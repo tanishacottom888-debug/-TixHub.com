@@ -15,6 +15,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
     <style>
+        /* ======================================== */
+        /* TICKETMASTER INSPIRED STYLES */
+        /* ======================================== */
+        :root {
+            --tm-blue: #024ddf;
+            --tm-blue-hover: #0139a7;
+            --tm-dark: #121212;
+            --tm-gray: #646464;
+            --tm-gray-light: #bfbfbf;
+            --tm-gray-bg: #f6f6f6;
+            --tm-white: #ffffff;
+            --tm-gold: #ffb932;
+            --tm-red: #eb0000;
+            --tm-text: #121212;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -22,125 +38,288 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a1a;
-            color: #ffffff;
+            font-family: 'Inter', 'Averta', helvetica, arial, sans-serif;
+            background: var(--tm-white);
+            color: var(--tm-text);
+            overflow-x: hidden;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
         
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1a1a2e;
+            background: var(--tm-gray-bg);
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            background: var(--tm-gray-light);
             border-radius: 10px;
         }
-        
-        /* Glassmorphism */
-        .glass-card {
-            background: rgba(26, 26, 46, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--tm-gray);
         }
         
-        .glass-card:hover {
-            border-color: rgba(108, 92, 231, 0.3);
-        }
-        
-        /* Gradient Button */
-        .gradient-btn {
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+        /* ======================================== */
+        /* TICKETMASTER STYLE BUTTONS */
+        /* ======================================== */
+        .btn-primary {
+            background: var(--tm-blue);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 600;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            line-height: 1.4;
+            min-height: 44px;
+            text-decoration: none;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .btn-primary:hover {
+            background: var(--tm-blue-hover);
+            transform: scale(1.02);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--tm-text);
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid var(--tm-gray-light);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            line-height: 1.4;
+            min-height: 44px;
+            text-decoration: none;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--tm-dark);
+            background: var(--tm-gray-bg);
+        }
+        
+        /* ======================================== */
+        /* NAVBAR - Ticketmaster Style */
+        /* ======================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--tm-dark);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-top {
+            padding: 6px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        
+        .navbar-main {
+            padding: 10px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav-link {
             position: relative;
+            color: #9ca3af;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            text-decoration: none;
+        }
+        
+        .nav-link:hover {
+            color: #fff;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--tm-blue);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link-active::after {
+            width: 60%;
+        }
+        
+        .nav-link-active {
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        /* Country Selector - USA Flag Circle */
+        .flag-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+        
+        .flag-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* ======================================== */
+        /* CARDS - Ticketmaster Style */
+        /* ======================================== */
+        .card {
+            background: var(--tm-white);
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid var(--tm-gray-light);
             overflow: hidden;
         }
         
-        .gradient-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 40px rgba(108, 92, 231, 0.4);
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
-        .gradient-btn:active {
-            transform: scale(0.98);
-        }
-        
-        .gradient-btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg) translateX(-100%);
-            transition: 0.6s;
-        }
-        
-        .gradient-btn:hover::after {
-            transform: rotate(45deg) translateX(100%);
-        }
-        
-        /* Form Inputs */
+        /* ======================================== */
+        /* FORM INPUTS */
+        /* ======================================== */
         .form-input {
-            background: rgba(26, 26, 46, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            padding: 14px 18px 14px 48px;
-            color: #fff;
+            border: 1px solid var(--tm-gray-light);
+            border-radius: 4px;
+            padding: 12px 16px 12px 44px;
+            font-size: 16px;
             width: 100%;
             transition: all 0.3s ease;
-            font-size: 16px;
+            background: var(--tm-white);
+            color: var(--tm-text);
+            min-height: 44px;
         }
         
         .form-input:focus {
             outline: none;
-            border-color: #6c5ce7;
-            box-shadow: 0 0 30px rgba(108, 92, 231, 0.1);
+            border-color: var(--tm-blue);
+            box-shadow: 0 0 0 3px rgba(2, 77, 223, 0.1);
         }
         
         .form-input::placeholder {
-            color: #6b7280;
+            color: var(--tm-gray);
         }
         
         .form-input.error {
-            border-color: #fd79a8;
-            box-shadow: 0 0 30px rgba(253, 121, 168, 0.1);
+            border-color: var(--tm-red);
         }
         
         .form-input.success {
             border-color: #10b981;
         }
         
-        .input-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6b7280;
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--tm-text);
+            margin-bottom: 4px;
+        }
+        
+        /* ======================================== */
+        /* TAB SWITCHER */
+        /* ======================================== */
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: 600;
             transition: all 0.3s ease;
-            pointer-events: none;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: var(--tm-gray);
+            font-size: 0.95rem;
         }
         
-        .form-input:focus + .input-icon,
-        .form-input:focus ~ .input-icon {
-            color: #6c5ce7;
+        .tab-btn.active {
+            background: var(--tm-blue);
+            color: #fff;
         }
         
-        /* Password Toggle */
+        .tab-btn:hover:not(.active) {
+            color: var(--tm-text);
+            background: var(--tm-gray-bg);
+        }
+        
+        /* ======================================== */
+        /* SOCIAL BUTTONS */
+        /* ======================================== */
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid var(--tm-gray-light);
+            background: var(--tm-white);
+            color: var(--tm-text);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            min-height: 44px;
+        }
+        
+        .social-btn:hover {
+            border-color: var(--tm-blue);
+            background: var(--tm-gray-bg);
+        }
+        
+        /* ======================================== */
+        /* PASSWORD TOGGLE */
+        /* ======================================== */
         .password-toggle {
             position: absolute;
-            right: 16px;
+            right: 14px;
             top: 50%;
             transform: translateY(-50%);
-            color: #6b7280;
+            color: var(--tm-gray);
             cursor: pointer;
             transition: all 0.3s ease;
             background: none;
@@ -149,179 +328,98 @@
         }
         
         .password-toggle:hover {
-            color: #fff;
+            color: var(--tm-text);
         }
         
-        /* Social Login Buttons */
-        .social-btn {
+        /* ======================================== */
+        /* DIVIDER */
+        /* ======================================== */
+        .divider {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 12px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(26, 26, 46, 0.4);
-            color: #d1d5db;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            font-size: 0.875rem;
+            gap: 16px;
+            color: var(--tm-gray);
+            font-size: 0.8rem;
         }
         
-        .social-btn:hover {
-            border-color: rgba(108, 92, 231, 0.3);
-            background: rgba(108, 92, 231, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        .social-btn:active {
-            transform: scale(0.98);
-        }
-        
-        .social-btn i {
-            font-size: 1.25rem;
-        }
-        
-        /* Tab Switcher */
-        .tab-btn {
+        .divider::before,
+        .divider::after {
+            content: '';
             flex: 1;
-            padding: 12px;
-            text-align: center;
-            border-radius: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            background: transparent;
-            border: none;
-            color: #6b7280;
-            font-size: 1rem;
+            height: 1px;
+            background: var(--tm-gray-light);
         }
         
-        .tab-btn.active {
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(253, 121, 168, 0.2));
+        /* ======================================== */
+        /* MOBILE MENU */
+        /* ======================================== */
+        .mobile-menu {
+            display: none;
+            background: var(--tm-dark);
+            padding: 16px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .mobile-menu.open {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            color: #9ca3af;
+            padding: 10px 0;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+        
+        .mobile-menu a:hover {
             color: #fff;
-            border: 1px solid rgba(108, 92, 231, 0.2);
         }
         
-        .tab-btn:hover:not(.active) {
-            color: #d1d5db;
+        .mobile-menu a:last-child {
+            border-bottom: none;
         }
         
-        /* Toast Notification */
+        /* ======================================== */
+        /* TOAST */
+        /* ======================================== */
         .toast {
             position: fixed;
-            top: 80px;
-            right: 20px;
-            z-index: 1000;
-            padding: 14px 20px;
-            border-radius: 16px;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            padding: 14px 24px;
+            border-radius: 4px;
+            background: var(--tm-dark);
             color: #fff;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             max-width: 90%;
-            width: 380px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            animation: slideInRight 0.3s ease-out;
+            width: auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-out;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         
-        .toast.success {
-            border-color: #10b981;
+        @keyframes slideUp {
+            0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
         }
         
-        .toast.error {
-            border-color: #fd79a8;
+        /* ======================================== */
+        /* MODAL */
+        /* ======================================== */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
         }
         
-        .toast.info {
-            border-color: #6c5ce7;
-        }
-        
-        @keyframes slideInRight {
-            0% { transform: translateX(100px); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
-        }
-        
-        /* Floating Particles */
-        .particle {
-            position: fixed;
-            border-radius: 50%;
-            background: rgba(108, 92, 231, 0.15);
-            animation: float linear infinite;
-            pointer-events: none;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) scale(1);
-                opacity: 0;
-            }
-        }
-        
-        /* Success Animation */
-        .auth-success {
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        /* Mobile Responsive */
-        @media (max-width: 640px) {
-            .glass-card {
-                padding: 20px !important;
-                border-radius: 20px;
-            }
-            
-            .form-input {
-                padding: 12px 14px 12px 42px;
-                font-size: 16px;
-            }
-            
-            .social-btn {
-                padding: 10px;
-                font-size: 0.8rem;
-            }
-            
-            .toast {
-                top: 70px;
-                right: 10px;
-                left: 10px;
-                width: auto;
-                padding: 12px 16px;
-                font-size: 0.8rem;
-            }
-            
-            h1 {
-                font-size: 1.75rem !important;
-            }
-            
-            .tab-btn {
-                padding: 10px;
-                font-size: 0.875rem;
-            }
-        }
-        
-        /* Dark mode select options */
-        select option {
-            background: #1a1a2e;
-        }
-        
-        /* Loading Spinner */
+        /* ======================================== */
+        /* SPINNER */
+        /* ======================================== */
         .spinner {
             display: inline-block;
             width: 20px;
@@ -336,84 +434,148 @@
             to { transform: rotate(360deg); }
         }
         
-        /* Divider */
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            color: #6b7280;
-            font-size: 0.75rem;
+        /* ======================================== */
+        /* RESPONSIVE */
+        /* ======================================== */
+        @media (max-width: 768px) {
+            .navbar-top {
+                padding: 6px 16px;
+            }
+            .navbar-main {
+                padding: 10px 16px;
+                flex-wrap: wrap;
+            }
+            .card {
+                padding: 20px !important;
+            }
+            .form-input {
+                font-size: 16px;
+                padding: 12px 14px 12px 40px;
+            }
+            .social-btn {
+                font-size: 0.8rem;
+                padding: 10px;
+            }
         }
         
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.08);
+        /* ======================================== */
+        /* FOOTER */
+        /* ======================================== */
+        .footer {
+            background: var(--tm-dark);
+            color: #fff;
+            padding: 24px 40px 16px;
+            margin-top: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .footer {
+                padding: 20px 16px 12px;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- ======================================== -->
-    <!-- BACKGROUND PARTICLES -->
+    <!-- NAVIGATION - Ticketmaster Style -->
     <!-- ======================================== -->
-    <div class="fixed inset-0 pointer-events-none overflow-hidden">
-        <div class="particle" style="width: 4px; height: 4px; left: 10%; animation-duration: 20s; animation-delay: 0s;"></div>
-        <div class="particle" style="width: 6px; height: 6px; left: 20%; animation-duration: 25s; animation-delay: 2s;"></div>
-        <div class="particle" style="width: 3px; height: 3px; left: 30%; animation-duration: 18s; animation-delay: 4s;"></div>
-        <div class="particle" style="width: 5px; height: 5px; left: 50%; animation-duration: 22s; animation-delay: 1s;"></div>
-        <div class="particle" style="width: 4px; height: 4px; left: 60%; animation-duration: 19s; animation-delay: 3s;"></div>
-        <div class="particle" style="width: 7px; height: 7px; left: 75%; animation-duration: 24s; animation-delay: 5s;"></div>
-        <div class="particle" style="width: 3px; height: 3px; left: 85%; animation-duration: 21s; animation-delay: 2s;"></div>
-        <div class="particle" style="width: 5px; height: 5px; left: 90%; animation-duration: 23s; animation-delay: 4s;"></div>
-    </div>
-
-    <!-- ======================================== -->
-    <!-- NAVIGATION -->
-    <!-- ======================================== -->
-    <nav class="fixed top-0 left-0 right-0 z-50 px-4 py-3 md:px-8 md:py-4">
-        <div class="max-w-7xl mx-auto glass-card px-4 py-2 md:px-6 md:py-3 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2 shrink-0">
-                <div class="w-8 h-8 md:w-10 md:h-10 gradient-bg rounded-xl flex items-center justify-center">
-                    <i class="fas fa-ticket-alt text-white text-sm md:text-xl"></i>
+    <nav class="navbar">
+        <!-- Top Bar -->
+        <div class="navbar-top hidden md:flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <!-- Country Selector with USA Flag Circle -->
+                <button class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
+                    <span class="flag-circle">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA Flag" />
+                    </span>
+                    <span>US</span>
+                </button>
+                
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-1">
+                    <i class="fas fa-hotel"></i> Hotels
+                </a>
+                <a href="sell.html" class="text-gray-400 hover:text-white transition text-sm">Sell</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Gift Cards</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Help</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">VIP</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-xs text-gray-500">PayPal Preferred</span>
+            </div>
+        </div>
+        
+        <!-- Main Nav -->
+        <div class="navbar-main">
+            <div class="flex items-center gap-6">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
+                        <i class="fas fa-ticket-alt text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white tracking-tight">
+                        Tix<span class="text-[#6c5ce7]">Hub</span>
+                    </span>
+                </a>
+                
+                <!-- Nav Links -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="buy.html" class="nav-link">Buy Tickets</a>
+                    <a href="sell.html" class="nav-link">Sell Tickets</a>
+                    <a href="matches.html" class="nav-link">Matches</a>
+                    <a href="stadiums.html" class="nav-link">Stadiums</a>
                 </div>
-                <span class="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    TixHub
-                </span>
-            </a>
-            <a href="index.html" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i>
-                <span class="hidden sm:inline">Back to Home</span>
-            </a>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <a href="auth.html" class="hidden md:block text-gray-300 hover:text-white transition text-sm font-medium">
+                    Sign In
+                </a>
+                <a href="auth.html" class="btn-primary text-sm px-5 py-2 min-h-[36px]">
+                    <i class="fas fa-rocket mr-1"></i> Get Started
+                </a>
+                <button id="mobileToggle" class="lg:hidden text-white text-2xl p-2">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy Tickets</a>
+            <a href="sell.html">Sell Tickets</a>
+            <a href="matches.html">Matches</a>
+            <a href="stadiums.html">Stadiums</a>
+            <a href="auth.html" class="text-white font-semibold">Sign In</a>
         </div>
     </nav>
 
     <!-- ======================================== -->
     <!-- AUTH CONTAINER -->
     <!-- ======================================== -->
-    <div class="flex-1 flex items-center justify-center px-4 pt-20 pb-8">
+    <div class="flex-1 flex items-center justify-center px-4 pt-28 pb-8">
         <div class="w-full max-w-md">
             
             <!-- Header -->
             <div class="text-center mb-8">
-                <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-4 auth-success">
+                <div class="w-16 h-16 rounded-full bg-[#024ddf] flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/20">
                     <i class="fas fa-ticket-alt text-white text-2xl"></i>
                 </div>
-                <h1 class="text-2xl md:text-3xl font-bold mb-2">
-                    Welcome to <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">TixHub</span>
+                <h1 class="text-2xl md:text-3xl font-bold text-[#121212]">
+                    Welcome to <span class="text-[#024ddf]">TixHub</span>
                 </h1>
-                <p class="text-gray-400 text-sm">
+                <p class="text-gray-500 text-sm">
                     Buy and sell tickets with complete security
                 </p>
             </div>
 
             <!-- Auth Card -->
-            <div class="glass-card p-6 md:p-8">
+            <div class="card p-6 md:p-8">
                 
                 <!-- Tab Switcher -->
-                <div class="flex gap-2 mb-6 glass-card p-1">
+                <div class="flex gap-2 mb-6 bg-gray-50 p-1 rounded">
                     <button id="loginTab" class="tab-btn active" onclick="switchTab('login')">
                         <i class="fas fa-sign-in-alt mr-2"></i> Sign In
                     </button>
@@ -430,6 +592,7 @@
                         <div class="space-y-4">
                             <!-- Email -->
                             <div class="relative">
+                                <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                                 <input 
                                     type="email" 
                                     id="loginEmail"
@@ -437,11 +600,11 @@
                                     placeholder="Email address"
                                     required
                                 />
-                                <i class="fas fa-envelope input-icon"></i>
                             </div>
                             
                             <!-- Password -->
                             <div class="relative">
+                                <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                                 <input 
                                     type="password" 
                                     id="loginPassword"
@@ -450,7 +613,6 @@
                                     required
                                     minlength="6"
                                 />
-                                <i class="fas fa-lock input-icon"></i>
                                 <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
                                     <i class="fas fa-eye"></i>
                                 </button>
@@ -458,13 +620,13 @@
                             
                             <!-- Forgot Password -->
                             <div class="text-right">
-                                <button type="button" onclick="showForgotPassword()" class="text-sm text-purple-400 hover:text-purple-300 transition">
+                                <button type="button" onclick="showForgotPassword()" class="text-sm text-[#024ddf] hover:text-[#0139a7] transition">
                                     Forgot password?
                                 </button>
                             </div>
                             
                             <!-- Submit -->
-                            <button type="submit" id="loginBtn" class="w-full gradient-btn py-3 rounded-xl text-white font-semibold">
+                            <button type="submit" id="loginBtn" class="btn-primary">
                                 <i class="fas fa-sign-in-alt mr-2"></i> Sign In
                             </button>
                         </div>
@@ -479,6 +641,7 @@
                         <div class="space-y-4">
                             <!-- Full Name -->
                             <div class="relative">
+                                <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                                 <input 
                                     type="text" 
                                     id="signupName"
@@ -486,11 +649,11 @@
                                     placeholder="Full name"
                                     required
                                 />
-                                <i class="fas fa-user input-icon"></i>
                             </div>
                             
                             <!-- Email -->
                             <div class="relative">
+                                <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                                 <input 
                                     type="email" 
                                     id="signupEmail"
@@ -498,11 +661,11 @@
                                     placeholder="Email address"
                                     required
                                 />
-                                <i class="fas fa-envelope input-icon"></i>
                             </div>
                             
                             <!-- Password -->
                             <div class="relative">
+                                <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                                 <input 
                                     type="password" 
                                     id="signupPassword"
@@ -511,7 +674,6 @@
                                     required
                                     minlength="6"
                                 />
-                                <i class="fas fa-lock input-icon"></i>
                                 <button type="button" class="password-toggle" onclick="togglePassword('signupPassword')">
                                     <i class="fas fa-eye"></i>
                                 </button>
@@ -519,6 +681,7 @@
                             
                             <!-- Confirm Password -->
                             <div class="relative">
+                                <i class="fas fa-check-circle absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                                 <input 
                                     type="password" 
                                     id="signupConfirmPassword"
@@ -527,7 +690,6 @@
                                     required
                                     minlength="6"
                                 />
-                                <i class="fas fa-check-circle input-icon"></i>
                             </div>
                             
                             <!-- Terms -->
@@ -535,17 +697,17 @@
                                 <input 
                                     type="checkbox" 
                                     id="termsCheck" 
-                                    class="mt-1 w-5 h-5 accent-purple-500 shrink-0"
+                                    class="mt-1 w-5 h-5 accent-[#024ddf] shrink-0"
                                     required
                                 />
-                                <label for="termsCheck" class="text-xs text-gray-400">
-                                    I agree to the <a href="#" class="text-purple-400 hover:text-purple-300">Terms of Service</a> 
-                                    and <a href="#" class="text-purple-400 hover:text-purple-300">Privacy Policy</a>
+                                <label for="termsCheck" class="text-xs text-gray-500">
+                                    I agree to the <a href="#" class="text-[#024ddf] hover:text-[#0139a7] transition">Terms of Service</a> 
+                                    and <a href="#" class="text-[#024ddf] hover:text-[#0139a7] transition">Privacy Policy</a>
                                 </label>
                             </div>
                             
                             <!-- Submit -->
-                            <button type="submit" id="signupBtn" class="w-full gradient-btn py-3 rounded-xl text-white font-semibold">
+                            <button type="submit" id="signupBtn" class="btn-primary">
                                 <i class="fas fa-user-plus mr-2"></i> Create Account
                             </button>
                         </div>
@@ -564,25 +726,25 @@
                 <!-- ======================================== -->
                 <div class="space-y-3">
                     <button onclick="socialLogin('google')" class="social-btn">
-                        <i class="fab fa-google text-red-400"></i>
+                        <i class="fab fa-google text-[#ea4335] text-lg"></i>
                         Continue with Google
                     </button>
                     <button onclick="socialLogin('facebook')" class="social-btn">
-                        <i class="fab fa-facebook text-blue-400"></i>
+                        <i class="fab fa-facebook text-[#1877f2] text-lg"></i>
                         Continue with Facebook
                     </button>
                     <button onclick="socialLogin('apple')" class="social-btn">
-                        <i class="fab fa-apple text-white"></i>
+                        <i class="fab fa-apple text-[#121212] text-lg"></i>
                         Continue with Apple
                     </button>
                 </div>
 
                 <!-- ======================================== -->
-                <!-- DEMO CREDENTIALS (For testing) -->
+                <!-- DEMO CREDENTIALS -->
                 <!-- ======================================== -->
-                <div class="mt-6 p-4 bg-white/5 rounded-xl border border-white/5">
-                    <p class="text-xs text-gray-400 text-center">
-                        <i class="fas fa-info-circle text-purple-400 mr-1"></i>
+                <div class="mt-6 p-4 bg-gray-50 rounded border border-gray-200">
+                    <p class="text-xs text-gray-500 text-center">
+                        <i class="fas fa-info-circle text-[#024ddf] mr-1"></i>
                         Demo: Use any email + password (min 6 chars)
                     </p>
                 </div>
@@ -592,13 +754,13 @@
             <div class="text-center mt-6">
                 <div class="flex flex-wrap justify-center gap-4 text-xs text-gray-500">
                     <span class="flex items-center gap-1">
-                        <i class="fas fa-lock text-green-400 text-xs"></i> 256-bit SSL
+                        <i class="fas fa-lock text-[#10b981] text-xs"></i> 256-bit SSL
                     </span>
                     <span class="flex items-center gap-1">
-                        <i class="fas fa-shield-alt text-purple-400 text-xs"></i> Escrow Protected
+                        <i class="fas fa-shield-alt text-[#024ddf] text-xs"></i> Escrow Protected
                     </span>
                     <span class="flex items-center gap-1">
-                        <i class="fas fa-headset text-blue-400 text-xs"></i> 24/7 Support
+                        <i class="fas fa-headset text-[#024ddf] text-xs"></i> 24/7 Support
                     </span>
                 </div>
             </div>
@@ -609,23 +771,24 @@
     <!-- FORGOT PASSWORD MODAL -->
     <!-- ======================================== -->
     <div id="forgotModal" class="fixed inset-0 z-50 hidden">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeForgotModal()"></div>
+        <div class="modal-overlay absolute inset-0" onclick="closeForgotModal()"></div>
         <div class="absolute inset-0 flex items-center justify-center p-4">
-            <div class="glass-card max-w-md w-full p-6 md:p-8 relative">
-                <button onclick="closeForgotModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
+            <div class="card max-w-md w-full p-6 md:p-8 relative">
+                <button onclick="closeForgotModal()" class="absolute top-4 right-4 text-gray-400 hover:text-[#121212] text-2xl transition">
                     <i class="fas fa-times"></i>
                 </button>
                 
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <div class="w-16 h-16 rounded-full bg-[#024ddf] flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-500/20">
                         <i class="fas fa-key text-white text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold">Reset Password</h3>
-                    <p class="text-gray-400 text-sm">Enter your email to receive reset instructions</p>
+                    <h3 class="text-xl font-bold text-[#121212]">Reset Password</h3>
+                    <p class="text-gray-500 text-sm">Enter your email to receive reset instructions</p>
                 </div>
                 
                 <form onsubmit="handleForgotPassword(event)">
                     <div class="relative mb-4">
+                        <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                         <input 
                             type="email" 
                             id="resetEmail"
@@ -633,9 +796,8 @@
                             placeholder="Email address"
                             required
                         />
-                        <i class="fas fa-envelope input-icon"></i>
                     </div>
-                    <button type="submit" class="w-full gradient-btn py-3 rounded-xl text-white font-semibold">
+                    <button type="submit" class="btn-primary">
                         <i class="fas fa-paper-plane mr-2"></i> Send Reset Link
                     </button>
                 </form>
@@ -644,10 +806,10 @@
     </div>
 
     <!-- ======================================== -->
-    <!-- FOOTER -->
+    <!-- FOOTER - Ticketmaster Style -->
     <!-- ======================================== -->
-    <footer class="border-t border-white/5 py-4 px-4 mt-auto">
-        <div class="max-w-7xl mx-auto text-center text-gray-500 text-xs">
+    <footer class="footer">
+        <div class="max-w-7xl mx-auto text-center text-gray-500 text-sm">
             &copy; 2026 TixHub. All rights reserved.
         </div>
     </footer>
@@ -662,20 +824,40 @@
         let currentTab = 'login';
 
         // ========================================
+        // MOBILE MENU
+        // ========================================
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('open');
+            const icon = this.querySelector('i');
+            if (mobileMenu.classList.contains('open')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('open');
+                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
+            });
+        });
+
+        // ========================================
         // TAB SWITCHING
         // ========================================
         function switchTab(tab) {
             currentTab = tab;
             
-            // Update tabs
             document.getElementById('loginTab').classList.toggle('active', tab === 'login');
             document.getElementById('signupTab').classList.toggle('active', tab === 'signup');
             
-            // Update forms
             document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
             document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
             
-            // Clear errors
             document.querySelectorAll('.form-input').forEach(input => {
                 input.classList.remove('error', 'success');
             });
@@ -707,7 +889,6 @@
             const password = document.getElementById('loginPassword').value;
             const btn = document.getElementById('loginBtn');
             
-            // Validate
             if (!email || !password) {
                 showToast('Please fill in all fields', 'error');
                 return;
@@ -718,16 +899,13 @@
                 return;
             }
             
-            // Show loading
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
             
-            // Simulate API call
             setTimeout(() => {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
                 
-                // Success - redirect to dashboard
                 showToast('✅ Welcome back! Redirecting...', 'success');
                 
                 setTimeout(() => {
@@ -749,7 +927,6 @@
             const terms = document.getElementById('termsCheck').checked;
             const btn = document.getElementById('signupBtn');
             
-            // Validate
             if (!name || !email || !password || !confirmPassword) {
                 showToast('Please fill in all fields', 'error');
                 return;
@@ -770,16 +947,13 @@
                 return;
             }
             
-            // Show loading
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
-            // Simulate API call
             setTimeout(() => {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
                 
-                // Success
                 showToast('🎉 Account created! Redirecting...', 'success');
                 
                 setTimeout(() => {
@@ -829,10 +1003,9 @@
         }
 
         // ========================================
-        // TOAST NOTIFICATION
+        // TOAST
         // ========================================
         function showToast(message, type = 'info') {
-            // Remove existing toasts
             document.querySelectorAll('.toast').forEach(t => t.remove());
             
             const icons = {
@@ -843,12 +1016,12 @@
             
             const colors = {
                 success: '#10b981',
-                error: '#fd79a8',
-                info: '#6c5ce7'
+                error: '#ef4444',
+                info: '#024ddf'
             };
             
             const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
+            toast.className = 'toast';
             toast.innerHTML = `
                 <i class="fas ${icons[type]}" style="color: ${colors[type]}; font-size: 1.25rem;"></i>
                 <span>${message}</span>
@@ -857,9 +1030,9 @@
             
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100px)';
-                toast.style.transition = 'all 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
+                toast.style.transform = 'translateX(-50%) translateY(20px)';
+                toast.style.transition = 'all 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
             }, 4000);
         }
 
@@ -867,12 +1040,10 @@
         // KEYBOARD SHORTCUTS
         // ========================================
         document.addEventListener('keydown', function(e) {
-            // Escape to close modal
             if (e.key === 'Escape') {
                 closeForgotModal();
             }
             
-            // Ctrl+1 for login, Ctrl+2 for signup
             if (e.ctrlKey && e.key === '1') {
                 e.preventDefault();
                 switchTab('login');
@@ -890,8 +1061,8 @@
             document.getElementById('loginEmail').focus();
         });
 
-        console.log('🔐 TixHub - Authentication Page Loaded');
-        console.log('📱 Mobile-optimized auth ready');
+        console.log('🔐 TixHub - Authentication Page');
+        console.log('🇺🇸 Ticketmaster-style design with USA flag circle');
         console.log('💡 Tip: Ctrl+1 = Login, Ctrl+2 = Signup');
     </script>
 </body>
