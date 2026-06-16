@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Dashboard - TixHub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a1a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            border-radius: 10px;
+        }
+        
+        /* Glassmorphism */
+        .glass-card {
+            background: rgba(26, 26, 46, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+        
+        /* Gradient Button */
+        .gradient-btn {
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            transition: all 0.3s ease;
+        }
+        
+        .gradient-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(108, 92, 231, 0.4);
+        }
+        
+        .gradient-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* Navbar */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            color: #9ca3af;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .sidebar-link:hover {
+            background: rgba(108, 92, 231, 0.1);
+            color: #fff;
+        }
+        
+        .sidebar-link.active {
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(253, 121, 168, 0.2));
+            color: #fff;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+        
+        .sidebar-link i {
+            width: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .sidebar-link .badge {
+            margin-left: auto;
+            background: rgba(253, 121, 168, 0.2);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: #fd79a8;
+        }
+        
+        /* Stat Cards */
+        .stat-card {
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        /* Ticket Item */
+        .ticket-item {
+            transition: all 0.3s ease;
+        }
+        
+        .ticket-item:hover {
+            border-color: rgba(108, 92, 231, 0.3);
+            transform: translateX(4px);
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .status-badge.active {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        .status-badge.completed {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+        
+        .status-badge.cancelled {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .status-badge.held {
+            background: rgba(108, 92, 231, 0.2);
+            color: #8b5cf6;
+        }
+        
+        .status-badge.released {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        /* QR Code Container */
+        .qr-container {
+            background: #fff;
+            padding: 16px;
+            border-radius: 16px;
+            display: inline-block;
+        }
+        
+        .qr-container canvas,
+        .qr-container img {
+            width: 120px;
+            height: 120px;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .sidebar-mobile {
+                display: flex !important;
+                overflow-x: auto;
+                gap: 8px;
+                padding: 4px;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .sidebar-mobile .sidebar-link {
+                white-space: nowrap;
+                padding: 10px 16px;
+                font-size: 0.8rem;
+                flex-shrink: 0;
+            }
+            
+            .stat-card {
+                padding: 16px;
+            }
+            
+            .stat-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 1.25rem !important;
+            }
+            
+            .glass-card {
+                padding: 16px !important;
+            }
+        }
+        
+        /* Mobile Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: none;
+            padding: 8px 0;
+            z-index: 50;
+        }
+        
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 0;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            font-size: 0.6rem;
+            flex: 1;
+            text-decoration: none;
+        }
+        
+        .bottom-nav-item.active {
+            color: #6c5ce7;
+        }
+        
+        .bottom-nav-item i {
+            font-size: 1.25rem;
+        }
+        
+        @media (max-width: 768px) {
+            .bottom-nav {
+                display: flex;
+            }
+            .content-wrapper {
+                padding-bottom: 80px;
+            }
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            padding: 14px 20px;
+            border-radius: 16px;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.875rem;
+            max-width: 90%;
+            width: 380px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideInRight 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        @keyframes slideInRight {
+            0% { transform: translateX(100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Profile Avatar */
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        /* Animation */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ======================================== -->
+    <!-- NAVIGATION -->
+    <!-- ======================================== -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-4 py-3 md:px-8 md:py-4">
+        <div class="max-w-7xl mx-auto glass-card px-4 py-2 md:px-6 md:py-3 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 shrink-0">
+                <div class="w-8 h-8 md:w-10 md:h-10 gradient-bg rounded-xl flex items-center justify-center">
+                    <i class="fas fa-ticket-alt text-white text-sm md:text-xl"></i>
+                </div>
+                <span class="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    TixHub
+                </span>
+            </a>
+            
+            <div class="flex items-center gap-3 md:gap-4">
+                <span class="hidden sm:inline text-sm text-gray-400">
+                    <i class="fas fa-user-circle mr-1 text-purple-400"></i>
+                    John Doe
+                </span>
+                <a href="index.html" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-2">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="hidden sm:inline">Logout</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ======================================== -->
+    <!-- MAIN CONTENT -->
+    <!-- ======================================== -->
+    <div class="max-w-7xl mx-auto px-4 pt-24 pb-8 content-wrapper">
+        
+        <!-- Mobile Sidebar -->
+        <div class="sidebar-mobile hidden md:hidden glass-card p-2 mb-4 overflow-x-auto">
+            <a href="#" class="sidebar-link active" data-section="overview" onclick="switchSection('overview')">
+                <i class="fas fa-chart-pie"></i> Overview
+            </a>
+            <a href="#" class="sidebar-link" data-section="purchases" onclick="switchSection('purchases')">
+                <i class="fas fa-shopping-bag"></i> Purchases
+            </a>
+            <a href="#" class="sidebar-link" data-section="sales" onclick="switchSection('sales')">
+                <i class="fas fa-tag"></i> Sales
+            </a>
+            <a href="#" class="sidebar-link" data-section="favorites" onclick="switchSection('favorites')">
+                <i class="fas fa-heart"></i> Favorites
+            </a>
+            <a href="#" class="sidebar-link" data-section="profile" onclick="switchSection('profile')">
+                <i class="fas fa-user"></i> Profile
+            </a>
+        </div>
+
+        <div class="flex gap-6">
+            
+            <!-- ======================================== -->
+            <!-- SIDEBAR - Desktop -->
+            <!-- ======================================== -->
+            <div class="sidebar w-64 shrink-0">
+                <div class="glass-card p-4 sticky top-24">
+                    <!-- User Info -->
+                    <div class="text-center mb-6 pb-6 border-b border-white/5">
+                        <div class="profile-avatar mx-auto mb-3">JD</div>
+                        <h3 class="font-semibold">John Doe</h3>
+                        <p class="text-gray-400 text-sm">john@example.com</p>
+                        <span class="inline-block mt-2 px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">
+                            <i class="fas fa-check-circle mr-1"></i> Verified
+                        </span>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <nav class="space-y-1">
+                        <a href="#" class="sidebar-link active" data-section="overview" onclick="switchSection('overview')">
+                            <i class="fas fa-chart-pie"></i> Overview
+                            <span class="badge">3</span>
+                        </a>
+                        <a href="#" class="sidebar-link" data-section="purchases" onclick="switchSection('purchases')">
+                            <i class="fas fa-shopping-bag"></i> My Purchases
+                            <span class="badge">5</span>
+                        </a>
+                        <a href="#" class="sidebar-link" data-section="sales" onclick="switchSection('sales')">
+                            <i class="fas fa-tag"></i> My Sales
+                            <span class="badge">2</span>
+                        </a>
+                        <a href="#" class="sidebar-link" data-section="favorites" onclick="switchSection('favorites')">
+                            <i class="fas fa-heart"></i> Favorites
+                            <span class="badge">4</span>
+                        </a>
+                        <a href="#" class="sidebar-link" data-section="messages" onclick="switchSection('messages')">
+                            <i class="fas fa-comments"></i> Messages
+                            <span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">3</span>
+                        </a>
+                        <a href="#" class="sidebar-link" data-section="profile" onclick="switchSection('profile')">
+                            <i class="fas fa-user"></i> Profile Settings
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- ======================================== -->
+            <!-- CONTENT AREA -->
+            <!-- ======================================== -->
+            <div class="flex-1 space-y-6">
+                
+                <!-- ======================================== -->
+                <!-- OVERVIEW SECTION -->
+                <!-- ======================================== -->
+                <div id="section-overview" class="fade-in">
+                    <!-- Welcome -->
+                    <div class="glass-card p-6 md:p-8">
+                        <h1 class="text-2xl md:text-3xl font-bold">
+                            Welcome back, <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">John!</span>
+                        </h1>
+                        <p class="text-gray-400 text-sm mt-1">Here's what's happening with your tickets</p>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="glass-card stat-card">
+                            <div class="flex items-center gap-4">
+                                <div class="stat-icon bg-purple-500/20 text-purple-400">
+                                    <i class="fas fa-ticket-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-xs">Total Tickets</p>
+                                    <p class="stat-number text-2xl font-bold">12</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card stat-card">
+                            <div class="flex items-center gap-4">
+                                <div class="stat-icon bg-green-500/20 text-green-400">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-xs">Confirmed</p>
+                                    <p class="stat-number text-2xl font-bold">8</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card stat-card">
+                            <div class="flex items-center gap-4">
+                                <div class="stat-icon bg-yellow-500/20 text-yellow-400">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-xs">Pending</p>
+                                    <p class="stat-number text-2xl font-bold">3</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card stat-card">
+                            <div class="flex items-center gap-4">
+                                <div class="stat-icon bg-pink-500/20 text-pink-400">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-xs">Favorites</p>
+                                    <p class="stat-number text-2xl font-bold">4</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="glass-card p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">Recent Activity</h3>
+                            <button class="text-sm text-purple-400 hover:text-purple-300 transition">View All</button>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 p-3 glass-card">
+                                <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">Summer Music Festival</p>
+                                    <p class="text-xs text-gray-400">Ticket confirmed • 2 hours ago</p>
+                                </div>
+                                <span class="text-xs text-green-400">$149.99</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 glass-card">
+                                <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">NBA Finals - Game 7</p>
+                                    <p class="text-xs text-gray-400">Payment held in escrow • 5 hours ago</p>
+                                </div>
+                                <span class="text-xs text-yellow-400">$299.99</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 glass-card">
+                                <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                    <i class="fas fa-tag"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">Hamilton - Broadway</p>
+                                    <p class="text-xs text-gray-400">Ticket listed for sale • 1 day ago</p>
+                                </div>
+                                <span class="text-xs text-blue-400">$189.50</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- PURCHASES SECTION -->
+                <!-- ======================================== -->
+                <div id="section-purchases" class="hidden fade-in">
+                    <div class="glass-card p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold">My Purchases</h2>
+                            <div class="flex gap-2">
+                                <select class="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-gray-300">
+                                    <option>All</option>
+                                    <option>Active</option>
+                                    <option>Completed</option>
+                                    <option>Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- Ticket 1 -->
+                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=100&h=100&fit=crop" 
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">Summer Music Festival 2026</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400 mt-1">
+                                        <span><i class="fas fa-calendar-alt mr-1 text-purple-400"></i> Jul 15, 2026</span>
+                                        <span><i class="fas fa-map-marker-alt mr-1 text-pink-400"></i> Central Park, NYC</span>
+                                        <span><i class="fas fa-chair mr-1 text-blue-400"></i> VIP Section A</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <span class="text-purple-400 font-bold">$149.99</span>
+                                    <span class="status-badge active">Active</span>
+                                    <button onclick="showQRCode('Summer Music Festival', 'VIP-A-001')" class="gradient-btn px-4 py-1.5 rounded-xl text-white text-sm">
+                                        <i class="fas fa-qrcode mr-1"></i> QR Code
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Ticket 2 -->
+                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=100&h=100&fit=crop" 
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">NBA Finals - Game 7</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400 mt-1">
+                                        <span><i class="fas fa-calendar-alt mr-1 text-purple-400"></i> Jun 20, 2026</span>
+                                        <span><i class="fas fa-map-marker-alt mr-1 text-pink-400"></i> Staples Center, LA</span>
+                                        <span><i class="fas fa-chair mr-1 text-blue-400"></i> Courtside Row B</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <span class="text-purple-400 font-bold">$299.99</span>
+                                    <span class="status-badge pending">Pending</span>
+                                    <button onclick="showToast('Payment in escrow. Awaiting seller confirmation.')" class="border border-white/10 px-4 py-1.5 rounded-xl text-white text-sm hover:bg-white/5 transition">
+                                        <i class="fas fa-clock mr-1"></i> Escrow
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Ticket 3 -->
+                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=100&h=100&fit=crop" 
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">Hamilton - Broadway Show</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400 mt-1">
+                                        <span><i class="fas fa-calendar-alt mr-1 text-purple-400"></i> Aug 10, 2026</span>
+                                        <span><i class="fas fa-map-marker-alt mr-1 text-pink-400"></i> Richard Rodgers Theatre, NYC</span>
+                                        <span><i class="fas fa-chair mr-1 text-blue-400"></i> Orchestra Center</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <span class="text-purple-400 font-bold">$189.50</span>
+                                    <span class="status-badge completed">Completed</span>
+                                    <button onclick="showToast('Ticket used on Aug 10, 2026')" class="border border-white/10 px-4 py-1.5 rounded-xl text-white text-sm hover:bg-white/5 transition">
+                                        <i class="fas fa-check-circle mr-1"></i> Used
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- SALES SECTION -->
+                <!-- ======================================== -->
+                <div id="section-sales" class="hidden fade-in">
+                    <div class="glass-card p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold">My Sales</h2>
+                            <a href="sell.html" class="gradient-btn px-4 py-2 rounded-xl text-white text-sm">
+                                <i class="fas fa-plus mr-1"></i> Sell New
+                            </a>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=100&h=100&fit=crop" 
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">Jazz & Blues Festival</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400 mt-1">
+                                        <span><i class="fas fa-calendar-alt mr-1 text-purple-400"></i> Sep 12, 2026</span>
+                                        <span><i class="fas fa-map-marker-alt mr-1 text-pink-400"></i> New Orleans, LA</span>
+                                        <span><i class="fas fa-users mr-1 text-blue-400"></i> 3 sold</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <span class="text-purple-400 font-bold">$89.99</span>
+                                    <span class="status-badge active">Active</span>
+                                    <span class="text-sm text-gray-400">5 left</span>
+                                </div>
+                            </div>
+                            
+                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=100&h=100&fit=crop" 
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">International Soccer Match</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400 mt-1">
+                                        <span><i class="fas fa-calendar-alt mr-1 text-purple-400"></i> Aug 20, 2026</span>
+                                        <span><i class="fas fa-map-marker-alt mr-1 text-pink-400"></i> Wembley Stadium, UK</span>
+                                        <span><i class="fas fa-users mr-1 text-blue-400"></i> 2 sold</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <span class="text-purple-400 font-bold">$159.99</span>
+                                    <span class="status-badge held">Escrow Held</span>
+                                    <span class="text-sm text-gray-400">$319.98 pending</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- FAVORITES SECTION -->
+                <!-- ======================================== -->
+                <div id="section-favorites" class="hidden fade-in">
+                    <div class="glass-card p-6">
+                        <h2 class="text-2xl font-bold mb-6">My Favorites</h2>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="ticket-item glass-card p-4 flex items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=80&h=80&fit=crop" 
+                                     alt="Event" class="w-16 h-16 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-sm">Comedy Night - Kevin Hart</h4>
+                                    <p class="text-xs text-gray-400">Sep 5, 2026 • NYC</p>
+                                    <span class="text-purple-400 font-bold text-sm">$79.99</span>
+                                </div>
+                                <button onclick="showToast('Added to cart')" class="gradient-btn px-3 py-1 rounded-xl text-white text-xs">
+                                    Buy
+                                </button>
+                            </div>
+                            
+                            <div class="ticket-item glass-card p-4 flex items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=80&h=80&fit=crop" 
+                                     alt="Event" class="w-16 h-16 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-sm">EDM Night - DJ Festival</h4>
+                                    <p class="text-xs text-gray-400">Jul 25, 2026 • Miami</p>
+                                    <span class="text-purple-400 font-bold text-sm">$99.99</span>
+                                </div>
+                                <button onclick="showToast('Added to cart')" class="gradient-btn px-3 py-1 rounded-xl text-white text-xs">
+                                    Buy
+                                </button>
+                            </div>
+                            
+                            <div class="ticket-item glass-card p-4 flex items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=80&h=80&fit=crop" 
+                                     alt="Event" class="w-16 h-16 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-sm">Harry Potter Exhibition</h4>
+                                    <p class="text-xs text-gray-400">Oct 15, 2026 • London</p>
+                                    <span class="text-purple-400 font-bold text-sm">$45.00</span>
+                                </div>
+                                <button onclick="showToast('Added to cart')" class="gradient-btn px-3 py-1 rounded-xl text-white text-xs">
+                                    Buy
+                                </button>
+                            </div>
+                            
+                            <div class="ticket-item glass-card p-4 flex items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=80&h=80&fit=crop" 
+                                     alt="Event" class="w-16 h-16 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-sm">Summer Music Festival</h4>
+                                    <p class="text-xs text-gray-400">Jul 15, 2026 • NYC</p>
+                                    <span class="text-purple-400 font-bold text-sm">$149.99</span>
+                                </div>
+                                <button onclick="showToast('Added to cart')" class="gradient-btn px-3 py-1 rounded-xl text-white text-xs">
+                                    Buy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- MESSAGES SECTION -->
+                <!-- ======================================== -->
+                <div id="section-messages" class="hidden fade-in">
+                    <div class="glass-card p-6">
+                        <h2 class="text-2xl font-bold mb-6">Messages</h2>
+                        
+                        <div class="space-y-3">
+                            <div class="ticket-item glass-card p-4 flex items-center gap-4 cursor-pointer hover:border-purple-500/50" onclick="showToast('Opening chat...')">
+                                <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold">
+                                    JS
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between">
+                                        <h4 class="font-semibold">Jane Smith</h4>
+                                        <span class="text-xs text-gray-400">2 min ago</span>
+                                    </div>
+                                    <p class="text-sm text-gray-400">Hey! Is the VIP ticket still available?</p>
+                                </div>
+                                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                            </div>
+                            
+                            <div class="ticket-item glass-card p-4 flex items-center gap-4 cursor-pointer hover:border-purple-500/50" onclick="showToast('Opening chat...')">
+                                <div class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400 font-bold">
+                                    MR
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between">
+                                        <h4 class="font-semibold">Mike Ross</h4>
+                                        <span class="text-xs text-gray-400">1 hour ago</span>
+                                    </div>
+                                    <p class="text-sm text-gray-400">Can you send the QR code for the event?</p>
+                                </div>
+                                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                            </div>
+                            
+                            <div class="ticket-item glass-card p-4 flex items-center gap-4 cursor-pointer hover:border-purple-500/50" onclick="showToast('Opening chat...')">
+                                <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold">
+                                    TL
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between">
+                                        <h4 class="font-semibold">Taylor Lee</h4>
+                                        <span class="text-xs text-gray-400">3 hours ago</span>
+                                    </div>
+                                    <p class="text-sm text-gray-400">Thanks for the tickets! Great seats!</p>
+                                </div>
+                                <span class="w-3 h-3 rounded-full bg-gray-500"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- PROFILE SECTION -->
+                <!-- ======================================== -->
+                <div id="section-profile" class="hidden fade-in">
+                    <div class="glass-card p-6">
+                        <h2 class="text-2xl font-bold mb-6">Profile Settings</h2>
+                        
+                        <div class="space-y-6">
+                            <!-- Avatar -->
+                            <div class="flex items-center gap-6">
+                                <div class="profile-avatar">JD</div>
+                                <div>
+                                    <button class="gradient-btn px-4 py-2 rounded-xl text-white text-sm">
+                                        <i class="fas fa-camera mr-1"></i> Change Photo
+                                    </button>
+                                    <p class="text-xs text-gray-400 mt-1">PNG, JPG up to 2MB</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Form -->
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-sm text-gray-400 block mb-1">Full Name</label>
+                                    <input type="text" value="John Doe" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-400 block mb-1">Email Address</label>
+                                    <input type="email" value="john@example.com" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-400 block mb-1">Phone Number</label>
+                                    <input type="tel" value="+1 (555) 123-4567" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-400 block mb-1">Location</label>
+                                    <input type="text" value="New York, USA" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                </div>
+                            </div>
+                            
+                            <button onclick="showToast('✅ Profile updated successfully!')" class="gradient-btn px-6 py-3 rounded-xl text-white font-semibold">
+                                <i class="fas fa-save mr-2"></i> Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- BOTTOM NAV - Mobile -->
+    <!-- ======================================== -->
+    <div class="bottom-nav">
+        <a href="#" class="bottom-nav-item active" onclick="switchSection('overview')">
+            <i class="fas fa-chart-pie"></i>
+            <span>Overview</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="switchSection('purchases')">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Purchases</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="switchSection('favorites')">
+            <i class="fas fa-heart"></i>
+            <span>Favorites</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="switchSection('messages')">
+            <i class="fas fa-comments"></i>
+            <span>Messages</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="switchSection('profile')">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- QR CODE MODAL -->
+    <!-- ======================================== -->
+    <div id="qrModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeQRModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="glass-card max-w-sm w-full p-6 relative">
+                <button onclick="closeQRModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="text-center">
+                    <h3 class="text-xl font-bold mb-2" id="qrEventName">Event Name</h3>
+                    <p class="text-gray-400 text-sm mb-4">Scan this QR code at the venue</p>
+                    
+                    <div class="qr-container" id="qrCodeContainer">
+                        <!-- QR Code will be rendered here -->
+                    </div>
+                    
+                    <p class="text-xs text-gray-500 mt-4" id="qrTicketId">Ticket #: ---</p>
+                    
+                    <button onclick="closeQRModal()" class="w-full gradient-btn py-3 rounded-xl text-white font-semibold mt-4">
+                        <i class="fas fa-check mr-2"></i> Done
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- TOAST CONTAINER -->
+    <!-- ======================================== -->
+    <div id="toastContainer"></div>
+
+    <!-- ======================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ======================================== -->
+    <script>
+        // ========================================
+        // SECTION SWITCHING
+        // ========================================
+        function switchSection(section) {
+            // Hide all sections
+            document.querySelectorAll('[id^="section-"]').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Show selected section
+            const target = document.getElementById(`section-${section}`);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('fade-in');
+            }
+            
+            // Update sidebar links
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === section) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Update bottom nav
+            document.querySelectorAll('.bottom-nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('onclick')?.includes(section)) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Scroll to top on mobile
+            if (window.innerWidth < 768) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // ========================================
+        // QR CODE GENERATOR
+        // ========================================
+        function showQRCode(eventName, ticketId) {
+            document.getElementById('qrEventName').textContent = eventName;
+            document.getElementById('qrTicketId').textContent = `Ticket #: ${ticketId}`;
+            
+            // Clear previous QR
+            const container = document.getElementById('qrCodeContainer');
+            container.innerHTML = '';
+            
+            // Generate QR
+            const qrData = JSON.stringify({
+                event: eventName,
+                ticket: ticketId,
+                user: 'John Doe',
+                date: new Date().toISOString()
+            });
+            
+            // Create QR using QRCode.js
+            new QRCode(container, {
+                text: qrData,
+                width: 160,
+                height: 160,
+                colorDark: "#1a1a2e",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            
+            document.getElementById('qrModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // ========================================
+        // TOAST NOTIFICATION
+        // ========================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            const colors = {
+                success: '#10b981',
+                error: '#fd79a8',
+                info: '#6c5ce7'
+            };
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <i class="fas ${icons[type]}" style="color: ${colors[type]}; font-size: 1.25rem;"></i>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // ========================================
+        // ESCAPE KEY
+        // ========================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeQRModal();
+            }
+        });
+
+        // ========================================
+        // INIT
+        // ========================================
+        console.log('🎫 TixHub - Dashboard Loaded');
+        console.log('👋 Welcome back, John!');
+        
+        // Show welcome toast
+        setTimeout(() => {
+            showToast('👋 Welcome back, John!', 'success');
+        }, 500);
+    </script>
+</body>
+</html>

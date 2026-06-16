@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy Tickets - TixHub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a1a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            border-radius: 10px;
+        }
+        
+        /* Glassmorphism */
+        .glass-card {
+            background: rgba(26, 26, 46, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(108, 92, 231, 0.3);
+            box-shadow: 0 20px 60px rgba(108, 92, 231, 0.1);
+        }
+        
+        /* Gradient Button */
+        .gradient-btn {
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            transition: all 0.3s ease;
+        }
+        
+        .gradient-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(108, 92, 231, 0.4);
+        }
+        
+        /* Ticket Card */
+        .ticket-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .ticket-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(108, 92, 231, 0.4);
+            box-shadow: 0 20px 60px rgba(108, 92, 231, 0.15);
+        }
+        
+        .ticket-image {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        /* Filter Tags */
+        .filter-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+        
+        .filter-tag:hover,
+        .filter-tag.active {
+            background: rgba(108, 92, 231, 0.2);
+            border-color: #6c5ce7;
+            color: #fff;
+        }
+        
+        .filter-tag.active {
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.3), rgba(253, 121, 168, 0.3));
+        }
+        
+        /* Search Input */
+        .search-input {
+            background: rgba(26, 26, 46, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 12px 20px 12px 48px;
+            color: #fff;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #6c5ce7;
+            box-shadow: 0 0 30px rgba(108, 92, 231, 0.1);
+        }
+        
+        .search-input::placeholder {
+            color: #6b7280;
+        }
+        
+        /* Quantity Badge */
+        .quantity-badge {
+            background: rgba(108, 92, 231, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #a78bfa;
+        }
+        
+        /* Wishlist Button */
+        .wishlist-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .wishlist-btn:hover {
+            transform: scale(1.2);
+        }
+        
+        .wishlist-btn.liked {
+            color: #fd79a8;
+        }
+        
+        /* Loading Skeleton */
+        .skeleton {
+            animation: shimmer 2s infinite;
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+            background-size: 200% 100%;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        /* Navbar Link */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Filter Sidebar */
+        .filter-section {
+            position: sticky;
+            top: 100px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-section {
+                position: relative;
+                top: 0;
+            }
+        }
+        
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ======================================== -->
+    <!-- NAVIGATION -->
+    <!-- ======================================== -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4">
+        <div class="max-w-7xl mx-auto glass-card px-6 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
+                    <i class="fas fa-ticket-alt text-white text-xl"></i>
+                </div>
+                <span class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    TixHub
+                </span>
+            </a>
+            
+            <!-- Nav Links -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="nav-link text-gray-300 hover:text-white">Home</a>
+                <a href="buy.html" class="nav-link text-white font-semibold">Buy Tickets</a>
+                <a href="sell.html" class="nav-link text-gray-300 hover:text-white">Sell Tickets</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white">About</a>
+            </div>
+            
+            <!-- Auth -->
+            <div class="flex items-center gap-3">
+                <a href="auth.html" class="hidden md:block px-4 py-2 text-gray-300 hover:text-white transition">
+                    <i class="fas fa-user mr-2"></i>Sign In
+                </a>
+                <a href="auth.html" class="gradient-btn px-5 py-2 rounded-xl text-white text-sm font-semibold">
+                    <i class="fas fa-rocket mr-2"></i>Get Started
+                </a>
+                <button id="mobileMenuBtn" class="md:hidden text-white text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden mt-3 glass-card px-6 py-4">
+            <div class="flex flex-col gap-4">
+                <a href="index.html" class="text-gray-300 hover:text-white py-2 border-b border-white/5">Home</a>
+                <a href="buy.html" class="text-white py-2 border-b border-white/5 font-semibold">Buy Tickets</a>
+                <a href="sell.html" class="text-gray-300 hover:text-white py-2 border-b border-white/5">Sell Tickets</a>
+                <a href="#" class="text-gray-300 hover:text-white py-2 border-b border-white/5">About</a>
+                <a href="auth.html" class="text-gray-300 hover:text-white py-2">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ======================================== -->
+    <!-- HERO BANNER -->
+    <!-- ======================================== -->
+    <section class="pt-28 pb-12 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="glass-card p-8 md:p-12 relative overflow-hidden">
+                <div class="absolute inset-0 gradient-bg opacity-5"></div>
+                <div class="relative z-10">
+                    <h1 class="text-3xl md:text-5xl font-bold mb-3">
+                        Find Your <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Perfect Event</span>
+                    </h1>
+                    <p class="text-gray-400 text-lg">
+                        Browse thousands of tickets from trusted sellers. Every purchase protected by escrow.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- MAIN CONTENT -->
+    <!-- ======================================== -->
+    <section class="px-4 pb-20">
+        <div class="max-w-7xl mx-auto">
+            
+            <!-- Search & Filters Bar -->
+            <div class="glass-card p-6 mb-8">
+                <div class="grid md:grid-cols-4 gap-4">
+                    <!-- Search -->
+                    <div class="md:col-span-2 relative">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Search events, artists, venues..." 
+                            class="search-input"
+                        />
+                    </div>
+                    
+                    <!-- Category Filter -->
+                    <div>
+                        <select id="categoryFilter" class="search-input appearance-none">
+                            <option value="all" class="bg-dark-200">All Categories</option>
+                            <option value="concert" class="bg-dark-200">🎵 Concerts</option>
+                            <option value="sports" class="bg-dark-200">⚽ Sports</option>
+                            <option value="theater" class="bg-dark-200">🎭 Theater</option>
+                            <option value="festival" class="bg-dark-200">🎪 Festivals</option>
+                            <option value="comedy" class="bg-dark-200">😂 Comedy</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Sort -->
+                    <div>
+                        <select id="sortFilter" class="search-input appearance-none">
+                            <option value="newest" class="bg-dark-200">Newest First</option>
+                            <option value="price-low" class="bg-dark-200">Price: Low to High</option>
+                            <option value="price-high" class="bg-dark-200">Price: High to Low</option>
+                            <option value="popular" class="bg-dark-200">Most Popular</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Filter Tags -->
+                <div class="flex flex-wrap gap-2 mt-4">
+                    <span class="filter-tag active" data-filter="all">All Tickets</span>
+                    <span class="filter-tag" data-filter="concert">🎵 Concerts</span>
+                    <span class="filter-tag" data-filter="sports">⚽ Sports</span>
+                    <span class="filter-tag" data-filter="theater">🎭 Theater</span>
+                    <span class="filter-tag" data-filter="festival">🎪 Festivals</span>
+                    <span class="filter-tag" data-filter="comedy">😂 Comedy</span>
+                    <span class="filter-tag" data-filter="under50">💰 Under $50</span>
+                    <span class="filter-tag" data-filter="this-weekend">📅 This Weekend</span>
+                </div>
+            </div>
+
+            <!-- Results Count -->
+            <div class="flex justify-between items-center mb-6">
+                <span id="resultsCount" class="text-gray-400 text-sm">
+                    Showing <span id="ticketCount">0</span> tickets
+                </span>
+                <button id="viewToggle" class="text-gray-400 hover:text-white transition">
+                    <i class="fas fa-th-large mr-2"></i>
+                    <i class="fas fa-list"></i>
+                </button>
+            </div>
+
+            <!-- Ticket Grid -->
+            <div id="ticketGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tickets will be rendered here by JavaScript -->
+            </div>
+
+            <!-- Load More -->
+            <div class="text-center mt-10">
+                <button id="loadMoreBtn" class="glass-card px-8 py-3 text-gray-300 hover:text-white hover:border-purple-500/50 transition">
+                    <i class="fas fa-spinner mr-2"></i> Load More Tickets
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- TICKET DETAIL MODAL -->
+    <!-- ======================================== -->
+    <div id="ticketModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="glass-card max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div id="modalContent">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- PAYMENT MODAL -->
+    <!-- ======================================== -->
+    <div id="paymentModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closePaymentModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="glass-card max-w-md w-full p-6 md:p-8 relative">
+                <button onclick="closePaymentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-lock text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold">Secure Payment</h3>
+                    <p class="text-gray-400 text-sm">Escrow protected transaction</p>
+                </div>
+                
+                <div id="paymentDetails" class="mb-6">
+                    <!-- Populated dynamically -->
+                </div>
+                
+                <!-- Payment Methods -->
+                <div class="space-y-3">
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-purple-500/50 transition" onclick="selectPayment('credit')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-credit-card text-purple-400 text-xl"></i>
+                                <span class="font-medium">Credit Card</span>
+                            </div>
+                            <i class="fas fa-check-circle text-green-400 hidden" id="check-credit"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-purple-500/50 transition" onclick="selectPayment('wise')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-globe text-blue-400 text-xl"></i>
+                                <span class="font-medium">Wise</span>
+                            </div>
+                            <i class="fas fa-check-circle text-green-400 hidden" id="check-wise"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-purple-500/50 transition" onclick="selectPayment('sendwave')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-mobile-alt text-green-400 text-xl"></i>
+                                <span class="font-medium">Sendwave</span>
+                            </div>
+                            <i class="fas fa-check-circle text-green-400 hidden" id="check-sendwave"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-purple-500/50 transition" onclick="selectPayment('skrill')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-envelope text-pink-400 text-xl"></i>
+                                <span class="font-medium">Skrill</span>
+                            </div>
+                            <i class="fas fa-check-circle text-green-400 hidden" id="check-skrill"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Escrow Info -->
+                <div class="mt-6 p-4 bg-purple-500/10 border border-purple-500/20 rounded-xl">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-shield-alt text-purple-400 mt-1"></i>
+                        <div>
+                            <p class="text-sm text-gray-300">
+                                <span class="font-semibold text-purple-400">Escrow Protected</span>
+                                <br />
+                                Your payment is held securely until you confirm ticket delivery.
+                                <span id="escrowTimer" class="text-purple-400 font-semibold"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="payNowBtn" class="w-full gradient-btn py-3 rounded-xl text-white font-semibold mt-6 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <i class="fas fa-lock mr-2"></i> Pay Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- SCROLL TO TOP -->
+    <!-- ======================================== -->
+    <button id="scrollTopBtn" class="scroll-top w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white shadow-lg shadow-purple-500/30">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ======================================== -->
+    <!-- FOOTER -->
+    <!-- ======================================== -->
+    <footer class="border-t border-white/5 py-12 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
+                            <i class="fas fa-ticket-alt text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                            TixHub
+                        </span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Secure ticket marketplace with escrow protection.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-purple-400 transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">How It Works</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-purple-400 transition">Help Center</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Follow Us</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-purple-500/20 transition">
+                            <i class="fab fa-twitter text-gray-400 hover:text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-purple-500/20 transition">
+                            <i class="fab fa-instagram text-gray-400 hover:text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-purple-500/20 transition">
+                            <i class="fab fa-facebook text-gray-400 hover:text-white"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/5 mt-8 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2026 TixHub. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ======================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ======================================== -->
+    <script>
+        // ========================================
+        // SAMPLE TICKET DATA
+        // ========================================
+        const sampleTickets = [
+            {
+                id: 1,
+                eventName: "Summer Music Festival 2026",
+                category: "festival",
+                date: "2026-07-15",
+                time: "2:00 PM",
+                location: "Central Park, NYC",
+                price: 149.99,
+                quantity: 45,
+                image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=300&fit=crop",
+                seller: "EventPro Tickets",
+                rating: 4.8,
+                seatInfo: "VIP Section A",
+                description: "The biggest summer music festival featuring top artists from around the world."
+            },
+            {
+                id: 2,
+                eventName: "NBA Finals - Game 7",
+                category: "sports",
+                date: "2026-06-20",
+                time: "7:30 PM",
+                location: "Staples Center, LA",
+                price: 299.99,
+                quantity: 12,
+                image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=400&h=300&fit=crop",
+                seller: "SportsTix Inc.",
+                rating: 4.9,
+                seatInfo: "Courtside Row B",
+                description: "Experience the thrill of Game 7 of the NBA Finals. Courtside seats with premium amenities."
+            },
+            {
+                id: 3,
+                eventName: "Hamilton - Broadway Show",
+                category: "theater",
+                date: "2026-08-10",
+                time: "8:00 PM",
+                location: "Richard Rodgers Theatre, NYC",
+                price: 189.50,
+                quantity: 28,
+                image: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=400&h=300&fit=crop",
+                seller: "Broadway Direct",
+                rating: 4.9,
+                seatInfo: "Orchestra Center",
+                description: "The award-winning musical that took the world by storm. Limited tickets available!"
+            },
+            {
+                id: 4,
+                eventName: "Comedy Night with Kevin Hart",
+                category: "comedy",
+                date: "2026-09-05",
+                time: "9:00 PM",
+                location: "Madison Square Garden, NYC",
+                price: 79.99,
+                quantity: 60,
+                image: "https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=400&h=300&fit=crop",
+                seller: "Comedy Central",
+                rating: 4.7,
+                seatInfo: "Lower Level",
+                description: "An unforgettable night of laughter with Kevin Hart and special guests."
+            },
+            {
+                id: 5,
+                eventName: "EDM Night - DJ Festival",
+                category: "concert",
+                date: "2026-07-25",
+                time: "10:00 PM",
+                location: "Miami Beach, FL",
+                price: 99.99,
+                quantity: 85,
+                image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&h=300&fit=crop",
+                seller: "EDM Productions",
+                rating: 4.6,
+                seatInfo: "General Admission",
+                description: "The ultimate EDM experience with top DJs and incredible light shows."
+            },
+            {
+                id: 6,
+                eventName: "International Soccer Match",
+                category: "sports",
+                date: "2026-08-20",
+                time: "3:00 PM",
+                location: "Wembley Stadium, UK",
+                price: 159.99,
+                quantity: 34,
+                image: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=400&h=300&fit=crop",
+                seller: "SoccerWorld",
+                rating: 4.8,
+                seatInfo: "Midfield Section",
+                description: "International friendly match between top national teams. Historic rivalry renewed!"
+            },
+            {
+                id: 7,
+                eventName: "Jazz & Blues Festival",
+                category: "festival",
+                date: "2026-09-12",
+                time: "12:00 PM",
+                location: "New Orleans, LA",
+                price: 89.99,
+                quantity: 100,
+                image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=300&fit=crop",
+                seller: "JazzFest Productions",
+                rating: 4.5,
+                seatInfo: "General Admission",
+                description: "Experience the soul of New Orleans with world-class jazz and blues performances."
+            },
+            {
+                id: 8,
+                eventName: "Harry Potter Exhibition",
+                category: "theater",
+                date: "2026-10-15",
+                time: "6:00 PM",
+                location: "Exhibition Centre, London",
+                price: 45.00,
+                quantity: 120,
+                image: "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=400&h=300&fit=crop",
+                seller: "MagicEvents",
+                rating: 4.7,
+                seatInfo: "Standard Entry",
+                description: "Step into the wizarding world with this immersive Harry Potter exhibition."
+            }
+        ];
+
+        // ========================================
+        // STATE
+        // ========================================
+        let tickets = [...sampleTickets];
+        let filteredTickets = [...tickets];
+        let currentPage = 1;
+        const ticketsPerPage = 6;
+        let selectedPayment = null;
+        let currentTicketId = null;
+
+        // ========================================
+        // DOM ELEMENTS
+        // ========================================
+        const ticketGrid = document.getElementById('ticketGrid');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const sortFilter = document.getElementById('sortFilter');
+        const filterTags = document.querySelectorAll('.filter-tag');
+        const resultsCount = document.getElementById('ticketCount');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        const modal = document.getElementById('ticketModal');
+        const modalContent = document.getElementById('modalContent');
+        const paymentModal = document.getElementById('paymentModal');
+
+        // ========================================
+        // RENDER TICKETS
+        // ========================================
+        function renderTickets() {
+            const start = 0;
+            const end = currentPage * ticketsPerPage;
+            const ticketsToShow = filteredTickets.slice(start, end);
+            
+            if (ticketsToShow.length === 0) {
+                ticketGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-ticket-alt text-5xl text-gray-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">No tickets found</h3>
+                        <p class="text-gray-400">Try adjusting your filters or search terms</p>
+                    </div>
+                `;
+                loadMoreBtn.style.display = 'none';
+                document.getElementById('ticketCount').textContent = '0';
+                return;
+            }
+
+            ticketGrid.innerHTML = ticketsToShow.map(ticket => `
+                <div class="glass-card ticket-card overflow-hidden cursor-pointer" onclick="openModal(${ticket.id})">
+                    <div class="relative">
+                        <img 
+                            src="${ticket.image}" 
+                            alt="${ticket.eventName}"
+                            class="ticket-image w-full"
+                            onerror="this.src='https://via.placeholder.com/400x300/1a1a2e/6c5ce7?text=No+Image'"
+                        />
+                        <div class="absolute top-3 left-3">
+                            <span class="px-3 py-1 bg-dark-500/80 backdrop-blur-sm rounded-lg text-xs text-purple-400 border border-purple-500/30">
+                                ${ticket.category.charAt(0).toUpperCase() + ticket.category.slice(1)}
+                            </span>
+                        </div>
+                        <button class="wishlist-btn absolute top-3 right-3 text-white/50 hover:text-pink-400 text-xl" onclick="event.stopPropagation(); toggleWishlist(${ticket.id})">
+                            <i class="far fa-heart" id="heart-${ticket.id}"></i>
+                        </button>
+                        <div class="absolute bottom-3 right-3">
+                            <span class="quantity-badge">
+                                <i class="fas fa-ticket-alt mr-1"></i> ${ticket.quantity} left
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold line-clamp-1">${ticket.eventName}</h3>
+                            <span class="text-purple-400 font-bold">$${ticket.price.toFixed(2)}</span>
+                        </div>
+                        
+                        <div class="space-y-2 text-sm text-gray-400">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-calendar-alt text-purple-400 w-4"></i>
+                                <span>${formatDate(ticket.date)} at ${ticket.time}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-map-marker-alt text-pink-400 w-4"></i>
+                                <span>${ticket.location}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-star text-yellow-400 w-4"></i>
+                                <span>${ticket.rating} · ${ticket.seller}</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full gradient-btn py-2 rounded-xl text-white font-semibold text-sm mt-4" onclick="event.stopPropagation(); openPayment(${ticket.id})">
+                            <i class="fas fa-shopping-cart mr-2"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('ticketCount').textContent = filteredTickets.length;
+            
+            // Show/hide load more
+            if (end >= filteredTickets.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-block';
+            }
+        }
+
+        // ========================================
+        // HELPER FUNCTIONS
+        // ========================================
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        function formatPrice(price) {
+            return '$' + price.toFixed(2);
+        }
+
+        // ========================================
+        // FILTER TICKETS
+        // ========================================
+        function filterTickets() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const category = categoryFilter.value;
+            const sort = sortFilter.value;
+            
+            let filtered = tickets.filter(ticket => {
+                // Search filter
+                const matchesSearch = ticket.eventName.toLowerCase().includes(searchTerm) ||
+                                     ticket.location.toLowerCase().includes(searchTerm) ||
+                                     ticket.seller.toLowerCase().includes(searchTerm);
+                
+                // Category filter
+                const matchesCategory = category === 'all' || ticket.category === category;
+                
+                return matchesSearch && matchesCategory;
+            });
+            
+            // Sort
+            switch(sort) {
+                case 'newest':
+                    filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    break;
+                case 'price-low':
+                    filtered.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filtered.sort((a, b) => b.price - a.price);
+                    break;
+                case 'popular':
+                    filtered.sort((a, b) => b.quantity - a.quantity);
+                    break;
+            }
+            
+            filteredTickets = filtered;
+            currentPage = 1;
+            renderTickets();
+        }
+
+        // ========================================
+        // FILTER TAGS
+        // ========================================
+        filterTags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                filterTags.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                if (filter === 'all') {
+                    categoryFilter.value = 'all';
+                } else if (filter === 'under50') {
+                    // Handle price filter
+                    filterTickets();
+                    return;
+                } else if (filter === 'this-weekend') {
+                    // Handle date filter
+                    filterTickets();
+                    return;
+                } else {
+                    categoryFilter.value = filter;
+                }
+                filterTickets();
+            });
+        });
+
+        // ========================================
+        // EVENT LISTENERS
+        // ========================================
+        searchInput.addEventListener('input', filterTickets);
+        categoryFilter.addEventListener('change', filterTickets);
+        sortFilter.addEventListener('change', filterTickets);
+
+        loadMoreBtn.addEventListener('click', function() {
+            currentPage++;
+            renderTickets();
+        });
+
+        // ========================================
+        // WISHLIST
+        // ========================================
+        function toggleWishlist(id) {
+            const heart = document.getElementById(`heart-${id}`);
+            heart.classList.toggle('far');
+            heart.classList.toggle('fas');
+            heart.classList.toggle('text-pink-400');
+            
+            // Show toast notification
+            if (heart.classList.contains('fas')) {
+                showToast('Added to wishlist ❤️');
+            } else {
+                showToast('Removed from wishlist');
+            }
+        }
+
+        // ========================================
+        // MODAL - TICKET DETAIL
+        // ========================================
+        function openModal(id) {
+            const ticket = tickets.find(t => t.id === id);
+            if (!ticket) return;
+            
+            modalContent.innerHTML = `
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="md:w-1/2">
+                        <img 
+                            src="${ticket.image}" 
+                            alt="${ticket.eventName}"
+                            class="w-full h-64 object-cover rounded-xl"
+                            onerror="this.src='https://via.placeholder.com/600x400/1a1a2e/6c5ce7?text=No+Image'"
+                        />
+                        <div class="flex gap-2 mt-3">
+                            <span class="px-3 py-1 bg-white/5 rounded-lg text-xs text-gray-300">
+                                <i class="fas fa-tag mr-1"></i> ${ticket.category}
+                            </span>
+                            <span class="px-3 py-1 bg-white/5 rounded-lg text-xs text-gray-300">
+                                <i class="fas fa-star mr-1 text-yellow-400"></i> ${ticket.rating}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2">
+                        <h2 class="text-2xl font-bold mb-2">${ticket.eventName}</h2>
+                        
+                        <div class="space-y-3 text-gray-300 mb-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-calendar-alt text-purple-400 w-5"></i>
+                                <span>${formatDate(ticket.date)} at ${ticket.time}</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-map-marker-alt text-pink-400 w-5"></i>
+                                <span>${ticket.location}</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-user text-blue-400 w-5"></i>
+                                <span>Seller: ${ticket.seller}</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-chair text-green-400 w-5"></i>
+                                <span>${ticket.seatInfo}</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-ticket-alt text-yellow-400 w-5"></i>
+                                <span>${ticket.quantity} tickets available</span>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-400 text-sm mb-4">${ticket.description}</p>
+                        
+                        <div class="flex items-center justify-between p-4 glass-card">
+                            <div>
+                                <span class="text-gray-400 text-sm">Price</span>
+                                <div class="text-3xl font-bold text-purple-400">$${ticket.price.toFixed(2)}</div>
+                            </div>
+                            <button onclick="closeModal(); openPayment(${ticket.id})" class="gradient-btn px-6 py-3 rounded-xl text-white font-semibold">
+                                <i class="fas fa-shopping-cart mr-2"></i> Buy Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // ========================================
+        // PAYMENT MODAL
+        // ========================================
+        function openPayment(id) {
+            const ticket = tickets.find(t => t.id === id);
+            if (!ticket) return;
+            
+            currentTicketId = id;
+            selectedPayment = null;
+            
+            document.getElementById('paymentDetails').innerHTML = `
+                <div class="flex items-center gap-4 p-3 glass-card">
+                    <img src="${ticket.image}" alt="${ticket.eventName}" class="w-16 h-16 object-cover rounded-lg" />
+                    <div>
+                        <h4 class="font-semibold">${ticket.eventName}</h4>
+                        <p class="text-gray-400 text-sm">${formatDate(ticket.date)} · ${ticket.location}</p>
+                        <p class="text-purple-400 font-bold">$${ticket.price.toFixed(2)}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Reset payment selection
+            document.querySelectorAll('.payment-option').forEach(opt => {
+                opt.style.borderColor = 'rgba(255,255,255,0.08)';
+            });
+            document.querySelectorAll('[id^="check-"]').forEach(check => {
+                check.classList.add('hidden');
+            });
+            document.getElementById('payNowBtn').disabled = true;
+            
+            paymentModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePaymentModal() {
+            paymentModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function selectPayment(method) {
+            selectedPayment = method;
+            
+            document.querySelectorAll('.payment-option').forEach(opt => {
+                opt.style.borderColor = 'rgba(255,255,255,0.08)';
+            });
+            document.querySelectorAll('[id^="check-"]').forEach(check => {
+                check.classList.add('hidden');
+            });
+            
+            const selectedElement = document.querySelector(`.payment-option:has(.fa-${method === 'credit' ? 'credit-card' : method === 'wise' ? 'globe' : method === 'sendwave' ? 'mobile-alt' : 'envelope'})`);
+            if (selectedElement) {
+                selectedElement.style.borderColor = '#6c5ce7';
+            }
+            
+            document.getElementById(`check-${method}`).classList.remove('hidden');
+            document.getElementById('payNowBtn').disabled = false;
+        }
+
+        document.getElementById('payNowBtn').addEventListener('click', function() {
+            if (!selectedPayment) return;
+            
+            const ticket = tickets.find(t => t.id === currentTicketId);
+            
+            // Show processing state
+            this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+            this.disabled = true;
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check mr-2"></i> Payment Successful!';
+                this.className = 'w-full bg-green-500 py-3 rounded-xl text-white font-semibold mt-6';
+                
+                // Show success message
+                setTimeout(() => {
+                    closePaymentModal();
+                    showToast(`✅ Payment successful! Check your email for ticket QR code.`);
+                    
+                    // Update quantity
+                    const ticketIndex = tickets.findIndex(t => t.id === currentTicketId);
+                    if (ticketIndex !== -1) {
+                        tickets[ticketIndex].quantity--;
+                        filterTickets();
+                    }
+                    
+                    // Reset button
+                    this.innerHTML = '<i class="fas fa-lock mr-2"></i> Pay Now';
+                    this.className = 'w-full gradient-btn py-3 rounded-xl text-white font-semibold mt-6';
+                    this.disabled = true;
+                }, 2000);
+            }, 2500);
+        });
+
+        // ========================================
+        // TOAST NOTIFICATION
+        // ========================================
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-4 right-4 z-50 glass-card px-6 py-3 text-white animate-slide-up';
+            toast.innerHTML = message;
+            toast.style.animation = 'slideUp 0.3s ease-out';
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ========================================
+        // SCROLL TO TOP
+        // ========================================
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ========================================
+        // MOBILE MENU
+        // ========================================
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars';
+            } else {
+                icon.className = 'fas fa-times';
+            }
+        });
+
+        // ========================================
+        // KEYBOARD SHORTCUTS
+        // ========================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+                closePaymentModal();
+            }
+        });
+
+        // ========================================
+        // INIT
+        // ========================================
+        filterTickets();
+
+        console.log('🎫 TixHub - Buy Tickets Page Loaded');
+        console.log(`📊 ${tickets.length} tickets available`);
+    </script>
+
+</body>
+</html>

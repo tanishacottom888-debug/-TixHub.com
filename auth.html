@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Sign In - TixHub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a1a;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            border-radius: 10px;
+        }
+        
+        /* Glassmorphism */
+        .glass-card {
+            background: rgba(26, 26, 46, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+        
+        /* Gradient Button */
+        .gradient-btn {
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gradient-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(108, 92, 231, 0.4);
+        }
+        
+        .gradient-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .gradient-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg) translateX(-100%);
+            transition: 0.6s;
+        }
+        
+        .gradient-btn:hover::after {
+            transform: rotate(45deg) translateX(100%);
+        }
+        
+        /* Form Inputs */
+        .form-input {
+            background: rgba(26, 26, 46, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px 18px 14px 48px;
+            color: #fff;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #6c5ce7;
+            box-shadow: 0 0 30px rgba(108, 92, 231, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: #6b7280;
+        }
+        
+        .form-input.error {
+            border-color: #fd79a8;
+            box-shadow: 0 0 30px rgba(253, 121, 168, 0.1);
+        }
+        
+        .form-input.success {
+            border-color: #10b981;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .form-input:focus + .input-icon,
+        .form-input:focus ~ .input-icon {
+            color: #6c5ce7;
+        }
+        
+        /* Password Toggle */
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        
+        .password-toggle:hover {
+            color: #fff;
+        }
+        
+        /* Social Login Buttons */
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(26, 26, 46, 0.4);
+            color: #d1d5db;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        
+        .social-btn:hover {
+            border-color: rgba(108, 92, 231, 0.3);
+            background: rgba(108, 92, 231, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .social-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .social-btn i {
+            font-size: 1.25rem;
+        }
+        
+        /* Tab Switcher */
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: #6b7280;
+            font-size: 1rem;
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(253, 121, 168, 0.2));
+            color: #fff;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+        
+        .tab-btn:hover:not(.active) {
+            color: #d1d5db;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            padding: 14px 20px;
+            border-radius: 16px;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.875rem;
+            max-width: 90%;
+            width: 380px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideInRight 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .toast.success {
+            border-color: #10b981;
+        }
+        
+        .toast.error {
+            border-color: #fd79a8;
+        }
+        
+        .toast.info {
+            border-color: #6c5ce7;
+        }
+        
+        @keyframes slideInRight {
+            0% { transform: translateX(100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(108, 92, 231, 0.15);
+            animation: float linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        /* Success Animation */
+        .auth-success {
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .glass-card {
+                padding: 20px !important;
+                border-radius: 20px;
+            }
+            
+            .form-input {
+                padding: 12px 14px 12px 42px;
+                font-size: 16px;
+            }
+            
+            .social-btn {
+                padding: 10px;
+                font-size: 0.8rem;
+            }
+            
+            .toast {
+                top: 70px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+                padding: 12px 16px;
+                font-size: 0.8rem;
+            }
+            
+            h1 {
+                font-size: 1.75rem !important;
+            }
+            
+            .tab-btn {
+                padding: 10px;
+                font-size: 0.875rem;
+            }
+        }
+        
+        /* Dark mode select options */
+        select option {
+            background: #1a1a2e;
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s ease infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ======================================== -->
+    <!-- BACKGROUND PARTICLES -->
+    <!-- ======================================== -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="particle" style="width: 4px; height: 4px; left: 10%; animation-duration: 20s; animation-delay: 0s;"></div>
+        <div class="particle" style="width: 6px; height: 6px; left: 20%; animation-duration: 25s; animation-delay: 2s;"></div>
+        <div class="particle" style="width: 3px; height: 3px; left: 30%; animation-duration: 18s; animation-delay: 4s;"></div>
+        <div class="particle" style="width: 5px; height: 5px; left: 50%; animation-duration: 22s; animation-delay: 1s;"></div>
+        <div class="particle" style="width: 4px; height: 4px; left: 60%; animation-duration: 19s; animation-delay: 3s;"></div>
+        <div class="particle" style="width: 7px; height: 7px; left: 75%; animation-duration: 24s; animation-delay: 5s;"></div>
+        <div class="particle" style="width: 3px; height: 3px; left: 85%; animation-duration: 21s; animation-delay: 2s;"></div>
+        <div class="particle" style="width: 5px; height: 5px; left: 90%; animation-duration: 23s; animation-delay: 4s;"></div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- NAVIGATION -->
+    <!-- ======================================== -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-4 py-3 md:px-8 md:py-4">
+        <div class="max-w-7xl mx-auto glass-card px-4 py-2 md:px-6 md:py-3 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 shrink-0">
+                <div class="w-8 h-8 md:w-10 md:h-10 gradient-bg rounded-xl flex items-center justify-center">
+                    <i class="fas fa-ticket-alt text-white text-sm md:text-xl"></i>
+                </div>
+                <span class="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    TixHub
+                </span>
+            </a>
+            <a href="index.html" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i>
+                <span class="hidden sm:inline">Back to Home</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- ======================================== -->
+    <!-- AUTH CONTAINER -->
+    <!-- ======================================== -->
+    <div class="flex-1 flex items-center justify-center px-4 pt-20 pb-8">
+        <div class="w-full max-w-md">
+            
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-4 auth-success">
+                    <i class="fas fa-ticket-alt text-white text-2xl"></i>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-bold mb-2">
+                    Welcome to <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">TixHub</span>
+                </h1>
+                <p class="text-gray-400 text-sm">
+                    Buy and sell tickets with complete security
+                </p>
+            </div>
+
+            <!-- Auth Card -->
+            <div class="glass-card p-6 md:p-8">
+                
+                <!-- Tab Switcher -->
+                <div class="flex gap-2 mb-6 glass-card p-1">
+                    <button id="loginTab" class="tab-btn active" onclick="switchTab('login')">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Sign In
+                    </button>
+                    <button id="signupTab" class="tab-btn" onclick="switchTab('signup')">
+                        <i class="fas fa-user-plus mr-2"></i> Sign Up
+                    </button>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- LOGIN FORM -->
+                <!-- ======================================== -->
+                <div id="loginForm">
+                    <form id="loginFormElement" onsubmit="handleLogin(event)">
+                        <div class="space-y-4">
+                            <!-- Email -->
+                            <div class="relative">
+                                <input 
+                                    type="email" 
+                                    id="loginEmail"
+                                    class="form-input" 
+                                    placeholder="Email address"
+                                    required
+                                />
+                                <i class="fas fa-envelope input-icon"></i>
+                            </div>
+                            
+                            <!-- Password -->
+                            <div class="relative">
+                                <input 
+                                    type="password" 
+                                    id="loginPassword"
+                                    class="form-input" 
+                                    placeholder="Password"
+                                    required
+                                    minlength="6"
+                                />
+                                <i class="fas fa-lock input-icon"></i>
+                                <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Forgot Password -->
+                            <div class="text-right">
+                                <button type="button" onclick="showForgotPassword()" class="text-sm text-purple-400 hover:text-purple-300 transition">
+                                    Forgot password?
+                                </button>
+                            </div>
+                            
+                            <!-- Submit -->
+                            <button type="submit" id="loginBtn" class="w-full gradient-btn py-3 rounded-xl text-white font-semibold">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Sign In
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- SIGNUP FORM -->
+                <!-- ======================================== -->
+                <div id="signupForm" class="hidden">
+                    <form id="signupFormElement" onsubmit="handleSignup(event)">
+                        <div class="space-y-4">
+                            <!-- Full Name -->
+                            <div class="relative">
+                                <input 
+                                    type="text" 
+                                    id="signupName"
+                                    class="form-input" 
+                                    placeholder="Full name"
+                                    required
+                                />
+                                <i class="fas fa-user input-icon"></i>
+                            </div>
+                            
+                            <!-- Email -->
+                            <div class="relative">
+                                <input 
+                                    type="email" 
+                                    id="signupEmail"
+                                    class="form-input" 
+                                    placeholder="Email address"
+                                    required
+                                />
+                                <i class="fas fa-envelope input-icon"></i>
+                            </div>
+                            
+                            <!-- Password -->
+                            <div class="relative">
+                                <input 
+                                    type="password" 
+                                    id="signupPassword"
+                                    class="form-input" 
+                                    placeholder="Create password (min 6 chars)"
+                                    required
+                                    minlength="6"
+                                />
+                                <i class="fas fa-lock input-icon"></i>
+                                <button type="button" class="password-toggle" onclick="togglePassword('signupPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Confirm Password -->
+                            <div class="relative">
+                                <input 
+                                    type="password" 
+                                    id="signupConfirmPassword"
+                                    class="form-input" 
+                                    placeholder="Confirm password"
+                                    required
+                                    minlength="6"
+                                />
+                                <i class="fas fa-check-circle input-icon"></i>
+                            </div>
+                            
+                            <!-- Terms -->
+                            <div class="flex items-start gap-3">
+                                <input 
+                                    type="checkbox" 
+                                    id="termsCheck" 
+                                    class="mt-1 w-5 h-5 accent-purple-500 shrink-0"
+                                    required
+                                />
+                                <label for="termsCheck" class="text-xs text-gray-400">
+                                    I agree to the <a href="#" class="text-purple-400 hover:text-purple-300">Terms of Service</a> 
+                                    and <a href="#" class="text-purple-400 hover:text-purple-300">Privacy Policy</a>
+                                </label>
+                            </div>
+                            
+                            <!-- Submit -->
+                            <button type="submit" id="signupBtn" class="w-full gradient-btn py-3 rounded-xl text-white font-semibold">
+                                <i class="fas fa-user-plus mr-2"></i> Create Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- DIVIDER -->
+                <!-- ======================================== -->
+                <div class="divider my-6">
+                    <span>OR</span>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- SOCIAL LOGIN -->
+                <!-- ======================================== -->
+                <div class="space-y-3">
+                    <button onclick="socialLogin('google')" class="social-btn">
+                        <i class="fab fa-google text-red-400"></i>
+                        Continue with Google
+                    </button>
+                    <button onclick="socialLogin('facebook')" class="social-btn">
+                        <i class="fab fa-facebook text-blue-400"></i>
+                        Continue with Facebook
+                    </button>
+                    <button onclick="socialLogin('apple')" class="social-btn">
+                        <i class="fab fa-apple text-white"></i>
+                        Continue with Apple
+                    </button>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- DEMO CREDENTIALS (For testing) -->
+                <!-- ======================================== -->
+                <div class="mt-6 p-4 bg-white/5 rounded-xl border border-white/5">
+                    <p class="text-xs text-gray-400 text-center">
+                        <i class="fas fa-info-circle text-purple-400 mr-1"></i>
+                        Demo: Use any email + password (min 6 chars)
+                    </p>
+                </div>
+            </div>
+
+            <!-- Trust Badge -->
+            <div class="text-center mt-6">
+                <div class="flex flex-wrap justify-center gap-4 text-xs text-gray-500">
+                    <span class="flex items-center gap-1">
+                        <i class="fas fa-lock text-green-400 text-xs"></i> 256-bit SSL
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <i class="fas fa-shield-alt text-purple-400 text-xs"></i> Escrow Protected
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <i class="fas fa-headset text-blue-400 text-xs"></i> 24/7 Support
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- FORGOT PASSWORD MODAL -->
+    <!-- ======================================== -->
+    <div id="forgotModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeForgotModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="glass-card max-w-md w-full p-6 md:p-8 relative">
+                <button onclick="closeForgotModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-key text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Reset Password</h3>
+                    <p class="text-gray-400 text-sm">Enter your email to receive reset instructions</p>
+                </div>
+                
+                <form onsubmit="handleForgotPassword(event)">
+                    <div class="relative mb-4">
+                        <input 
+                            type="email" 
+                            id="resetEmail"
+                            class="form-input" 
+                            placeholder="Email address"
+                            required
+                        />
+                        <i class="fas fa-envelope input-icon"></i>
+                    </div>
+                    <button type="submit" class="w-full gradient-btn py-3 rounded-xl text-white font-semibold">
+                        <i class="fas fa-paper-plane mr-2"></i> Send Reset Link
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- FOOTER -->
+    <!-- ======================================== -->
+    <footer class="border-t border-white/5 py-4 px-4 mt-auto">
+        <div class="max-w-7xl mx-auto text-center text-gray-500 text-xs">
+            &copy; 2026 TixHub. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- ======================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ======================================== -->
+    <script>
+        // ========================================
+        // STATE
+        // ========================================
+        let currentTab = 'login';
+
+        // ========================================
+        // TAB SWITCHING
+        // ========================================
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update tabs
+            document.getElementById('loginTab').classList.toggle('active', tab === 'login');
+            document.getElementById('signupTab').classList.toggle('active', tab === 'signup');
+            
+            // Update forms
+            document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+            document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
+            
+            // Clear errors
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.classList.remove('error', 'success');
+            });
+        }
+
+        // ========================================
+        // PASSWORD TOGGLE
+        // ========================================
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const icon = input.parentElement.querySelector('.password-toggle i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        // ========================================
+        // HANDLE LOGIN
+        // ========================================
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('loginBtn');
+            
+            // Validate
+            if (!email || !password) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showToast('Password must be at least 6 characters', 'error');
+                return;
+            }
+            
+            // Show loading
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
+            
+            // Simulate API call
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
+                
+                // Success - redirect to dashboard
+                showToast('✅ Welcome back! Redirecting...', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            }, 1500);
+        }
+
+        // ========================================
+        // HANDLE SIGNUP
+        // ========================================
+        function handleSignup(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            const terms = document.getElementById('termsCheck').checked;
+            const btn = document.getElementById('signupBtn');
+            
+            // Validate
+            if (!name || !email || !password || !confirmPassword) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showToast('Password must be at least 6 characters', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showToast('Passwords do not match', 'error');
+                return;
+            }
+            
+            if (!terms) {
+                showToast('Please agree to the Terms of Service', 'error');
+                return;
+            }
+            
+            // Show loading
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
+            
+            // Simulate API call
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                
+                // Success
+                showToast('🎉 Account created! Redirecting...', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            }, 2000);
+        }
+
+        // ========================================
+        // SOCIAL LOGIN
+        // ========================================
+        function socialLogin(provider) {
+            showToast(`Connecting to ${provider.charAt(0).toUpperCase() + provider.slice(1)}...`, 'info');
+            
+            setTimeout(() => {
+                showToast(`✅ Connected with ${provider.charAt(0).toUpperCase() + provider.slice(1)}!`, 'success');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            }, 1500);
+        }
+
+        // ========================================
+        // FORGOT PASSWORD
+        // ========================================
+        function showForgotPassword() {
+            document.getElementById('forgotModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeForgotModal() {
+            document.getElementById('forgotModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function handleForgotPassword(e) {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value.trim();
+            
+            if (!email) {
+                showToast('Please enter your email', 'error');
+                return;
+            }
+            
+            showToast('📧 Reset link sent to your email!', 'success');
+            closeForgotModal();
+        }
+
+        // ========================================
+        // TOAST NOTIFICATION
+        // ========================================
+        function showToast(message, type = 'info') {
+            // Remove existing toasts
+            document.querySelectorAll('.toast').forEach(t => t.remove());
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            const colors = {
+                success: '#10b981',
+                error: '#fd79a8',
+                info: '#6c5ce7'
+            };
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas ${icons[type]}" style="color: ${colors[type]}; font-size: 1.25rem;"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // ========================================
+        // KEYBOARD SHORTCUTS
+        // ========================================
+        document.addEventListener('keydown', function(e) {
+            // Escape to close modal
+            if (e.key === 'Escape') {
+                closeForgotModal();
+            }
+            
+            // Ctrl+1 for login, Ctrl+2 for signup
+            if (e.ctrlKey && e.key === '1') {
+                e.preventDefault();
+                switchTab('login');
+            }
+            if (e.ctrlKey && e.key === '2') {
+                e.preventDefault();
+                switchTab('signup');
+            }
+        });
+
+        // ========================================
+        // AUTO-FOCUS ON LOAD
+        // ========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loginEmail').focus();
+        });
+
+        console.log('🔐 TixHub - Authentication Page Loaded');
+        console.log('📱 Mobile-optimized auth ready');
+        console.log('💡 Tip: Ctrl+1 = Login, Ctrl+2 = Signup');
+    </script>
+</body>
+</html>

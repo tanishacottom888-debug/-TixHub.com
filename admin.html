@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Admin Dashboard - TixHub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Chart.js for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a1a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            border-radius: 10px;
+        }
+        
+        /* Glassmorphism */
+        .glass-card {
+            background: rgba(26, 26, 46, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+        
+        /* Gradient Button */
+        .gradient-btn {
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            transition: all 0.3s ease;
+        }
+        
+        .gradient-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(108, 92, 231, 0.4);
+        }
+        
+        .gradient-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .gradient-btn-success {
+            background: linear-gradient(135deg, #10b981, #34d399);
+        }
+        
+        .gradient-btn-danger {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+        }
+        
+        .gradient-btn-warning {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            color: #9ca3af;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .sidebar-link:hover {
+            background: rgba(108, 92, 231, 0.1);
+            color: #fff;
+        }
+        
+        .sidebar-link.active {
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(253, 121, 168, 0.2));
+            color: #fff;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+        
+        .sidebar-link i {
+            width: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .sidebar-link .badge {
+            margin-left: auto;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+        }
+        
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        .badge-success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        /* Stat Cards */
+        .stat-card {
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .status-badge.held {
+            background: rgba(108, 92, 231, 0.2);
+            color: #8b5cf6;
+        }
+        
+        .status-badge.released {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        .status-badge.approved {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .status-badge.rejected {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .status-badge.disputed {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .status-badge.verified {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .status-badge.unverified {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .table-container table {
+            width: 100%;
+            min-width: 600px;
+        }
+        
+        .table-container th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .table-container td {
+            padding: 12px 16px;
+            font-size: 0.875rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: middle;
+        }
+        
+        .table-container tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .sidebar-mobile {
+                display: flex !important;
+                overflow-x: auto;
+                gap: 8px;
+                padding: 4px;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .sidebar-mobile .sidebar-link {
+                white-space: nowrap;
+                padding: 10px 16px;
+                font-size: 0.8rem;
+                flex-shrink: 0;
+            }
+            
+            .stat-card {
+                padding: 16px;
+            }
+            
+            .stat-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 1.25rem !important;
+            }
+            
+            .glass-card {
+                padding: 16px !important;
+            }
+        }
+        
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: none;
+            padding: 8px 0;
+            z-index: 50;
+        }
+        
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 0;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            font-size: 0.6rem;
+            flex: 1;
+            text-decoration: none;
+        }
+        
+        .bottom-nav-item.active {
+            color: #6c5ce7;
+        }
+        
+        .bottom-nav-item i {
+            font-size: 1.25rem;
+        }
+        
+        @media (max-width: 768px) {
+            .bottom-nav {
+                display: flex;
+            }
+            .content-wrapper {
+                padding-bottom: 80px;
+            }
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            padding: 14px 20px;
+            border-radius: 16px;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.875rem;
+            max-width: 90%;
+            width: 380px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideInRight 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        @keyframes slideInRight {
+            0% { transform: translateX(100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Fade In */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 250px;
+        }
+        
+        /* Avatar initials */
+        .avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #fff;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ======================================== -->
+    <!-- NAVIGATION -->
+    <!-- ======================================== -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-4 py-3 md:px-8 md:py-4">
+        <div class="max-w-7xl mx-auto glass-card px-4 py-2 md:px-6 md:py-3 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 shrink-0">
+                <div class="w-8 h-8 md:w-10 md:h-10 gradient-bg rounded-xl flex items-center justify-center">
+                    <i class="fas fa-ticket-alt text-white text-sm md:text-xl"></i>
+                </div>
+                <span class="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    TixHub
+                </span>
+                <span class="hidden sm:inline text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Admin</span>
+            </a>
+            
+            <div class="flex items-center gap-3 md:gap-4">
+                <span class="hidden sm:inline text-sm text-gray-400">
+                    <i class="fas fa-user-shield mr-1 text-purple-400"></i>
+                    Admin
+                </span>
+                <a href="index.html" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-2">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="hidden sm:inline">Logout</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ======================================== -->
+    <!-- MAIN CONTENT -->
+    <!-- ======================================== -->
+    <div class="max-w-7xl mx-auto px-4 pt-24 pb-8 content-wrapper">
+        
+        <!-- Mobile Sidebar -->
+        <div class="sidebar-mobile hidden md:hidden glass-card p-2 mb-4 overflow-x-auto">
+            <a href="#" class="sidebar-link active" data-section="overview" onclick="switchSection('overview')">
+                <i class="fas fa-chart-pie"></i> Overview
+            </a>
+            <a href="#" class="sidebar-link" data-section="escrow" onclick="switchSection('escrow')">
+                <i class="fas fa-shield-alt"></i> Escrow
+                <span class="badge badge-danger">5</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="tickets" onclick="switchSection('tickets')">
+                <i class="fas fa-ticket-alt"></i> Tickets
+                <span class="badge badge-warning">3</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="users" onclick="switchSection('users')">
+                <i class="fas fa-users"></i> Users
+            </a>
+            <a href="#" class="sidebar-link" data-section="transactions" onclick="switchSection('transactions')">
+                <i class="fas fa-receipt"></i> Transactions
+            </a>
+        </div>
+
+        <div class="flex gap-6">
+            
+            <!-- ======================================== -->
+            <!-- SIDEBAR - Desktop -->
+            <!-- ======================================== -->
+            <div class="sidebar shrink-0">
+                <div class="glass-card p-4 sticky top-24">
+                    <!-- Admin Info -->
+                    <div class="text-center mb-6 pb-6 border-b border-white/5">
+                        <div class="w-20 h-20 rounded-full gradient-bg flex items-center justify-center mx-auto mb-3 text-2xl font-bold">
+                            A
+                        </div>
+                        <h3 class="font-semibold">Administrator</h3>
+                        <p class="text-gray-400 text-sm">admin@tixhub.com</p>
+                        <span class="inline-block mt-2 px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">
+                            <i class="fas fa-check-circle mr-1"></i> Super Admin
+                        </span>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <nav class="space-y-1">
+                        <a href="#" class="sidebar-link active" data-section="overview" onclick="switchSection('overview')">
+                            <i class="fas fa-chart-pie"></i> Overview
+                            <span class="badge badge-success">Live</span>
+                        </a>
+                        <a href="#" class="sidebar-link" data-section="escrow" onclick="switchSection('escrow')">
+                            <i class="fas fa-shield-alt"></i> Escrow Management
+                            <span class="badge badge-danger">5</span>
+                        </a>
+                        <a href="#" class="sidebar-link" data-section="tickets" onclick="switchSection('tickets')">
+                            <i class="fas fa-ticket-alt"></i> Ticket Approvals
+                            <span class="badge badge-warning">3</span>
+                        </a>
+                        <a href="#" class="sidebar-link" data-section="users" onclick="switchSection('users')">
+                            <i class="fas fa-users"></i> User Management
+                        </a>
+                        <a href="#" class="sidebar-link" data-section="transactions" onclick="switchSection('transactions')">
+                            <i class="fas fa-receipt"></i> Transactions
+                        </a>
+                        <a href="#" class="sidebar-link" data-section="disputes" onclick="switchSection('disputes')">
+                            <i class="fas fa-gavel"></i> Disputes
+                            <span class="badge badge-danger">2</span>
+                        </a>
+                        <a href="#" class="sidebar-link" data-section="settings" onclick="switchSection('settings')">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- ======================================== -->
+            <!-- CONTENT AREA -->
+            <!-- ======================================== -->
+            <div class="flex-1 space-y-6">
+                
+                <!-- ======================================== -->
+                <!-- OVERVIEW SECTION -->
+                <!-- ======================================== -->
+                <div id="section-overview" class="fade-in">
+                    <!-- Welcome -->
+                    <div class="glass-card p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h1 class="text-2xl md:text-3xl font-bold">
+                                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Admin Dashboard</span>
+                                </h1>
+                                <p class="text-gray-400 text-sm mt-1">Manage your marketplace with ease</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-xs text-gray-500 flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                                    System Online
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="glass-card stat-card">
+                            <div class="flex items-center gap-4">
+                                <div class="stat-icon bg-purple-500/20 text-purple-400">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-xs">Total Revenue</p>
+                                    <p class="stat-number text-2xl font-bold">$47,892</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card stat-card">
+                            <div class="flex items-center gap-4">
+                                <div class="stat-icon bg-blue-500/20 text-blue-400">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-xs">Total Users</p>
+                                    <p class="stat-number text-2xl font-bold">1,284</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card stat-card">
+                            <div class="flex items-center gap-4">
+                                <div class="stat-icon bg-yellow-500/20 text-yellow-400">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-xs">Pending Escrow</p>
+                                    <p class="stat-number text-2xl font-bold">$8,450</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card stat-card">
+                            <div class="flex items-center gap-4">
+                                <div class="stat-icon bg-green-500/20 text-green-400">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-xs">Completed Sales</p>
+                                    <p class="stat-number text-2xl font-bold">342</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Revenue Chart -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-sm font-semibold mb-4">Revenue Overview</h3>
+                            <div class="chart-container">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Sales Chart -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-sm font-semibold mb-4">Ticket Sales</h3>
+                            <div class="chart-container">
+                                <canvas id="salesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="glass-card p-6">
+                        <h3 class="text-sm font-semibold mb-4">Quick Actions</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <button onclick="switchSection('escrow')" class="glass-card p-4 text-center hover:border-purple-500/50 transition">
+                                <i class="fas fa-shield-alt text-purple-400 text-2xl mb-2"></i>
+                                <p class="text-sm">Manage Escrow</p>
+                            </button>
+                            <button onclick="switchSection('tickets')" class="glass-card p-4 text-center hover:border-purple-500/50 transition">
+                                <i class="fas fa-ticket-alt text-yellow-400 text-2xl mb-2"></i>
+                                <p class="text-sm">Approve Tickets</p>
+                            </button>
+                            <button onclick="switchSection('users')" class="glass-card p-4 text-center hover:border-purple-500/50 transition">
+                                <i class="fas fa-user-check text-green-400 text-2xl mb-2"></i>
+                                <p class="text-sm">Verify Sellers</p>
+                            </button>
+                            <button onclick="switchSection('disputes')" class="glass-card p-4 text-center hover:border-purple-500/50 transition">
+                                <i class="fas fa-gavel text-red-400 text-2xl mb-2"></i>
+                                <p class="text-sm">View Disputes</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- ESCROW MANAGEMENT -->
+                <!-- ======================================== -->
+                <div id="section-escrow" class="hidden fade-in">
+                    <div class="glass-card p-6">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                            <h2 class="text-2xl font-bold">Escrow Management</h2>
+                            <div class="flex gap-2">
+                                <select class="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-gray-300">
+                                    <option>All Status</option>
+                                    <option>Held</option>
+                                    <option>Released</option>
+                                    <option>Disputed</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Transaction</th>
+                                        <th>Amount</th>
+                                        <th>Buyer</th>
+                                        <th>Seller</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-medium">#TX-2026-001</span>
+                                                <span class="text-xs text-gray-500">Jun 15, 2026</span>
+                                            </div>
+                                        </td>
+                                        <td class="font-semibold text-purple-400">$299.99</td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-blue-500/20 text-blue-400">JD</div>
+                                                <span class="text-sm">John D.</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-pink-500/20 text-pink-400">AS</div>
+                                                <span class="text-sm">Alice S.</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="status-badge held">Held</span></td>
+                                        <td>
+                                            <div class="flex gap-2">
+                                                <button onclick="releaseEscrow('TX-2026-001', '$299.99')" class="gradient-btn-success px-3 py-1 rounded-xl text-white text-xs">
+                                                    <i class="fas fa-check"></i> Release
+                                                </button>
+                                                <button onclick="showDisputeModal('TX-2026-001')" class="gradient-btn-danger px-3 py-1 rounded-xl text-white text-xs">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-medium">#TX-2026-002</span>
+                                                <span class="text-xs text-gray-500">Jun 14, 2026</span>
+                                            </div>
+                                        </td>
+                                        <td class="font-semibold text-purple-400">$149.99</td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-green-500/20 text-green-400">SM</div>
+                                                <span class="text-sm">Sarah M.</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-orange-500/20 text-orange-400">RJ</div>
+                                                <span class="text-sm">Robert J.</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="status-badge held">Held</span></td>
+                                        <td>
+                                            <div class="flex gap-2">
+                                                <button onclick="releaseEscrow('TX-2026-002', '$149.99')" class="gradient-btn-success px-3 py-1 rounded-xl text-white text-xs">
+                                                    <i class="fas fa-check"></i> Release
+                                                </button>
+                                                <button onclick="showDisputeModal('TX-2026-002')" class="gradient-btn-danger px-3 py-1 rounded-xl text-white text-xs">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-medium">#TX-2026-003</span>
+                                                <span class="text-xs text-gray-500">Jun 13, 2026</span>
+                                            </div>
+                                        </td>
+                                        <td class="font-semibold text-purple-400">$189.50</td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-purple-500/20 text-purple-400">MK</div>
+                                                <span class="text-sm">Mike K.</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-teal-500/20 text-teal-400">LW</div>
+                                                <span class="text-sm">Lisa W.</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="status-badge released">Released</span></td>
+                                        <td>
+                                            <span class="text-xs text-gray-500">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-medium">#TX-2026-004</span>
+                                                <span class="text-xs text-gray-500">Jun 12, 2026</span>
+                                            </div>
+                                        </td>
+                                        <td class="font-semibold text-purple-400">$79.99</td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-red-500/20 text-red-400">TL</div>
+                                                <span class="text-sm">Tom L.</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-indigo-500/20 text-indigo-400">NP</div>
+                                                <span class="text-sm">Nancy P.</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="status-badge disputed">Disputed</span></td>
+                                        <td>
+                                            <button onclick="showDisputeModal('TX-2026-004')" class="gradient-btn-warning px-3 py-1 rounded-xl text-white text-xs">
+                                                <i class="fas fa-gavel"></i> Resolve
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-medium">#TX-2026-005</span>
+                                                <span class="text-xs text-gray-500">Jun 11, 2026</span>
+                                            </div>
+                                        </td>
+                                        <td class="font-semibold text-purple-400">$45.00</td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-cyan-500/20 text-cyan-400">ER</div>
+                                                <span class="text-sm">Emma R.</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-rose-500/20 text-rose-400">DB</div>
+                                                <span class="text-sm">David B.</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="status-badge held">Held</span></td>
+                                        <td>
+                                            <div class="flex gap-2">
+                                                <button onclick="releaseEscrow('TX-2026-005', '$45.00')" class="gradient-btn-success px-3 py-1 rounded-xl text-white text-xs">
+                                                    <i class="fas fa-check"></i> Release
+                                                </button>
+                                                <button onclick="showDisputeModal('TX-2026-005')" class="gradient-btn-danger px-3 py-1 rounded-xl text-white text-xs">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- TICKET APPROVALS -->
+                <!-- ======================================== -->
+                <div id="section-tickets" class="hidden fade-in">
+                    <div class="glass-card p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold">Ticket Approvals</h2>
+                            <span class="text-sm text-gray-400">Pending: 3</span>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=80&h=80&fit=crop" 
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">Summer Music Festival 2026</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400">
+                                        <span><i class="fas fa-user mr-1 text-purple-400"></i> Seller: Jane S.</span>
+                                        <span><i class="fas fa-tag mr-1 text-pink-400"></i> $149.99</span>
+                                        <span><i class="fas fa-calendar mr-1 text-blue-400"></i> Jul 15, 2026</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="status-badge pending">Pending</span>
+                                    <button onclick="approveTicket()" class="gradient-btn-success px-4 py-1.5 rounded-xl text-white text-sm">
+                                        <i class="fas fa-check mr-1"></i> Approve
+                                    </button>
+                                    <button onclick="rejectTicket()" class="gradient-btn-danger px-4 py-1.5 rounded-xl text-white text-sm">
+                                        <i class="fas fa-times mr-1"></i> Reject
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=80&h=80&fit=crop" 
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">NBA Finals - Game 7</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400">
+                                        <span><i class="fas fa-user mr-1 text-purple-400"></i> Seller: Mike R.</span>
+                                        <span><i class="fas fa-tag mr-1 text-pink-400"></i> $299.99</span>
+                                        <span><i class="fas fa-calendar mr-1 text-blue-400"></i> Jun 20, 2026</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="status-badge pending">Pending</span>
+                                    <button onclick="approveTicket()" class="gradient-btn-success px-4 py-1.5 rounded-xl text-white text-sm">
+                                        <i class="fas fa-check mr-1"></i> Approve
+                                    </button>
+                                    <button onclick="rejectTicket()" class="gradient-btn-danger px-4 py-1.5 rounded-xl text-white text-sm">
+                                        <i class="fas fa-times mr-1"></i> Reject
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=80&h=80&fit=crop" 
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">Jazz & Blues Festival</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400">
+                                        <span><i class="fas fa-user mr-1 text-purple-400"></i> Seller: Alice W.</span>
+                                        <span><i class="fas fa-tag mr-1 text-pink-400"></i> $89.99</span>
+                                        <span><i class="fas fa-calendar mr-1 text-blue-400"></i> Sep 12, 2026</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="status-badge pending">Pending</span>
+                                    <button onclick="approveTicket()" class="gradient-btn-success px-4 py-1.5 rounded-xl text-white text-sm">
+                                        <i class="fas fa-check mr-1"></i> Approve
+                                    </button>
+                                    <button onclick="rejectTicket()" class="gradient-btn-danger px-4 py-1.5 rounded-xl text-white text-sm">
+                                        <i class="fas fa-times mr-1"></i> Reject
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- USER MANAGEMENT -->
+                <!-- ======================================== -->
+                <div id="section-users" class="hidden fade-in">
+                    <div class="glass-card p-6">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                            <h2 class="text-2xl font-bold">User Management</h2>
+                            <div class="flex gap-2">
+                                <input type="text" placeholder="Search users..." class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500" />
+                            </div>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th>Joined</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-purple-500/20 text-purple-400">JD</div>
+                                                <span class="font-medium">John Doe</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm text-gray-400">john@example.com</td>
+                                        <td><span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full">Buyer</span></td>
+                                        <td><span class="status-badge verified">Verified</span></td>
+                                        <td class="text-sm text-gray-400">Jan 2026</td>
+                                        <td>
+                                            <button class="text-sm text-gray-400 hover:text-white transition">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-pink-500/20 text-pink-400">AS</div>
+                                                <span class="font-medium">Alice Smith</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm text-gray-400">alice@example.com</td>
+                                        <td><span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full">Seller</span></td>
+                                        <td><span class="status-badge verified">Verified</span></td>
+                                        <td class="text-sm text-gray-400">Feb 2026</td>
+                                        <td>
+                                            <button class="text-sm text-gray-400 hover:text-white transition">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-yellow-500/20 text-yellow-400">MR</div>
+                                                <span class="font-medium">Mike Ross</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm text-gray-400">mike@example.com</td>
+                                        <td><span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full">Seller</span></td>
+                                        <td><span class="status-badge unverified">Unverified</span></td>
+                                        <td class="text-sm text-gray-400">Mar 2026</td>
+                                        <td>
+                                            <button onclick="verifySeller()" class="gradient-btn-success px-3 py-1 rounded-xl text-white text-xs">
+                                                <i class="fas fa-check"></i> Verify
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-green-500/20 text-green-400">SM</div>
+                                                <span class="font-medium">Sarah Miller</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm text-gray-400">sarah@example.com</td>
+                                        <td><span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full">Buyer</span></td>
+                                        <td><span class="status-badge verified">Verified</span></td>
+                                        <td class="text-sm text-gray-400">Apr 2026</td>
+                                        <td>
+                                            <button class="text-sm text-gray-400 hover:text-white transition">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="avatar-sm bg-red-500/20 text-red-400">TL</div>
+                                                <span class="font-medium">Tom Lee</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm text-gray-400">tom@example.com</td>
+                                        <td><span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full">Buyer</span></td>
+                                        <td><span class="status-badge unverified">Unverified</span></td>
+                                        <td class="text-sm text-gray-400">May 2026</td>
+                                        <td>
+                                            <button onclick="verifySeller()" class="gradient-btn-success px-3 py-1 rounded-xl text-white text-xs">
+                                                <i class="fas fa-check"></i> Verify
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- TRANSACTIONS -->
+                <!-- ======================================== -->
+                <div id="section-transactions" class="hidden fade-in">
+                    <div class="glass-card p-6">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                            <h2 class="text-2xl font-bold">Transaction History</h2>
+                            <div class="flex gap-2">
+                                <select class="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-gray-300">
+                                    <option>All Time</option>
+                                    <option>This Week</option>
+                                    <option>This Month</option>
+                                    <option>This Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Transaction ID</th>
+                                        <th>Date</th>
+                                        <th>Buyer</th>
+                                        <th>Seller</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-mono text-xs">#TX-2026-001</td>
+                                        <td class="text-sm text-gray-400">Jun 15, 2026</td>
+                                        <td class="text-sm">John D.</td>
+                                        <td class="text-sm">Alice S.</td>
+                                        <td class="font-semibold text-purple-400">$299.99</td>
+                                        <td><span class="status-badge held">Held</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-mono text-xs">#TX-2026-002</td>
+                                        <td class="text-sm text-gray-400">Jun 14, 2026</td>
+                                        <td class="text-sm">Sarah M.</td>
+                                        <td class="text-sm">Robert J.</td>
+                                        <td class="font-semibold text-purple-400">$149.99</td>
+                                        <td><span class="status-badge released">Released</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-mono text-xs">#TX-2026-003</td>
+                                        <td class="text-sm text-gray-400">Jun 13, 2026</td>
+                                        <td class="text-sm">Mike K.</td>
+                                        <td class="text-sm">Lisa W.</td>
+                                        <td class="font-semibold text-purple-400">$189.50</td>
+                                        <td><span class="status-badge released">Released</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-mono text-xs">#TX-2026-004</td>
+                                        <td class="text-sm text-gray-400">Jun 12, 2026</td>
+                                        <td class="text-sm">Tom L.</td>
+                                        <td class="text-sm">Nancy P.</td>
+                                        <td class="font-semibold text-purple-400">$79.99</td>
+                                        <td><span class="status-badge disputed">Disputed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-mono text-xs">#TX-2026-005</td>
+                                        <td class="text-sm text-gray-400">Jun 11, 2026</td>
+                                        <td class="text-sm">Emma R.</td>
+                                        <td class="text-sm">David B.</td>
+                                        <td class="font-semibold text-purple-400">$45.00</td>
+                                        <td><span class="status-badge held">Held</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- DISPUTES -->
+                <!-- ======================================== -->
+                <div id="section-disputes" class="hidden fade-in">
+                    <div class="glass-card p-6">
+                        <h2 class="text-2xl font-bold mb-6">Dispute Resolution</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="glass-card p-4 border border-red-500/20">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center text-red-400">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold">Transaction #TX-2026-004</h4>
+                                            <p class="text-sm text-gray-400">Buyer claims ticket was not delivered</p>
+                                            <div class="flex gap-3 text-xs text-gray-500 mt-1">
+                                                <span><i class="fas fa-user mr-1"></i> Tom L. vs Nancy P.</span>
+                                                <span><i class="fas fa-clock mr-1"></i> 2 days ago</span>
+                                                <span class="text-red-400">$79.99</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button onclick="resolveDispute()" class="gradient-btn-success px-4 py-2 rounded-xl text-white text-sm">
+                                            <i class="fas fa-check mr-1"></i> Resolve
+                                        </button>
+                                        <button onclick="showToast('Escalated to support team')" class="gradient-btn-warning px-4 py-2 rounded-xl text-white text-sm">
+                                            <i class="fas fa-flag mr-1"></i> Escalate
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="glass-card p-4 border border-yellow-500/20">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400">
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold">Transaction #TX-2026-001</h4>
+                                            <p class="text-sm text-gray-400">Seller claims buyer received tickets</p>
+                                            <div class="flex gap-3 text-xs text-gray-500 mt-1">
+                                                <span><i class="fas fa-user mr-1"></i> John D. vs Alice S.</span>
+                                                <span><i class="fas fa-clock mr-1"></i> 5 hours ago</span>
+                                                <span class="text-yellow-400">$299.99</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button onclick="resolveDispute()" class="gradient-btn-success px-4 py-2 rounded-xl text-white text-sm">
+                                            <i class="fas fa-check mr-1"></i> Resolve
+                                        </button>
+                                        <button onclick="showToast('Escalated to support team')" class="gradient-btn-warning px-4 py-2 rounded-xl text-white text-sm">
+                                            <i class="fas fa-flag mr-1"></i> Escalate
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================== -->
+                <!-- SETTINGS -->
+                <!-- ======================================== -->
+                <div id="section-settings" class="hidden fade-in">
+                    <div class="glass-card p-6">
+                        <h2 class="text-2xl font-bold mb-6">Platform Settings</h2>
+                        
+                        <div class="space-y-6">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-sm text-gray-400 block mb-1">Platform Fee (%)</label>
+                                    <input type="number" value="5.0" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-400 block mb-1">Escrow Release Time (days)</label>
+                                    <input type="number" value="3" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-400 block mb-1">Max Ticket Price</label>
+                                    <input type="number" value="5000" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-400 block mb-1">Min Ticket Price</label>
+                                    <input type="number" value="1" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-4 p-4 glass-card">
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">Maintenance Mode</h4>
+                                    <p class="text-sm text-gray-400">Put the platform in maintenance mode</p>
+                                </div>
+                                <button onclick="showToast('Maintenance mode toggled')" class="px-4 py-2 rounded-xl border border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10 transition">
+                                    Toggle
+                                </button>
+                            </div>
+                            
+                            <button onclick="showToast('✅ Settings saved successfully!')" class="gradient-btn px-6 py-3 rounded-xl text-white font-semibold">
+                                <i class="fas fa-save mr-2"></i> Save Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- BOTTOM NAV - Mobile -->
+    <!-- ======================================== -->
+    <div class="bottom-nav">
+        <a href="#" class="bottom-nav-item active" onclick="switchSection('overview')">
+            <i class="fas fa-chart-pie"></i>
+            <span>Overview</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="switchSection('escrow')">
+            <i class="fas fa-shield-alt"></i>
+            <span>Escrow</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="switchSection('tickets')">
+            <i class="fas fa-ticket-alt"></i>
+            <span>Tickets</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="switchSection('users')">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="switchSection('transactions')">
+            <i class="fas fa-receipt"></i>
+            <span>History</span>
+        </a>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- DISPUTE MODAL -->
+    <!-- ======================================== -->
+    <div id="disputeModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeDisputeModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="glass-card max-w-md w-full p-6 relative">
+                <button onclick="closeDisputeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-3 text-red-400 text-2xl">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Dispute Resolution</h3>
+                    <p class="text-gray-400 text-sm" id="disputeTxId">Transaction #TX-2026-001</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="glass-card p-3 text-sm">
+                        <p class="text-gray-400">Buyer says: <span class="text-white">"I never received the tickets"</span></p>
+                        <p class="text-gray-400 mt-2">Seller says: <span class="text-white">"I sent them via email"</span></p>
+                    </div>
+                    
+                    <div>
+                        <label class="text-sm text-gray-400 block mb-1">Resolution</label>
+                        <select class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500">
+                            <option>Refund Buyer</option>
+                            <option>Release to Seller</option>
+                            <option>Split Payment 50/50</option>
+                            <option>Escalate to Support</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="text-sm text-gray-400 block mb-1">Admin Notes</label>
+                        <textarea rows="3" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" placeholder="Add resolution notes..."></textarea>
+                    </div>
+                    
+                    <button onclick="resolveDispute()" class="w-full gradient-btn py-3 rounded-xl text-white font-semibold">
+                        <i class="fas fa-check mr-2"></i> Apply Resolution
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- TOAST CONTAINER -->
+    <!-- ======================================== -->
+    <div id="toastContainer"></div>
+
+    <!-- ======================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ======================================== -->
+    <script>
+        // ========================================
+        // SECTION SWITCHING
+        // ========================================
+        function switchSection(section) {
+            // Hide all sections
+            document.querySelectorAll('[id^="section-"]').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Show selected section
+            const target = document.getElementById(`section-${section}`);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('fade-in');
+            }
+            
+            // Update sidebar links
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === section) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Update bottom nav
+            document.querySelectorAll('.bottom-nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('onclick')?.includes(section)) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Scroll to top on mobile
+            if (window.innerWidth < 768) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // ========================================
+        // ESCROW ACTIONS
+        // ========================================
+        function releaseEscrow(txId, amount) {
+            if (confirm(`Release ${amount} from escrow for ${txId}?`)) {
+                showToast(`✅ Escrow released for ${txId} - ${amount} sent to seller`, 'success');
+            }
+        }
+
+        // ========================================
+        // TICKET ACTIONS
+        // ========================================
+        function approveTicket() {
+            showToast('✅ Ticket approved and published!', 'success');
+        }
+
+        function rejectTicket() {
+            if (confirm('Reject this ticket listing?')) {
+                showToast('❌ Ticket rejected', 'error');
+            }
+        }
+
+        // ========================================
+        // USER ACTIONS
+        // ========================================
+        function verifySeller() {
+            showToast('✅ Seller verified successfully!', 'success');
+        }
+
+        // ========================================
+        // DISPUTE MODAL
+        // ========================================
+        let currentDisputeTx = '';
+
+        function showDisputeModal(txId) {
+            currentDisputeTx = txId;
+            document.getElementById('disputeTxId').textContent = `Transaction ${txId}`;
+            document.getElementById('disputeModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDisputeModal() {
+            document.getElementById('disputeModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function resolveDispute() {
+            closeDisputeModal();
+            showToast('✅ Dispute resolved successfully!', 'success');
+        }
+
+        // ========================================
+        // TOAST NOTIFICATION
+        // ========================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            const colors = {
+                success: '#10b981',
+                error: '#ef4444',
+                info: '#6c5ce7'
+            };
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <i class="fas ${icons[type]}" style="color: ${colors[type]}; font-size: 1.25rem;"></i>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // ========================================
+        // CHARTS
+        // ========================================
+        let revenueChartInstance = null;
+        let salesChartInstance = null;
+
+        function initCharts() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart')?.getContext('2d');
+            if (revenueCtx) {
+                if (revenueChartInstance) revenueChartInstance.destroy();
+                
+                revenueChartInstance = new Chart(revenueCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Revenue',
+                            data: [3200, 4500, 3800, 5200, 6100, 8900],
+                            borderColor: '#6c5ce7',
+                            backgroundColor: 'rgba(108, 92, 231, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: { color: '#9ca3af' }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#9ca3af' }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#9ca3af' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Sales Chart
+            const salesCtx = document.getElementById('salesChart')?.getContext('2d');
+            if (salesCtx) {
+                if (salesChartInstance) salesChartInstance.destroy();
+                
+                salesChartInstance = new Chart(salesCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Tickets Sold',
+                            data: [45, 62, 51, 78, 94, 124],
+                            backgroundColor: 'rgba(253, 121, 168, 0.7)',
+                            borderColor: '#fd79a8',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: { color: '#9ca3af' }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#9ca3af' }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#9ca3af' }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // ========================================
+        // ESCAPE KEY
+        // ========================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDisputeModal();
+            }
+        });
+
+        // ========================================
+        // INIT
+        // ========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            console.log('🎫 TixHub - Admin Dashboard Loaded');
+            console.log('👑 Welcome Admin!');
+            
+            setTimeout(() => {
+                showToast('👑 Welcome to Admin Dashboard', 'info');
+            }, 500);
+        });
+    </script>
+</body>
+</html>
