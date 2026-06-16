@@ -16,8 +16,21 @@
     
     <style>
         /* ======================================== */
-        /* BASE STYLES */
+        /* TICKETMASTER INSPIRED STYLES */
         /* ======================================== */
+        :root {
+            --tm-blue: #024ddf;
+            --tm-blue-hover: #0139a7;
+            --tm-dark: #121212;
+            --tm-gray: #646464;
+            --tm-gray-light: #bfbfbf;
+            --tm-gray-bg: #f6f6f6;
+            --tm-white: #ffffff;
+            --tm-gold: #ffb932;
+            --tm-red: #eb0000;
+            --tm-text: #121212;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -25,149 +38,98 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: #07070f;
-            color: #ffffff;
+            font-family: 'Inter', 'Averta', helvetica, arial, sans-serif;
+            background: var(--tm-white);
+            color: var(--tm-text);
             overflow-x: hidden;
         }
         
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0a0a1a;
+            background: var(--tm-gray-bg);
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            background: var(--tm-gray-light);
             border-radius: 10px;
         }
-        
-        /* Glassmorphism */
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--tm-gray);
         }
         
-        .glass-card {
-            background: rgba(26, 26, 46, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .glass-card:hover {
-            border-color: rgba(245, 158, 11, 0.3);
-            box-shadow: 0 20px 60px rgba(245, 158, 11, 0.08);
-        }
-        
-        /* Buttons */
+        /* ======================================== */
+        /* TICKETMASTER STYLE BUTTONS */
+        /* ======================================== */
         .btn-primary {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
+            background: var(--tm-blue);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            line-height: 1.4;
+            min-height: 40px;
+            text-decoration: none;
         }
         
         .btn-primary:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 20px 50px rgba(245, 158, 11, 0.4);
-        }
-        
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-        
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--tm-blue-hover);
             transform: scale(1.02);
         }
         
-        /* Badges */
-        .badge-worldcup {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .badge-capacity {
-            background: rgba(59, 130, 246, 0.2);
-            color: #3b82f6;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.65rem;
+        .btn-secondary {
+            background: transparent;
+            color: var(--tm-text);
+            padding: 10px 24px;
+            border-radius: 4px;
             font-weight: 600;
-        }
-        
-        .badge-matches {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 600;
-        }
-        
-        /* Stadium Card */
-        .stadium-card {
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
+            border: 1px solid var(--tm-gray-light);
             cursor: pointer;
-            overflow: hidden;
-        }
-        
-        .stadium-card:hover {
-            transform: translateY(-8px) scale(1.01);
-            border-color: rgba(245, 158, 11, 0.3);
-            box-shadow: 0 30px 80px rgba(245, 158, 11, 0.1);
-        }
-        
-        .stadium-image {
-            height: 220px;
-            object-fit: cover;
-            width: 100%;
-            border-radius: 20px 20px 0 0;
-        }
-        
-        .stadium-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
-            border: 2px solid rgba(245, 158, 11, 0.2);
+            gap: 8px;
+            font-size: 14px;
+            line-height: 1.4;
+            min-height: 40px;
+            text-decoration: none;
         }
         
-        /* Navbar */
+        .btn-secondary:hover {
+            border-color: var(--tm-dark);
+            background: var(--tm-gray-bg);
+        }
+        
+        /* ======================================== */
+        /* NAVBAR - Ticketmaster Style */
+        /* ======================================== */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 16px 20px;
-            transition: all 0.4s ease;
+            background: var(--tm-dark);
+            transition: all 0.3s ease;
         }
         
-        .navbar-scrolled {
-            background: rgba(7, 7, 15, 0.92);
-            backdrop-filter: blur(30px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 12px 20px;
+        .navbar-top {
+            padding: 6px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        
+        .navbar-main {
+            padding: 10px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         
         .nav-link {
@@ -175,7 +137,9 @@
             color: #9ca3af;
             transition: all 0.3s ease;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            text-decoration: none;
         }
         
         .nav-link:hover {
@@ -185,130 +149,231 @@
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -4px;
-            left: 0;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
             width: 0;
             height: 2px;
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            background: var(--tm-blue);
             transition: width 0.3s ease;
             border-radius: 2px;
         }
         
-        .nav-link:hover::after {
-            width: 100%;
+        .nav-link:hover::after,
+        .nav-link-active::after {
+            width: 60%;
         }
         
         .nav-link-active {
             color: #fff;
+            font-weight: 600;
         }
         
-        .nav-link-active::after {
+        /* Country Selector - USA Flag Circle */
+        .flag-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+        
+        .flag-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* ======================================== */
+        /* CARDS - Ticketmaster Style */
+        /* ======================================== */
+        .card {
+            background: var(--tm-white);
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid var(--tm-gray-light);
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+        
+        /* ======================================== */
+        /* BADGES */
+        /* ======================================== */
+        .badge-worldcup {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-capacity {
+            background: rgba(2, 77, 223, 0.1);
+            color: var(--tm-blue);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+        
+        .badge-matches {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+        
+        /* ======================================== */
+        /* STADIUM CARD */
+        /* ======================================== */
+        .stadium-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: var(--tm-white);
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--tm-gray-light);
+            overflow: hidden;
+        }
+        
+        .stadium-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+            border-color: var(--tm-blue);
+        }
+        
+        .stadium-image {
+            height: 180px;
+            object-fit: cover;
             width: 100%;
         }
         
-        /* Mobile Menu */
+        /* ======================================== */
+        /* FILTER TAGS */
+        /* ======================================== */
+        .filter-tag {
+            background: var(--tm-white);
+            border: 1px solid var(--tm-gray-light);
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--tm-gray);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .filter-tag:hover {
+            border-color: var(--tm-blue);
+            color: var(--tm-text);
+        }
+        
+        .filter-tag.active {
+            background: var(--tm-blue);
+            border-color: var(--tm-blue);
+            color: #fff;
+        }
+        
+        /* ======================================== */
+        /* MOBILE MENU */
+        /* ======================================== */
         .mobile-menu {
             display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            margin-top: 8px;
-            padding: 20px;
-            background: rgba(7, 7, 15, 0.95);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
+            background: var(--tm-dark);
+            padding: 16px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         .mobile-menu.open {
             display: block;
         }
         
-        /* Filter Tags */
-        .filter-tag {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 8px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .mobile-menu a {
+            display: block;
             color: #9ca3af;
-            font-size: 0.875rem;
-            white-space: nowrap;
+            padding: 10px 0;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
         }
         
-        .filter-tag:hover,
-        .filter-tag.active {
-            background: rgba(245, 158, 11, 0.15);
-            border-color: #f59e0b;
+        .mobile-menu a:hover {
             color: #fff;
         }
         
-        .filter-tag.active {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
+        .mobile-menu a:last-child {
+            border-bottom: none;
         }
         
-        /* Toast */
+        /* ======================================== */
+        /* TOAST */
+        /* ======================================== */
         .toast {
             position: fixed;
-            top: 80px;
-            right: 20px;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 9999;
-            padding: 14px 20px;
-            border-radius: 16px;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 24px;
+            border-radius: 4px;
+            background: var(--tm-dark);
             color: #fff;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             max-width: 90%;
-            width: 380px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-out;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         
-        @keyframes slideInRight {
-            0% { transform: translateX(100px); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
+        @keyframes slideUp {
+            0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
         }
         
-        /* Modal */
+        /* ======================================== */
+        /* MODAL */
+        /* ======================================== */
         .modal-overlay {
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 12px 16px;
-            }
-            
-            .stadium-image {
-                height: 160px;
-            }
-            
-            .stadium-icon {
-                width: 48px;
-                height: 48px;
-                font-size: 1.5rem;
-            }
-            
-            .glass-card {
-                padding: 16px !important;
-            }
-            
-            .filter-tag {
-                font-size: 0.75rem;
-                padding: 6px 12px;
-            }
+        /* ======================================== */
+        /* STATS */
+        /* ======================================== */
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--tm-blue);
+            line-height: 1;
         }
         
-        /* Scroll to top */
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--tm-gray);
+        }
+        
+        /* ======================================== */
+        /* SCROLL TO TOP */
+        /* ======================================== */
         .scroll-top {
             position: fixed;
             bottom: 30px;
@@ -317,6 +382,15 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
+            width: 44px;
+            height: 44px;
+            background: var(--tm-blue);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(2, 77, 223, 0.3);
         }
         
         .scroll-top.visible {
@@ -324,80 +398,154 @@
             visibility: visible;
         }
         
-        /* Stats Counter */
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
+        .scroll-top:hover {
+            background: var(--tm-blue-hover);
+        }
+        
+        /* ======================================== */
+        /* RESPONSIVE */
+        /* ======================================== */
+        @media (max-width: 768px) {
+            .navbar-top {
+                padding: 6px 16px;
+            }
+            .navbar-main {
+                padding: 10px 16px;
+                flex-wrap: wrap;
+            }
+            .stadium-image {
+                height: 140px;
+            }
+            .card {
+                padding: 16px !important;
+            }
+            .filter-tag {
+                font-size: 0.7rem;
+                padding: 4px 10px;
+            }
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* ======================================== */
+        /* FOOTER */
+        /* ======================================== */
+        .footer {
+            background: var(--tm-dark);
+            color: #fff;
+            padding: 40px 40px 20px;
+        }
+        
+        .footer-link {
+            color: #9ca3af;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .footer-link:hover {
+            color: #fff;
+        }
+        
+        .footer-heading {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .footer {
+                padding: 32px 16px 16px;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- ======================================== -->
-    <!-- NAVIGATION -->
+    <!-- NAVIGATION - Ticketmaster Style -->
     <!-- ======================================== -->
-    <nav class="navbar" id="navbar">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2.5 shrink-0">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500 to-red-500 flex items-center justify-center shadow-lg shadow-yellow-500/25">
-                    <i class="fas fa-ticket-alt text-white text-lg"></i>
+    <nav class="navbar">
+        <!-- Top Bar -->
+        <div class="navbar-top hidden md:flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <!-- Country Selector with USA Flag Circle -->
+                <button class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
+                    <span class="flag-circle">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA Flag" />
+                    </span>
+                    <span>US</span>
+                </button>
+                
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-1">
+                    <i class="fas fa-hotel"></i> Hotels
+                </a>
+                <a href="sell.html" class="text-gray-400 hover:text-white transition text-sm">Sell</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Gift Cards</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Help</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">VIP</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-xs text-gray-500">PayPal Preferred</span>
+            </div>
+        </div>
+        
+        <!-- Main Nav -->
+        <div class="navbar-main">
+            <div class="flex items-center gap-6">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
+                        <i class="fas fa-ticket-alt text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white tracking-tight">
+                        Tix<span class="text-[#6c5ce7]">Hub</span>
+                    </span>
+                </a>
+                
+                <!-- Nav Links -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="buy.html" class="nav-link">Buy Tickets</a>
+                    <a href="sell.html" class="nav-link">Sell Tickets</a>
+                    <a href="matches.html" class="nav-link">Matches</a>
+                    <a href="stadiums.html" class="nav-link nav-link-active">Stadiums</a>
                 </div>
-                <span class="text-2xl font-bold text-white tracking-tight">
-                    Tix<span class="text-gradient-animated">Hub</span>
-                </span>
-                <span class="hidden md:inline text-xs bg-gradient-to-r from-yellow-500 to-red-500 text-white px-2 py-0.5 rounded-full font-bold">
-                    World Cup 2026
-                </span>
-            </a>
-            
-            <div class="hidden md:flex items-center gap-8">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="buy.html" class="nav-link">Buy Tickets</a>
-                <a href="sell.html" class="nav-link">Sell Tickets</a>
-                <a href="matches.html" class="nav-link">Matches</a>
-                <a href="stadiums.html" class="nav-link nav-link-active">Stadiums</a>
             </div>
             
             <div class="flex items-center gap-3">
-                <a href="auth.html" class="hidden md:block text-gray-400 hover:text-white transition font-medium text-sm">
-                    <i class="fas fa-user mr-2"></i>Sign In
+                <a href="auth.html" class="hidden md:block text-gray-300 hover:text-white transition text-sm font-medium">
+                    Sign In
                 </a>
-                <a href="auth.html" class="btn-primary px-5 py-2.5 rounded-xl text-white text-sm font-semibold">
-                    <i class="fas fa-rocket mr-2"></i>Get Started
+                <a href="auth.html" class="btn-primary text-sm px-5 py-2 min-h-[36px]">
+                    <i class="fas fa-rocket mr-1"></i> Get Started
                 </a>
-                <button id="mobileToggle" class="md:hidden text-white text-2xl p-2">
+                <button id="mobileToggle" class="lg:hidden text-white text-2xl p-2">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
         
-        <div id="mobileMenu" class="mobile-menu md:hidden">
-            <div class="flex flex-col gap-4">
-                <a href="index.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Home</a>
-                <a href="buy.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Buy Tickets</a>
-                <a href="sell.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Sell Tickets</a>
-                <a href="matches.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Matches</a>
-                <a href="stadiums.html" class="text-white font-semibold py-2 border-b border-white/5">Stadiums</a>
-                <a href="auth.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Sign In</a>
-                <a href="auth.html" class="btn-primary text-center py-3 rounded-xl text-white font-semibold">
-                    <i class="fas fa-rocket mr-2"></i>Get Started
-                </a>
-            </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy Tickets</a>
+            <a href="sell.html">Sell Tickets</a>
+            <a href="matches.html">Matches</a>
+            <a href="stadiums.html" class="text-white font-semibold">Stadiums</a>
+            <a href="auth.html" class="text-white font-semibold">Sign In</a>
         </div>
     </nav>
 
     <!-- ======================================== -->
     <!-- HERO BANNER -->
     <!-- ======================================== -->
-    <section class="pt-28 pb-8 px-4">
+    <section class="pt-24 pb-6 px-4">
         <div class="max-w-7xl mx-auto">
-            <div class="glass-card p-6 md:p-8 relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-r from-yellow-500/5 via-red-500/5 to-transparent"></div>
+            <div class="card p-6 md:p-8 relative overflow-hidden border-[#024ddf]/20">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-transparent"></div>
                 <div class="relative z-10">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
@@ -405,21 +553,21 @@
                                 <span class="badge-worldcup">🏟️ FIFA World Cup 2026</span>
                                 <span class="badge-matches">12 Stadiums</span>
                             </div>
-                            <h1 class="text-3xl md:text-4xl font-bold">
-                                World Cup <span class="text-gradient-animated">Stadiums</span>
+                            <h1 class="text-3xl md:text-4xl font-bold text-[#121212]">
+                                World Cup <span class="text-[#024ddf]">Stadiums</span>
                             </h1>
-                            <p class="text-gray-400 text-sm md:text-base mt-1">
+                            <p class="text-gray-500 text-sm md:text-base mt-1">
                                 Explore the 12 iconic stadiums hosting the World Cup 2026
                             </p>
                         </div>
                         <div class="flex gap-4">
-                            <div class="glass px-4 py-2 rounded-xl text-center">
-                                <div class="text-xs text-gray-400">Total Capacity</div>
-                                <div class="text-2xl font-bold text-yellow-400">2.4M+</div>
+                            <div class="card px-4 py-2 text-center border-none bg-gray-50">
+                                <div class="text-xs text-gray-500">Total Capacity</div>
+                                <div class="text-2xl font-bold text-[#024ddf]">2.4M+</div>
                             </div>
-                            <div class="glass px-4 py-2 rounded-xl text-center">
-                                <div class="text-xs text-gray-400">Matches</div>
-                                <div class="text-2xl font-bold text-red-400">64</div>
+                            <div class="card px-4 py-2 text-center border-none bg-gray-50">
+                                <div class="text-xs text-gray-500">Matches</div>
+                                <div class="text-2xl font-bold text-[#f59e0b]">64</div>
                             </div>
                         </div>
                     </div>
@@ -434,21 +582,21 @@
     <section class="px-4 pb-6">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="glass-card p-4 text-center">
+                <div class="card p-4 text-center border-none bg-gray-50">
                     <div class="stat-number">12</div>
-                    <div class="text-gray-400 text-sm">Stadiums</div>
+                    <div class="stat-label">Stadiums</div>
                 </div>
-                <div class="glass-card p-4 text-center">
+                <div class="card p-4 text-center border-none bg-gray-50">
                     <div class="stat-number">64</div>
-                    <div class="text-gray-400 text-sm">Matches Hosted</div>
+                    <div class="stat-label">Matches Hosted</div>
                 </div>
-                <div class="glass-card p-4 text-center">
+                <div class="card p-4 text-center border-none bg-gray-50">
                     <div class="stat-number">2.4M+</div>
-                    <div class="text-gray-400 text-sm">Total Capacity</div>
+                    <div class="stat-label">Total Capacity</div>
                 </div>
-                <div class="glass-card p-4 text-center">
+                <div class="card p-4 text-center border-none bg-gray-50">
                     <div class="stat-number">16</div>
-                    <div class="text-gray-400 text-sm">US States</div>
+                    <div class="stat-label">US States</div>
                 </div>
             </div>
         </div>
@@ -459,7 +607,7 @@
     <!-- ======================================== -->
     <section class="px-4 pb-6">
         <div class="max-w-7xl mx-auto">
-            <div class="glass-card p-4">
+            <div class="card p-4">
                 <div class="flex flex-wrap gap-2">
                     <span class="filter-tag active" data-filter="all">🏟️ All Stadiums</span>
                     <span class="filter-tag" data-filter="east">🗽 East Coast</span>
@@ -478,7 +626,7 @@
     <!-- ======================================== -->
     <section class="px-4 pb-20">
         <div class="max-w-7xl mx-auto">
-            <div id="stadiumsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="stadiumsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
                 <!-- Rendered by JavaScript -->
             </div>
         </div>
@@ -490,8 +638,8 @@
     <div id="stadiumModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0" onclick="closeStadiumModal()"></div>
         <div class="absolute inset-0 flex items-center justify-center p-4">
-            <div class="glass-card max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative">
-                <button onclick="closeStadiumModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
+            <div class="card max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative">
+                <button onclick="closeStadiumModal()" class="absolute top-4 right-4 text-gray-400 hover:text-[#121212] text-2xl transition">
                     <i class="fas fa-times"></i>
                 </button>
                 
@@ -505,59 +653,59 @@
     <!-- ======================================== -->
     <!-- SCROLL TO TOP -->
     <!-- ======================================== -->
-    <button id="scrollTopBtn" class="scroll-top w-12 h-12 bg-gradient-to-br from-yellow-500 to-red-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-yellow-500/30">
+    <button id="scrollTopBtn" class="scroll-top">
         <i class="fas fa-arrow-up"></i>
     </button>
 
     <!-- ======================================== -->
-    <!-- FOOTER -->
+    <!-- FOOTER - Ticketmaster Style -->
     <!-- ======================================== -->
-    <footer class="border-t border-white/5 py-12 px-4">
+    <footer class="footer">
         <div class="max-w-7xl mx-auto">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
                     <div class="flex items-center gap-2 mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500 to-red-500 flex items-center justify-center">
-                            <i class="fas fa-ticket-alt text-white text-xl"></i>
+                        <div class="w-10 h-10 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
+                            <i class="fas fa-ticket-alt text-white text-sm"></i>
                         </div>
-                        <span class="text-2xl font-bold text-white">Tix<span class="text-gradient-animated">Hub</span></span>
+                        <span class="text-xl font-bold text-white">Tix<span class="text-[#6c5ce7]">Hub</span></span>
                     </div>
                     <p class="text-gray-400 text-sm">Secure ticket marketplace for World Cup 2026 and beyond.</p>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-yellow-400 transition">World Cup 2026</a></li>
-                        <li><a href="matches.html" class="hover:text-yellow-400 transition">Matches</a></li>
-                        <li><a href="stadiums.html" class="hover:text-yellow-400 transition">Stadiums</a></li>
-                        <li><a href="#" class="hover:text-yellow-400 transition">Hospitality</a></li>
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link">World Cup 2026</a></li>
+                        <li><a href="matches.html" class="footer-link">Matches</a></li>
+                        <li><a href="stadiums.html" class="footer-link">Stadiums</a></li>
+                        <li><a href="#" class="footer-link">Hospitality</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4">Support</h4>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-yellow-400 transition">Help Center</a></li>
-                        <li><a href="#" class="hover:text-yellow-400 transition">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-yellow-400 transition">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-yellow-400 transition">Terms of Service</a></li>
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link">Help Center</a></li>
+                        <li><a href="#" class="footer-link">Contact Us</a></li>
+                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4">Follow Us</h4>
+                    <h4 class="footer-heading">Follow Us</h4>
                     <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
                             <i class="fab fa-twitter text-gray-400 hover:text-white"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
                             <i class="fab fa-instagram text-gray-400 hover:text-white"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
                             <i class="fab fa-facebook text-gray-400 hover:text-white"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-white/5 mt-8 pt-8 text-center text-gray-500 text-sm">
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
                 &copy; 2026 TixHub. All rights reserved. | FIFA World Cup 2026
             </div>
         </div>
@@ -808,7 +956,8 @@
         let activeFilter = 'all';
 
         // ========================================
-        // DOM ELEMENTS        // ========================================
+        // DOM ELEMENTS
+        // ========================================
         const stadiumsContainer = document.getElementById('stadiumsContainer');
         const filterTags = document.querySelectorAll('.filter-tag');
         const scrollTopBtn = document.getElementById('scrollTopBtn');
@@ -816,42 +965,82 @@
         const modalContent = document.getElementById('stadiumModalContent');
 
         // ========================================
+        // NAVBAR SCROLL
+        // ========================================
+        const navbar = document.querySelector('.navbar');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ========================================
+        // MOBILE MENU
+        // ========================================
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('open');
+            const icon = this.querySelector('i');
+            if (mobileMenu.classList.contains('open')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('open');
+                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
+            });
+        });
+
+        // ========================================
         // RENDER STADIUMS
         // ========================================
         function renderStadiums() {
             if (filteredStadiums.length === 0) {
                 stadiumsContainer.innerHTML = `
-                    <div class="col-span-full glass-card p-12 text-center">
-                        <i class="fas fa-map-marker-alt text-5xl text-gray-600 mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">No stadiums found</h3>
-                        <p class="text-gray-400">Try adjusting your filters</p>
+                    <div class="col-span-full card p-12 text-center">
+                        <i class="fas fa-map-marker-alt text-5xl text-gray-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-[#121212] mb-2">No stadiums found</h3>
+                        <p class="text-gray-500">Try adjusting your filters</p>
                     </div>
                 `;
                 return;
             }
 
             stadiumsContainer.innerHTML = filteredStadiums.map(stadium => `
-                <div class="glass-card stadium-card overflow-hidden" onclick="openStadiumModal(${stadium.id})">
+                <div class="stadium-card" onclick="openStadiumModal(${stadium.id})">
                     <img 
                         src="${stadium.image}" 
                         alt="${stadium.name}"
                         class="stadium-image"
-                        onerror="this.src='https://via.placeholder.com/600x400/1a1a2e/f59e0b?text=${stadium.name}'"
+                        onerror="this.src='https://via.placeholder.com/400x200/e5e7eb/024ddf?text=${stadium.name}'"
                         loading="lazy"
                     />
-                    <div class="p-5">
+                    <div class="p-4">
                         <div class="flex items-start justify-between mb-2">
                             <div>
                                 <div class="flex items-center gap-2">
                                     <span class="text-2xl">${stadium.icon}</span>
-                                    <h3 class="text-xl font-bold">${stadium.name}</h3>
+                                    <h3 class="text-lg font-bold text-[#121212]">${stadium.name}</h3>
                                 </div>
-                                <p class="text-sm text-gray-400">${stadium.city}</p>
+                                <p class="text-sm text-gray-500">${stadium.city}</p>
                             </div>
                             ${stadium.finalHost ? '<span class="badge-worldcup">🏆 Final</span>' : ''}
                         </div>
                         
-                        <div class="flex flex-wrap gap-2 mt-3">
+                        <div class="flex flex-wrap gap-2 mt-2">
                             <span class="badge-capacity">
                                 <i class="fas fa-users mr-1"></i> ${stadium.capacity.toLocaleString()}
                             </span>
@@ -860,16 +1049,14 @@
                             </span>
                         </div>
                         
-                        <div class="mt-3 text-sm text-gray-400 line-clamp-2">
-                            ${stadium.description}
-                        </div>
+                        <p class="mt-2 text-sm text-gray-500 line-clamp-2">${stadium.description}</p>
                         
-                        <div class="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+                        <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
                             <div>
-                                <span class="text-xs text-gray-500">Tickets from</span>
-                                <div class="text-yellow-400 font-bold">$${stadium.avgPrice}</div>
+                                <span class="text-xs text-gray-400">Tickets from</span>
+                                <div class="text-[#024ddf] font-bold">$${stadium.avgPrice}</div>
                             </div>
-                            <button onclick="event.stopPropagation(); viewStadiumTickets(${stadium.id})" class="btn-primary px-4 py-2 rounded-xl text-white text-sm font-semibold">
+                            <button onclick="event.stopPropagation(); viewStadiumTickets(${stadium.id})" class="btn-primary text-sm px-4 py-1.5 min-h-[32px]">
                                 <i class="fas fa-ticket-alt mr-1"></i> Tickets
                             </button>
                         </div>
@@ -934,8 +1121,8 @@
                         <img 
                             src="${stadium.image}" 
                             alt="${stadium.name}"
-                            class="w-full h-64 object-cover rounded-xl"
-                            onerror="this.src='https://via.placeholder.com/600x400/1a1a2e/f59e0b?text=${stadium.name}'"
+                            class="w-full h-56 object-cover rounded"
+                            onerror="this.src='https://via.placeholder.com/600x350/e5e7eb/024ddf?text=${stadium.name}'"
                             loading="lazy"
                         />
                         <div class="flex flex-wrap gap-2 mt-3">
@@ -952,46 +1139,46 @@
                     <div class="lg:w-1/2">
                         <div class="flex items-center gap-2">
                             <span class="text-3xl">${stadium.icon}</span>
-                            <h2 class="text-2xl font-bold">${stadium.name}</h2>
+                            <h2 class="text-2xl font-bold text-[#121212]">${stadium.name}</h2>
                         </div>
-                        <p class="text-gray-400 text-sm">${stadium.city}</p>
+                        <p class="text-gray-500 text-sm">${stadium.city}</p>
                         
-                        <div class="glass p-4 rounded-xl mt-4 space-y-2">
+                        <div class="bg-gray-50 p-4 rounded border border-gray-200 mt-4 space-y-2">
                             <div class="flex justify-between text-sm">
-                                <span class="text-gray-400">Home Team</span>
-                                <span class="text-white">${stadium.homeTeam}</span>
+                                <span class="text-gray-500">Home Team</span>
+                                <span class="text-[#121212]">${stadium.homeTeam}</span>
                             </div>
                             <div class="flex justify-between text-sm">
-                                <span class="text-gray-400">Year Built</span>
-                                <span class="text-white">${stadium.yearBuilt}</span>
+                                <span class="text-gray-500">Year Built</span>
+                                <span class="text-[#121212]">${stadium.yearBuilt}</span>
                             </div>
                             <div class="flex justify-between text-sm">
-                                <span class="text-gray-400">Avg Ticket Price</span>
-                                <span class="text-yellow-400 font-bold">$${stadium.avgPrice}</span>
+                                <span class="text-gray-500">Avg Ticket Price</span>
+                                <span class="text-[#024ddf] font-bold">$${stadium.avgPrice}</span>
                             </div>
                         </div>
                         
-                        <p class="text-gray-300 text-sm mt-4">${stadium.description}</p>
+                        <p class="text-gray-600 text-sm mt-4">${stadium.description}</p>
                         
                         <div class="mt-4">
-                            <h4 class="font-semibold text-sm mb-2">Matches Hosted</h4>
+                            <h4 class="font-semibold text-sm text-[#121212] mb-2">Matches Hosted</h4>
                             <div class="flex flex-wrap gap-2">
                                 ${stadium.matchesList.map(m => 
-                                    `<span class="glass px-3 py-1 rounded-full text-xs text-gray-300">${m}</span>`
+                                    `<span class="px-3 py-1 bg-gray-100 rounded text-xs text-gray-600">${m}</span>`
                                 ).join('')}
                             </div>
                         </div>
                         
                         <div class="mt-4">
-                            <h4 class="font-semibold text-sm mb-2">Features</h4>
+                            <h4 class="font-semibold text-sm text-[#121212] mb-2">Features</h4>
                             <div class="flex flex-wrap gap-2">
                                 ${stadium.features.map(f => 
-                                    `<span class="glass px-3 py-1 rounded-full text-xs text-green-400"><i class="fas fa-check-circle mr-1"></i>${f}</span>`
+                                    `<span class="px-3 py-1 bg-gray-100 rounded text-xs text-gray-600"><i class="fas fa-check-circle text-[#10b981] mr-1"></i>${f}</span>`
                                 ).join('')}
                             </div>
                         </div>
                         
-                        <button onclick="closeStadiumModal(); viewStadiumTickets(${stadium.id})" class="w-full btn-primary py-3 rounded-xl text-white font-semibold mt-4">
+                        <button onclick="closeStadiumModal(); viewStadiumTickets(${stadium.id})" class="w-full btn-primary py-3 rounded text-white font-semibold mt-4">
                             <i class="fas fa-ticket-alt mr-2"></i> Buy Tickets for ${stadium.name}
                         </button>
                     </div>
@@ -1034,7 +1221,7 @@
             const colors = {
                 success: '#10b981',
                 error: '#ef4444',
-                info: '#f59e0b'
+                info: '#024ddf'
             };
             
             const toast = document.createElement('div');
@@ -1047,57 +1234,11 @@
             
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100px)';
-                toast.style.transition = 'all 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
+                toast.style.transform = 'translateX(-50%) translateY(20px)';
+                toast.style.transition = 'all 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
             }, 4000);
         }
-
-        // ========================================
-        // NAVBAR SCROLL
-        // ========================================
-        const navbar = document.getElementById('navbar');
-        
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
-            
-            if (window.scrollY > 500) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
-        });
-
-        scrollTopBtn.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // ========================================
-        // MOBILE MENU
-        // ========================================
-        const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        mobileToggle.addEventListener('click', function() {
-            mobileMenu.classList.toggle('open');
-            const icon = this.querySelector('i');
-            if (mobileMenu.classList.contains('open')) {
-                icon.className = 'fas fa-times';
-            } else {
-                icon.className = 'fas fa-bars';
-            }
-        });
-
-        document.querySelectorAll('#mobileMenu a').forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenu.classList.remove('open');
-                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
-            });
-        });
 
         // ========================================
         // ESCAPE KEY
@@ -1115,6 +1256,7 @@
 
         console.log('🏟️ TixHub - World Cup 2026 Stadiums');
         console.log(`🏟️ ${stadiumsData.length} stadiums loaded with real images`);
+        console.log('🇺🇸 Ticketmaster-style design with USA flag circle');
         console.log('🏆 Final host: MetLife Stadium');
         
         setTimeout(() => {
