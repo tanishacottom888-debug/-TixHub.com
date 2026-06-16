@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>Buy Tickets - TixHub | World Cup 2026</title>
+    <title>Buy Tickets - TixHub</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -39,7 +42,7 @@
         
         body {
             font-family: 'Inter', 'Averta', helvetica, arial, sans-serif;
-            background: var(--tm-white);
+            background: var(--tm-gray-bg);
             color: var(--tm-text);
             overflow-x: hidden;
         }
@@ -58,13 +61,10 @@
             background: var(--tm-gray);
         }
         
-        /* ======================================== */
-        /* TICKETMASTER STYLE BUTTONS */
-        /* ======================================== */
         .btn-primary {
             background: var(--tm-blue);
             color: #fff;
-            padding: 10px 24px;
+            padding: 10px 20px;
             border-radius: 4px;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -84,16 +84,10 @@
             transform: scale(1.02);
         }
         
-        .btn-primary-sm {
-            padding: 8px 16px;
-            font-size: 13px;
-            min-height: 36px;
-        }
-        
         .btn-secondary {
             background: transparent;
             color: var(--tm-text);
-            padding: 10px 24px;
+            padding: 10px 20px;
             border-radius: 4px;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -113,19 +107,6 @@
             background: var(--tm-gray-bg);
         }
         
-        .btn-worldcup {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-worldcup:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
-        }
-        
-        /* ======================================== */
-        /* NAVBAR - Ticketmaster Style */
-        /* ======================================== */
         .navbar {
             position: fixed;
             top: 0;
@@ -185,7 +166,6 @@
             font-weight: 600;
         }
         
-        /* Country Selector - USA Flag Circle */
         .flag-circle {
             width: 28px;
             height: 28px;
@@ -205,9 +185,6 @@
             object-fit: cover;
         }
         
-        /* ======================================== */
-        /* CARDS - Ticketmaster Style */
-        /* ======================================== */
         .card {
             background: var(--tm-white);
             border-radius: 4px;
@@ -219,7 +196,6 @@
         
         .card:hover {
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-            transform: translateY(-4px);
         }
         
         .ticket-card {
@@ -244,9 +220,6 @@
             width: 100%;
         }
         
-        /* ======================================== */
-        /* SEARCH INPUT */
-        /* ======================================== */
         .search-input {
             border: 1px solid var(--tm-gray-light);
             border-radius: 4px;
@@ -269,9 +242,6 @@
             color: var(--tm-gray);
         }
         
-        /* ======================================== */
-        /* FILTER TAGS */
-        /* ======================================== */
         .filter-tag {
             background: var(--tm-white);
             border: 1px solid var(--tm-gray-light);
@@ -295,9 +265,6 @@
             color: #fff;
         }
         
-        /* ======================================== */
-        /* BADGES */
-        /* ======================================== */
         .badge-worldcup {
             background: linear-gradient(135deg, #f59e0b, #ef4444);
             color: #fff;
@@ -345,9 +312,6 @@
             font-weight: 600;
         }
         
-        /* ======================================== */
-        /* WORLD CUP BANNER */
-        /* ======================================== */
         .worldcup-banner {
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(239, 68, 68, 0.04));
             border: 1px solid rgba(245, 158, 11, 0.15);
@@ -366,9 +330,6 @@
             opacity: 0.05;
         }
         
-        /* ======================================== */
-        /* MOBILE MENU */
-        /* ======================================== */
         .mobile-menu {
             display: none;
             background: var(--tm-dark);
@@ -397,9 +358,6 @@
             border-bottom: none;
         }
         
-        /* ======================================== */
-        /* TOAST */
-        /* ======================================== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -425,17 +383,11 @@
             100% { transform: translateX(-50%) translateY(0); opacity: 1; }
         }
         
-        /* ======================================== */
-        /* MODAL */
-        /* ======================================== */
         .modal-overlay {
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
         }
         
-        /* ======================================== */
-        /* SCROLL TO TOP */
-        /* ======================================== */
         .scroll-top {
             position: fixed;
             bottom: 30px;
@@ -464,9 +416,6 @@
             background: var(--tm-blue-hover);
         }
         
-        /* ======================================== */
-        /* RESPONSIVE */
-        /* ======================================== */
         @media (max-width: 768px) {
             .navbar-top {
                 padding: 6px 16px;
@@ -490,25 +439,11 @@
             }
         }
         
-        /* ======================================== */
-        /* ANIMATIONS */
-        /* ======================================== */
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(15px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* ======================================== */
-        /* FOOTER */
-        /* ======================================== */
         .footer {
             background: var(--tm-dark);
             color: #fff;
             padding: 40px 40px 20px;
+            margin-top: 20px;
         }
         
         .footer-link {
@@ -531,8 +466,17 @@
         
         @media (max-width: 768px) {
             .footer {
-                padding: 32px 16px 16px;
+                padding: 24px 16px 16px;
             }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -542,17 +486,14 @@
     <!-- NAVIGATION - Ticketmaster Style -->
     <!-- ======================================== -->
     <nav class="navbar">
-        <!-- Top Bar -->
         <div class="navbar-top hidden md:flex items-center justify-between">
             <div class="flex items-center gap-6">
-                <!-- Country Selector with USA Flag Circle -->
                 <button class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
                     <span class="flag-circle">
                         <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA Flag" />
                     </span>
                     <span>US</span>
                 </button>
-                
                 <a href="#" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-1">
                     <i class="fas fa-hotel"></i> Hotels
                 </a>
@@ -566,10 +507,8 @@
             </div>
         </div>
         
-        <!-- Main Nav -->
         <div class="navbar-main">
             <div class="flex items-center gap-6">
-                <!-- Logo -->
                 <a href="index.html" class="flex items-center gap-2">
                     <div class="w-9 h-9 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
                         <i class="fas fa-ticket-alt text-white text-sm"></i>
@@ -579,7 +518,6 @@
                     </span>
                 </a>
                 
-                <!-- Nav Links -->
                 <div class="hidden lg:flex items-center gap-1">
                     <a href="index.html" class="nav-link">Home</a>
                     <a href="buy.html" class="nav-link nav-link-active">Buy Tickets</a>
@@ -602,7 +540,6 @@
             </div>
         </div>
         
-        <!-- Mobile Menu -->
         <div id="mobileMenu" class="mobile-menu">
             <a href="index.html">Home</a>
             <a href="buy.html" class="text-white font-semibold">Buy Tickets</a>
@@ -614,7 +551,7 @@
     </nav>
 
     <!-- ======================================== -->
-    <!-- HERO BANNER - World Cup Edition -->
+    <!-- HERO BANNER -->
     <!-- ======================================== -->
     <section class="pt-24 pb-6 px-4">
         <div class="max-w-7xl mx-auto">
@@ -645,7 +582,7 @@
                             </a>
                             <span class="card px-4 py-2 text-center">
                                 <div class="text-xs text-gray-500">Tickets</div>
-                                <div class="text-xl font-bold text-[#024ddf]">50K+</div>
+                                <div class="text-xl font-bold text-[#024ddf]"><span id="totalTickets">0</span>+</div>
                             </span>
                         </div>
                     </div>
@@ -663,18 +600,11 @@
             <!-- Search & Filters -->
             <div class="card p-5 mb-6">
                 <div class="grid md:grid-cols-4 gap-3">
-                    <!-- Search -->
                     <div class="md:col-span-2 relative">
                         <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                        <input 
-                            type="text" 
-                            id="searchInput"
-                            placeholder="Search matches, teams, stadiums..." 
-                            class="search-input"
-                        />
+                        <input type="text" id="searchInput" placeholder="Search matches, teams, stadiums..." class="search-input" />
                     </div>
                     
-                    <!-- Match Stage Filter -->
                     <div>
                         <select id="stageFilter" class="search-input appearance-none">
                             <option value="all">All Stages</option>
@@ -686,7 +616,6 @@
                         </select>
                     </div>
                     
-                    <!-- Sort -->
                     <div>
                         <select id="sortFilter" class="search-input appearance-none">
                             <option value="newest">Newest First</option>
@@ -697,7 +626,6 @@
                     </div>
                 </div>
                 
-                <!-- Filter Tags -->
                 <div class="flex flex-wrap gap-2 mt-4">
                     <span class="filter-tag active" data-filter="all">All Tickets</span>
                     <span class="filter-tag" data-filter="group">🏆 Group Stage</span>
@@ -726,6 +654,12 @@
                 </div>
             </div>
 
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="text-center py-12">
+                <div class="spinner mx-auto"></div>
+                <p class="text-gray-500 mt-4">Loading tickets...</p>
+            </div>
+
             <!-- Ticket Grid -->
             <div id="ticketGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
                 <!-- Tickets rendered by JavaScript -->
@@ -750,10 +684,7 @@
                 <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-[#121212] text-2xl transition">
                     <i class="fas fa-times"></i>
                 </button>
-                
-                <div id="modalContent">
-                    <!-- Dynamic content -->
-                </div>
+                <div id="modalContent"></div>
             </div>
         </div>
     </div>
@@ -779,7 +710,6 @@
                 
                 <div id="paymentDetails" class="mb-6"></div>
                 
-                <!-- Payment Methods -->
                 <div class="space-y-3">
                     <div class="payment-option card p-4 cursor-pointer hover:border-[#024ddf] transition" onclick="selectPayment('credit')">
                         <div class="flex items-center justify-between">
@@ -822,7 +752,6 @@
                     </div>
                 </div>
                 
-                <!-- Escrow Info -->
                 <div class="mt-6 p-4 bg-blue-50 border border-[#024ddf]/20 rounded">
                     <div class="flex items-start gap-3">
                         <i class="fas fa-shield-alt text-[#024ddf] mt-1"></i>
@@ -851,7 +780,7 @@
     </button>
 
     <!-- ======================================== -->
-    <!-- FOOTER - Ticketmaster Style -->
+    <!-- FOOTER -->
     <!-- ======================================== -->
     <footer class="footer">
         <div class="max-w-7xl mx-auto">
@@ -905,192 +834,26 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT -->
+    <!-- JAVASCRIPT - Supabase Integration -->
     <!-- ======================================== -->
     <script>
         // ========================================
-        // WORLD CUP TICKET DATA
+        // SUPABASE CONFIGURATION
         // ========================================
-        const worldCupTickets = [
-            {
-                id: 1,
-                eventName: "FIFA World Cup 2026 - Final",
-                category: "final",
-                stage: "Final",
-                team1: "Brazil",
-                team2: "Argentina",
-                date: "2026-07-19",
-                time: "6:00 PM",
-                location: "MetLife Stadium, New Jersey",
-                price: 2499.99,
-                quantity: 45,
-                image: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=400&h=300&fit=crop",
-                seller: "FIFA Official Resale",
-                rating: 4.9,
-                seatCategory: "Category 1",
-                seatInfo: "Sideline, Row 5",
-                description: "The biggest match in football history! Brazil vs Argentina in the World Cup Final.",
-                hospitality: true,
-                verified: true
-            },
-            {
-                id: 2,
-                eventName: "FIFA World Cup 2026 - Semi-Final",
-                category: "semi",
-                stage: "Semi-Final",
-                team1: "France",
-                team2: "England",
-                date: "2026-07-15",
-                time: "4:00 PM",
-                location: "AT&T Stadium, Texas",
-                price: 1899.99,
-                quantity: 28,
-                image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=400&h=300&fit=crop",
-                seller: "World Cup Tickets Inc.",
-                rating: 4.8,
-                seatCategory: "Category 2",
-                seatInfo: "Upper Tier, Row 12",
-                description: "European giants clash in the World Cup Semi-Final. France vs England.",
-                hospitality: false,
-                verified: true
-            },
-            {
-                id: 3,
-                eventName: "FIFA World Cup 2026 - Quarter-Final",
-                category: "quarter",
-                stage: "Quarter-Final",
-                team1: "Germany",
-                team2: "Spain",
-                date: "2026-07-10",
-                time: "8:00 PM",
-                location: "SoFi Stadium, Los Angeles",
-                price: 1299.99,
-                quantity: 60,
-                image: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=400&h=300&fit=crop",
-                seller: "Elite Sports Tickets",
-                rating: 4.7,
-                seatCategory: "Category 2",
-                seatInfo: "Midfield, Row 18",
-                description: "Two European powerhouses battle for a spot in the Semi-Finals.",
-                hospitality: false,
-                verified: true
-            },
-            {
-                id: 4,
-                eventName: "FIFA World Cup 2026 - Group Stage",
-                category: "group",
-                stage: "Group Stage",
-                team1: "USA",
-                team2: "Mexico",
-                date: "2026-06-15",
-                time: "2:00 PM",
-                location: "Levi's Stadium, California",
-                price: 399.99,
-                quantity: 120,
-                image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=300&fit=crop",
-                seller: "North American Tickets",
-                rating: 4.5,
-                seatCategory: "Category 3",
-                seatInfo: "Corner Flag, Row 25",
-                description: "North American rivals face off in the Group Stage. USA vs Mexico.",
-                hospitality: false,
-                verified: true
-            },
-            {
-                id: 5,
-                eventName: "FIFA World Cup 2026 - Group Stage",
-                category: "group",
-                stage: "Group Stage",
-                team1: "Portugal",
-                team2: "Netherlands",
-                date: "2026-06-18",
-                time: "12:00 PM",
-                location: "Hard Rock Stadium, Florida",
-                price: 449.99,
-                quantity: 85,
-                image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&h=300&fit=crop",
-                seller: "Euro Sports Exchange",
-                rating: 4.6,
-                seatCategory: "Category 3",
-                seatInfo: "Behind Goal, Row 20",
-                description: "European giants Portugal vs Netherlands in an epic Group Stage match.",
-                hospitality: false,
-                verified: true
-            },
-            {
-                id: 6,
-                eventName: "FIFA World Cup 2026 - Round of 16",
-                category: "round16",
-                stage: "Round of 16",
-                team1: "Italy",
-                team2: "Croatia",
-                date: "2026-07-03",
-                time: "10:00 AM",
-                location: "Arrowhead Stadium, Kansas",
-                price: 899.99,
-                quantity: 34,
-                image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=300&fit=crop",
-                seller: "World Cup Direct",
-                rating: 4.8,
-                seatCategory: "Category 2",
-                seatInfo: "Sideline, Row 14",
-                description: "Knockout stage action! Italy vs Croatia for a place in the Quarter-Finals.",
-                hospitality: false,
-                verified: true
-            },
-            {
-                id: 7,
-                eventName: "FIFA World Cup 2026 - Final (Hospitality)",
-                category: "final",
-                stage: "Final",
-                team1: "TBD",
-                team2: "TBD",
-                date: "2026-07-19",
-                time: "6:00 PM",
-                location: "MetLife Stadium, New Jersey",
-                price: 5499.99,
-                quantity: 12,
-                image: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=400&h=300&fit=crop",
-                seller: "FIFA Hospitality",
-                rating: 5.0,
-                seatCategory: "Hospitality",
-                seatInfo: "VIP Suite, Full Package",
-                description: "Ultimate World Cup experience! VIP hospitality package includes premium seats, gourmet dining, and exclusive access.",
-                hospitality: true,
-                verified: true
-            },
-            {
-                id: 8,
-                eventName: "FIFA World Cup 2026 - Semi-Final",
-                category: "semi",
-                stage: "Semi-Final",
-                team1: "Argentina",
-                team2: "Brazil",
-                date: "2026-07-16",
-                time: "8:00 PM",
-                location: "SoFi Stadium, Los Angeles",
-                price: 2099.99,
-                quantity: 18,
-                image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=400&h=300&fit=crop",
-                seller: "South American Tickets",
-                rating: 4.9,
-                seatCategory: "Category 1",
-                seatInfo: "Midfield, Row 8",
-                description: "South American Superclasico! Argentina vs Brazil in the World Cup Semi-Final.",
-                hospitality: true,
-                verified: true
-            }
-        ];
+        const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // ========================================
         // STATE
         // ========================================
-        let tickets = [...worldCupTickets];
-        let filteredTickets = [...tickets];
+        let tickets = [];
+        let filteredTickets = [];
         let currentPage = 1;
         const ticketsPerPage = 6;
         let selectedPayment = null;
         let currentTicketId = null;
+        let isLoading = false;
 
         // ========================================
         // DOM ELEMENTS
@@ -1101,51 +864,125 @@
         const sortFilter = document.getElementById('sortFilter');
         const filterTags = document.querySelectorAll('.filter-tag');
         const ticketCount = document.getElementById('ticketCount');
+        const totalTickets = document.getElementById('totalTickets');
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         const scrollTopBtn = document.getElementById('scrollTopBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
         const modal = document.getElementById('ticketModal');
         const modalContent = document.getElementById('modalContent');
         const paymentModal = document.getElementById('paymentModal');
 
         // ========================================
-        // NAVBAR SCROLL
+        // FETCH TICKETS FROM SUPABASE
         // ========================================
-        const navbar = document.querySelector('.navbar');
-        
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 500) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
+        async function fetchTickets() {
+            try {
+                isLoading = true;
+                loadingSpinner.classList.remove('hidden');
+                ticketGrid.innerHTML = '';
+
+                const { data, error } = await supabase
+                    .from('tickets')
+                    .select('*')
+                    .eq('status', 'approved')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (data && data.length > 0) {
+                    tickets = data;
+                    filteredTickets = [...tickets];
+                    totalTickets.textContent = tickets.length;
+                    renderTickets();
+                } else {
+                    // If no tickets in Supabase, use sample data
+                    tickets = sampleTickets;
+                    filteredTickets = [...tickets];
+                    totalTickets.textContent = tickets.length;
+                    renderTickets();
+                    showToast('📢 No tickets found in database. Showing sample tickets.', 'info');
+                }
+
+                loadingSpinner.classList.add('hidden');
+                isLoading = false;
+            } catch (error) {
+                console.error('Error fetching tickets:', error);
+                loadingSpinner.classList.add('hidden');
+                isLoading = false;
+                // Fallback to sample data
+                tickets = sampleTickets;
+                filteredTickets = [...tickets];
+                totalTickets.textContent = tickets.length;
+                renderTickets();
+                showToast('⚠️ Using sample data. Database connection failed.', 'error');
             }
-        });
-
-        scrollTopBtn.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        }
 
         // ========================================
-        // MOBILE MENU
+        // SAMPLE TICKET DATA (Fallback)
         // ========================================
-        const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        mobileToggle.addEventListener('click', function() {
-            mobileMenu.classList.toggle('open');
-            const icon = this.querySelector('i');
-            if (mobileMenu.classList.contains('open')) {
-                icon.className = 'fas fa-times';
-            } else {
-                icon.className = 'fas fa-bars';
+        const sampleTickets = [
+            {
+                id: 1,
+                event_name: "FIFA World Cup 2026 - Final",
+                event_category: "final",
+                team1: "Brazil",
+                team2: "Argentina",
+                event_date: "2026-07-19",
+                event_time: "6:00 PM",
+                location: "MetLife Stadium, New Jersey",
+                price: 2499.99,
+                quantity: 45,
+                image_url: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=400&h=300&fit=crop",
+                seller_id: "user1",
+                seat_category: "Category 1",
+                seat_info: "Sideline, Row 5",
+                description: "The biggest match in football history! Brazil vs Argentina in the World Cup Final.",
+                hospitality: true,
+                verified: true,
+                status: "approved"
+            },
+            {
+                id: 2,
+                event_name: "FIFA World Cup 2026 - Semi-Final",
+                event_category: "semi",
+                team1: "France",
+                team2: "England",
+                event_date: "2026-07-15",
+                event_time: "4:00 PM",
+                location: "AT&T Stadium, Texas",
+                price: 1899.99,
+                quantity: 28,
+                image_url: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=400&h=300&fit=crop",
+                seller_id: "user2",
+                seat_category: "Category 2",
+                seat_info: "Upper Tier, Row 12",
+                description: "European giants clash in the World Cup Semi-Final. France vs England.",
+                hospitality: false,
+                verified: true,
+                status: "approved"
+            },
+            {
+                id: 3,
+                event_name: "FIFA World Cup 2026 - Group Stage",
+                event_category: "group",
+                team1: "USA",
+                team2: "Mexico",
+                event_date: "2026-06-15",
+                event_time: "2:00 PM",
+                location: "Levi's Stadium, California",
+                price: 399.99,
+                quantity: 120,
+                image_url: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=300&fit=crop",
+                seller_id: "user3",
+                seat_category: "Category 3",
+                seat_info: "Corner Flag, Row 25",
+                description: "North American rivals face off in the Group Stage. USA vs Mexico.",
+                hospitality: false,
+                verified: true,
+                status: "approved"
             }
-        });
-
-        document.querySelectorAll('#mobileMenu a').forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenu.classList.remove('open');
-                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
-            });
-        });
+        ];
 
         // ========================================
         // RENDER TICKETS
@@ -1168,68 +1005,77 @@
                 return;
             }
 
-            ticketGrid.innerHTML = ticketsToShow.map(ticket => `
-                <div class="ticket-card" onclick="openModal(${ticket.id})">
+            ticketGrid.innerHTML = ticketsToShow.map(ticket => {
+                const isFinal = ticket.event_category === 'final' || ticket.event_category === 'Final';
+                const isSemi = ticket.event_category === 'semi' || ticket.event_category === 'Semi-Final';
+                const isQuarter = ticket.event_category === 'quarter' || ticket.event_category === 'Quarter-Final';
+                const isGroup = ticket.event_category === 'group' || ticket.event_category === 'Group Stage';
+                const isR16 = ticket.event_category === 'round16' || ticket.event_category === 'Round of 16';
+                const isHospitality = ticket.hospitality === true;
+                const isVerified = ticket.verified === true;
+                
+                return `
+                <div class="ticket-card" onclick="openModal('${ticket.id}')">
                     <div class="relative">
                         <img 
-                            src="${ticket.image}" 
-                            alt="${ticket.eventName}"
+                            src="${ticket.image_url || 'https://via.placeholder.com/400x200/e5e7eb/024ddf?text=World+Cup'}" 
+                            alt="${ticket.event_name}"
                             class="ticket-image"
-                            onerror="this.src='https://via.placeholder.com/400x300/e5e7eb/024ddf?text=World+Cup'"
+                            onerror="this.src='https://via.placeholder.com/400x200/e5e7eb/024ddf?text=World+Cup'"
                         />
                         <div class="absolute top-3 left-3 flex gap-1.5">
-                            ${ticket.stage === 'Final' ? '<span class="badge-worldcup">🏆 FINAL</span>' : ''}
-                            ${ticket.stage === 'Semi-Final' ? '<span class="badge-knockout">🌟 SEMI</span>' : ''}
-                            ${ticket.stage === 'Quarter-Final' ? '<span class="badge-knockout">🏅 QUARTER</span>' : ''}
-                            ${ticket.stage === 'Group Stage' ? '<span class="badge-group">📋 GROUP</span>' : ''}
-                            ${ticket.stage === 'Round of 16' ? '<span class="badge-group">⚽ R16</span>' : ''}
-                            ${ticket.hospitality ? '<span class="badge-category">🍾 VIP</span>' : ''}
+                            ${isFinal ? '<span class="badge-worldcup">🏆 FINAL</span>' : ''}
+                            ${isSemi ? '<span class="badge-knockout">🌟 SEMI</span>' : ''}
+                            ${isQuarter ? '<span class="badge-knockout">🏅 QUARTER</span>' : ''}
+                            ${isGroup ? '<span class="badge-group">📋 GROUP</span>' : ''}
+                            ${isR16 ? '<span class="badge-group">⚽ R16</span>' : ''}
+                            ${isHospitality ? '<span class="badge-category">🍾 VIP</span>' : ''}
                         </div>
-                        <button class="absolute top-3 right-3 text-gray-300 hover:text-[#ef4444] text-lg bg-white/80 rounded-full w-8 h-8 flex items-center justify-center" onclick="event.stopPropagation(); toggleWishlist(${ticket.id})">
+                        <button class="absolute top-3 right-3 text-gray-300 hover:text-[#ef4444] text-lg bg-white/80 rounded-full w-8 h-8 flex items-center justify-center" onclick="event.stopPropagation(); toggleWishlist('${ticket.id}')">
                             <i class="far fa-heart" id="heart-${ticket.id}"></i>
                         </button>
                         <div class="absolute bottom-3 right-3">
                             <span class="quantity-badge">
-                                <i class="fas fa-ticket-alt mr-1"></i> ${ticket.quantity} left
+                                <i class="fas fa-ticket-alt mr-1"></i> ${ticket.quantity || 0} left
                             </span>
                         </div>
-                        ${ticket.verified ? '<div class="absolute bottom-3 left-3 flex items-center gap-1 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded text-xs text-green-600"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
+                        ${isVerified ? '<div class="absolute bottom-3 left-3 flex items-center gap-1 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded text-xs text-green-600"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
                     </div>
                     
                     <div class="p-4">
                         <div class="flex items-start justify-between mb-2">
                             <div>
-                                <h3 class="text-base font-semibold text-[#121212] line-clamp-1">${ticket.eventName}</h3>
+                                <h3 class="text-base font-semibold text-[#121212] line-clamp-1">${ticket.event_name}</h3>
                                 <div class="flex items-center gap-1 mt-1">
-                                    <span class="text-sm font-bold text-[#f59e0b]">${ticket.team1}</span>
+                                    <span class="text-sm font-bold text-[#f59e0b]">${ticket.team1 || 'TBD'}</span>
                                     <span class="text-xs text-gray-400">vs</span>
-                                    <span class="text-sm font-bold text-[#ef4444]">${ticket.team2}</span>
+                                    <span class="text-sm font-bold text-[#ef4444]">${ticket.team2 || 'TBD'}</span>
                                 </div>
                             </div>
-                            <span class="text-[#024ddf] font-bold">$${ticket.price.toFixed(2)}</span>
+                            <span class="text-[#024ddf] font-bold">$${(ticket.price || 0).toFixed(2)}</span>
                         </div>
                         
                         <div class="space-y-1.5 text-sm text-gray-500">
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-calendar-alt text-[#024ddf] w-4"></i>
-                                <span>${formatDate(ticket.date)} at ${ticket.time}</span>
+                                <span>${formatDate(ticket.event_date)} at ${ticket.event_time || 'TBD'}</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-map-marker-alt text-[#ef4444] w-4"></i>
-                                <span>${ticket.location}</span>
+                                <span>${ticket.location || 'TBD'}</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-star text-[#f59e0b] w-4"></i>
-                                <span>${ticket.rating} · ${ticket.seatCategory}</span>
+                                <span>${ticket.seat_category || 'Standard'}</span>
                             </div>
                         </div>
                         
-                        <button class="w-full btn-primary btn-primary-sm mt-3" onclick="event.stopPropagation(); openPayment(${ticket.id})">
+                        <button class="w-full btn-primary btn-sm mt-3" onclick="event.stopPropagation(); openPayment('${ticket.id}')">
                             <i class="fas fa-shopping-cart mr-2"></i> Buy Now
                         </button>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
 
             ticketCount.textContent = filteredTickets.length;
             
@@ -1244,8 +1090,13 @@
         // HELPER FUNCTIONS
         // ========================================
         function formatDate(dateStr) {
+            if (!dateStr) return 'TBD';
             const date = new Date(dateStr);
             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        function formatPrice(price) {
+            return '$' + (price || 0).toFixed(2);
         }
 
         // ========================================
@@ -1257,28 +1108,28 @@
             const sort = sortFilter.value;
             
             let filtered = tickets.filter(ticket => {
-                const matchesSearch = ticket.eventName.toLowerCase().includes(searchTerm) ||
-                                     ticket.team1.toLowerCase().includes(searchTerm) ||
-                                     ticket.team2.toLowerCase().includes(searchTerm) ||
-                                     ticket.location.toLowerCase().includes(searchTerm);
+                const matchesSearch = (ticket.event_name || '').toLowerCase().includes(searchTerm) ||
+                                     (ticket.team1 || '').toLowerCase().includes(searchTerm) ||
+                                     (ticket.team2 || '').toLowerCase().includes(searchTerm) ||
+                                     (ticket.location || '').toLowerCase().includes(searchTerm);
                 
-                const matchesStage = stage === 'all' || ticket.category === stage;
+                const matchesStage = stage === 'all' || (ticket.event_category || '').toLowerCase() === stage;
                 
                 return matchesSearch && matchesStage;
             });
             
             switch(sort) {
                 case 'newest':
-                    filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    filtered.sort((a, b) => new Date(b.event_date) - new Date(a.event_date));
                     break;
                 case 'price-low':
-                    filtered.sort((a, b) => a.price - b.price);
+                    filtered.sort((a, b) => (a.price || 0) - (b.price || 0));
                     break;
                 case 'price-high':
-                    filtered.sort((a, b) => b.price - a.price);
+                    filtered.sort((a, b) => (b.price || 0) - (a.price || 0));
                     break;
                 case 'popular':
-                    filtered.sort((a, b) => b.quantity - a.quantity);
+                    filtered.sort((a, b) => (b.quantity || 0) - (a.quantity || 0));
                     break;
             }
             
@@ -1305,14 +1156,6 @@
                         'final': 'final'
                     };
                     stageFilter.value = stageMap[filter] || 'all';
-                } else if (filter === 'hospitality') {
-                    // Filter hospitality tickets
-                    filterTickets();
-                    return;
-                } else if (filter === 'under500') {
-                    // Filter under $500
-                    filterTickets();
-                    return;
                 } else {
                     stageFilter.value = filter;
                 }
@@ -1352,27 +1195,24 @@
         // MODAL - TICKET DETAIL
         // ========================================
         function openModal(id) {
-            const ticket = tickets.find(t => t.id === id);
+            const ticket = tickets.find(t => t.id == id);
             if (!ticket) return;
             
             modalContent.innerHTML = `
                 <div class="flex flex-col lg:flex-row gap-6">
                     <div class="lg:w-1/2">
                         <img 
-                            src="${ticket.image}" 
-                            alt="${ticket.eventName}"
+                            src="${ticket.image_url || 'https://via.placeholder.com/600x350/e5e7eb/024ddf?text=World+Cup'}" 
+                            alt="${ticket.event_name}"
                             class="w-full h-56 object-cover rounded"
-                            onerror="this.src='https://via.placeholder.com/600x400/e5e7eb/024ddf?text=World+Cup'"
+                            onerror="this.src='https://via.placeholder.com/600x350/e5e7eb/024ddf?text=World+Cup'"
                         />
                         <div class="flex flex-wrap gap-2 mt-3">
                             <span class="px-3 py-1 bg-gray-100 rounded text-xs text-gray-600">
-                                <i class="fas fa-tag mr-1 text-[#f59e0b]"></i> ${ticket.stage}
+                                <i class="fas fa-tag mr-1 text-[#f59e0b]"></i> ${ticket.event_category || 'Event'}
                             </span>
                             <span class="px-3 py-1 bg-gray-100 rounded text-xs text-gray-600">
-                                <i class="fas fa-star mr-1 text-[#f59e0b]"></i> ${ticket.rating}
-                            </span>
-                            <span class="px-3 py-1 bg-gray-100 rounded text-xs text-gray-600">
-                                <i class="fas fa-chair mr-1 text-[#024ddf]"></i> ${ticket.seatCategory}
+                                <i class="fas fa-chair mr-1 text-[#024ddf]"></i> ${ticket.seat_category || 'Standard'}
                             </span>
                             ${ticket.hospitality ? '<span class="px-3 py-1 bg-yellow-100 rounded text-xs text-yellow-700">🍾 Hospitality Package</span>' : ''}
                             ${ticket.verified ? '<span class="px-3 py-1 bg-green-100 rounded text-xs text-green-700">✅ Verified Seller</span>' : ''}
@@ -1380,54 +1220,49 @@
                     </div>
                     
                     <div class="lg:w-1/2">
-                        <h2 class="text-2xl font-bold text-[#121212] mb-2">${ticket.eventName}</h2>
+                        <h2 class="text-2xl font-bold text-[#121212] mb-2">${ticket.event_name}</h2>
                         
                         <div class="flex items-center gap-3 mb-4 p-3 bg-gray-50 rounded border border-gray-200">
                             <div class="text-center">
                                 <div class="text-sm text-gray-500">Team 1</div>
-                                <div class="text-lg font-bold text-[#f59e0b]">${ticket.team1}</div>
+                                <div class="text-lg font-bold text-[#f59e0b]">${ticket.team1 || 'TBD'}</div>
                             </div>
                             <div class="text-center">
                                 <div class="text-2xl font-bold text-gray-300">VS</div>
                             </div>
                             <div class="text-center">
                                 <div class="text-sm text-gray-500">Team 2</div>
-                                <div class="text-lg font-bold text-[#ef4444]">${ticket.team2}</div>
+                                <div class="text-lg font-bold text-[#ef4444]">${ticket.team2 || 'TBD'}</div>
                             </div>
                         </div>
                         
                         <div class="space-y-2 text-gray-600 mb-4">
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-calendar-alt text-[#024ddf] w-5"></i>
-                                <span>${formatDate(ticket.date)} at ${ticket.time}</span>
+                                <span>${formatDate(ticket.event_date)} at ${ticket.event_time || 'TBD'}</span>
                             </div>
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-map-marker-alt text-[#ef4444] w-5"></i>
-                                <span>${ticket.location}</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-user text-[#024ddf] w-5"></i>
-                                <span>Seller: ${ticket.seller}</span>
+                                <span>${ticket.location || 'TBD'}</span>
                             </div>
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-chair text-[#024ddf] w-5"></i>
-                                <span>${ticket.seatInfo}</span>
+                                <span>${ticket.seat_info || 'Standard seating'}</span>
                             </div>
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-ticket-alt text-[#f59e0b] w-5"></i>
-                                <span>${ticket.quantity} tickets available</span>
+                                <span>${ticket.quantity || 0} tickets available</span>
                             </div>
                         </div>
                         
-                        <p class="text-gray-500 text-sm mb-4">${ticket.description}</p>
+                        <p class="text-gray-500 text-sm mb-4">${ticket.description || 'No description available.'}</p>
                         
                         <div class="flex items-center justify-between p-4 bg-gray-50 rounded border border-gray-200">
                             <div>
                                 <span class="text-gray-500 text-sm">Price</span>
-                                <div class="text-3xl font-bold text-[#024ddf]">$${ticket.price.toFixed(2)}</div>
-                                ${ticket.hospitality ? '<span class="text-xs text-gray-500">Includes VIP package</span>' : ''}
+                                <div class="text-3xl font-bold text-[#024ddf]">$${(ticket.price || 0).toFixed(2)}</div>
                             </div>
-                            <button onclick="closeModal(); openPayment(${ticket.id})" class="btn-primary">
+                            <button onclick="closeModal(); openPayment('${ticket.id}')" class="btn-primary">
                                 <i class="fas fa-shopping-cart mr-2"></i> Buy Now
                             </button>
                         </div>
@@ -1448,7 +1283,7 @@
         // PAYMENT MODAL
         // ========================================
         function openPayment(id) {
-            const ticket = tickets.find(t => t.id === id);
+            const ticket = tickets.find(t => t.id == id);
             if (!ticket) return;
             
             currentTicketId = id;
@@ -1456,11 +1291,11 @@
             
             document.getElementById('paymentDetails').innerHTML = `
                 <div class="flex items-center gap-4 p-3 bg-gray-50 rounded border border-gray-200">
-                    <img src="${ticket.image}" alt="${ticket.eventName}" class="w-16 h-16 object-cover rounded" />
+                    <img src="${ticket.image_url || 'https://via.placeholder.com/60x60/e5e7eb/024ddf?text=Event'}" alt="${ticket.event_name}" class="w-16 h-16 object-cover rounded" />
                     <div>
-                        <h4 class="font-semibold text-[#121212]">${ticket.eventName}</h4>
-                        <p class="text-gray-500 text-sm">${formatDate(ticket.date)} · ${ticket.location}</p>
-                        <p class="text-[#024ddf] font-bold">$${ticket.price.toFixed(2)}</p>
+                        <h4 class="font-semibold text-[#121212]">${ticket.event_name}</h4>
+                        <p class="text-gray-500 text-sm">${formatDate(ticket.event_date)} · ${ticket.location || 'TBD'}</p>
+                        <p class="text-[#024ddf] font-bold">$${(ticket.price || 0).toFixed(2)}</p>
                     </div>
                 </div>
             `;
@@ -1504,8 +1339,6 @@
         document.getElementById('payNowBtn').addEventListener('click', function() {
             if (!selectedPayment) return;
             
-            const ticket = tickets.find(t => t.id === currentTicketId);
-            
             this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
             this.disabled = true;
             
@@ -1517,7 +1350,8 @@
                     closePaymentModal();
                     showToast(`✅ World Cup tickets secured! Check your email for QR code.`);
                     
-                    const ticketIndex = tickets.findIndex(t => t.id === currentTicketId);
+                    // Update quantity
+                    const ticketIndex = tickets.findIndex(t => t.id == currentTicketId);
                     if (ticketIndex !== -1) {
                         tickets[ticketIndex].quantity--;
                         filterTickets();
@@ -1565,6 +1399,41 @@
         }
 
         // ========================================
+        // NAVBAR/MOBILE
+        // ========================================
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('open');
+            const icon = this.querySelector('i');
+            if (mobileMenu.classList.contains('open')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('open');
+                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
+            });
+        });
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ========================================
         // VIEW TOGGLE
         // ========================================
         document.getElementById('viewGrid').addEventListener('click', function() {
@@ -1592,15 +1461,12 @@
         // ========================================
         // INIT
         // ========================================
-        filterTickets();
+        fetchTickets();
 
         console.log('🏆 TixHub - World Cup 2026 Ticket Marketplace');
-        console.log(`🎫 ${tickets.length} World Cup tickets available`);
-        console.log('🇺🇸 Ticketmaster-style design with USA flag circle');
-        
-        setTimeout(() => {
-            showToast('🏆 Welcome to World Cup 2026 ticket marketplace!', 'info');
-        }, 800);
+        console.log('🔗 Supabase connected');
+        console.log('🇺🇸 Ticketmaster-style design');
+        console.log('📦 Fetching tickets from Supabase...');
     </script>
 </body>
 </html>
