@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>World Cup 2026 Stadiums - TixHub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    
+    <style>
+        /* ======================================== */
+        /* BASE STYLES */
+        /* ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #07070f;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            border-radius: 10px;
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        
+        .glass-card {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+            box-shadow: 0 20px 60px rgba(245, 158, 11, 0.08);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 20px 50px rgba(245, 158, 11, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+        
+        /* Badges */
+        .badge-worldcup {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-capacity {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+        
+        .badge-matches {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+        
+        /* Stadium Card */
+        .stadium-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .stadium-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(245, 158, 11, 0.3);
+            box-shadow: 0 30px 80px rgba(245, 158, 11, 0.1);
+        }
+        
+        .stadium-image {
+            height: 220px;
+            object-fit: cover;
+            width: 100%;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .stadium-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
+            border: 2px solid rgba(245, 158, 11, 0.2);
+        }
+        
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 20px;
+            transition: all 0.4s ease;
+        }
+        
+        .navbar-scrolled {
+            background: rgba(7, 7, 15, 0.92);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px 20px;
+        }
+        
+        .nav-link {
+            position: relative;
+            color: #9ca3af;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .nav-link:hover {
+            color: #fff;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link-active {
+            color: #fff;
+        }
+        
+        .nav-link-active::after {
+            width: 100%;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin-top: 8px;
+            padding: 20px;
+            background: rgba(7, 7, 15, 0.95);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+        }
+        
+        .mobile-menu.open {
+            display: block;
+        }
+        
+        /* Filter Tags */
+        .filter-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #9ca3af;
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+        
+        .filter-tag:hover,
+        .filter-tag.active {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: #f59e0b;
+            color: #fff;
+        }
+        
+        .filter-tag.active {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+            padding: 14px 20px;
+            border-radius: 16px;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 0.9rem;
+            max-width: 90%;
+            width: 380px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        @keyframes slideInRight {
+            0% { transform: translateX(100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 16px;
+            }
+            
+            .stadium-image {
+                height: 160px;
+            }
+            
+            .stadium-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.5rem;
+            }
+            
+            .glass-card {
+                padding: 16px !important;
+            }
+            
+            .filter-tag {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+        }
+        
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Stats Counter */
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        
+        /* Map Placeholder */
+        .map-placeholder {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(239, 68, 68, 0.05));
+            border: 1px solid rgba(245, 158, 11, 0.1);
+            border-radius: 16px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ======================================== -->
+    <!-- NAVIGATION -->
+    <!-- ======================================== -->
+    <nav class="navbar" id="navbar">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2.5 shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500 to-red-500 flex items-center justify-center shadow-lg shadow-yellow-500/25">
+                    <i class="fas fa-ticket-alt text-white text-lg"></i>
+                </div>
+                <span class="text-2xl font-bold text-white tracking-tight">
+                    Tix<span class="text-gradient-animated">Hub</span>
+                </span>
+                <span class="hidden md:inline text-xs bg-gradient-to-r from-yellow-500 to-red-500 text-white px-2 py-0.5 rounded-full font-bold">
+                    World Cup 2026
+                </span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="buy.html" class="nav-link">Buy Tickets</a>
+                <a href="sell.html" class="nav-link">Sell Tickets</a>
+                <a href="matches.html" class="nav-link">Matches</a>
+                <a href="stadiums.html" class="nav-link nav-link-active">Stadiums</a>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <a href="auth.html" class="hidden md:block text-gray-400 hover:text-white transition font-medium text-sm">
+                    <i class="fas fa-user mr-2"></i>Sign In
+                </a>
+                <a href="auth.html" class="btn-primary px-5 py-2.5 rounded-xl text-white text-sm font-semibold">
+                    <i class="fas fa-rocket mr-2"></i>Get Started
+                </a>
+                <button id="mobileToggle" class="md:hidden text-white text-2xl p-2">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobileMenu" class="mobile-menu md:hidden">
+            <div class="flex flex-col gap-4">
+                <a href="index.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Home</a>
+                <a href="buy.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Buy Tickets</a>
+                <a href="sell.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Sell Tickets</a>
+                <a href="matches.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Matches</a>
+                <a href="stadiums.html" class="text-white font-semibold py-2 border-b border-white/5">Stadiums</a>
+                <a href="auth.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Sign In</a>
+                <a href="auth.html" class="btn-primary text-center py-3 rounded-xl text-white font-semibold">
+                    <i class="fas fa-rocket mr-2"></i>Get Started
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ======================================== -->
+    <!-- HERO BANNER -->
+    <!-- ======================================== -->
+    <section class="pt-28 pb-8 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="glass-card p-6 md:p-8 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-yellow-500/5 via-red-500/5 to-transparent"></div>
+                <div class="relative z-10">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="badge-worldcup">🏟️ FIFA World Cup 2026</span>
+                                <span class="badge-matches">12 Stadiums</span>
+                            </div>
+                            <h1 class="text-3xl md:text-4xl font-bold">
+                                World Cup <span class="text-gradient-animated">Stadiums</span>
+                            </h1>
+                            <p class="text-gray-400 text-sm md:text-base mt-1">
+                                Explore the 12 iconic stadiums hosting the World Cup 2026
+                            </p>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="glass px-4 py-2 rounded-xl text-center">
+                                <div class="text-xs text-gray-400">Total Capacity</div>
+                                <div class="text-2xl font-bold text-yellow-400">2.4M+</div>
+                            </div>
+                            <div class="glass px-4 py-2 rounded-xl text-center">
+                                <div class="text-xs text-gray-400">Matches</div>
+                                <div class="text-2xl font-bold text-red-400">64</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- STATS -->
+    <!-- ======================================== -->
+    <section class="px-4 pb-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card p-4 text-center">
+                    <div class="stat-number">12</div>
+                    <div class="text-gray-400 text-sm">Stadiums</div>
+                </div>
+                <div class="glass-card p-4 text-center">
+                    <div class="stat-number">64</div>
+                    <div class="text-gray-400 text-sm">Matches Hosted</div>
+                </div>
+                <div class="glass-card p-4 text-center">
+                    <div class="stat-number">2.4M+</div>
+                    <div class="text-gray-400 text-sm">Total Capacity</div>
+                </div>
+                <div class="glass-card p-4 text-center">
+                    <div class="stat-number">16</div>
+                    <div class="text-gray-400 text-sm">US States</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- FILTERS -->
+    <!-- ======================================== -->
+    <section class="px-4 pb-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="glass-card p-4">
+                <div class="flex flex-wrap gap-2">
+                    <span class="filter-tag active" data-filter="all">🏟️ All Stadiums</span>
+                    <span class="filter-tag" data-filter="east">🗽 East Coast</span>
+                    <span class="filter-tag" data-filter="west">🌴 West Coast</span>
+                    <span class="filter-tag" data-filter="south">🌞 South</span>
+                    <span class="filter-tag" data-filter="midwest">🌾 Midwest</span>
+                    <span class="filter-tag" data-filter="largest">🏆 Largest</span>
+                    <span class="filter-tag" data-filter="final">🏆 Final Host</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- STADIUM GRID -->
+    <!-- ======================================== -->
+    <section class="px-4 pb-20">
+        <div class="max-w-7xl mx-auto">
+            <div id="stadiumsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Rendered by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- STADIUM DETAIL MODAL -->
+    <!-- ======================================== -->
+    <div id="stadiumModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeStadiumModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="glass-card max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative">
+                <button onclick="closeStadiumModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div id="stadiumModalContent">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- SCROLL TO TOP -->
+    <!-- ======================================== -->
+    <button id="scrollTopBtn" class="scroll-top w-12 h-12 bg-gradient-to-br from-yellow-500 to-red-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-yellow-500/30">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ======================================== -->
+    <!-- FOOTER -->
+    <!-- ======================================== -->
+    <footer class="border-t border-white/5 py-12 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500 to-red-500 flex items-center justify-center">
+                            <i class="fas fa-ticket-alt text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-white">Tix<span class="text-gradient-animated">Hub</span></span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Secure ticket marketplace for World Cup 2026 and beyond.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-yellow-400 transition">World Cup 2026</a></li>
+                        <li><a href="matches.html" class="hover:text-yellow-400 transition">Matches</a></li>
+                        <li><a href="stadiums.html" class="hover:text-yellow-400 transition">Stadiums</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Hospitality</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-yellow-400 transition">Help Center</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Follow Us</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
+                            <i class="fab fa-twitter text-gray-400 hover:text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
+                            <i class="fab fa-instagram text-gray-400 hover:text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
+                            <i class="fab fa-facebook text-gray-400 hover:text-white"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/5 mt-8 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2026 TixHub. All rights reserved. | FIFA World Cup 2026
+            </div>
+        </div>
+    </footer>
+
+    <!-- ======================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ======================================== -->
+    <script>
+        // ========================================
+        // STADIUM DATA
+        // ========================================
+        const stadiumsData = [
+            {
+                id: 1,
+                name: "MetLife Stadium",
+                city: "East Rutherford, New Jersey",
+                state: "NJ",
+                region: "east",
+                capacity: 82500,
+                image: "https://images.unsplash.com/photo-1522156373667-4a7230df5b0c?w=600&h=400&fit=crop",
+                icon: "🏟️",
+                matches: 8,
+                matchesList: ["Final", "Semi-Final", "Quarter-Final", "Group Stage x5"],
+                description: "The largest stadium in the US, MetLife Stadium will host the World Cup Final. A state-of-the-art venue with incredible atmosphere.",
+                features: ["Retractable Roof", "Premium Suites", "4K Video Board", "VIP Hospitality"],
+                yearBuilt: 2010,
+                homeTeam: "New York Giants & Jets",
+                finalHost: true,
+                ticketsAvailable: true,
+                avgPrice: 199.99
+            },
+            {
+                id: 2,
+                name: "SoFi Stadium",
+                city: "Inglewood, California",
+                state: "CA",
+                region: "west",
+                capacity: 70000,
+                image: "https://images.unsplash.com/photo-1592982537447-6f2a3a3d9f8a?w=600&h=400&fit=crop",
+                icon: "🌴",
+                matches: 7,
+                matchesList: ["Semi-Final", "Quarter-Final", "Group Stage x5"],
+                description: "SoFi Stadium is a technological marvel with a stunning design. Home to the LA Rams and Chargers.",
+                features: ["Oculus Video Board", "Premium Seating", "Beach Club", "Natural Light"],
+                yearBuilt: 2020,
+                homeTeam: "LA Rams & Chargers",
+                finalHost: false,
+                ticketsAvailable: true,
+                avgPrice: 179.99
+            },
+            {
+                id: 3,
+                name: "AT&T Stadium",
+                city: "Arlington, Texas",
+                state: "TX",
+                region: "south",
+                capacity: 80000,
+                image: "https://images.unsplash.com/photo-1580120443074-35d9dcd6b998?w=600&h=400&fit=crop",
+                icon: "🤠",
+                matches: 6,
+                matchesList: ["Semi-Final", "Quarter-Final", "Group Stage x4"],
+                description: "Known as 'Jerry World', AT&T Stadium features a massive retractable roof and the largest video screen in the world.",
+                features: ["Retractable Roof", "Giant Video Board", "Party Pass Areas", "High-Tech Lighting"],
+                yearBuilt: 2009,
+                homeTeam: "Dallas Cowboys",
+                finalHost: false,
+                ticketsAvailable: true,
+                avgPrice: 159.99
+            },
+            {
+                id: 4,
+                name: "Levi's Stadium",
+                city: "Santa Clara, California",
+                state: "CA",
+                region: "west",
+                capacity: 68500,
+                image: "https://images.unsplash.com/photo-1576175806009-3b5f9b8c6d32?w=600&h=400&fit=crop",
+                icon: "🌉",
+                matches: 5,
+                matchesList: ["Quarter-Final", "Group Stage x4"],
+                description: "Levi's Stadium is one of the most technologically advanced venues, located in the heart of Silicon Valley.",
+                features: ["Solar Panels", "Green Roof", "High-Speed Wi-Fi", "Tech Integration"],
+                yearBuilt: 2014,
+                homeTeam: "San Francisco 49ers",
+                finalHost: false,
+                ticketsAvailable: true,
+                avgPrice: 139.99
+            },
+            {
+                id: 5,
+                name: "Hard Rock Stadium",
+                city: "Miami Gardens, Florida",
+                state: "FL",
+                region: "south",
+                capacity: 65300,
+                image: "https://images.unsplash.com/photo-1576175806009-3b5f9b8c6d32?w=600&h=400&fit=crop",
+                icon: "🌊",
+                matches: 5,
+                matchesList: ["Quarter-Final", "Group Stage x4"],
+                description: "Hard Rock Stadium has been completely renovated and features a massive canopy to protect fans from the Florida heat.",
+                features: ["Canopy Roof", "Premium Clubs", "Wide Concourses", "Waterfront Views"],
+                yearBuilt: 1987,
+                homeTeam: "Miami Dolphins",
+                finalHost: false,
+                ticketsAvailable: true,
+                avgPrice: 149.99
+            },
+            {
+                id: 6,
+                name: "Arrowhead Stadium",
+                city: "Kansas City, Missouri",
+                state: "MO",
+                region: "midwest",
+                capacity: 76416,
+                image: "https://images.unsplash.com/photo-1580120443074-35d9dcd6b998?w=600&h=400&fit=crop",
+                icon: "🌾",
+                matches: 4,
+                matchesList: ["Quarter-Final", "Group Stage x3"],
+                description: "Arrowhead Stadium is known as one of the loudest stadiums in the world. Home to the Kansas City Chiefs.",
+                features: ["Loudest Stadium", "Tailgating Paradise", "Hall of Fame", "Sea of Red"],
+                yearBuilt: 1972,
+                homeTeam: "Kansas City Chiefs",
+                finalHost: false,
+                ticketsAvailable: true,
+                avgPrice: 129.99
+            },
+            {
+                id: 7,
+                name: "NRG Stadium",
+                city: "Houston, Texas",
+                state: "TX",
+                region: "south",
+                capacity: 72000,
+                image: "https://images.unsplash.com/photo-1580120443074-35d9dcd6b998?w=600&h=400&fit=crop",
+                icon: "🚀",
+                matches: 4,
+                matchesList: ["Group Stage x4"],
+                description: "NRG Stadium features a retractable roof and has hosted numerous Super Bowls. A world-class venue.",
+                features: ["Retractable Roof", "Natural Grass", "Super Bowl History", "Large Concourses"],
+                yearBuilt: 2002,
+                homeTeam: "Houston Texans",
+                finalHost: false,
+                ticketsAvailable: true,
+                avgPrice: 119.99
+            },
+            {
+                id: 8,
+                name: "Mercedes-Benz Stadium",
+                city: "Atlanta, Georgia",
+                state: "GA",
+                region: "south",
+                capacity: 71000,
+                image: "https://images.unsplash.com/photo-1576175806009-3b5f9b8c6d32?w=600&h=400&fit=crop",
+                icon: "⚡",
+                matches: 5,
+                matchesList: ["Group Stage x5"],
+                description: "Mercedes-Benz Stadium is a futuristic venue with a retractable roof and a unique 360-degree video board.",
+                features: ["Retractable Roof", "360-Degree Screen", "Luxury Suites", "Sustainable Design"],
+                yearBuilt: 2017,
+                homeTeam: "Atlanta Falcons & United",
+                finalHost: false,
+                ticketsAvailable: true,
+                avgPrice: 109.99
+            },
+            {
+                id: 9,
+                name: "Lincoln Financial Field",
+                city: "Philadelphia, Pennsylvania",
+                state: "PA",
+                region: "east",
+                capacity: 69500,
+                image: "https://images.unsplash.com/photo-1522156373667-4a7230df5b0c?w=600&h=400&fit=crop",
+                icon: "🔔",
+                matches: 4,
+                matchesList: ["Group Stage x4"],
+                description: "Lincoln Financial Field is a classic American stadium with a passionate fan base. Home to the Philadelphia Eagles.",
+                features: ["Open Air", "Great Sightlines", "Historic City", "Passionate Fans"],
+                yearBuilt: 2003,
+                homeTeam: "Philadelphia Eagles",
+                finalHost: false,
+                ticketsAvailable: true,
+                avgPrice: 99.99
+            },
+            {
+                id: 10,
+                name: "Nissan Stadium",
+                city: "Nashville, Tennessee",
+                state: "TN",
+                region: "south",
+                capacity: 69000,
+                image: "https://images.unsplash.com/photo-1580120443074-35d9dcd6b998?w=600&h=400&fit=crop",
+                icon: "🎸",
+                matches: 4,
+                matchesList: ["Group Stage x4"],
+                description: "Nissan Stadium is located in the heart of Music City, offering incredible views of the Nashville skyline.",
+                features: ["Skyline Views", "Music City Vibe", "Open Design", "River Location"],
+                yearBuilt: 1999,
+                homeTeam: "Tennessee Titans",
+                finalHost: false,
+                ticketsAvailable: true,
+                avgPrice: 89.99
+            },
+            {
+                id: 11,
+                name: "Gillette Stadium",
+                city: "Foxborough, Massachusetts",
+                state: "MA",
+                region: "east",
+                capacity: 66500,
+                image: "https://images.unsplash.com/photo-1522156373667-4a7230df5b0c?w=600&h=400&fit=crop",
+                icon: "🏛️",
+                matches: 4,
+                matchesList: ["Group Stage x4"],
+                description: "Gillette Stadium is the home of the New England Patriots, known for its incredible atmosphere and history.",
+                features: ["Patriot Place", "Hall of Fame", "Open Air", "Great Parking"],
+                yearBuilt: 2002,
+                homeTeam: "New England Patriots",
+                finalHost: false,
+                ticketsAvailable: true,
+                avgPrice: 79.99
+            },
+            {
+                id: 12,
+                name: "Lumen Field",
+                city: "Seattle, Washington",
+                state: "WA",
+                region: "west",
+                capacity: 69000,
+                image: "https://images.unsplash.com/photo-1576175806009-3b5f9b8c6d32?w=600&h=400&fit=crop",
+                icon: "🌧️",
+                matches: 4,
+                matchesList: ["Group Stage x4"],
+                description: "Lumen Field is famous for its 12th Man and incredible noise levels. Home to the Seattle Seahawks.",
+                features: ["Loudest Fans", "12th Man", "City Views", "Open Design"],
+                yearBuilt: 2002,
+                homeTeam: "Seattle Seahawks",
+                finalHost: false,
+                ticketsAvailable: true,
+                avgPrice: 69.99
+            }
+        ];
+
+        // ========================================
+        // STATE
+        // ========================================
+        let filteredStadiums = [...stadiumsData];
+        let activeFilter = 'all';
+
+        // ========================================
+        // DOM ELEMENTS
+        // ========================================
+        const stadiumsContainer = document.getElementById('stadiumsContainer');
+        const filterTags = document.querySelectorAll('.filter-tag');
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        const modal = document.getElementById('stadiumModal');
+        const modalContent = document.getElementById('stadiumModalContent');
+
+        // ========================================
+        // RENDER STADIUMS
+        // ========================================
+        function renderStadiums() {
+            if (filteredStadiums.length === 0) {
+                stadiumsContainer.innerHTML = `
+                    <div class="col-span-full glass-card p-12 text-center">
+                        <i class="fas fa-map-marker-alt text-5xl text-gray-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">No stadiums found</h3>
+                        <p class="text-gray-400">Try adjusting your filters</p>
+                    </div>
+                `;
+                return;
+            }
+
+            stadiumsContainer.innerHTML = filteredStadiums.map(stadium => `
+                <div class="glass-card stadium-card overflow-hidden" onclick="openStadiumModal(${stadium.id})">
+                    <img 
+                        src="${stadium.image}" 
+                        alt="${stadium.name}"
+                        class="stadium-image"
+                        onerror="this.src='https://via.placeholder.com/600x400/1a1a2e/f59e0b?text=${stadium.name}'"
+                    />
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-2xl">${stadium.icon}</span>
+                                    <h3 class="text-xl font-bold">${stadium.name}</h3>
+                                </div>
+                                <p class="text-sm text-gray-400">${stadium.city}</p>
+                            </div>
+                            ${stadium.finalHost ? '<span class="badge-worldcup">🏆 Final</span>' : ''}
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <span class="badge-capacity">
+                                <i class="fas fa-users mr-1"></i> ${stadium.capacity.toLocaleString()}
+                            </span>
+                            <span class="badge-matches">
+                                <i class="fas fa-futbol mr-1"></i> ${stadium.matches} Matches
+                            </span>
+                        </div>
+                        
+                        <div class="mt-3 text-sm text-gray-400 line-clamp-2">
+                            ${stadium.description}
+                        </div>
+                        
+                        <div class="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+                            <div>
+                                <span class="text-xs text-gray-500">Tickets from</span>
+                                <div class="text-yellow-400 font-bold">$${stadium.avgPrice}</div>
+                            </div>
+                            <button onclick="event.stopPropagation(); viewStadiumTickets(${stadium.id})" class="btn-primary px-4 py-2 rounded-xl text-white text-sm font-semibold">
+                                <i class="fas fa-ticket-alt mr-1"></i> Tickets
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ========================================
+        // FILTER STADIUMS
+        // ========================================
+        function filterStadiums(filter) {
+            activeFilter = filter;
+            
+            switch(filter) {
+                case 'east':
+                    filteredStadiums = stadiumsData.filter(s => s.region === 'east');
+                    break;
+                case 'west':
+                    filteredStadiums = stadiumsData.filter(s => s.region === 'west');
+                    break;
+                case 'south':
+                    filteredStadiums = stadiumsData.filter(s => s.region === 'south');
+                    break;
+                case 'midwest':
+                    filteredStadiums = stadiumsData.filter(s => s.region === 'midwest');
+                    break;
+                case 'largest':
+                    filteredStadiums = [...stadiumsData].sort((a, b) => b.capacity - a.capacity);
+                    break;
+                case 'final':
+                    filteredStadiums = stadiumsData.filter(s => s.finalHost);
+                    break;
+                default:
+                    filteredStadiums = [...stadiumsData];
+            }
+            
+            renderStadiums();
+        }
+
+        // ========================================
+        // FILTER TAGS
+        // ========================================
+        filterTags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                filterTags.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                filterStadiums(this.dataset.filter);
+            });
+        });
+
+        // ========================================
+        // STADIUM MODAL
+        // ========================================
+        function openStadiumModal(id) {
+            const stadium = stadiumsData.find(s => s.id === id);
+            if (!stadium) return;
+            
+            modalContent.innerHTML = `
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <div class="lg:w-1/2">
+                        <img 
+                            src="${stadium.image}" 
+                            alt="${stadium.name}"
+                            class="w-full h-64 object-cover rounded-xl"
+                            onerror="this.src='https://via.placeholder.com/600x400/1a1a2e/f59e0b?text=${stadium.name}'"
+                        />
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <span class="badge-capacity">
+                                <i class="fas fa-users mr-1"></i> ${stadium.capacity.toLocaleString()} capacity
+                            </span>
+                            <span class="badge-matches">
+                                <i class="fas fa-futbol mr-1"></i> ${stadium.matches} matches
+                            </span>
+                            ${stadium.finalHost ? '<span class="badge-worldcup">🏆 Final Host</span>' : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="lg:w-1/2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-3xl">${stadium.icon}</span>
+                            <h2 class="text-2xl font-bold">${stadium.name}</h2>
+                        </div>
+                        <p class="text-gray-400 text-sm">${stadium.city}</p>
+                        
+                        <div class="glass p-4 rounded-xl mt-4 space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Home Team</span>
+                                <span class="text-white">${stadium.homeTeam}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Year Built</span>
+                                <span class="text-white">${stadium.yearBuilt}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Avg Ticket Price</span>
+                                <span class="text-yellow-400 font-bold">$${stadium.avgPrice}</span>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-300 text-sm mt-4">${stadium.description}</p>
+                        
+                        <div class="mt-4">
+                            <h4 class="font-semibold text-sm mb-2">Matches Hosted</h4>
+                            <div class="flex flex-wrap gap-2">
+                                ${stadium.matchesList.map(m => 
+                                    `<span class="glass px-3 py-1 rounded-full text-xs text-gray-300">${m}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h4 class="font-semibold text-sm mb-2">Features</h4>
+                            <div class="flex flex-wrap gap-2">
+                                ${stadium.features.map(f => 
+                                    `<span class="glass px-3 py-1 rounded-full text-xs text-green-400"><i class="fas fa-check-circle mr-1"></i>${f}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        
+                        <button onclick="closeStadiumModal(); viewStadiumTickets(${stadium.id})" class="w-full btn-primary py-3 rounded-xl text-white font-semibold mt-4">
+                            <i class="fas fa-ticket-alt mr-2"></i> Buy Tickets for ${stadium.name}
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeStadiumModal() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // ========================================
+        // VIEW STADIUM TICKETS
+        // ========================================
+        function viewStadiumTickets(id) {
+            const stadium = stadiumsData.find(s => s.id === id);
+            closeStadiumModal();
+            showToast(`🎫 Showing tickets for ${stadium.name}`, 'success');
+            setTimeout(() => {
+                window.location.href = `buy.html?stadium=${stadium.id}`;
+            }, 800);
+        }
+
+        // ========================================
+        // TOAST
+        // ========================================
+        function showToast(message, type = 'info') {
+            document.querySelectorAll('.toast').forEach(t => t.remove());
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            const colors = {
+                success: '#10b981',
+                error: '#ef4444',
+                info: '#f59e0b'
+            };
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <i class="fas ${icons[type]}" style="color: ${colors[type]}; font-size: 1.25rem;"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // ========================================
+        // NAVBAR SCROLL
+        // ========================================
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+            
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ========================================
+        // MOBILE MENU
+        // ========================================
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('open');
+            const icon = this.querySelector('i');
+            if (mobileMenu.classList.contains('open')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('open');
+                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
+            });
+        });
+
+        // ========================================
+        // ESCAPE KEY
+        // ========================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeStadiumModal();
+            }
+        });
+
+        // ========================================
+        // INIT
+        // ========================================
+        renderStadiums();
+
+        console.log('🏟️ TixHub - World Cup 2026 Stadiums');
+        console.log(`🏟️ ${stadiumsData.length} stadiums loaded`);
+        console.log('🏆 Final host: MetLife Stadium');
+        
+        setTimeout(() => {
+            showToast('🏟️ Explore the 12 World Cup stadiums!', 'info');
+        }, 800);
+    </script>
+</body>
+</html>
