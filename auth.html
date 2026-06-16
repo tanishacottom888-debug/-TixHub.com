@@ -430,7 +430,7 @@
 <body>
 
     <!-- ======================================== -->
-    <!-- NAVIGATION - Ticketmaster Style -->
+    <!-- NAVIGATION -->
     <!-- ======================================== -->
     <nav class="navbar">
         <div class="navbar-top hidden md:flex items-center justify-between">
@@ -533,7 +533,7 @@
                 <!-- LOGIN FORM -->
                 <!-- ======================================== -->
                 <div id="loginForm">
-                    <form id="loginFormElement" onsubmit="handleLogin(event)">
+                    <form id="loginFormElement" onsubmit="return handleLogin(event)">
                         <div class="space-y-4">
                             <div class="relative">
                                 <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -565,7 +565,7 @@
                 <!-- SIGNUP FORM -->
                 <!-- ======================================== -->
                 <div id="signupForm" class="hidden">
-                    <form id="signupFormElement" onsubmit="handleSignup(event)">
+                    <form id="signupFormElement" onsubmit="return handleSignup(event)">
                         <div class="space-y-4">
                             <div class="relative">
                                 <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -690,60 +690,15 @@
     <!-- ======================================== -->
     <script>
         // ========================================
-        // SUPABASE CONFIGURATION - Your Keys
+        // SUPABASE CONFIGURATION
         // ========================================
         const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
         
+        console.log('🔐 Supabase Config:', { url: SUPABASE_URL, key: SUPABASE_ANON_KEY.substring(0, 20) + '...' });
+        
         // Initialize Supabase
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        
-        // ========================================
-        // AUTH FUNCTIONS
-        // ========================================
-        async function signUp(email, password, fullName) {
-            try {
-                const { data, error } = await supabase.auth.signUp({
-                    email: email,
-                    password: password,
-                    options: {
-                        data: { full_name: fullName }
-                    }
-                });
-                if (error) throw error;
-                return { success: true, data: data };
-            } catch (error) {
-                return { success: false, error: error.message };
-            }
-        }
-        
-        async function signIn(email, password) {
-            try {
-                const { data, error } = await supabase.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
-                if (error) throw error;
-                return { success: true, data: data };
-            } catch (error) {
-                return { success: false, error: error.message };
-            }
-        }
-        
-        async function resetPassword(email) {
-            try {
-                const { error } = await supabase.auth.resetPasswordForEmail(email);
-                if (error) throw error;
-                return { success: true };
-            } catch (error) {
-                return { success: false, error: error.message };
-            }
-        }
-        
-        async function isLoggedIn() {
-            const { data: { session } } = await supabase.auth.getSession();
-            return !!session;
-        }
         
         // ========================================
         // STATE
@@ -751,11 +706,14 @@
         let currentTab = 'login';
 
         // ========================================
-        // MOBILE MENU
+        // DOM ELEMENTS
         // ========================================
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileMenu = document.getElementById('mobileMenu');
         
+        // ========================================
+        // MOBILE MENU
+        // ========================================
         mobileToggle.addEventListener('click', function() {
             mobileMenu.classList.toggle('open');
             const icon = this.querySelector('i');
@@ -782,6 +740,13 @@
             document.getElementById('signupTab').classList.toggle('active', tab === 'signup');
             document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
             document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
+            
+            // Clear any errors
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.classList.remove('error', 'success');
+            });
+            
+            console.log(`📋 Switched to ${tab} tab`);
         }
 
         // ========================================
@@ -800,10 +765,12 @@
         }
 
         // ========================================
-        // HANDLE LOGIN - Supabase
+        // HANDLE LOGIN - FIXED
         // ========================================
         async function handleLogin(e) {
             e.preventDefault();
+            
+            console.log('🔑 Login form submitted');
             
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
@@ -811,38 +778,55 @@
             
             if (!email || !password) {
                 showToast('Please fill in all fields', 'error');
-                return;
+                return false;
             }
             
             if (password.length < 6) {
                 showToast('Password must be at least 6 characters', 'error');
-                return;
+                return false;
             }
             
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
             
-            const result = await signIn(email, password);
-            
-            if (result.success) {
+            try {
+                console.log('📤 Attempting login for:', email);
+                
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                
+                console.log('📥 Login response:', { data, error });
+                
+                if (error) throw error;
+                
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
+                
                 showToast('✅ Welcome back! Redirecting...', 'success');
+                
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
                 }, 1500);
-            } else {
+                
+            } catch (error) {
+                console.error('❌ Login error:', error);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
-                showToast('❌ Invalid email or password', 'error');
+                showToast('❌ ' + (error.message || 'Invalid email or password'), 'error');
             }
+            
+            return false;
         }
 
         // ========================================
-        // HANDLE SIGNUP - Supabase
+        // HANDLE SIGNUP - FIXED
         // ========================================
         async function handleSignup(e) {
             e.preventDefault();
+            
+            console.log('📝 Signup form submitted');
             
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
@@ -851,50 +835,96 @@
             const terms = document.getElementById('termsCheck').checked;
             const btn = document.getElementById('signupBtn');
             
+            // Validate
             if (!name || !email || !password || !confirmPassword) {
                 showToast('Please fill in all fields', 'error');
-                return;
+                return false;
             }
             
             if (password.length < 6) {
                 showToast('Password must be at least 6 characters', 'error');
-                return;
+                return false;
             }
             
             if (password !== confirmPassword) {
                 showToast('Passwords do not match', 'error');
-                return;
+                return false;
             }
             
             if (!terms) {
                 showToast('Please agree to the Terms of Service', 'error');
-                return;
+                return false;
             }
             
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
-            const result = await signUp(email, password, name);
-            
-            if (result.success) {
+            try {
+                console.log('📤 Attempting signup for:', email);
+                
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: name,
+                        }
+                    }
+                });
+                
+                console.log('📥 Signup response:', { data, error });
+                
+                if (error) throw error;
+                
+                // If user was created, try to create profile
+                if (data.user) {
+                    try {
+                        const { error: profileError } = await supabase
+                            .from('profiles')
+                            .insert([
+                                {
+                                    id: data.user.id,
+                                    full_name: name,
+                                    created_at: new Date().toISOString()
+                                }
+                            ]);
+                        
+                        if (profileError) {
+                            console.warn('⚠️ Profile creation warning:', profileError);
+                        } else {
+                            console.log('✅ Profile created successfully');
+                        }
+                    } catch (profileErr) {
+                        console.warn('⚠️ Profile creation error:', profileErr);
+                    }
+                }
+                
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                
                 showToast('🎉 Account created! Redirecting...', 'success');
+                
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
                 }, 1500);
-            } else {
+                
+            } catch (error) {
+                console.error('❌ Signup error:', error);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                showToast('❌ Account creation failed. Please try again.', 'error');
+                showToast('❌ ' + (error.message || 'Account creation failed'), 'error');
             }
+            
+            return false;
         }
 
         // ========================================
         // SOCIAL LOGIN
         // ========================================
         function socialLogin(provider) {
+            console.log(`🔗 Social login with ${provider}`);
             showToast(`Connecting to ${provider}...`, 'info');
+            
             supabase.auth.signInWithOAuth({
                 provider: provider,
                 options: {
@@ -925,13 +955,15 @@
                 return;
             }
             
-            const result = await resetPassword(email);
-            
-            if (result.success) {
+            try {
+                const { error } = await supabase.auth.resetPasswordForEmail(email);
+                
+                if (error) throw error;
+                
                 showToast('📧 Reset link sent to your email!', 'success');
                 closeForgotModal();
-            } else {
-                showToast('❌ Failed to send reset link.', 'error');
+            } catch (error) {
+                showToast('❌ Failed to send reset link: ' + error.message, 'error');
             }
         }
 
@@ -939,9 +971,16 @@
         // CHECK IF ALREADY LOGGED IN
         // ========================================
         async function checkAuth() {
-            const loggedIn = await isLoggedIn();
-            if (loggedIn) {
-                window.location.href = 'dashboard.html';
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                console.log('🔍 Session check:', session ? 'Logged in' : 'Not logged in');
+                
+                if (session) {
+                    console.log('👤 User already logged in, redirecting to dashboard');
+                    window.location.href = 'dashboard.html';
+                }
+            } catch (error) {
+                console.error('⚠️ Session check error:', error);
             }
         }
 
@@ -998,6 +1037,7 @@
         // INIT
         // ========================================
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Auth page loaded');
             checkAuth();
             document.getElementById('loginEmail').focus();
         });
@@ -1005,6 +1045,7 @@
         console.log('🔐 TixHub - Supabase Auth Ready');
         console.log('📦 Supabase URL:', SUPABASE_URL);
         console.log('🇺🇸 Ticketmaster-style design');
+        console.log('💡 Tip: Use console.log to debug');
     </script>
 </body>
 </html>
