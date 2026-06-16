@@ -16,8 +16,21 @@
     
     <style>
         /* ======================================== */
-        /* PREMIUM STYLES */
+        /* TICKETMASTER INSPIRED STYLES */
         /* ======================================== */
+        :root {
+            --tm-blue: #024ddf;
+            --tm-blue-hover: #0139a7;
+            --tm-dark: #121212;
+            --tm-gray: #646464;
+            --tm-gray-light: #bfbfbf;
+            --tm-gray-bg: #f6f6f6;
+            --tm-white: #ffffff;
+            --tm-gold: #ffb932;
+            --tm-red: #eb0000;
+            --tm-text: #121212;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -25,195 +38,287 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: #07070f;
-            color: #ffffff;
+            font-family: 'Inter', 'Averta', helvetica, arial, sans-serif;
+            background: var(--tm-white);
+            color: var(--tm-text);
             overflow-x: hidden;
         }
         
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0a0a1a;
+            background: var(--tm-gray-bg);
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            background: var(--tm-gray-light);
             border-radius: 10px;
         }
-        
-        /* Glassmorphism */
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--tm-gray);
         }
         
-        .glass-card {
-            background: rgba(26, 26, 46, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .glass-card:hover {
-            border-color: rgba(245, 158, 11, 0.3);
-            box-shadow: 0 20px 60px rgba(245, 158, 11, 0.08);
-        }
-        
-        /* Buttons */
+        /* ======================================== */
+        /* TICKETMASTER STYLE BUTTONS */
+        /* ======================================== */
         .btn-primary {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
+            background: var(--tm-blue);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            line-height: 1.4;
+            min-height: 44px;
+            text-decoration: none;
         }
         
         .btn-primary:hover {
-            transform: scale(1.02) translateY(-2px);
-            box-shadow: 0 20px 50px rgba(245, 158, 11, 0.4);
-        }
-        
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-        
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg) translateX(-100%);
-            transition: 0.8s;
-        }
-        
-        .btn-primary:hover::after {
-            transform: rotate(45deg) translateX(100%);
-        }
-        
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--tm-blue-hover);
             transform: scale(1.02);
         }
         
-        /* Form Inputs */
-        .form-input {
-            background: rgba(26, 26, 46, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            padding: 14px 18px;
-            color: #fff;
-            width: 100%;
-            transition: all 0.3s ease;
-            font-size: 16px;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: #f59e0b;
-            box-shadow: 0 0 30px rgba(245, 158, 11, 0.08);
-        }
-        
-        .form-input::placeholder {
-            color: #6b7280;
-        }
-        
-        .form-input:disabled {
+        .btn-primary:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
         
+        .btn-secondary {
+            background: transparent;
+            color: var(--tm-text);
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid var(--tm-gray-light);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            line-height: 1.4;
+            min-height: 44px;
+            text-decoration: none;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--tm-dark);
+            background: var(--tm-gray-bg);
+        }
+        
+        /* ======================================== */
+        /* NAVBAR - Ticketmaster Style */
+        /* ======================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--tm-dark);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-top {
+            padding: 6px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        
+        .navbar-main {
+            padding: 10px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav-link {
+            position: relative;
+            color: #9ca3af;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            text-decoration: none;
+        }
+        
+        .nav-link:hover {
+            color: #fff;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--tm-blue);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link-active::after {
+            width: 60%;
+        }
+        
+        .nav-link-active {
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        /* Country Selector - USA Flag Circle */
+        .flag-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+        
+        .flag-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* ======================================== */
+        /* CARDS - Ticketmaster Style */
+        /* ======================================== */
+        .card {
+            background: var(--tm-white);
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid var(--tm-gray-light);
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* ======================================== */
+        /* FORM INPUTS */
+        /* ======================================== */
+        .form-input {
+            border: 1px solid var(--tm-gray-light);
+            border-radius: 4px;
+            padding: 12px 16px;
+            font-size: 16px;
+            width: 100%;
+            transition: all 0.3s ease;
+            background: var(--tm-white);
+            color: var(--tm-text);
+            min-height: 44px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--tm-blue);
+            box-shadow: 0 0 0 3px rgba(2, 77, 223, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: var(--tm-gray);
+        }
+        
         .form-input.error {
-            border-color: #ef4444;
-            box-shadow: 0 0 30px rgba(239, 68, 68, 0.1);
+            border-color: var(--tm-red);
         }
         
         .form-label {
             display: block;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            color: #d1d5db;
-            margin-bottom: 6px;
+            color: var(--tm-text);
+            margin-bottom: 4px;
         }
         
         .form-label .required {
-            color: #ef4444;
+            color: var(--tm-red);
             margin-left: 2px;
         }
         
         .form-label .hint {
-            color: #6b7280;
+            color: var(--tm-gray);
             font-weight: 400;
             font-size: 0.75rem;
             margin-left: 4px;
         }
         
-        /* File Upload */
+        /* ======================================== */
+        /* FILE UPLOAD */
+        /* ======================================== */
         .file-upload {
-            border: 2px dashed rgba(255, 255, 255, 0.12);
-            border-radius: 16px;
+            border: 2px dashed var(--tm-gray-light);
+            border-radius: 4px;
             padding: 30px 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: rgba(26, 26, 46, 0.3);
+            background: var(--tm-gray-bg);
         }
         
         .file-upload:hover {
-            border-color: #f59e0b;
-            background: rgba(245, 158, 11, 0.05);
+            border-color: var(--tm-blue);
+            background: rgba(2, 77, 223, 0.03);
         }
         
         .file-upload.dragover {
-            border-color: #f59e0b;
-            background: rgba(245, 158, 11, 0.08);
+            border-color: var(--tm-blue);
+            background: rgba(2, 77, 223, 0.05);
         }
         
         .file-upload .preview-image {
             max-width: 100%;
             max-height: 200px;
-            border-radius: 12px;
+            border-radius: 4px;
             margin-top: 12px;
         }
         
-        /* Step Indicator */
+        /* ======================================== */
+        /* STEP INDICATOR */
+        /* ======================================== */
         .step-indicator {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         
         .step-dot {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.75rem;
             font-weight: 700;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            color: #6b7280;
+            background: var(--tm-gray-bg);
+            border: 2px solid var(--tm-gray-light);
+            color: var(--tm-gray);
             transition: all 0.3s ease;
         }
         
         .step-dot.active {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
-            border-color: #f59e0b;
+            background: var(--tm-blue);
+            border-color: var(--tm-blue);
             color: #fff;
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+            box-shadow: 0 4px 12px rgba(2, 77, 223, 0.3);
         }
         
         .step-dot.completed {
@@ -225,26 +330,28 @@
         .step-line {
             flex: 1;
             height: 2px;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--tm-gray-light);
             min-width: 20px;
         }
         
         .step-line.completed {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            background: var(--tm-blue);
         }
         
-        /* Success Animation */
+        /* ======================================== */
+        /* SUCCESS ANIMATION */
+        /* ======================================== */
         .success-checkmark {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #10b981, #34d399);
+            background: #10b981;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
             animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
         }
         
         @keyframes popIn {
@@ -257,208 +364,9 @@
             color: #fff;
         }
         
-        /* Navbar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 16px 20px;
-            transition: all 0.4s ease;
-        }
-        
-        .navbar-scrolled {
-            background: rgba(7, 7, 15, 0.92);
-            backdrop-filter: blur(30px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 12px 20px;
-        }
-        
-        .nav-link {
-            position: relative;
-            color: #9ca3af;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        
-        .nav-link:hover {
-            color: #fff;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
-            transition: width 0.3s ease;
-            border-radius: 2px;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        .nav-link-active {
-            color: #fff;
-        }
-        
-        .nav-link-active::after {
-            width: 100%;
-        }
-        
-        /* Mobile Menu */
-        .mobile-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            margin-top: 8px;
-            padding: 20px;
-            background: rgba(7, 7, 15, 0.95);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-        }
-        
-        .mobile-menu.open {
-            display: block;
-        }
-        
-        /* Toast */
-        .toast {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            z-index: 9999;
-            padding: 14px 20px;
-            border-radius: 16px;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #fff;
-            font-size: 0.9rem;
-            max-width: 90%;
-            width: 380px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        @keyframes slideInRight {
-            0% { transform: translateX(100px); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
-        }
-        
-        /* Badge */
-        .badge-worldcup {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Responsive */
-        @media (max-width: 640px) {
-            .glass-card {
-                padding: 16px !important;
-                border-radius: 16px;
-            }
-            
-            .form-input {
-                padding: 12px 14px;
-                font-size: 16px;
-            }
-            
-            .step-dot {
-                width: 32px;
-                height: 32px;
-                font-size: 0.65rem;
-            }
-            
-            .file-upload {
-                padding: 20px 16px;
-            }
-            
-            h1 {
-                font-size: 1.75rem !important;
-            }
-            
-            .btn-primary {
-                padding: 14px 20px;
-                font-size: 1rem;
-            }
-            
-            button, 
-            .file-upload,
-            .form-input,
-            select {
-                min-height: 48px;
-            }
-            
-            input, select, textarea {
-                font-size: 16px !important;
-            }
-        }
-        
-        @media (min-width: 641px) and (max-width: 1024px) {
-            .glass-card {
-                padding: 24px !important;
-            }
-        }
-        
-        /* Spinner */
-        .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 0.8s ease infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Team Select */
-        .team-select {
-            background: rgba(26, 26, 46, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            padding: 14px 18px;
-            color: #fff;
-            width: 100%;
-            transition: all 0.3s ease;
-            font-size: 16px;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-        }
-        
-        .team-select:focus {
-            outline: none;
-            border-color: #f59e0b;
-        }
-        
-        .team-select option {
-            background: #1a1a2e;
-        }
-        
-        /* Toggle Switch */
+        /* ======================================== */
+        /* TOGGLE SWITCH */
+        /* ======================================== */
         .toggle-switch {
             position: relative;
             width: 48px;
@@ -476,7 +384,7 @@
         .toggle-slider {
             position: absolute;
             inset: 0;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--tm-gray-light);
             border-radius: 20px;
             transition: all 0.3s ease;
         }
@@ -494,19 +402,21 @@
         }
         
         .toggle-switch input:checked + .toggle-slider {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            background: var(--tm-blue);
         }
         
         .toggle-switch input:checked + .toggle-slider::before {
             transform: translateX(20px);
         }
         
-        /* Review Card */
+        /* ======================================== */
+        /* REVIEW ITEMS */
+        /* ======================================== */
         .review-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--tm-gray-bg);
         }
         
         .review-item:last-child {
@@ -514,37 +424,225 @@
         }
         
         .review-label {
-            color: #6b7280;
+            color: var(--tm-gray);
             font-size: 0.85rem;
         }
         
         .review-value {
-            color: #fff;
+            color: var(--tm-text);
             font-weight: 500;
             font-size: 0.85rem;
             text-align: right;
             max-width: 60%;
         }
         
-        /* FIFA Verified Badge */
+        /* ======================================== */
+        /* FIFA BADGE */
+        /* ======================================== */
         .fifa-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            background: rgba(2, 77, 223, 0.08);
+            border: 1px solid rgba(2, 77, 223, 0.15);
             padding: 8px 16px;
-            border-radius: 12px;
-            color: #fbbf24;
-            font-size: 0.8rem;
+            border-radius: 4px;
+            color: var(--tm-blue);
+            font-size: 0.85rem;
+            font-weight: 500;
         }
         
-        /* World Cup Banner */
-        .worldcup-banner-form {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(239, 68, 68, 0.04));
-            border: 1px solid rgba(245, 158, 11, 0.15);
-            border-radius: 16px;
+        .badge-worldcup {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* ======================================== */
+        /* MOBILE MENU */
+        /* ======================================== */
+        .mobile-menu {
+            display: none;
+            background: var(--tm-dark);
             padding: 16px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .mobile-menu.open {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            color: #9ca3af;
+            padding: 10px 0;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+        
+        .mobile-menu a:hover {
+            color: #fff;
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        /* ======================================== */
+        /* TOAST */
+        /* ======================================== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            padding: 14px 24px;
+            border-radius: 4px;
+            background: var(--tm-dark);
+            color: #fff;
+            font-size: 0.85rem;
+            max-width: 90%;
+            width: auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        @keyframes slideUp {
+            0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+        
+        /* ======================================== */
+        /* SPINNER */
+        /* ======================================== */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s ease infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* ======================================== */
+        /* TEAM SELECT */
+        /* ======================================== */
+        .team-select {
+            border: 1px solid var(--tm-gray-light);
+            border-radius: 4px;
+            padding: 12px 16px;
+            font-size: 16px;
+            width: 100%;
+            transition: all 0.3s ease;
+            background: var(--tm-white);
+            color: var(--tm-text);
+            min-height: 44px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23646464' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+        
+        .team-select:focus {
+            outline: none;
+            border-color: var(--tm-blue);
+            box-shadow: 0 0 0 3px rgba(2, 77, 223, 0.1);
+        }
+        
+        .team-select option {
+            background: var(--tm-white);
+        }
+        
+        /* ======================================== */
+        /* RESPONSIVE */
+        /* ======================================== */
+        @media (max-width: 768px) {
+            .navbar-top {
+                padding: 6px 16px;
+            }
+            .navbar-main {
+                padding: 10px 16px;
+                flex-wrap: wrap;
+            }
+            .card {
+                padding: 16px !important;
+            }
+            .form-input {
+                font-size: 16px;
+                padding: 10px 14px;
+            }
+            .step-dot {
+                width: 32px;
+                height: 32px;
+                font-size: 0.65rem;
+            }
+            .file-upload {
+                padding: 20px 16px;
+            }
+            h1 {
+                font-size: 1.75rem !important;
+            }
+            .btn-primary, .btn-secondary {
+                padding: 10px 20px;
+                font-size: 14px;
+                min-height: 40px;
+            }
+        }
+        
+        /* ======================================== */
+        /* FOOTER */
+        /* ======================================== */
+        .footer {
+            background: var(--tm-dark);
+            color: #fff;
+            padding: 40px 40px 20px;
+        }
+        
+        .footer-link {
+            color: #9ca3af;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .footer-link:hover {
+            color: #fff;
+        }
+        
+        .footer-heading {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .footer {
+                padding: 32px 16px 16px;
+            }
+        }
+        
+        /* World Cup Banner Form */
+        .worldcup-banner-form {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(239, 68, 68, 0.03));
+            border: 1px solid rgba(245, 158, 11, 0.12);
+            border-radius: 4px;
+            padding: 14px 18px;
             position: relative;
             overflow: hidden;
         }
@@ -554,84 +652,103 @@
             position: absolute;
             right: -10px;
             top: -10px;
-            font-size: 80px;
-            opacity: 0.05;
+            font-size: 60px;
+            opacity: 0.04;
         }
     </style>
 </head>
 <body>
 
     <!-- ======================================== -->
-    <!-- NAVIGATION -->
+    <!-- NAVIGATION - Ticketmaster Style -->
     <!-- ======================================== -->
-    <nav class="navbar" id="navbar">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2.5 shrink-0">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500 to-red-500 flex items-center justify-center shadow-lg shadow-yellow-500/25">
-                    <i class="fas fa-ticket-alt text-white text-lg"></i>
+    <nav class="navbar">
+        <!-- Top Bar -->
+        <div class="navbar-top hidden md:flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <!-- Country Selector with USA Flag Circle -->
+                <button class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
+                    <span class="flag-circle">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA Flag" />
+                    </span>
+                    <span>US</span>
+                </button>
+                
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-1">
+                    <i class="fas fa-hotel"></i> Hotels
+                </a>
+                <a href="sell.html" class="text-gray-400 hover:text-white transition text-sm">Sell</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Gift Cards</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Help</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">VIP</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-xs text-gray-500">PayPal Preferred</span>
+            </div>
+        </div>
+        
+        <!-- Main Nav -->
+        <div class="navbar-main">
+            <div class="flex items-center gap-6">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
+                        <i class="fas fa-ticket-alt text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white tracking-tight">
+                        Tix<span class="text-[#6c5ce7]">Hub</span>
+                    </span>
+                </a>
+                
+                <!-- Nav Links -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="buy.html" class="nav-link">Buy Tickets</a>
+                    <a href="sell.html" class="nav-link nav-link-active">Sell Tickets</a>
+                    <a href="matches.html" class="nav-link">Matches</a>
+                    <a href="stadiums.html" class="nav-link">Stadiums</a>
                 </div>
-                <span class="text-2xl font-bold text-white tracking-tight">
-                    Tix<span class="text-gradient-animated">Hub</span>
-                </span>
-                <span class="hidden md:inline text-xs bg-gradient-to-r from-yellow-500 to-red-500 text-white px-2 py-0.5 rounded-full font-bold">
-                    World Cup 2026
-                </span>
-            </a>
-            
-            <!-- Desktop Nav - FIXED: Matches tab now links to matches.html -->
-            <div class="hidden md:flex items-center gap-8">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="buy.html" class="nav-link">Buy Tickets</a>
-                <a href="sell.html" class="nav-link nav-link-active">Sell Tickets</a>
-                <a href="matches.html" class="nav-link">Matches</a>
-                <a href="stadiums.html" class="nav-link">Stadiums</a>
             </div>
             
-            <!-- Desktop Auth -->
             <div class="flex items-center gap-3">
-                <a href="auth.html" class="hidden md:block text-gray-400 hover:text-white transition font-medium text-sm">
-                    <i class="fas fa-user mr-2"></i>Sign In
+                <a href="auth.html" class="hidden md:block text-gray-300 hover:text-white transition text-sm font-medium">
+                    Sign In
                 </a>
-                <a href="auth.html" class="btn-primary px-5 py-2.5 rounded-xl text-white text-sm font-semibold">
-                    <i class="fas fa-rocket mr-2"></i>Get Started
+                <a href="auth.html" class="btn-primary text-sm px-5 py-2 min-h-[36px]">
+                    <i class="fas fa-rocket mr-1"></i> Get Started
                 </a>
-                <button id="mobileToggle" class="md:hidden text-white text-2xl p-2">
+                <button id="mobileToggle" class="lg:hidden text-white text-2xl p-2">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
         
-        <!-- Mobile Menu - FIXED: Matches tab now links to matches.html -->
-        <div id="mobileMenu" class="mobile-menu md:hidden">
-            <div class="flex flex-col gap-4">
-                <a href="index.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Home</a>
-                <a href="buy.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Buy Tickets</a>
-                <a href="sell.html" class="text-white font-semibold py-2 border-b border-white/5">Sell Tickets</a>
-                <a href="matches.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Matches</a>
-                <a href="stadiums.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Stadiums</a>
-                <a href="auth.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Sign In</a>
-                <a href="auth.html" class="btn-primary text-center py-3 rounded-xl text-white font-semibold">
-                    <i class="fas fa-rocket mr-2"></i>Get Started
-                </a>
-            </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy Tickets</a>
+            <a href="sell.html" class="text-white font-semibold">Sell Tickets</a>
+            <a href="matches.html">Matches</a>
+            <a href="stadiums.html">Stadiums</a>
+            <a href="auth.html" class="text-white font-semibold">Sign In</a>
         </div>
     </nav>
 
     <!-- ======================================== -->
     <!-- MAIN CONTENT -->
     <!-- ======================================== -->
-    <section class="pt-20 md:pt-28 pb-12 px-4">
+    <section class="pt-24 pb-12 px-4">
         <div class="max-w-3xl mx-auto">
             
             <!-- Header -->
-            <div class="text-center mb-6 md:mb-8">
+            <div class="text-center mb-6">
                 <div class="flex justify-center mb-3">
                     <span class="badge-worldcup">🏆 FIFA World Cup 2026</span>
                 </div>
-                <h1 class="text-3xl md:text-4xl font-bold mb-2">
-                    <span class="text-gradient-animated">Sell</span> World Cup Tickets
+                <h1 class="text-3xl md:text-4xl font-bold text-[#121212]">
+                    <span class="text-[#024ddf]">Sell</span> World Cup Tickets
                 </h1>
-                <p class="text-gray-400 text-sm md:text-base">
+                <p class="text-gray-500 text-sm md:text-base mt-1">
                     List your World Cup tickets and reach thousands of fans worldwide
                 </p>
             </div>
@@ -639,7 +756,7 @@
             <!-- ======================================== -->
             <!-- STEP INDICATOR -->
             <!-- ======================================== -->
-            <div class="glass-card p-4 md:p-6 mb-6">
+            <div class="card p-4 md:p-6 mb-6">
                 <div class="step-indicator">
                     <div class="step-dot active" id="step1Dot">1</div>
                     <div class="step-line" id="line1"></div>
@@ -647,7 +764,7 @@
                     <div class="step-line" id="line2"></div>
                     <div class="step-dot" id="step3Dot">3</div>
                 </div>
-                <div class="flex justify-between text-xs text-gray-400 px-1">
+                <div class="flex justify-between text-xs text-gray-500 px-1">
                     <span>Match Details</span>
                     <span>Pricing & Media</span>
                     <span>Review & Publish</span>
@@ -657,14 +774,14 @@
             <!-- ======================================== -->
             <!-- FORM -->
             <!-- ======================================== -->
-            <form id="sellForm" class="glass-card p-5 md:p-8">
+            <form id="sellForm" class="card p-5 md:p-8">
                 
                 <!-- ======================================== -->
                 <!-- STEP 1: Match Details -->
                 <!-- ======================================== -->
                 <div id="step1">
-                    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-                        <span class="w-8 h-8 bg-gradient-to-br from-yellow-500 to-red-500 rounded-lg flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-yellow-500/25">1</span>
+                    <h2 class="text-xl font-semibold text-[#121212] mb-4 flex items-center gap-2">
+                        <span class="w-8 h-8 bg-[#024ddf] rounded flex items-center justify-center text-white text-sm font-bold">1</span>
                         Match Details
                     </h2>
                     
@@ -788,7 +905,7 @@
                         </div>
                     </div>
                     
-                    <button type="button" onclick="goToStep(2)" class="w-full btn-primary py-3 rounded-xl text-white font-semibold mt-6">
+                    <button type="button" onclick="goToStep(2)" class="w-full btn-primary mt-6">
                         Next: Pricing & Media <i class="fas fa-arrow-right ml-2"></i>
                     </button>
                 </div>
@@ -797,8 +914,8 @@
                 <!-- STEP 2: Pricing & Media -->
                 <!-- ======================================== -->
                 <div id="step2" class="hidden">
-                    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-                        <span class="w-8 h-8 bg-gradient-to-br from-orange-500 to-pink-500 rounded-lg flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-orange-500/25">2</span>
+                    <h2 class="text-xl font-semibold text-[#121212] mb-4 flex items-center gap-2">
+                        <span class="w-8 h-8 bg-[#024ddf] rounded flex items-center justify-center text-white text-sm font-bold">2</span>
                         Pricing & Media
                     </h2>
                     
@@ -810,7 +927,7 @@
                                 <span class="hint">(Per ticket)</span>
                             </label>
                             <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">$</span>
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-bold">$</span>
                                 <input type="number" id="ticketPrice" class="form-input pl-8" placeholder="0.00" min="1" step="0.01" required />
                             </div>
                             <p class="text-xs text-gray-500 mt-1">
@@ -828,7 +945,7 @@
                         </div>
                         
                         <!-- Hospitality Package -->
-                        <div class="glass p-4 rounded-xl">
+                        <div class="bg-gray-50 p-4 rounded border border-gray-200">
                             <div class="flex items-center justify-between">
                                 <div>
                                     <label class="form-label mb-0">
@@ -852,13 +969,13 @@
                             <div class="file-upload" id="fileUpload">
                                 <input type="file" id="bannerUpload" accept="image/*" class="hidden" />
                                 <div id="uploadPlaceholder">
-                                    <i class="fas fa-cloud-upload-alt text-3xl text-yellow-400 mb-2"></i>
-                                    <p class="text-gray-400 text-sm">Tap to upload stadium or match image</p>
-                                    <p class="text-gray-500 text-xs mt-1">PNG, JPG up to 5MB</p>
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-[#024ddf] mb-2"></i>
+                                    <p class="text-gray-500 text-sm">Tap to upload stadium or match image</p>
+                                    <p class="text-gray-400 text-xs mt-1">PNG, JPG up to 5MB</p>
                                 </div>
                                 <div id="uploadPreview" class="hidden">
                                     <img id="previewImage" class="preview-image" alt="Preview" />
-                                    <button type="button" onclick="removeImage()" class="text-red-400 text-sm mt-2 hover:text-red-300 transition">
+                                    <button type="button" onclick="removeImage()" class="text-[#ef4444] text-sm mt-2 hover:text-[#dc2626] transition">
                                         <i class="fas fa-times-circle"></i> Remove
                                     </button>
                                 </div>
@@ -874,14 +991,14 @@
                             <div class="file-upload" id="proofUpload">
                                 <input type="file" id="proofFile" accept="image/*,.pdf" class="hidden" />
                                 <div id="proofPlaceholder">
-                                    <i class="fas fa-file-upload text-3xl text-red-400 mb-2"></i>
-                                    <p class="text-gray-400 text-sm">Upload FIFA ticket proof</p>
-                                    <p class="text-gray-500 text-xs mt-1">PDF or image, max 5MB</p>
+                                    <i class="fas fa-file-upload text-3xl text-[#024ddf] mb-2"></i>
+                                    <p class="text-gray-500 text-sm">Upload FIFA ticket proof</p>
+                                    <p class="text-gray-400 text-xs mt-1">PDF or image, max 5MB</p>
                                 </div>
                                 <div id="proofPreview" class="hidden">
-                                    <i class="fas fa-file-check text-3xl text-green-400 mb-2"></i>
-                                    <p class="text-gray-300 text-sm" id="proofFileName">ticket-proof.pdf</p>
-                                    <button type="button" onclick="removeProof()" class="text-red-400 text-sm mt-2 hover:text-red-300 transition">
+                                    <i class="fas fa-file-check text-3xl text-green-500 mb-2"></i>
+                                    <p class="text-gray-700 text-sm" id="proofFileName">ticket-proof.pdf</p>
+                                    <button type="button" onclick="removeProof()" class="text-[#ef4444] text-sm mt-2 hover:text-[#dc2626] transition">
                                         <i class="fas fa-times-circle"></i> Remove
                                     </button>
                                 </div>
@@ -895,11 +1012,11 @@
                             </label>
                             <div class="flex gap-4">
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="fanId" value="yes" class="accent-yellow-500" required />
+                                    <input type="radio" name="fanId" value="yes" class="accent-[#024ddf]" required />
                                     <span class="text-sm">Yes</span>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="fanId" value="no" class="accent-yellow-500" />
+                                    <input type="radio" name="fanId" value="no" class="accent-[#024ddf]" />
                                     <span class="text-sm">No</span>
                                 </label>
                             </div>
@@ -911,10 +1028,10 @@
                     </div>
                     
                     <div class="flex gap-3 mt-6">
-                        <button type="button" onclick="goToStep(1)" class="flex-1 px-4 py-3 rounded-xl border border-white/10 text-white font-semibold hover:bg-white/5 transition">
+                        <button type="button" onclick="goToStep(1)" class="flex-1 btn-secondary">
                             <i class="fas fa-arrow-left mr-2"></i> Back
                         </button>
-                        <button type="button" onclick="goToStep(3)" class="flex-1 btn-primary py-3 rounded-xl text-white font-semibold">
+                        <button type="button" onclick="goToStep(3)" class="flex-1 btn-primary">
                             Next: Review <i class="fas fa-arrow-right ml-2"></i>
                         </button>
                     </div>
@@ -924,8 +1041,8 @@
                 <!-- STEP 3: Review & Publish -->
                 <!-- ======================================== -->
                 <div id="step3" class="hidden">
-                    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-                        <span class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-green-500/25">3</span>
+                    <h2 class="text-xl font-semibold text-[#121212] mb-4 flex items-center gap-2">
+                        <span class="w-8 h-8 bg-[#024ddf] rounded flex items-center justify-center text-white text-sm font-bold">3</span>
                         Review & Publish
                     </h2>
                     
@@ -937,8 +1054,8 @@
                     
                     <div class="space-y-4">
                         <!-- Review Card -->
-                        <div class="bg-white/5 rounded-xl p-4">
-                            <h4 class="font-semibold text-sm text-yellow-400 mb-3">Match Details</h4>
+                        <div class="bg-gray-50 rounded p-4 border border-gray-200">
+                            <h4 class="font-semibold text-sm text-[#024ddf] mb-3">Match Details</h4>
                             <div class="space-y-1">
                                 <div class="review-item">
                                     <span class="review-label">Match Stage</span>
@@ -967,12 +1084,12 @@
                             </div>
                         </div>
                         
-                        <div class="bg-white/5 rounded-xl p-4">
-                            <h4 class="font-semibold text-sm text-yellow-400 mb-3">Pricing & Media</h4>
+                        <div class="bg-gray-50 rounded p-4 border border-gray-200">
+                            <h4 class="font-semibold text-sm text-[#024ddf] mb-3">Pricing & Media</h4>
                             <div class="space-y-1">
                                 <div class="review-item">
                                     <span class="review-label">Price (per ticket)</span>
-                                    <span class="review-value text-yellow-400 font-bold" id="reviewPrice">-</span>
+                                    <span class="review-value text-[#024ddf] font-bold" id="reviewPrice">-</span>
                                 </div>
                                 <div class="review-item">
                                     <span class="review-label">Quantity</span>
@@ -991,21 +1108,21 @@
                         
                         <!-- Terms -->
                         <div class="flex items-start gap-3">
-                            <input type="checkbox" id="termsCheck" class="mt-1 w-5 h-5 accent-yellow-500 shrink-0" required />
-                            <label for="termsCheck" class="text-sm text-gray-400">
+                            <input type="checkbox" id="termsCheck" class="mt-1 w-5 h-5 accent-[#024ddf] shrink-0" required />
+                            <label for="termsCheck" class="text-sm text-gray-600">
                                 I confirm that these tickets are valid and I have the right to sell them.
                                 I understand that payment will be held in escrow until the buyer confirms receipt.
-                                <span class="text-yellow-400 hover:text-yellow-300 transition cursor-pointer">Terms & Conditions</span>
+                                <span class="text-[#024ddf] hover:text-[#0139a7] transition cursor-pointer">Terms & Conditions</span>
                             </label>
                         </div>
                         
                         <!-- Escrow Info -->
-                        <div class="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
+                        <div class="p-4 bg-blue-50 border border-[#024ddf]/20 rounded">
                             <div class="flex items-start gap-3">
-                                <i class="fas fa-shield-alt text-yellow-400 mt-0.5"></i>
+                                <i class="fas fa-shield-alt text-[#024ddf] mt-0.5"></i>
                                 <div>
-                                    <p class="text-sm font-semibold text-yellow-400">Escrow Protection</p>
-                                    <p class="text-xs text-gray-400">
+                                    <p class="text-sm font-semibold text-[#024ddf]">Escrow Protection</p>
+                                    <p class="text-xs text-gray-600">
                                         Your payment will be held securely by TixHub until the buyer confirms ticket delivery.
                                         You'll get paid instantly after confirmation. World Cup tickets are fully protected.
                                     </p>
@@ -1015,10 +1132,10 @@
                     </div>
                     
                     <div class="flex gap-3 mt-6">
-                        <button type="button" onclick="goToStep(2)" class="flex-1 px-4 py-3 rounded-xl border border-white/10 text-white font-semibold hover:bg-white/5 transition">
+                        <button type="button" onclick="goToStep(2)" class="flex-1 btn-secondary">
                             <i class="fas fa-arrow-left mr-2"></i> Back
                         </button>
-                        <button type="submit" id="publishBtn" class="flex-1 btn-primary py-3 rounded-xl text-white font-semibold">
+                        <button type="submit" id="publishBtn" class="flex-1 btn-primary">
                             <i class="fas fa-rocket mr-2"></i> Publish Ticket
                         </button>
                     </div>
@@ -1031,18 +1148,18 @@
                     <div class="success-checkmark">
                         <i class="fas fa-check"></i>
                     </div>
-                    <h2 class="text-2xl font-bold mb-2">🏆 Ticket Published!</h2>
-                    <p class="text-gray-400 mb-2">
+                    <h2 class="text-2xl font-bold text-[#121212] mb-2">🏆 Ticket Published!</h2>
+                    <p class="text-gray-500 mb-2">
                         Your World Cup tickets have been listed successfully!
                     </p>
-                    <p class="text-gray-500 text-sm mb-4">
+                    <p class="text-gray-400 text-sm mb-4">
                         You'll receive notifications when buyers are interested.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                        <a href="buy.html" class="btn-primary px-6 py-3 rounded-xl text-white font-semibold inline-block">
+                        <a href="buy.html" class="btn-primary">
                             <i class="fas fa-eye mr-2"></i> View Listing
                         </a>
-                        <a href="sell.html" class="px-6 py-3 rounded-xl border border-white/10 text-white font-semibold inline-block hover:bg-white/5 transition">
+                        <a href="sell.html" class="btn-secondary">
                             <i class="fas fa-plus mr-2"></i> Sell Another
                         </a>
                     </div>
@@ -1050,30 +1167,30 @@
             </form>
 
             <!-- Tips Section -->
-            <div class="glass-card p-4 md:p-6 mt-6">
-                <h3 class="font-semibold mb-3 flex items-center gap-2">
-                    <i class="fas fa-lightbulb text-yellow-400"></i>
+            <div class="card p-4 md:p-6 mt-6">
+                <h3 class="font-semibold text-[#121212] mb-3 flex items-center gap-2">
+                    <i class="fas fa-lightbulb text-[#f59e0b]"></i>
                     Tips for Selling World Cup Tickets
                 </h3>
-                <ul class="space-y-2 text-sm text-gray-400">
+                <ul class="space-y-2 text-sm text-gray-500">
                     <li class="flex items-start gap-2">
-                        <i class="fas fa-check-circle text-green-400 mt-0.5"></i>
+                        <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
                         <span>Upload clear, high-quality images of the stadium and match details</span>
                     </li>
                     <li class="flex items-start gap-2">
-                        <i class="fas fa-check-circle text-green-400 mt-0.5"></i>
+                        <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
                         <span>Set competitive prices by checking similar World Cup listings</span>
                     </li>
                     <li class="flex items-start gap-2">
-                        <i class="fas fa-check-circle text-green-400 mt-0.5"></i>
+                        <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
                         <span>Include accurate seat information for buyer confidence</span>
                     </li>
                     <li class="flex items-start gap-2">
-                        <i class="fas fa-check-circle text-green-400 mt-0.5"></i>
+                        <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
                         <span>Highlight if you have hospitality packages or premium seating</span>
                     </li>
                     <li class="flex items-start gap-2">
-                        <i class="fas fa-check-circle text-green-400 mt-0.5"></i>
+                        <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
                         <span>Be responsive to buyer inquiries to close sales faster</span>
                     </li>
                 </ul>
@@ -1082,54 +1199,54 @@
     </section>
 
     <!-- ======================================== -->
-    <!-- FOOTER -->
+    <!-- FOOTER - Ticketmaster Style -->
     <!-- ======================================== -->
-    <footer class="border-t border-white/5 py-8 md:py-12 px-4">
+    <footer class="footer">
         <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-                <div class="col-span-2 md:col-span-1">
-                    <div class="flex items-center gap-2 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500 to-red-500 flex items-center justify-center">
-                            <i class="fas fa-ticket-alt text-white text-sm md:text-xl"></i>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
+                            <i class="fas fa-ticket-alt text-white text-sm"></i>
                         </div>
-                        <span class="text-xl md:text-2xl font-bold text-white">Tix<span class="text-gradient-animated">Hub</span></span>
+                        <span class="text-xl font-bold text-white">Tix<span class="text-[#6c5ce7]">Hub</span></span>
                     </div>
                     <p class="text-gray-400 text-sm">Secure ticket marketplace for World Cup 2026 and beyond.</p>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-3 text-sm">Quick Links</h4>
-                    <ul class="space-y-1.5 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-yellow-400 transition">World Cup 2026</a></li>
-                        <li><a href="matches.html" class="hover:text-yellow-400 transition">Matches</a></li>
-                        <li><a href="stadiums.html" class="hover:text-yellow-400 transition">Stadiums</a></li>
-                        <li><a href="#" class="hover:text-yellow-400 transition">Hospitality</a></li>
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link">World Cup 2026</a></li>
+                        <li><a href="matches.html" class="footer-link">Matches</a></li>
+                        <li><a href="stadiums.html" class="footer-link">Stadiums</a></li>
+                        <li><a href="#" class="footer-link">Hospitality</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-3 text-sm">Support</h4>
-                    <ul class="space-y-1.5 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-yellow-400 transition">Help Center</a></li>
-                        <li><a href="#" class="hover:text-yellow-400 transition">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-yellow-400 transition">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-yellow-400 transition">Terms of Service</a></li>
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link">Help Center</a></li>
+                        <li><a href="#" class="footer-link">Contact Us</a></li>
+                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-3 text-sm">Follow Us</h4>
-                    <div class="flex gap-3">
-                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
-                            <i class="fab fa-twitter text-gray-400 hover:text-white text-sm md:text-base"></i>
+                    <h4 class="footer-heading">Follow Us</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
+                            <i class="fab fa-twitter text-gray-400 hover:text-white"></i>
                         </a>
-                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
-                            <i class="fab fa-instagram text-gray-400 hover:text-white text-sm md:text-base"></i>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
+                            <i class="fab fa-instagram text-gray-400 hover:text-white"></i>
                         </a>
-                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
-                            <i class="fab fa-facebook text-gray-400 hover:text-white text-sm md:text-base"></i>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
+                            <i class="fab fa-facebook text-gray-400 hover:text-white"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-white/5 mt-6 md:mt-8 pt-6 text-center text-gray-500 text-xs md:text-sm">
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
                 &copy; 2026 TixHub. All rights reserved. | FIFA World Cup 2026
             </div>
         </div>
@@ -1164,6 +1281,34 @@
         const proofInput = document.getElementById('proofFile');
         const fileUpload = document.getElementById('fileUpload');
         const proofUpload = document.getElementById('proofUpload');
+
+        // ========================================
+        // NAVBAR SCROLL
+        // ========================================
+        const navbar = document.querySelector('.navbar');
+
+        // ========================================
+        // MOBILE MENU
+        // ========================================
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('open');
+            const icon = this.querySelector('i');
+            if (mobileMenu.classList.contains('open')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('open');
+                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
+            });
+        });
 
         // ========================================
         // STEP NAVIGATION
@@ -1317,7 +1462,7 @@
                     field.style.borderColor = '#ef4444';
                     allValid = false;
                 } else {
-                    field.style.borderColor = 'rgba(255,255,255,0.08)';
+                    field.style.borderColor = '#bfbfbf';
                 }
             });
             
@@ -1367,7 +1512,7 @@
             const colors = {
                 success: '#10b981',
                 error: '#ef4444',
-                info: '#f59e0b'
+                info: '#024ddf'
             };
             
             const toast = document.createElement('div');
@@ -1380,47 +1525,11 @@
             
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100px)';
-                toast.style.transition = 'all 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
+                toast.style.transform = 'translateX(-50%) translateY(20px)';
+                toast.style.transition = 'all 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
             }, 4000);
         }
-
-        // ========================================
-        // NAVBAR SCROLL
-        // ========================================
-        const navbar = document.getElementById('navbar');
-        
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
-        });
-
-        // ========================================
-        // MOBILE MENU
-        // ========================================
-        const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        mobileToggle.addEventListener('click', function() {
-            mobileMenu.classList.toggle('open');
-            const icon = this.querySelector('i');
-            if (mobileMenu.classList.contains('open')) {
-                icon.className = 'fas fa-times';
-            } else {
-                icon.className = 'fas fa-bars';
-            }
-        });
-
-        document.querySelectorAll('#mobileMenu a').forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenu.classList.remove('open');
-                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
-            });
-        });
 
         // ========================================
         // KEYBOARD SHORTCUTS
@@ -1440,7 +1549,8 @@
         // ========================================
         // INIT
         // ========================================
-        console.log('🏆 TixHub - World Cup Sell Page Loaded');
+        console.log('🏆 TixHub - World Cup Sell Page');
+        console.log('🇺🇸 Ticketmaster-style design with USA flag circle');
         console.log('⚽ Ready to list World Cup 2026 tickets!');
         
         setTimeout(() => {
