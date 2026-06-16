@@ -11,6 +11,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
@@ -61,9 +64,6 @@
             background: var(--tm-gray);
         }
         
-        /* ======================================== */
-        /* TICKETMASTER STYLE BUTTONS */
-        /* ======================================== */
         .btn-primary {
             background: var(--tm-blue);
             color: #fff;
@@ -119,9 +119,6 @@
             background: var(--tm-gray-bg);
         }
         
-        /* ======================================== */
-        /* NAVBAR - Ticketmaster Style */
-        /* ======================================== */
         .navbar {
             position: fixed;
             top: 0;
@@ -181,7 +178,6 @@
             font-weight: 600;
         }
         
-        /* Country Selector - USA Flag Circle */
         .flag-circle {
             width: 28px;
             height: 28px;
@@ -201,9 +197,6 @@
             object-fit: cover;
         }
         
-        /* ======================================== */
-        /* CARDS - Ticketmaster Style */
-        /* ======================================== */
         .card {
             background: var(--tm-white);
             border-radius: 4px;
@@ -217,9 +210,6 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
-        /* ======================================== */
-        /* FORM INPUTS */
-        /* ======================================== */
         .form-input {
             border: 1px solid var(--tm-gray-light);
             border-radius: 4px;
@@ -250,17 +240,6 @@
             border-color: #10b981;
         }
         
-        .form-label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--tm-text);
-            margin-bottom: 4px;
-        }
-        
-        /* ======================================== */
-        /* TAB SWITCHER */
-        /* ======================================== */
         .tab-btn {
             flex: 1;
             padding: 10px;
@@ -285,9 +264,6 @@
             background: var(--tm-gray-bg);
         }
         
-        /* ======================================== */
-        /* SOCIAL BUTTONS */
-        /* ======================================== */
         .social-btn {
             display: flex;
             align-items: center;
@@ -311,9 +287,6 @@
             background: var(--tm-gray-bg);
         }
         
-        /* ======================================== */
-        /* PASSWORD TOGGLE */
-        /* ======================================== */
         .password-toggle {
             position: absolute;
             right: 14px;
@@ -331,9 +304,6 @@
             color: var(--tm-text);
         }
         
-        /* ======================================== */
-        /* DIVIDER */
-        /* ======================================== */
         .divider {
             display: flex;
             align-items: center;
@@ -350,9 +320,6 @@
             background: var(--tm-gray-light);
         }
         
-        /* ======================================== */
-        /* MOBILE MENU */
-        /* ======================================== */
         .mobile-menu {
             display: none;
             background: var(--tm-dark);
@@ -381,9 +348,6 @@
             border-bottom: none;
         }
         
-        /* ======================================== */
-        /* TOAST */
-        /* ======================================== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -409,17 +373,11 @@
             100% { transform: translateX(-50%) translateY(0); opacity: 1; }
         }
         
-        /* ======================================== */
-        /* MODAL */
-        /* ======================================== */
         .modal-overlay {
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
         }
         
-        /* ======================================== */
-        /* SPINNER */
-        /* ======================================== */
         .spinner {
             display: inline-block;
             width: 20px;
@@ -434,9 +392,6 @@
             to { transform: rotate(360deg); }
         }
         
-        /* ======================================== */
-        /* RESPONSIVE */
-        /* ======================================== */
         @media (max-width: 768px) {
             .navbar-top {
                 padding: 6px 16px;
@@ -458,9 +413,6 @@
             }
         }
         
-        /* ======================================== */
-        /* FOOTER */
-        /* ======================================== */
         .footer {
             background: var(--tm-dark);
             color: #fff;
@@ -481,17 +433,14 @@
     <!-- NAVIGATION - Ticketmaster Style -->
     <!-- ======================================== -->
     <nav class="navbar">
-        <!-- Top Bar -->
         <div class="navbar-top hidden md:flex items-center justify-between">
             <div class="flex items-center gap-6">
-                <!-- Country Selector with USA Flag Circle -->
                 <button class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
                     <span class="flag-circle">
                         <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA Flag" />
                     </span>
                     <span>US</span>
                 </button>
-                
                 <a href="#" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-1">
                     <i class="fas fa-hotel"></i> Hotels
                 </a>
@@ -505,10 +454,8 @@
             </div>
         </div>
         
-        <!-- Main Nav -->
         <div class="navbar-main">
             <div class="flex items-center gap-6">
-                <!-- Logo -->
                 <a href="index.html" class="flex items-center gap-2">
                     <div class="w-9 h-9 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
                         <i class="fas fa-ticket-alt text-white text-sm"></i>
@@ -518,7 +465,6 @@
                     </span>
                 </a>
                 
-                <!-- Nav Links -->
                 <div class="hidden lg:flex items-center gap-1">
                     <a href="index.html" class="nav-link">Home</a>
                     <a href="buy.html" class="nav-link">Buy Tickets</a>
@@ -541,7 +487,6 @@
             </div>
         </div>
         
-        <!-- Mobile Menu -->
         <div id="mobileMenu" class="mobile-menu">
             <a href="index.html">Home</a>
             <a href="buy.html">Buy Tickets</a>
@@ -590,42 +535,25 @@
                 <div id="loginForm">
                     <form id="loginFormElement" onsubmit="handleLogin(event)">
                         <div class="space-y-4">
-                            <!-- Email -->
                             <div class="relative">
                                 <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input 
-                                    type="email" 
-                                    id="loginEmail"
-                                    class="form-input" 
-                                    placeholder="Email address"
-                                    required
-                                />
+                                <input type="email" id="loginEmail" class="form-input" placeholder="Email address" required />
                             </div>
                             
-                            <!-- Password -->
                             <div class="relative">
                                 <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input 
-                                    type="password" 
-                                    id="loginPassword"
-                                    class="form-input" 
-                                    placeholder="Password"
-                                    required
-                                    minlength="6"
-                                />
+                                <input type="password" id="loginPassword" class="form-input" placeholder="Password" required minlength="6" />
                                 <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             </div>
                             
-                            <!-- Forgot Password -->
                             <div class="text-right">
                                 <button type="button" onclick="showForgotPassword()" class="text-sm text-[#024ddf] hover:text-[#0139a7] transition">
                                     Forgot password?
                                 </button>
                             </div>
                             
-                            <!-- Submit -->
                             <button type="submit" id="loginBtn" class="btn-primary">
                                 <i class="fas fa-sign-in-alt mr-2"></i> Sign In
                             </button>
@@ -639,74 +567,37 @@
                 <div id="signupForm" class="hidden">
                     <form id="signupFormElement" onsubmit="handleSignup(event)">
                         <div class="space-y-4">
-                            <!-- Full Name -->
                             <div class="relative">
                                 <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input 
-                                    type="text" 
-                                    id="signupName"
-                                    class="form-input" 
-                                    placeholder="Full name"
-                                    required
-                                />
+                                <input type="text" id="signupName" class="form-input" placeholder="Full name" required />
                             </div>
                             
-                            <!-- Email -->
                             <div class="relative">
                                 <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input 
-                                    type="email" 
-                                    id="signupEmail"
-                                    class="form-input" 
-                                    placeholder="Email address"
-                                    required
-                                />
+                                <input type="email" id="signupEmail" class="form-input" placeholder="Email address" required />
                             </div>
                             
-                            <!-- Password -->
                             <div class="relative">
                                 <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input 
-                                    type="password" 
-                                    id="signupPassword"
-                                    class="form-input" 
-                                    placeholder="Create password (min 6 chars)"
-                                    required
-                                    minlength="6"
-                                />
+                                <input type="password" id="signupPassword" class="form-input" placeholder="Create password (min 6 chars)" required minlength="6" />
                                 <button type="button" class="password-toggle" onclick="togglePassword('signupPassword')">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             </div>
                             
-                            <!-- Confirm Password -->
                             <div class="relative">
                                 <i class="fas fa-check-circle absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input 
-                                    type="password" 
-                                    id="signupConfirmPassword"
-                                    class="form-input" 
-                                    placeholder="Confirm password"
-                                    required
-                                    minlength="6"
-                                />
+                                <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm password" required minlength="6" />
                             </div>
                             
-                            <!-- Terms -->
                             <div class="flex items-start gap-3">
-                                <input 
-                                    type="checkbox" 
-                                    id="termsCheck" 
-                                    class="mt-1 w-5 h-5 accent-[#024ddf] shrink-0"
-                                    required
-                                />
+                                <input type="checkbox" id="termsCheck" class="mt-1 w-5 h-5 accent-[#024ddf] shrink-0" required />
                                 <label for="termsCheck" class="text-xs text-gray-500">
                                     I agree to the <a href="#" class="text-[#024ddf] hover:text-[#0139a7] transition">Terms of Service</a> 
                                     and <a href="#" class="text-[#024ddf] hover:text-[#0139a7] transition">Privacy Policy</a>
                                 </label>
                             </div>
                             
-                            <!-- Submit -->
                             <button type="submit" id="signupBtn" class="btn-primary">
                                 <i class="fas fa-user-plus mr-2"></i> Create Account
                             </button>
@@ -726,31 +617,17 @@
                 <!-- ======================================== -->
                 <div class="space-y-3">
                     <button onclick="socialLogin('google')" class="social-btn">
-                        <i class="fab fa-google text-[#ea4335] text-lg"></i>
-                        Continue with Google
+                        <i class="fab fa-google text-[#ea4335] text-lg"></i> Continue with Google
                     </button>
                     <button onclick="socialLogin('facebook')" class="social-btn">
-                        <i class="fab fa-facebook text-[#1877f2] text-lg"></i>
-                        Continue with Facebook
+                        <i class="fab fa-facebook text-[#1877f2] text-lg"></i> Continue with Facebook
                     </button>
                     <button onclick="socialLogin('apple')" class="social-btn">
-                        <i class="fab fa-apple text-[#121212] text-lg"></i>
-                        Continue with Apple
+                        <i class="fab fa-apple text-[#121212] text-lg"></i> Continue with Apple
                     </button>
-                </div>
-
-                <!-- ======================================== -->
-                <!-- DEMO CREDENTIALS -->
-                <!-- ======================================== -->
-                <div class="mt-6 p-4 bg-gray-50 rounded border border-gray-200">
-                    <p class="text-xs text-gray-500 text-center">
-                        <i class="fas fa-info-circle text-[#024ddf] mr-1"></i>
-                        Demo: Use any email + password (min 6 chars)
-                    </p>
                 </div>
             </div>
 
-            <!-- Trust Badge -->
             <div class="text-center mt-6">
                 <div class="flex flex-wrap justify-center gap-4 text-xs text-gray-500">
                     <span class="flex items-center gap-1">
@@ -789,13 +666,7 @@
                 <form onsubmit="handleForgotPassword(event)">
                     <div class="relative mb-4">
                         <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                        <input 
-                            type="email" 
-                            id="resetEmail"
-                            class="form-input" 
-                            placeholder="Email address"
-                            required
-                        />
+                        <input type="email" id="resetEmail" class="form-input" placeholder="Email address" required />
                     </div>
                     <button type="submit" class="btn-primary">
                         <i class="fas fa-paper-plane mr-2"></i> Send Reset Link
@@ -806,7 +677,7 @@
     </div>
 
     <!-- ======================================== -->
-    <!-- FOOTER - Ticketmaster Style -->
+    <!-- FOOTER -->
     <!-- ======================================== -->
     <footer class="footer">
         <div class="max-w-7xl mx-auto text-center text-gray-500 text-sm">
@@ -815,9 +686,65 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT -->
+    <!-- JAVASCRIPT - All In One -->
     <!-- ======================================== -->
     <script>
+        // ========================================
+        // SUPABASE CONFIGURATION - Your Keys
+        // ========================================
+        const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
+        
+        // Initialize Supabase
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // ========================================
+        // AUTH FUNCTIONS
+        // ========================================
+        async function signUp(email, password, fullName) {
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: { full_name: fullName }
+                    }
+                });
+                if (error) throw error;
+                return { success: true, data: data };
+            } catch (error) {
+                return { success: false, error: error.message };
+            }
+        }
+        
+        async function signIn(email, password) {
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                if (error) throw error;
+                return { success: true, data: data };
+            } catch (error) {
+                return { success: false, error: error.message };
+            }
+        }
+        
+        async function resetPassword(email) {
+            try {
+                const { error } = await supabase.auth.resetPasswordForEmail(email);
+                if (error) throw error;
+                return { success: true };
+            } catch (error) {
+                return { success: false, error: error.message };
+            }
+        }
+        
+        async function isLoggedIn() {
+            const { data: { session } } = await supabase.auth.getSession();
+            return !!session;
+        }
+        
         // ========================================
         // STATE
         // ========================================
@@ -851,16 +778,10 @@
         // ========================================
         function switchTab(tab) {
             currentTab = tab;
-            
             document.getElementById('loginTab').classList.toggle('active', tab === 'login');
             document.getElementById('signupTab').classList.toggle('active', tab === 'signup');
-            
             document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
             document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
-            
-            document.querySelectorAll('.form-input').forEach(input => {
-                input.classList.remove('error', 'success');
-            });
         }
 
         // ========================================
@@ -869,7 +790,6 @@
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
             const icon = input.parentElement.querySelector('.password-toggle i');
-            
             if (input.type === 'password') {
                 input.type = 'text';
                 icon.className = 'fas fa-eye-slash';
@@ -880,9 +800,9 @@
         }
 
         // ========================================
-        // HANDLE LOGIN
+        // HANDLE LOGIN - Supabase
         // ========================================
-        function handleLogin(e) {
+        async function handleLogin(e) {
             e.preventDefault();
             
             const email = document.getElementById('loginEmail').value.trim();
@@ -902,22 +822,26 @@
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
             
-            setTimeout(() => {
+            const result = await signIn(email, password);
+            
+            if (result.success) {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
-                
                 showToast('✅ Welcome back! Redirecting...', 'success');
-                
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
                 }, 1500);
-            }, 1500);
+            } else {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
+                showToast('❌ Invalid email or password', 'error');
+            }
         }
 
         // ========================================
-        // HANDLE SIGNUP
+        // HANDLE SIGNUP - Supabase
         // ========================================
-        function handleSignup(e) {
+        async function handleSignup(e) {
             e.preventDefault();
             
             const name = document.getElementById('signupName').value.trim();
@@ -950,30 +874,33 @@
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
-            setTimeout(() => {
+            const result = await signUp(email, password, name);
+            
+            if (result.success) {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                
                 showToast('🎉 Account created! Redirecting...', 'success');
-                
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
                 }, 1500);
-            }, 2000);
+            } else {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                showToast('❌ Account creation failed. Please try again.', 'error');
+            }
         }
 
         // ========================================
         // SOCIAL LOGIN
         // ========================================
         function socialLogin(provider) {
-            showToast(`Connecting to ${provider.charAt(0).toUpperCase() + provider.slice(1)}...`, 'info');
-            
-            setTimeout(() => {
-                showToast(`✅ Connected with ${provider.charAt(0).toUpperCase() + provider.slice(1)}!`, 'success');
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1000);
-            }, 1500);
+            showToast(`Connecting to ${provider}...`, 'info');
+            supabase.auth.signInWithOAuth({
+                provider: provider,
+                options: {
+                    redirectTo: window.location.origin + '/dashboard.html'
+                }
+            });
         }
 
         // ========================================
@@ -989,7 +916,7 @@
             document.body.style.overflow = '';
         }
 
-        function handleForgotPassword(e) {
+        async function handleForgotPassword(e) {
             e.preventDefault();
             const email = document.getElementById('resetEmail').value.trim();
             
@@ -998,8 +925,24 @@
                 return;
             }
             
-            showToast('📧 Reset link sent to your email!', 'success');
-            closeForgotModal();
+            const result = await resetPassword(email);
+            
+            if (result.success) {
+                showToast('📧 Reset link sent to your email!', 'success');
+                closeForgotModal();
+            } else {
+                showToast('❌ Failed to send reset link.', 'error');
+            }
+        }
+
+        // ========================================
+        // CHECK IF ALREADY LOGGED IN
+        // ========================================
+        async function checkAuth() {
+            const loggedIn = await isLoggedIn();
+            if (loggedIn) {
+                window.location.href = 'dashboard.html';
+            }
         }
 
         // ========================================
@@ -1040,10 +983,7 @@
         // KEYBOARD SHORTCUTS
         // ========================================
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeForgotModal();
-            }
-            
+            if (e.key === 'Escape') closeForgotModal();
             if (e.ctrlKey && e.key === '1') {
                 e.preventDefault();
                 switchTab('login');
@@ -1055,15 +995,16 @@
         });
 
         // ========================================
-        // AUTO-FOCUS ON LOAD
+        // INIT
         // ========================================
         document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
             document.getElementById('loginEmail').focus();
         });
 
-        console.log('🔐 TixHub - Authentication Page');
-        console.log('🇺🇸 Ticketmaster-style design with USA flag circle');
-        console.log('💡 Tip: Ctrl+1 = Login, Ctrl+2 = Signup');
+        console.log('🔐 TixHub - Supabase Auth Ready');
+        console.log('📦 Supabase URL:', SUPABASE_URL);
+        console.log('🇺🇸 Ticketmaster-style design');
     </script>
 </body>
 </html>
