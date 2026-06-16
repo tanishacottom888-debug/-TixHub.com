@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>TixHub - Secure Ticket Marketplace</title>
+    <title>TixHub - Buy Verified Tickets for Concerts, Sports, Theater and Events</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,7 +11,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts - Similar to Averta -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
     <style>
@@ -19,16 +19,16 @@
         /* TICKETMASTER INSPIRED STYLES */
         /* ======================================== */
         :root {
-            --primary-dark: #0C1B4D;
-            --primary-blue: #1E3A8A;
-            --primary-light: #2563EB;
-            --accent-red: #DC2626;
-            --accent-gold: #F59E0B;
-            --bg-white: #F8FAFC;
-            --bg-card: #FFFFFF;
-            --text-dark: #1E293B;
-            --text-gray: #64748B;
-            --text-light: #94A3B8;
+            --tm-blue: #024ddf;
+            --tm-blue-hover: #0139a7;
+            --tm-dark: #121212;
+            --tm-gray: #646464;
+            --tm-gray-light: #bfbfbf;
+            --tm-gray-bg: #f6f6f6;
+            --tm-white: #ffffff;
+            --tm-gold: #ffb932;
+            --tm-red: #eb0000;
+            --tm-text: #121212;
         }
         
         * {
@@ -38,166 +38,147 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-white);
-            color: var(--text-dark);
+            font-family: 'Inter', 'Averta', helvetica, arial, sans-serif;
+            background: var(--tm-white);
+            color: var(--tm-text);
             overflow-x: hidden;
         }
         
-        /* Custom Scrollbar */
+        /* Custom Scrollbar - Ticketmaster Style */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #E2E8F0;
+            background: var(--tm-gray-bg);
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--primary-blue);
+            background: var(--tm-gray-light);
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
+            background: var(--tm-gray);
         }
         
-        /* Cards - Ticketmaster Style */
-        .card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(0, 0, 0, 0.04);
-        }
-        
-        .card:hover {
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-            transform: translateY(-4px);
-        }
-        
-        /* Buttons - Ticketmaster Style */
+        /* ======================================== */
+        /* TICKETMASTER STYLE BUTTONS */
+        /* ======================================== */
         .btn-primary {
-            background: var(--primary-blue);
+            background: var(--tm-blue);
             color: #fff;
             padding: 12px 28px;
-            border-radius: 50px;
+            border-radius: 4px;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-size: 16px;
+            line-height: 1.4;
+            min-height: 44px;
+            text-decoration: none;
         }
         
         .btn-primary:hover {
-            background: var(--primary-dark);
+            background: var(--tm-blue-hover);
             transform: scale(1.02);
-            box-shadow: 0 8px 30px rgba(30, 58, 138, 0.3);
         }
         
         .btn-secondary {
             background: transparent;
-            color: var(--primary-blue);
+            color: var(--tm-text);
             padding: 12px 28px;
-            border-radius: 50px;
+            border-radius: 4px;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid var(--primary-blue);
+            transition: all 0.3s ease;
+            border: 2px solid var(--tm-gray-light);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-size: 16px;
+            line-height: 1.4;
+            min-height: 44px;
+            text-decoration: none;
         }
         
         .btn-secondary:hover {
-            background: var(--primary-blue);
-            color: #fff;
-            transform: scale(1.02);
+            border-color: var(--tm-dark);
+            background: var(--tm-gray-bg);
         }
         
-        .btn-red {
-            background: var(--accent-red);
-            color: #fff;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-red:hover {
-            background: #B91C1C;
-            transform: scale(1.02);
-            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
-        }
-        
-        /* Navbar - Ticketmaster Style */
+        /* ======================================== */
+        /* NAVBAR - Ticketmaster Style */
+        /* ======================================== */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 14px 20px;
-            background: var(--bg-white);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            background: var(--tm-dark);
             transition: all 0.3s ease;
         }
         
-        .navbar-scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        .navbar-top {
+            padding: 8px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar-main {
+            padding: 12px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         
         .nav-link {
             position: relative;
-            color: var(--text-gray);
+            color: #9ca3af;
             transition: all 0.3s ease;
             font-weight: 500;
             font-size: 0.9rem;
-            padding: 4px 0;
+            padding: 8px 12px;
+            text-decoration: none;
         }
         
         .nav-link:hover {
-            color: var(--text-dark);
+            color: #fff;
         }
         
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -2px;
-            left: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 0;
             height: 2px;
-            background: var(--primary-blue);
+            background: var(--tm-blue);
             transition: width 0.3s ease;
             border-radius: 2px;
         }
         
         .nav-link:hover::after,
         .nav-link-active::after {
-            width: 100%;
+            width: 60%;
         }
         
         .nav-link-active {
-            color: var(--text-dark);
+            color: #fff;
             font-weight: 600;
         }
         
-        /* Hero Section - Ticketmaster Style */
-        .hero-gradient {
-            background: linear-gradient(135deg, var(--bg-white) 0%, #EFF6FF 100%);
-        }
-        
-        /* USA Flag Circle */
+        /* ======================================== */
+        /* COUNTRY SELECTOR - USA Flag Circle */
+        /* ======================================== */
         .flag-circle {
-            width: 48px;
-            height: 48px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             overflow: hidden;
-            border: 2px solid rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             flex-shrink: 0;
             display: inline-flex;
             align-items: center;
@@ -211,75 +192,178 @@
             object-fit: cover;
         }
         
-        /* Hero Stats */
-        .hero-stat {
-            text-align: center;
-            padding: 16px 24px;
+        .flag-circle-large {
+            width: 48px;
+            height: 48px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
         
-        .hero-stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--primary-dark);
-        }
-        
-        .hero-stat-label {
-            font-size: 0.8rem;
-            color: var(--text-gray);
-            font-weight: 500;
-        }
-        
-        /* Feature Cards - Ticketmaster Style */
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
+        /* ======================================== */
+        /* SEARCH BAR - Ticketmaster Style */
+        /* ======================================== */
+        .search-container {
+            background: var(--tm-white);
+            border-radius: 4px;
+            border: 1px solid var(--tm-gray-light);
+            overflow: hidden;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            background: #EFF6FF;
-            color: var(--primary-blue);
+            align-items: stretch;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
         
-        /* CTA Section - Ticketmaster Style */
-        .cta-gradient {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
-            border-radius: 24px;
-            padding: 48px 40px;
-            position: relative;
+        .search-container:focus-within {
+            border-color: var(--tm-blue);
+            box-shadow: 0 0 0 3px rgba(2, 77, 223, 0.1);
+        }
+        
+        .search-field {
+            flex: 1;
+            padding: 12px 16px 12px 44px;
+            border: none;
+            font-size: 16px;
+            color: var(--tm-text);
+            background: transparent;
+            min-height: 48px;
+            outline: none;
+        }
+        
+        .search-field::placeholder {
+            color: var(--tm-gray);
+        }
+        
+        .search-icon-wrapper {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--tm-gray);
+        }
+        
+        .search-divider {
+            width: 1px;
+            background: var(--tm-gray-light);
+            flex-shrink: 0;
+        }
+        
+        .search-btn {
+            background: var(--tm-blue);
+            color: #fff;
+            padding: 12px 32px;
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            min-height: 48px;
+            white-space: nowrap;
+        }
+        
+        .search-btn:hover {
+            background: var(--tm-blue-hover);
+        }
+        
+        /* ======================================== */
+        /* HERO SECTION */
+        /* ======================================== */
+        .hero-section {
+            background: var(--tm-gray-bg);
+            padding: 120px 40px 60px;
+        }
+        
+        /* ======================================== */
+        /* CARDS - Ticketmaster Style */
+        /* ======================================== */
+        .card {
+            background: var(--tm-white);
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid var(--tm-gray-light);
             overflow: hidden;
         }
         
-        .cta-gradient::before {
-            content: '🎫';
-            position: absolute;
-            right: -20px;
-            top: -20px;
-            font-size: 200px;
-            opacity: 0.05;
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
         }
         
-        /* Mobile Menu */
-        .mobile-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            margin-top: 8px;
-            padding: 20px;
-            background: var(--bg-white);
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.04);
+        /* ======================================== */
+        /* FOOTER - Ticketmaster Style */
+        /* ======================================== */
+        .footer {
+            background: var(--tm-dark);
+            color: #fff;
+            padding: 48px 40px 24px;
         }
         
-        .mobile-menu.open {
-            display: block;
+        .footer-link {
+            color: #9ca3af;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
         }
         
-        /* Toast */
+        .footer-link:hover {
+            color: #fff;
+        }
+        
+        .footer-heading {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        
+        /* ======================================== */
+        /* RESPONSIVE */
+        /* ======================================== */
+        @media (max-width: 768px) {
+            .navbar-top {
+                padding: 8px 16px;
+            }
+            .navbar-main {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+            }
+            .hero-section {
+                padding: 100px 16px 40px;
+            }
+            .search-container {
+                flex-direction: column;
+                border-radius: 8px;
+            }
+            .search-field {
+                padding: 14px 16px 14px 44px;
+            }
+            .search-divider {
+                display: none;
+            }
+            .search-btn {
+                border-radius: 0 0 8px 8px;
+                width: 100%;
+            }
+            .footer {
+                padding: 32px 16px 16px;
+            }
+        }
+        
+        /* ======================================== */
+        /* ANIMATIONS */
+        /* ======================================== */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ======================================== */
+        /* TOAST */
+        /* ======================================== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -287,15 +371,14 @@
             transform: translateX(-50%);
             z-index: 9999;
             padding: 16px 28px;
-            border-radius: 16px;
-            background: var(--bg-white);
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            color: var(--text-dark);
+            border-radius: 4px;
+            background: var(--tm-dark);
+            color: #fff;
             font-size: 0.9rem;
             max-width: 90%;
             width: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-out;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -306,312 +389,284 @@
             100% { transform: translateX(-50%) translateY(0); opacity: 1; }
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 10px 16px;
-            }
-            
-            .hero-stat-number {
-                font-size: 1.5rem;
-            }
-            
-            .cta-gradient {
-                padding: 32px 20px;
-            }
-            
-            .flag-circle {
-                width: 40px;
-                height: 40px;
-            }
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            background: var(--tm-dark);
+            padding: 16px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        /* Animations */
-        .animate-fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        .mobile-menu.open {
+            display: block;
         }
         
-        .animate-fade-up-delay-1 {
-            animation-delay: 0.1s;
-        }
-        .animate-fade-up-delay-2 {
-            animation-delay: 0.2s;
-        }
-        .animate-fade-up-delay-3 {
-            animation-delay: 0.3s;
-        }
-        .animate-fade-up-delay-4 {
-            animation-delay: 0.4s;
-        }
-        .animate-fade-up-delay-5 {
-            animation-delay: 0.5s;
+        .mobile-menu a {
+            display: block;
+            color: #9ca3af;
+            padding: 10px 0;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .mobile-menu a:hover {
+            color: #fff;
         }
         
-        /* Text Gradient */
-        .text-gradient {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .mobile-menu a:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
 <body>
 
     <!-- ======================================== -->
-    <!-- NAVIGATION -->
+    <!-- NAVIGATION - Ticketmaster Style -->
     <!-- ======================================== -->
-    <nav class="navbar" id="navbar">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <!-- Logo -->
-            <a href="index.html" class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0C1B4D] to-[#1E3A8A] flex items-center justify-center shadow-lg shadow-blue-900/20">
-                    <i class="fas fa-ticket-alt text-white text-lg"></i>
+    <nav class="navbar">
+        <!-- Top Bar -->
+        <div class="navbar-top hidden md:flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <!-- Country Selector with USA Flag Circle -->
+                <button class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
+                    <span class="flag-circle">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA Flag" />
+                    </span>
+                    <span>US</span>
+                </button>
+                
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-1">
+                    <i class="fas fa-hotel"></i> Hotels
+                </a>
+                <a href="sell.html" class="text-gray-400 hover:text-white transition text-sm">Sell</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Gift Cards</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Help</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">VIP</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-xs text-gray-500">PayPal Preferred</span>
+            </div>
+        </div>
+        
+        <!-- Main Nav -->
+        <div class="navbar-main">
+            <div class="flex items-center gap-6">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
+                        <i class="fas fa-ticket-alt text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white tracking-tight">
+                        Tix<span class="text-[#6c5ce7]">Hub</span>
+                    </span>
+                </a>
+                
+                <!-- Nav Links -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="nav-link nav-link-active">Home</a>
+                    <a href="buy.html" class="nav-link">Buy Tickets</a>
+                    <a href="sell.html" class="nav-link">Sell Tickets</a>
+                    <a href="matches.html" class="nav-link">Matches</a>
+                    <a href="stadiums.html" class="nav-link">Stadiums</a>
                 </div>
-                <span class="text-2xl font-bold text-[#0C1B4D] tracking-tight">
-                    Tix<span class="text-[#1E3A8A]">Hub</span>
-                </span>
-            </a>
-            
-            <!-- Desktop Nav -->
-            <div class="hidden md:flex items-center gap-8">
-                <a href="index.html" class="nav-link nav-link-active">Home</a>
-                <a href="buy.html" class="nav-link">Buy Tickets</a>
-                <a href="sell.html" class="nav-link">Sell Tickets</a>
-                <a href="matches.html" class="nav-link">Matches</a>
-                <a href="stadiums.html" class="nav-link">Stadiums</a>
             </div>
             
-            <!-- Desktop Auth -->
-            <div class="hidden md:flex items-center gap-3">
-                <a href="auth.html" class="text-gray-500 hover:text-[#0C1B4D] transition font-medium text-sm">
+            <div class="flex items-center gap-3">
+                <a href="auth.html" class="hidden md:block text-gray-300 hover:text-white transition text-sm font-medium">
                     Sign In
                 </a>
-                <a href="auth.html" class="btn-primary text-sm">
-                    <i class="fas fa-rocket mr-2"></i>Get Started
+                <a href="auth.html" class="btn-primary text-sm px-5 py-2 min-h-[40px]">
+                    <i class="fas fa-rocket mr-1"></i> Get Started
                 </a>
+                <button id="mobileToggle" class="lg:hidden text-white text-2xl p-2">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-            
-            <!-- Mobile Toggle -->
-            <button id="mobileToggle" class="md:hidden text-[#0C1B4D] text-2xl p-2">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="mobile-menu md:hidden">
-            <div class="flex flex-col gap-4">
-                <a href="index.html" class="text-[#0C1B4D] font-semibold py-2 border-b border-gray-100">Home</a>
-                <a href="buy.html" class="text-gray-500 hover:text-[#0C1B4D] py-2 border-b border-gray-100 transition">Buy Tickets</a>
-                <a href="sell.html" class="text-gray-500 hover:text-[#0C1B4D] py-2 border-b border-gray-100 transition">Sell Tickets</a>
-                <a href="matches.html" class="text-gray-500 hover:text-[#0C1B4D] py-2 border-b border-gray-100 transition">Matches</a>
-                <a href="stadiums.html" class="text-gray-500 hover:text-[#0C1B4D] py-2 border-b border-gray-100 transition">Stadiums</a>
-                <div class="flex flex-col gap-3 pt-2">
-                    <a href="auth.html" class="text-center text-gray-500 hover:text-[#0C1B4D] transition py-2">Sign In</a>
-                    <a href="auth.html" class="btn-primary text-center justify-center py-3 rounded-xl">
-                        <i class="fas fa-rocket mr-2"></i>Get Started
-                    </a>
-                </div>
-            </div>
+        <div id="mobileMenu" class="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy Tickets</a>
+            <a href="sell.html">Sell Tickets</a>
+            <a href="matches.html">Matches</a>
+            <a href="stadiums.html">Stadiums</a>
+            <a href="auth.html" class="text-white font-semibold">Sign In</a>
         </div>
     </nav>
 
     <!-- ======================================== -->
     <!-- HERO SECTION -->
     <!-- ======================================== -->
-    <section class="min-h-screen flex items-center justify-center px-4 pt-24 pb-12 hero-gradient">
-        <div class="max-w-7xl mx-auto w-full">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Left Content -->
-                <div>
-                    <!-- Badge -->
-                    <div class="inline-flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full mb-6 animate-fade-up">
-                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                        <span class="text-sm text-[#1E3A8A] font-medium">🔥 10,000+ tickets sold this month</span>
+    <section class="hero-section">
+        <div class="max-w-7xl mx-auto">
+            <!-- Search Bar - Ticketmaster Style -->
+            <div class="max-w-4xl mx-auto">
+                <div class="search-container">
+                    <div class="relative flex-1">
+                        <i class="fas fa-search text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                        <input 
+                            type="text" 
+                            id="heroSearch"
+                            placeholder="Artist, Event or Venue"
+                            class="search-field"
+                        />
                     </div>
-                    
-                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-6 animate-fade-up animate-fade-up-delay-1">
-                        Find Your <span class="text-gradient">Perfect</span>
-                        <br />
-                        <span class="text-[#0C1B4D]">Ticket</span>
-                    </h1>
-                    
-                    <p class="text-lg text-gray-500 max-w-lg mb-8 animate-fade-up animate-fade-up-delay-2">
-                        Every transaction is protected by our secure platform. Buy and sell tickets with confidence.
-                    </p>
-                    
-                    <!-- Search Bar -->
-                    <div class="flex flex-col sm:flex-row gap-3 animate-fade-up animate-fade-up-delay-3">
-                        <div class="flex-1 relative">
-                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input 
-                                type="text" 
-                                id="heroSearch"
-                                placeholder="Search events, artists, or venues..."
-                                class="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#1E3A8A] focus:ring-2 focus:ring-blue-100 outline-none transition text-gray-700 text-sm"
-                            />
-                        </div>
-                        <button onclick="searchEvents()" class="btn-primary px-8 py-3.5 rounded-xl">
-                            <i class="fas fa-arrow-right mr-2"></i>Search
-                        </button>
+                    <div class="search-divider"></div>
+                    <div class="relative flex-1">
+                        <i class="fas fa-map-marker-alt text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                        <input 
+                            type="text" 
+                            id="locationSearch"
+                            placeholder="City or Zip Code"
+                            class="search-field"
+                        />
                     </div>
-                    
-                    <!-- Trust Badges -->
-                    <div class="flex flex-wrap gap-4 mt-8 animate-fade-up animate-fade-up-delay-4">
-                        <span class="flex items-center gap-2 text-sm text-gray-500">
-                            <i class="fas fa-shield-alt text-[#1E3A8A]"></i>
-                            Secure Escrow
-                        </span>
-                        <span class="flex items-center gap-2 text-sm text-gray-500">
-                            <i class="fas fa-lock text-[#1E3A8A]"></i>
-                            256-bit Encryption
-                        </span>
-                        <span class="flex items-center gap-2 text-sm text-gray-500">
-                            <i class="fas fa-headset text-[#1E3A8A]"></i>
-                            24/7 Support
-                        </span>
-                    </div>
-                </div>
-                
-                <!-- Right Content -->
-                <div class="flex flex-col items-center animate-fade-up animate-fade-up-delay-3">
-                    <!-- USA Flag Circle -->
-                    <div class="flag-circle w-24 h-24 border-4 border-white shadow-xl">
-                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA Flag" />
-                    </div>
-                    
-                    <!-- Stats -->
-                    <div class="grid grid-cols-3 gap-4 w-full mt-6">
-                        <div class="card p-4 text-center">
-                            <div class="text-2xl font-bold text-[#0C1B4D]">50K+</div>
-                            <div class="text-xs text-gray-500">Happy Users</div>
-                        </div>
-                        <div class="card p-4 text-center">
-                            <div class="text-2xl font-bold text-[#0C1B4D]">$2M+</div>
-                            <div class="text-xs text-gray-500">Protected</div>
-                        </div>
-                        <div class="card p-4 text-center">
-                            <div class="text-2xl font-bold text-[#0C1B4D]">99.9%</div>
-                            <div class="text-xs text-gray-500">Satisfaction</div>
-                        </div>
-                    </div>
+                    <button onclick="searchEvents()" class="search-btn">
+                        <i class="fas fa-search mr-2"></i> Search
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- ======================================== -->
-    <!-- CATEGORIES SECTION -->
-    <!-- ======================================== -->
-    <section class="py-16 px-4 bg-white">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <span class="text-[#1E3A8A] font-semibold text-sm uppercase tracking-wider">Categories</span>
-                <h2 class="text-3xl md:text-4xl font-bold mt-3 text-[#0C1B4D]">
-                    Explore <span class="text-gradient">Events</span>
-                </h2>
-                <p class="text-gray-500 mt-3 max-w-2xl mx-auto">
-                    Find tickets for the best events in your city
+            
+            <!-- Hero Content -->
+            <div class="text-center mt-12">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-[#121212] leading-tight">
+                    Find Your <span class="text-[#024ddf]">Perfect</span> Ticket
+                </h1>
+                <p class="text-gray-500 text-lg mt-4 max-w-2xl mx-auto">
+                    Buy and sell tickets with complete security. Every transaction protected by escrow.
                 </p>
             </div>
             
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                <a href="buy.html?category=concert" class="card p-6 text-center hover:border-[#1E3A8A]">
-                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
-                        🎵
+            <!-- Two Main Options - Buy & Sell Cards -->
+            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-10">
+                <!-- Buy Card -->
+                <a href="buy.html" class="card p-8 text-center hover:border-[#024ddf]">
+                    <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-ticket-alt text-[#024ddf] text-2xl"></i>
                     </div>
-                    <h3 class="font-semibold text-sm text-[#0C1B4D]">Concerts</h3>
-                    <p class="text-gray-400 text-xs mt-1">2,345 events</p>
+                    <h2 class="text-2xl font-bold text-[#121212]">Buy Tickets</h2>
+                    <p class="text-gray-500 text-sm mt-2">Browse events and secure your tickets instantly</p>
+                    <div class="mt-4 inline-block text-[#024ddf] font-semibold text-sm">
+                        Browse Events <i class="fas fa-arrow-right ml-1"></i>
+                    </div>
                 </a>
                 
-                <a href="buy.html?category=sports" class="card p-6 text-center hover:border-[#1E3A8A]">
-                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
-                        ⚽
+                <!-- Sell Card -->
+                <a href="sell.html" class="card p-8 text-center hover:border-[#024ddf]">
+                    <div class="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-store text-[#024ddf] text-2xl"></i>
                     </div>
-                    <h3 class="font-semibold text-sm text-[#0C1B4D]">Sports</h3>
-                    <p class="text-gray-400 text-xs mt-1">1,892 events</p>
-                </a>
-                
-                <a href="buy.html?category=theater" class="card p-6 text-center hover:border-[#1E3A8A]">
-                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
-                        🎭
+                    <h2 class="text-2xl font-bold text-[#121212]">Sell Tickets</h2>
+                    <p class="text-gray-500 text-sm mt-2">List your tickets and reach thousands of buyers</p>
+                    <div class="mt-4 inline-block text-[#024ddf] font-semibold text-sm">
+                        List Tickets <i class="fas fa-arrow-right ml-1"></i>
                     </div>
-                    <h3 class="font-semibold text-sm text-[#0C1B4D]">Theater</h3>
-                    <p class="text-gray-400 text-xs mt-1">1,234 events</p>
                 </a>
-                
-                <a href="buy.html?category=festival" class="card p-6 text-center hover:border-[#1E3A8A]">
-                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
-                        🎪
-                    </div>
-                    <h3 class="font-semibold text-sm text-[#0C1B4D]">Festivals</h3>
-                    <p class="text-gray-400 text-xs mt-1">876 events</p>
-                </a>
-                
-                <a href="buy.html?category=comedy" class="card p-6 text-center hover:border-[#1E3A8A]">
-                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
-                        😂
-                    </div>
-                    <h3 class="font-semibold text-sm text-[#0C1B4D]">Comedy</h3>
-                    <p class="text-gray-400 text-xs mt-1">654 events</p>
-                </a>
-                
-                <a href="buy.html?category=other" class="card p-6 text-center hover:border-[#1E3A8A]">
-                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
-                        🎯
-                    </div>
-                    <h3 class="font-semibold text-sm text-[#0C1B4D]">More</h3>
-                    <p class="text-gray-400 text-xs mt-1">1,023 events</p>
-                </a>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mt-10">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-[#024ddf]">50K+</div>
+                    <div class="text-gray-500 text-sm">Happy Users</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-[#024ddf]">$2M+</div>
+                    <div class="text-gray-500 text-sm">Protected</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-[#024ddf]">99.9%</div>
+                    <div class="text-gray-500 text-sm">Satisfaction</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-[#024ddf]">10K+</div>
+                    <div class="text-gray-500 text-sm">Tickets Listed</div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- ======================================== -->
-    <!-- FEATURES SECTION -->
+    <!-- CATEGORIES - Ticketmaster Style -->
     <!-- ======================================== -->
-    <section class="py-16 px-4 bg-[#F8FAFC]">
+    <section class="py-16 px-4 max-w-7xl mx-auto">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold text-[#121212]">Explore <span class="text-[#024ddf]">Events</span></h2>
+            <p class="text-gray-500 mt-2">Find tickets for the best events in your city</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <a href="buy.html?category=concert" class="card p-6 text-center hover:border-[#024ddf]">
+                <div class="text-3xl mb-2">🎵</div>
+                <h3 class="font-semibold text-sm text-[#121212]">Concerts</h3>
+                <p class="text-gray-400 text-xs mt-1">2,345 events</p>
+            </a>
+            <a href="buy.html?category=sports" class="card p-6 text-center hover:border-[#024ddf]">
+                <div class="text-3xl mb-2">⚽</div>
+                <h3 class="font-semibold text-sm text-[#121212]">Sports</h3>
+                <p class="text-gray-400 text-xs mt-1">1,892 events</p>
+            </a>
+            <a href="buy.html?category=theater" class="card p-6 text-center hover:border-[#024ddf]">
+                <div class="text-3xl mb-2">🎭</div>
+                <h3 class="font-semibold text-sm text-[#121212]">Theater</h3>
+                <p class="text-gray-400 text-xs mt-1">1,234 events</p>
+            </a>
+            <a href="buy.html?category=festival" class="card p-6 text-center hover:border-[#024ddf]">
+                <div class="text-3xl mb-2">🎪</div>
+                <h3 class="font-semibold text-sm text-[#121212]">Festivals</h3>
+                <p class="text-gray-400 text-xs mt-1">876 events</p>
+            </a>
+            <a href="buy.html?category=comedy" class="card p-6 text-center hover:border-[#024ddf]">
+                <div class="text-3xl mb-2">😂</div>
+                <h3 class="font-semibold text-sm text-[#121212]">Comedy</h3>
+                <p class="text-gray-400 text-xs mt-1">654 events</p>
+            </a>
+            <a href="buy.html?category=other" class="card p-6 text-center hover:border-[#024ddf]">
+                <div class="text-3xl mb-2">🎯</div>
+                <h3 class="font-semibold text-sm text-[#121212]">More</h3>
+                <p class="text-gray-400 text-xs mt-1">1,023 events</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- FEATURES - Ticketmaster Style -->
+    <!-- ======================================== -->
+    <section class="py-16 px-4 bg-[#f6f6f6]">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <span class="text-[#1E3A8A] font-semibold text-sm uppercase tracking-wider">Features</span>
-                <h2 class="text-3xl md:text-4xl font-bold mt-3 text-[#0C1B4D]">
-                    Why Choose <span class="text-gradient">TixHub</span>
-                </h2>
-                <p class="text-gray-500 mt-3 max-w-2xl mx-auto">
-                    Everything you need for secure ticket transactions
-                </p>
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-[#121212]">Why Choose <span class="text-[#024ddf]">TixHub</span></h2>
+                <p class="text-gray-500 mt-2">Everything you need for secure ticket transactions</p>
             </div>
             
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="card p-8">
-                    <div class="feature-icon">🛡️</div>
-                    <h3 class="text-xl font-bold mt-4 mb-2 text-[#0C1B4D]">Escrow Protection</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-[#024ddf] text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-[#121212]">Escrow Protection</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mt-2">
                         Your payment is held securely until you confirm ticket delivery. Zero risk, complete peace of mind.
                     </p>
                 </div>
                 
                 <div class="card p-8">
-                    <div class="feature-icon">💳</div>
-                    <h3 class="text-xl font-bold mt-4 mb-2 text-[#0C1B4D]">Multiple Payments</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-4">
+                        <i class="fas fa-credit-card text-[#024ddf] text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-[#121212]">Multiple Payments</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mt-2">
                         Pay with Credit Card, Wise, Sendwave, or Skrill. Choose what works best for you.
                     </p>
                 </div>
                 
                 <div class="card p-8">
-                    <div class="feature-icon">📱</div>
-                    <h3 class="text-xl font-bold mt-4 mb-2 text-[#0C1B4D]">QR Code Tickets</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-4">
+                        <i class="fas fa-qrcode text-[#024ddf] text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-[#121212]">QR Code Tickets</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mt-2">
                         Get instant QR codes for contactless entry. No physical tickets needed, ever.
                     </p>
                 </div>
@@ -623,82 +678,77 @@
     <!-- CTA SECTION -->
     <!-- ======================================== -->
     <section class="py-16 px-4">
-        <div class="max-w-5xl mx-auto">
-            <div class="cta-gradient">
-                <div class="relative z-10 text-center">
-                    <span class="inline-block px-4 py-1.5 bg-white/10 rounded-full text-white text-sm font-medium mb-4 backdrop-blur-sm">
-                        <i class="fas fa-rocket mr-2"></i>Get Started Today
-                    </span>
-                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">
-                        Ready to <span class="text-yellow-400">Join</span> the Community?
-                    </h2>
-                    <p class="text-blue-100 text-lg max-w-2xl mx-auto mb-8">
-                        Join thousands of users who trust TixHub for secure ticket transactions.
-                    </p>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <a href="auth.html" class="btn-red px-8 py-4 rounded-xl">
-                            <i class="fas fa-user-plus"></i> Create Free Account
-                        </a>
-                        <a href="buy.html" class="bg-white/10 backdrop-blur-sm px-8 py-4 rounded-xl text-white font-semibold hover:bg-white/20 transition inline-flex items-center gap-2">
-                            <i class="fas fa-search"></i> Explore Events
-                        </a>
-                    </div>
-                    <p class="text-blue-200 text-sm mt-6">
-                        <i class="fas fa-check-circle text-green-400 mr-1"></i>
-                        No credit card required • Free to join
-                    </p>
+        <div class="max-w-4xl mx-auto">
+            <div class="card p-12 text-center bg-[#121212] text-white border-none">
+                <h2 class="text-3xl md:text-4xl font-bold">
+                    Ready to <span class="text-[#ffb932]">Join</span> the Community?
+                </h2>
+                <p class="text-gray-400 text-lg mt-4 max-w-2xl mx-auto">
+                    Join thousands of users who trust TixHub for secure ticket transactions.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <a href="auth.html" class="btn-primary bg-[#ffb932] text-[#121212] hover:bg-[#f5a800]">
+                        <i class="fas fa-user-plus"></i> Create Free Account
+                    </a>
+                    <a href="buy.html" class="btn-secondary border-white/20 text-white hover:bg-white/10">
+                        <i class="fas fa-search"></i> Explore Events
+                    </a>
                 </div>
+                <p class="text-gray-500 text-sm mt-6">
+                    <i class="fas fa-check-circle text-green-400 mr-1"></i>
+                    No credit card required • Free to join
+                </p>
             </div>
         </div>
     </section>
 
     <!-- ======================================== -->
-    <!-- FOOTER -->
+    <!-- FOOTER - Ticketmaster Style -->
     <!-- ======================================== -->
-    <footer class="border-t border-gray-200 py-12 px-4 bg-white">
+    <footer class="footer">
         <div class="max-w-7xl mx-auto">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
                     <div class="flex items-center gap-2 mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0C1B4D] to-[#1E3A8A] flex items-center justify-center">
-                            <i class="fas fa-ticket-alt text-white text-xl"></i>
+                        <div class="w-10 h-10 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
+                            <i class="fas fa-ticket-alt text-white text-sm"></i>
                         </div>
-                        <span class="text-2xl font-bold text-[#0C1B4D]">Tix<span class="text-[#1E3A8A]">Hub</span></span>
+                        <span class="text-xl font-bold text-white">Tix<span class="text-[#6c5ce7]">Hub</span></span>
                     </div>
-                    <p class="text-gray-500 text-sm">Secure ticket marketplace with escrow protection.</p>
+                    <p class="text-gray-400 text-sm">Secure ticket marketplace with escrow protection.</p>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-[#0C1B4D]">Quick Links</h4>
-                    <ul class="space-y-2 text-gray-500 text-sm">
-                        <li><a href="#" class="hover:text-[#1E3A8A] transition">About Us</a></li>
-                        <li><a href="#" class="hover:text-[#1E3A8A] transition">How It Works</a></li>
-                        <li><a href="#" class="hover:text-[#1E3A8A] transition">FAQ</a></li>
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link">About Us</a></li>
+                        <li><a href="#" class="footer-link">How It Works</a></li>
+                        <li><a href="#" class="footer-link">FAQ</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-[#0C1B4D]">Support</h4>
-                    <ul class="space-y-2 text-gray-500 text-sm">
-                        <li><a href="#" class="hover:text-[#1E3A8A] transition">Help Center</a></li>
-                        <li><a href="#" class="hover:text-[#1E3A8A] transition">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-[#1E3A8A] transition">Privacy Policy</a></li>
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link">Help Center</a></li>
+                        <li><a href="#" class="footer-link">Contact Us</a></li>
+                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-[#0C1B4D]">Follow Us</h4>
+                    <h4 class="footer-heading">Follow Us</h4>
                     <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-blue-50 transition">
-                            <i class="fab fa-twitter text-gray-500 hover:text-[#1E3A8A]"></i>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
+                            <i class="fab fa-twitter text-gray-400 hover:text-white"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-blue-50 transition">
-                            <i class="fab fa-instagram text-gray-500 hover:text-[#1E3A8A]"></i>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
+                            <i class="fab fa-instagram text-gray-400 hover:text-white"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-blue-50 transition">
-                            <i class="fab fa-facebook text-gray-500 hover:text-[#1E3A8A]"></i>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
+                            <i class="fab fa-facebook text-gray-400 hover:text-white"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-200 mt-8 pt-8 text-center text-gray-500 text-sm">
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
                 &copy; 2026 TixHub. All rights reserved.
             </div>
         </div>
@@ -708,19 +758,6 @@
     <!-- JAVASCRIPT -->
     <!-- ======================================== -->
     <script>
-        // ========================================
-        // NAVBAR SCROLL
-        // ========================================
-        const navbar = document.getElementById('navbar');
-        
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
-        });
-
         // ========================================
         // MOBILE MENU
         // ========================================
@@ -737,24 +774,19 @@
             }
         });
 
-        document.querySelectorAll('#mobileMenu a').forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenu.classList.remove('open');
-                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
-            });
-        });
-
         // ========================================
         // SEARCH
         // ========================================
         function searchEvents() {
             const searchInput = document.getElementById('heroSearch');
+            const locationInput = document.getElementById('locationSearch');
             const query = searchInput.value.trim();
+            const location = locationInput.value.trim();
             
             if (query.length > 0) {
-                showToast(`🔍 Searching for "${query}"...`);
+                showToast(`🔍 Searching for "${query}"${location ? ' near ' + location : ''}...`);
                 setTimeout(() => {
-                    window.location.href = `buy.html?search=${encodeURIComponent(query)}`;
+                    window.location.href = `buy.html?search=${encodeURIComponent(query)}&location=${encodeURIComponent(location)}`;
                 }, 800);
             } else {
                 showToast('Please enter an event or artist name');
@@ -762,6 +794,12 @@
         }
 
         document.getElementById('heroSearch')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchEvents();
+            }
+        });
+
+        document.getElementById('locationSearch')?.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 searchEvents();
             }
@@ -776,7 +814,7 @@
             const toast = document.createElement('div');
             toast.className = 'toast';
             toast.innerHTML = `
-                <i class="fas fa-info-circle text-[#1E3A8A]"></i>
+                <i class="fas fa-info-circle text-[#024ddf]"></i>
                 <span>${message}</span>
             `;
             document.body.appendChild(toast);
@@ -788,30 +826,6 @@
                 setTimeout(() => toast.remove(), 400);
             }, 4000);
         }
-
-        // ========================================
-        // INTERSECTION OBSERVER
-        // ========================================
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            observer.observe(card);
-        });
 
         // ========================================
         // CONSOLE
