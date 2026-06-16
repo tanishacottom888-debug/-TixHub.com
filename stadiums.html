@@ -334,19 +334,6 @@
             background-clip: text;
             line-height: 1;
         }
-        
-        /* Map Placeholder */
-        .map-placeholder {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(239, 68, 68, 0.05));
-            border: 1px solid rgba(245, 158, 11, 0.1);
-            border-radius: 16px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            font-size: 0.9rem;
-        }
     </style>
 </head>
 <body>
@@ -581,7 +568,7 @@
     <!-- ======================================== -->
     <script>
         // ========================================
-        // STADIUM DATA
+        // STADIUM DATA WITH REAL IMAGES
         // ========================================
         const stadiumsData = [
             {
@@ -591,7 +578,7 @@
                 state: "NJ",
                 region: "east",
                 capacity: 82500,
-                image: "https://images.unsplash.com/photo-1522156373667-4a7230df5b0c?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/MetLife_Stadium_aerial.jpg/800px-MetLife_Stadium_aerial.jpg",
                 icon: "🏟️",
                 matches: 8,
                 matchesList: ["Final", "Semi-Final", "Quarter-Final", "Group Stage x5"],
@@ -610,7 +597,7 @@
                 state: "CA",
                 region: "west",
                 capacity: 70000,
-                image: "https://images.unsplash.com/photo-1592982537447-6f2a3a3d9f8a?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/SoFi_Stadium_2021.jpg/800px-SoFi_Stadium_2021.jpg",
                 icon: "🌴",
                 matches: 7,
                 matchesList: ["Semi-Final", "Quarter-Final", "Group Stage x5"],
@@ -629,7 +616,7 @@
                 state: "TX",
                 region: "south",
                 capacity: 80000,
-                image: "https://images.unsplash.com/photo-1580120443074-35d9dcd6b998?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/AT%26T_Stadium_2020.jpg/800px-AT%26T_Stadium_2020.jpg",
                 icon: "🤠",
                 matches: 6,
                 matchesList: ["Semi-Final", "Quarter-Final", "Group Stage x4"],
@@ -648,7 +635,7 @@
                 state: "CA",
                 region: "west",
                 capacity: 68500,
-                image: "https://images.unsplash.com/photo-1576175806009-3b5f9b8c6d32?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Levi%27s_Stadium_2020.jpg/800px-Levi%27s_Stadium_2020.jpg",
                 icon: "🌉",
                 matches: 5,
                 matchesList: ["Quarter-Final", "Group Stage x4"],
@@ -667,7 +654,7 @@
                 state: "FL",
                 region: "south",
                 capacity: 65300,
-                image: "https://images.unsplash.com/photo-1576175806009-3b5f9b8c6d32?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Hard_Rock_Stadium_2020.jpg/800px-Hard_Rock_Stadium_2020.jpg",
                 icon: "🌊",
                 matches: 5,
                 matchesList: ["Quarter-Final", "Group Stage x4"],
@@ -686,7 +673,7 @@
                 state: "MO",
                 region: "midwest",
                 capacity: 76416,
-                image: "https://images.unsplash.com/photo-1580120443074-35d9dcd6b998?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Arrowhead_Stadium_2020.jpg/800px-Arrowhead_Stadium_2020.jpg",
                 icon: "🌾",
                 matches: 4,
                 matchesList: ["Quarter-Final", "Group Stage x3"],
@@ -705,7 +692,7 @@
                 state: "TX",
                 region: "south",
                 capacity: 72000,
-                image: "https://images.unsplash.com/photo-1580120443074-35d9dcd6b998?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/NRG_Stadium_2020.jpg/800px-NRG_Stadium_2020.jpg",
                 icon: "🚀",
                 matches: 4,
                 matchesList: ["Group Stage x4"],
@@ -724,7 +711,7 @@
                 state: "GA",
                 region: "south",
                 capacity: 71000,
-                image: "https://images.unsplash.com/photo-1576175806009-3b5f9b8c6d32?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Mercedes-Benz_Stadium_2020.jpg/800px-Mercedes-Benz_Stadium_2020.jpg",
                 icon: "⚡",
                 matches: 5,
                 matchesList: ["Group Stage x5"],
@@ -743,7 +730,7 @@
                 state: "PA",
                 region: "east",
                 capacity: 69500,
-                image: "https://images.unsplash.com/photo-1522156373667-4a7230df5b0c?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Lincoln_Financial_Field_2020.jpg/800px-Lincoln_Financial_Field_2020.jpg",
                 icon: "🔔",
                 matches: 4,
                 matchesList: ["Group Stage x4"],
@@ -762,7 +749,7 @@
                 state: "TN",
                 region: "south",
                 capacity: 69000,
-                image: "https://images.unsplash.com/photo-1580120443074-35d9dcd6b998?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Nissan_Stadium_2020.jpg/800px-Nissan_Stadium_2020.jpg",
                 icon: "🎸",
                 matches: 4,
                 matchesList: ["Group Stage x4"],
@@ -781,7 +768,7 @@
                 state: "MA",
                 region: "east",
                 capacity: 66500,
-                image: "https://images.unsplash.com/photo-1522156373667-4a7230df5b0c?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Gillette_Stadium_2020.jpg/800px-Gillette_Stadium_2020.jpg",
                 icon: "🏛️",
                 matches: 4,
                 matchesList: ["Group Stage x4"],
@@ -800,7 +787,7 @@
                 state: "WA",
                 region: "west",
                 capacity: 69000,
-                image: "https://images.unsplash.com/photo-1576175806009-3b5f9b8c6d32?w=600&h=400&fit=crop",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Lumen_Field_2020.jpg/800px-Lumen_Field_2020.jpg",
                 icon: "🌧️",
                 matches: 4,
                 matchesList: ["Group Stage x4"],
@@ -821,8 +808,7 @@
         let activeFilter = 'all';
 
         // ========================================
-        // DOM ELEMENTS
-        // ========================================
+        // DOM ELEMENTS        // ========================================
         const stadiumsContainer = document.getElementById('stadiumsContainer');
         const filterTags = document.querySelectorAll('.filter-tag');
         const scrollTopBtn = document.getElementById('scrollTopBtn');
@@ -851,6 +837,7 @@
                         alt="${stadium.name}"
                         class="stadium-image"
                         onerror="this.src='https://via.placeholder.com/600x400/1a1a2e/f59e0b?text=${stadium.name}'"
+                        loading="lazy"
                     />
                     <div class="p-5">
                         <div class="flex items-start justify-between mb-2">
@@ -949,6 +936,7 @@
                             alt="${stadium.name}"
                             class="w-full h-64 object-cover rounded-xl"
                             onerror="this.src='https://via.placeholder.com/600x400/1a1a2e/f59e0b?text=${stadium.name}'"
+                            loading="lazy"
                         />
                         <div class="flex flex-wrap gap-2 mt-3">
                             <span class="badge-capacity">
@@ -1126,11 +1114,11 @@
         renderStadiums();
 
         console.log('🏟️ TixHub - World Cup 2026 Stadiums');
-        console.log(`🏟️ ${stadiumsData.length} stadiums loaded`);
+        console.log(`🏟️ ${stadiumsData.length} stadiums loaded with real images`);
         console.log('🏆 Final host: MetLife Stadium');
         
         setTimeout(() => {
-            showToast('🏟️ Explore the 12 World Cup stadiums!', 'info');
+            showToast('🏟️ Explore the 12 World Cup stadiums with real images!', 'info');
         }, 800);
     </script>
 </body>
