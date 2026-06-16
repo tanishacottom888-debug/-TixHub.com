@@ -18,6 +18,22 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     
     <style>
+        /* ======================================== */
+        /* TICKETMASTER INSPIRED STYLES */
+        /* ======================================== */
+        :root {
+            --tm-blue: #024ddf;
+            --tm-blue-hover: #0139a7;
+            --tm-dark: #121212;
+            --tm-gray: #646464;
+            --tm-gray-light: #bfbfbf;
+            --tm-gray-bg: #f6f6f6;
+            --tm-white: #ffffff;
+            --tm-gold: #ffb932;
+            --tm-red: #eb0000;
+            --tm-text: #121212;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -25,245 +41,383 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a1a;
-            color: #ffffff;
+            font-family: 'Inter', 'Averta', helvetica, arial, sans-serif;
+            background: var(--tm-gray-bg);
+            color: var(--tm-text);
             overflow-x: hidden;
         }
         
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1a1a2e;
+            background: var(--tm-gray-bg);
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            background: var(--tm-gray-light);
             border-radius: 10px;
         }
-        
-        /* Glassmorphism */
-        .glass-card {
-            background: rgba(26, 26, 46, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--tm-gray);
         }
         
-        .glass-card:hover {
-            border-color: rgba(108, 92, 231, 0.3);
+        /* ======================================== */
+        /* TICKETMASTER STYLE BUTTONS */
+        /* ======================================== */
+        .btn-primary {
+            background: var(--tm-blue);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            line-height: 1.4;
+            min-height: 40px;
+            text-decoration: none;
         }
         
-        /* Gradient Button */
-        .gradient-btn {
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+        .btn-primary:hover {
+            background: var(--tm-blue-hover);
+            transform: scale(1.02);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--tm-text);
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid var(--tm-gray-light);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            line-height: 1.4;
+            min-height: 40px;
+            text-decoration: none;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--tm-dark);
+            background: var(--tm-gray-bg);
+        }
+        
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 12px;
+            min-height: 32px;
+        }
+        
+        /* ======================================== */
+        /* NAVBAR - Ticketmaster Style */
+        /* ======================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--tm-dark);
             transition: all 0.3s ease;
         }
         
-        .gradient-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 40px rgba(108, 92, 231, 0.4);
+        .navbar-top {
+            padding: 6px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
         
-        .gradient-btn:active {
-            transform: scale(0.98);
+        .navbar-main {
+            padding: 10px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         
-        /* Navbar */
         .nav-link {
             position: relative;
-            transition: color 0.3s ease;
+            color: #9ca3af;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            text-decoration: none;
+        }
+        
+        .nav-link:hover {
+            color: #fff;
         }
         
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
             width: 0;
             height: 2px;
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            background: var(--tm-blue);
             transition: width 0.3s ease;
+            border-radius: 2px;
         }
         
         .nav-link:hover::after,
-        .nav-link.active::after {
-            width: 100%;
+        .nav-link-active::after {
+            width: 60%;
         }
         
-        /* Sidebar Navigation */
-        .sidebar-link {
-            display: flex;
+        .nav-link-active {
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        /* Country Selector - USA Flag Circle */
+        .flag-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+            display: inline-flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 14px;
-            color: #9ca3af;
+            justify-content: center;
+            background: #fff;
+        }
+        
+        .flag-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* ======================================== */
+        /* CARDS - Ticketmaster Style */
+        /* ======================================== */
+        .card {
+            background: var(--tm-white);
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
+            border: 1px solid var(--tm-gray-light);
+            overflow: hidden;
         }
         
-        .sidebar-link:hover {
-            background: rgba(108, 92, 231, 0.1);
-            color: #fff;
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
-        .sidebar-link.active {
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(253, 121, 168, 0.2));
-            color: #fff;
-            border: 1px solid rgba(108, 92, 231, 0.2);
-        }
-        
-        .sidebar-link i {
-            width: 20px;
-            font-size: 1.1rem;
-        }
-        
-        .sidebar-link .badge {
-            margin-left: auto;
-            background: rgba(253, 121, 168, 0.2);
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            color: #fd79a8;
-        }
-        
-        /* Stat Cards */
+        /* ======================================== */
+        /* STAT CARDS */
+        /* ======================================== */
         .stat-card {
-            padding: 20px;
+            padding: 16px 20px;
             transition: all 0.3s ease;
         }
         
         .stat-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(108, 92, 231, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
         .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
+            width: 44px;
+            height: 44px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
         }
         
-        /* Ticket Item */
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--tm-text);
+            line-height: 1.2;
+        }
+        
+        /* ======================================== */
+        /* SIDEBAR */
+        /* ======================================== */
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 4px;
+            color: var(--tm-gray);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .sidebar-link:hover {
+            background: var(--tm-gray-bg);
+            color: var(--tm-text);
+        }
+        
+        .sidebar-link.active {
+            background: var(--tm-blue);
+            color: #fff;
+        }
+        
+        .sidebar-link i {
+            width: 18px;
+            font-size: 1rem;
+        }
+        
+        .sidebar-link .badge {
+            margin-left: auto;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            color: #fff;
+        }
+        
+        .sidebar-link.active .badge {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        /* ======================================== */
+        /* TICKET ITEM */
+        /* ======================================== */
         .ticket-item {
             transition: all 0.3s ease;
         }
         
         .ticket-item:hover {
-            border-color: rgba(108, 92, 231, 0.3);
-            transform: translateX(4px);
+            border-color: var(--tm-blue);
+            background: var(--tm-gray-bg);
         }
         
+        /* ======================================== */
+        /* STATUS BADGES */
+        /* ======================================== */
         .status-badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.65rem;
             font-weight: 600;
+            text-transform: uppercase;
         }
         
         .status-badge.active {
-            background: rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.1);
             color: #10b981;
         }
         
         .status-badge.pending {
-            background: rgba(245, 158, 11, 0.2);
+            background: rgba(245, 158, 11, 0.1);
             color: #f59e0b;
         }
         
         .status-badge.completed {
-            background: rgba(59, 130, 246, 0.2);
+            background: rgba(59, 130, 246, 0.1);
             color: #3b82f6;
         }
         
         .status-badge.cancelled {
-            background: rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.1);
             color: #ef4444;
         }
         
         .status-badge.held {
-            background: rgba(108, 92, 231, 0.2);
-            color: #8b5cf6;
+            background: rgba(2, 77, 223, 0.1);
+            color: var(--tm-blue);
         }
         
         .status-badge.released {
-            background: rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.1);
             color: #10b981;
         }
         
-        /* QR Code Container */
+        /* ======================================== */
+        /* PROFILE AVATAR */
+        /* ======================================== */
+        .profile-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--tm-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 auto;
+        }
+        
+        /* ======================================== */
+        /* QR CODE */
+        /* ======================================== */
         .qr-container {
             background: #fff;
             padding: 16px;
-            border-radius: 16px;
+            border-radius: 4px;
             display: inline-block;
+            border: 1px solid var(--tm-gray-light);
         }
         
         .qr-container canvas,
         .qr-container img {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
         }
         
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-            
-            .sidebar-mobile {
-                display: flex !important;
-                overflow-x: auto;
-                gap: 8px;
-                padding: 4px;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .sidebar-mobile .sidebar-link {
-                white-space: nowrap;
-                padding: 10px 16px;
-                font-size: 0.8rem;
-                flex-shrink: 0;
-            }
-            
-            .stat-card {
-                padding: 16px;
-            }
-            
-            .stat-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-            
-            .stat-number {
-                font-size: 1.25rem !important;
-            }
-            
-            .glass-card {
-                padding: 16px !important;
-            }
+        /* ======================================== */
+        /* MOBILE MENU */
+        /* ======================================== */
+        .mobile-menu {
+            display: none;
+            background: var(--tm-dark);
+            padding: 16px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        /* Mobile Bottom Nav */
+        .mobile-menu.open {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            color: #9ca3af;
+            padding: 10px 0;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+        
+        .mobile-menu a:hover {
+            color: #fff;
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        /* ======================================== */
+        /* BOTTOM NAV - Mobile */
+        /* ======================================== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--tm-white);
+            border-top: 1px solid var(--tm-gray-light);
             display: none;
-            padding: 8px 0;
+            padding: 6px 0;
             z-index: 50;
         }
         
@@ -273,19 +427,19 @@
             align-items: center;
             gap: 2px;
             padding: 4px 0;
-            color: #6b7280;
+            color: var(--tm-gray);
             transition: all 0.3s ease;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             flex: 1;
             text-decoration: none;
         }
         
         .bottom-nav-item.active {
-            color: #6c5ce7;
+            color: var(--tm-blue);
         }
         
         .bottom-nav-item i {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
         }
         
         @media (max-width: 768px) {
@@ -293,94 +447,210 @@
                 display: flex;
             }
             .content-wrapper {
-                padding-bottom: 80px;
+                padding-bottom: 70px;
             }
         }
         
-        /* Toast */
+        /* ======================================== */
+        /* TOAST */
+        /* ======================================== */
         .toast {
             position: fixed;
-            top: 80px;
-            right: 20px;
-            z-index: 1000;
-            padding: 14px 20px;
-            border-radius: 16px;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            padding: 14px 24px;
+            border-radius: 4px;
+            background: var(--tm-dark);
             color: #fff;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             max-width: 90%;
-            width: 380px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            animation: slideInRight 0.3s ease-out;
+            width: auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-out;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         
-        @keyframes slideInRight {
-            0% { transform: translateX(100px); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
+        @keyframes slideUp {
+            0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
         }
         
-        /* Profile Avatar */
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #fff;
+        /* ======================================== */
+        /* MODAL */
+        /* ======================================== */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
         }
         
-        /* Animation */
+        /* ======================================== */
+        /* RESPONSIVE */
+        /* ======================================== */
+        @media (max-width: 768px) {
+            .navbar-top {
+                padding: 6px 16px;
+            }
+            .navbar-main {
+                padding: 10px 16px;
+                flex-wrap: wrap;
+            }
+            .sidebar {
+                display: none;
+            }
+            .sidebar-mobile {
+                display: flex !important;
+                overflow-x: auto;
+                gap: 6px;
+                padding: 4px;
+                -webkit-overflow-scrolling: touch;
+            }
+            .sidebar-mobile .sidebar-link {
+                white-space: nowrap;
+                padding: 8px 14px;
+                font-size: 0.75rem;
+                flex-shrink: 0;
+            }
+            .stat-number {
+                font-size: 1.2rem;
+            }
+            .stat-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+            .profile-avatar {
+                width: 56px;
+                height: 56px;
+                font-size: 1.4rem;
+            }
+        }
+        
+        /* ======================================== */
+        /* ANIMATIONS */
+        /* ======================================== */
         .fade-in {
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.4s ease-out forwards;
         }
         
         @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
+            0% { opacity: 0; transform: translateY(10px); }
             100% { opacity: 1; transform: translateY(0); }
         }
         
-        /* Modal */
-        .modal-overlay {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+        /* ======================================== */
+        /* FOOTER */
+        /* ======================================== */
+        .footer {
+            background: var(--tm-dark);
+            color: #fff;
+            padding: 32px 40px 20px;
+            margin-top: 20px;
+        }
+        
+        .footer-link {
+            color: #9ca3af;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .footer-link:hover {
+            color: #fff;
+        }
+        
+        .footer-heading {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .footer {
+                padding: 24px 16px 16px;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- ======================================== -->
-    <!-- NAVIGATION -->
+    <!-- NAVIGATION - Ticketmaster Style -->
     <!-- ======================================== -->
-    <nav class="fixed top-0 left-0 right-0 z-50 px-4 py-3 md:px-8 md:py-4">
-        <div class="max-w-7xl mx-auto glass-card px-4 py-2 md:px-6 md:py-3 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2 shrink-0">
-                <div class="w-8 h-8 md:w-10 md:h-10 gradient-bg rounded-xl flex items-center justify-center">
-                    <i class="fas fa-ticket-alt text-white text-sm md:text-xl"></i>
+    <nav class="navbar">
+        <!-- Top Bar -->
+        <div class="navbar-top hidden md:flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <!-- Country Selector with USA Flag Circle -->
+                <button class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
+                    <span class="flag-circle">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA Flag" />
+                    </span>
+                    <span>US</span>
+                </button>
+                
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-1">
+                    <i class="fas fa-hotel"></i> Hotels
+                </a>
+                <a href="sell.html" class="text-gray-400 hover:text-white transition text-sm">Sell</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Gift Cards</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Help</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">VIP</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-xs text-gray-500">PayPal Preferred</span>
+            </div>
+        </div>
+        
+        <!-- Main Nav -->
+        <div class="navbar-main">
+            <div class="flex items-center gap-6">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
+                        <i class="fas fa-ticket-alt text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white tracking-tight">
+                        Tix<span class="text-[#6c5ce7]">Hub</span>
+                    </span>
+                </a>
+                
+                <!-- Nav Links -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="buy.html" class="nav-link">Buy Tickets</a>
+                    <a href="sell.html" class="nav-link">Sell Tickets</a>
+                    <a href="matches.html" class="nav-link">Matches</a>
+                    <a href="stadiums.html" class="nav-link">Stadiums</a>
                 </div>
-                <span class="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    TixHub
-                </span>
-            </a>
+            </div>
             
-            <div class="flex items-center gap-3 md:gap-4">
-                <span class="hidden sm:inline text-sm text-gray-400">
-                    <i class="fas fa-user-circle mr-1 text-purple-400"></i>
-                    John Doe
+            <div class="flex items-center gap-3">
+                <span class="hidden md:block text-gray-300 text-sm">
+                    <i class="fas fa-user-circle mr-1"></i> John Doe
                 </span>
                 <a href="index.html" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-2">
                     <i class="fas fa-sign-out-alt"></i>
                     <span class="hidden sm:inline">Logout</span>
                 </a>
+                <button id="mobileToggle" class="lg:hidden text-white text-2xl p-2">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy Tickets</a>
+            <a href="sell.html">Sell Tickets</a>
+            <a href="matches.html">Matches</a>
+            <a href="stadiums.html">Stadiums</a>
+            <a href="index.html" class="text-white font-semibold">Logout</a>
         </div>
     </nav>
 
@@ -390,7 +660,7 @@
     <div class="max-w-7xl mx-auto px-4 pt-24 pb-8 content-wrapper">
         
         <!-- Mobile Sidebar -->
-        <div class="sidebar-mobile hidden md:hidden glass-card p-2 mb-4 overflow-x-auto">
+        <div class="sidebar-mobile hidden md:hidden card p-2 mb-4 overflow-x-auto">
             <a href="#" class="sidebar-link active" data-section="overview" onclick="switchSection('overview')">
                 <i class="fas fa-chart-pie"></i> Overview
             </a>
@@ -403,6 +673,9 @@
             <a href="#" class="sidebar-link" data-section="favorites" onclick="switchSection('favorites')">
                 <i class="fas fa-heart"></i> Favorites
             </a>
+            <a href="#" class="sidebar-link" data-section="messages" onclick="switchSection('messages')">
+                <i class="fas fa-comments"></i> Messages
+            </a>
             <a href="#" class="sidebar-link" data-section="profile" onclick="switchSection('profile')">
                 <i class="fas fa-user"></i> Profile
             </a>
@@ -413,14 +686,14 @@
             <!-- ======================================== -->
             <!-- SIDEBAR - Desktop -->
             <!-- ======================================== -->
-            <div class="sidebar w-64 shrink-0">
-                <div class="glass-card p-4 sticky top-24">
+            <div class="sidebar w-56 shrink-0">
+                <div class="card p-4 sticky top-24">
                     <!-- User Info -->
-                    <div class="text-center mb-6 pb-6 border-b border-white/5">
-                        <div class="profile-avatar mx-auto mb-3">JD</div>
-                        <h3 class="font-semibold">John Doe</h3>
-                        <p class="text-gray-400 text-sm">john@example.com</p>
-                        <span class="inline-block mt-2 px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">
+                    <div class="text-center mb-4 pb-4 border-b border-gray-200">
+                        <div class="profile-avatar">JD</div>
+                        <h3 class="font-semibold mt-3 text-[#121212]">John Doe</h3>
+                        <p class="text-gray-500 text-sm">john@example.com</p>
+                        <span class="inline-block mt-1 px-3 py-0.5 bg-green-100 text-green-700 rounded text-xs">
                             <i class="fas fa-check-circle mr-1"></i> Verified
                         </span>
                     </div>
@@ -445,7 +718,7 @@
                         </a>
                         <a href="#" class="sidebar-link" data-section="messages" onclick="switchSection('messages')">
                             <i class="fas fa-comments"></i> Messages
-                            <span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">3</span>
+                            <span class="badge" style="background:rgba(239,68,68,0.1);color:#ef4444;">3</span>
                         </a>
                         <a href="#" class="sidebar-link" data-section="profile" onclick="switchSection('profile')">
                             <i class="fas fa-user"></i> Profile Settings
@@ -457,107 +730,107 @@
             <!-- ======================================== -->
             <!-- CONTENT AREA -->
             <!-- ======================================== -->
-            <div class="flex-1 space-y-6">
+            <div class="flex-1 space-y-5">
                 
                 <!-- ======================================== -->
                 <!-- OVERVIEW SECTION -->
                 <!-- ======================================== -->
                 <div id="section-overview" class="fade-in">
                     <!-- Welcome -->
-                    <div class="glass-card p-6 md:p-8">
-                        <h1 class="text-2xl md:text-3xl font-bold">
-                            Welcome back, <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">John!</span>
+                    <div class="card p-6 md:p-8">
+                        <h1 class="text-2xl md:text-3xl font-bold text-[#121212]">
+                            Welcome back, <span class="text-[#024ddf]">John!</span>
                         </h1>
-                        <p class="text-gray-400 text-sm mt-1">Here's what's happening with your tickets</p>
+                        <p class="text-gray-500 text-sm mt-1">Here's what's happening with your tickets</p>
                     </div>
 
                     <!-- Stats -->
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="glass-card stat-card">
+                        <div class="card stat-card">
                             <div class="flex items-center gap-4">
-                                <div class="stat-icon bg-purple-500/20 text-purple-400">
+                                <div class="stat-icon bg-blue-50 text-[#024ddf]">
                                     <i class="fas fa-ticket-alt"></i>
                                 </div>
                                 <div>
-                                    <p class="text-gray-400 text-xs">Total Tickets</p>
-                                    <p class="stat-number text-2xl font-bold">12</p>
+                                    <p class="text-gray-500 text-xs">Total Tickets</p>
+                                    <p class="stat-number">12</p>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="glass-card stat-card">
+                        <div class="card stat-card">
                             <div class="flex items-center gap-4">
-                                <div class="stat-icon bg-green-500/20 text-green-400">
+                                <div class="stat-icon bg-green-50 text-[#10b981]">
                                     <i class="fas fa-check-circle"></i>
                                 </div>
                                 <div>
-                                    <p class="text-gray-400 text-xs">Confirmed</p>
-                                    <p class="stat-number text-2xl font-bold">8</p>
+                                    <p class="text-gray-500 text-xs">Confirmed</p>
+                                    <p class="stat-number">8</p>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="glass-card stat-card">
+                        <div class="card stat-card">
                             <div class="flex items-center gap-4">
-                                <div class="stat-icon bg-yellow-500/20 text-yellow-400">
+                                <div class="stat-icon bg-yellow-50 text-[#f59e0b]">
                                     <i class="fas fa-clock"></i>
                                 </div>
                                 <div>
-                                    <p class="text-gray-400 text-xs">Pending</p>
-                                    <p class="stat-number text-2xl font-bold">3</p>
+                                    <p class="text-gray-500 text-xs">Pending</p>
+                                    <p class="stat-number">3</p>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="glass-card stat-card">
+                        <div class="card stat-card">
                             <div class="flex items-center gap-4">
-                                <div class="stat-icon bg-pink-500/20 text-pink-400">
+                                <div class="stat-icon bg-pink-50 text-[#ec4899]">
                                     <i class="fas fa-heart"></i>
                                 </div>
                                 <div>
-                                    <p class="text-gray-400 text-xs">Favorites</p>
-                                    <p class="stat-number text-2xl font-bold">4</p>
+                                    <p class="text-gray-500 text-xs">Favorites</p>
+                                    <p class="stat-number">4</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Recent Activity -->
-                    <div class="glass-card p-6">
+                    <div class="card p-5">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold">Recent Activity</h3>
-                            <button class="text-sm text-purple-400 hover:text-purple-300 transition">View All</button>
+                            <h3 class="text-lg font-semibold text-[#121212]">Recent Activity</h3>
+                            <button class="text-sm text-[#024ddf] hover:text-[#0139a7] transition">View All</button>
                         </div>
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-3 p-3 glass-card">
-                                <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
-                                    <i class="fas fa-check"></i>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-3 p-3 bg-gray-50 rounded border border-gray-200">
+                                <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-green-600">
+                                    <i class="fas fa-check text-sm"></i>
                                 </div>
                                 <div class="flex-1">
-                                    <p class="text-sm font-medium">Summer Music Festival</p>
-                                    <p class="text-xs text-gray-400">Ticket confirmed • 2 hours ago</p>
+                                    <p class="text-sm font-medium text-[#121212]">Summer Music Festival</p>
+                                    <p class="text-xs text-gray-500">Ticket confirmed • 2 hours ago</p>
                                 </div>
-                                <span class="text-xs text-green-400">$149.99</span>
+                                <span class="text-xs text-[#10b981] font-bold">$149.99</span>
                             </div>
-                            <div class="flex items-center gap-3 p-3 glass-card">
-                                <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400">
-                                    <i class="fas fa-clock"></i>
+                            <div class="flex items-center gap-3 p-3 bg-gray-50 rounded border border-gray-200">
+                                <div class="w-8 h-8 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-600">
+                                    <i class="fas fa-clock text-sm"></i>
                                 </div>
                                 <div class="flex-1">
-                                    <p class="text-sm font-medium">NBA Finals - Game 7</p>
-                                    <p class="text-xs text-gray-400">Payment held in escrow • 5 hours ago</p>
+                                    <p class="text-sm font-medium text-[#121212]">NBA Finals - Game 7</p>
+                                    <p class="text-xs text-gray-500">Payment held in escrow • 5 hours ago</p>
                                 </div>
-                                <span class="text-xs text-yellow-400">$299.99</span>
+                                <span class="text-xs text-[#f59e0b] font-bold">$299.99</span>
                             </div>
-                            <div class="flex items-center gap-3 p-3 glass-card">
-                                <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-                                    <i class="fas fa-tag"></i>
+                            <div class="flex items-center gap-3 p-3 bg-gray-50 rounded border border-gray-200">
+                                <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+                                    <i class="fas fa-tag text-sm"></i>
                                 </div>
                                 <div class="flex-1">
-                                    <p class="text-sm font-medium">Hamilton - Broadway</p>
-                                    <p class="text-xs text-gray-400">Ticket listed for sale • 1 day ago</p>
+                                    <p class="text-sm font-medium text-[#121212]">Hamilton - Broadway</p>
+                                    <p class="text-xs text-gray-500">Ticket listed for sale • 1 day ago</p>
                                 </div>
-                                <span class="text-xs text-blue-400">$189.50</span>
+                                <span class="text-xs text-[#024ddf] font-bold">$189.50</span>
                             </div>
                         </div>
                     </div>
@@ -567,11 +840,11 @@
                 <!-- PURCHASES SECTION -->
                 <!-- ======================================== -->
                 <div id="section-purchases" class="hidden fade-in">
-                    <div class="glass-card p-6">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-2xl font-bold">My Purchases</h2>
+                    <div class="card p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-2xl font-bold text-[#121212]">My Purchases</h2>
                             <div class="flex gap-2">
-                                <select class="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-gray-300">
+                                <select class="border border-gray-200 rounded px-3 py-1.5 text-sm text-gray-600 bg-white focus:border-[#024ddf] focus:outline-none">
                                     <option>All</option>
                                     <option>Active</option>
                                     <option>Completed</option>
@@ -580,65 +853,65 @@
                             </div>
                         </div>
                         
-                        <div class="space-y-4">
+                        <div class="space-y-3">
                             <!-- Ticket 1 -->
-                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                            <div class="ticket-item card p-4 flex flex-col md:flex-row md:items-center gap-4 border border-gray-200 hover:border-[#024ddf]">
                                 <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=100&h=100&fit=crop" 
-                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded object-cover" />
                                 <div class="flex-1">
-                                    <h4 class="font-semibold">Summer Music Festival 2026</h4>
-                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400 mt-1">
-                                        <span><i class="fas fa-calendar-alt mr-1 text-purple-400"></i> Jul 15, 2026</span>
-                                        <span><i class="fas fa-map-marker-alt mr-1 text-pink-400"></i> Central Park, NYC</span>
-                                        <span><i class="fas fa-chair mr-1 text-blue-400"></i> VIP Section A</span>
+                                    <h4 class="font-semibold text-[#121212]">Summer Music Festival 2026</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-500 mt-1">
+                                        <span><i class="fas fa-calendar-alt mr-1 text-[#024ddf]"></i> Jul 15, 2026</span>
+                                        <span><i class="fas fa-map-marker-alt mr-1 text-[#ef4444]"></i> Central Park, NYC</span>
+                                        <span><i class="fas fa-chair mr-1 text-[#024ddf]"></i> VIP Section A</span>
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap items-center gap-3">
-                                    <span class="text-purple-400 font-bold">$149.99</span>
+                                    <span class="text-[#024ddf] font-bold">$149.99</span>
                                     <span class="status-badge active">Active</span>
-                                    <button onclick="showQRCode('Summer Music Festival', 'VIP-A-001')" class="gradient-btn px-4 py-1.5 rounded-xl text-white text-sm">
+                                    <button onclick="showQRCode('Summer Music Festival', 'VIP-A-001')" class="btn-primary btn-sm">
                                         <i class="fas fa-qrcode mr-1"></i> QR Code
                                     </button>
                                 </div>
                             </div>
                             
                             <!-- Ticket 2 -->
-                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                            <div class="ticket-item card p-4 flex flex-col md:flex-row md:items-center gap-4 border border-gray-200 hover:border-[#024ddf]">
                                 <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=100&h=100&fit=crop" 
-                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded object-cover" />
                                 <div class="flex-1">
-                                    <h4 class="font-semibold">NBA Finals - Game 7</h4>
-                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400 mt-1">
-                                        <span><i class="fas fa-calendar-alt mr-1 text-purple-400"></i> Jun 20, 2026</span>
-                                        <span><i class="fas fa-map-marker-alt mr-1 text-pink-400"></i> Staples Center, LA</span>
-                                        <span><i class="fas fa-chair mr-1 text-blue-400"></i> Courtside Row B</span>
+                                    <h4 class="font-semibold text-[#121212]">NBA Finals - Game 7</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-500 mt-1">
+                                        <span><i class="fas fa-calendar-alt mr-1 text-[#024ddf]"></i> Jun 20, 2026</span>
+                                        <span><i class="fas fa-map-marker-alt mr-1 text-[#ef4444]"></i> Staples Center, LA</span>
+                                        <span><i class="fas fa-chair mr-1 text-[#024ddf]"></i> Courtside Row B</span>
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap items-center gap-3">
-                                    <span class="text-purple-400 font-bold">$299.99</span>
+                                    <span class="text-[#024ddf] font-bold">$299.99</span>
                                     <span class="status-badge pending">Pending</span>
-                                    <button onclick="showToast('Payment in escrow. Awaiting seller confirmation.')" class="border border-white/10 px-4 py-1.5 rounded-xl text-white text-sm hover:bg-white/5 transition">
+                                    <button onclick="showToast('Payment in escrow. Awaiting seller confirmation.')" class="btn-secondary btn-sm">
                                         <i class="fas fa-clock mr-1"></i> Escrow
                                     </button>
                                 </div>
                             </div>
                             
                             <!-- Ticket 3 -->
-                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                            <div class="ticket-item card p-4 flex flex-col md:flex-row md:items-center gap-4 border border-gray-200 hover:border-[#024ddf]">
                                 <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=100&h=100&fit=crop" 
-                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded object-cover" />
                                 <div class="flex-1">
-                                    <h4 class="font-semibold">Hamilton - Broadway Show</h4>
-                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400 mt-1">
-                                        <span><i class="fas fa-calendar-alt mr-1 text-purple-400"></i> Aug 10, 2026</span>
-                                        <span><i class="fas fa-map-marker-alt mr-1 text-pink-400"></i> Richard Rodgers Theatre, NYC</span>
-                                        <span><i class="fas fa-chair mr-1 text-blue-400"></i> Orchestra Center</span>
+                                    <h4 class="font-semibold text-[#121212]">Hamilton - Broadway Show</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-500 mt-1">
+                                        <span><i class="fas fa-calendar-alt mr-1 text-[#024ddf]"></i> Aug 10, 2026</span>
+                                        <span><i class="fas fa-map-marker-alt mr-1 text-[#ef4444]"></i> Richard Rodgers Theatre, NYC</span>
+                                        <span><i class="fas fa-chair mr-1 text-[#024ddf]"></i> Orchestra Center</span>
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap items-center gap-3">
-                                    <span class="text-purple-400 font-bold">$189.50</span>
+                                    <span class="text-[#024ddf] font-bold">$189.50</span>
                                     <span class="status-badge completed">Completed</span>
-                                    <button onclick="showToast('Ticket used on Aug 10, 2026')" class="border border-white/10 px-4 py-1.5 rounded-xl text-white text-sm hover:bg-white/5 transition">
+                                    <button onclick="showToast('Ticket used on Aug 10, 2026')" class="btn-secondary btn-sm">
                                         <i class="fas fa-check-circle mr-1"></i> Used
                                     </button>
                                 </div>
@@ -651,48 +924,48 @@
                 <!-- SALES SECTION -->
                 <!-- ======================================== -->
                 <div id="section-sales" class="hidden fade-in">
-                    <div class="glass-card p-6">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-2xl font-bold">My Sales</h2>
-                            <a href="sell.html" class="gradient-btn px-4 py-2 rounded-xl text-white text-sm">
+                    <div class="card p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-2xl font-bold text-[#121212]">My Sales</h2>
+                            <a href="sell.html" class="btn-primary btn-sm">
                                 <i class="fas fa-plus mr-1"></i> Sell New
                             </a>
                         </div>
                         
-                        <div class="space-y-4">
-                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                        <div class="space-y-3">
+                            <div class="ticket-item card p-4 flex flex-col md:flex-row md:items-center gap-4 border border-gray-200 hover:border-[#024ddf]">
                                 <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=100&h=100&fit=crop" 
-                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded object-cover" />
                                 <div class="flex-1">
-                                    <h4 class="font-semibold">Jazz & Blues Festival</h4>
-                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400 mt-1">
-                                        <span><i class="fas fa-calendar-alt mr-1 text-purple-400"></i> Sep 12, 2026</span>
-                                        <span><i class="fas fa-map-marker-alt mr-1 text-pink-400"></i> New Orleans, LA</span>
-                                        <span><i class="fas fa-users mr-1 text-blue-400"></i> 3 sold</span>
+                                    <h4 class="font-semibold text-[#121212]">Jazz & Blues Festival</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-500 mt-1">
+                                        <span><i class="fas fa-calendar-alt mr-1 text-[#024ddf]"></i> Sep 12, 2026</span>
+                                        <span><i class="fas fa-map-marker-alt mr-1 text-[#ef4444]"></i> New Orleans, LA</span>
+                                        <span><i class="fas fa-users mr-1 text-[#024ddf]"></i> 3 sold</span>
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap items-center gap-3">
-                                    <span class="text-purple-400 font-bold">$89.99</span>
+                                    <span class="text-[#024ddf] font-bold">$89.99</span>
                                     <span class="status-badge active">Active</span>
-                                    <span class="text-sm text-gray-400">5 left</span>
+                                    <span class="text-sm text-gray-500">5 left</span>
                                 </div>
                             </div>
                             
-                            <div class="ticket-item glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
+                            <div class="ticket-item card p-4 flex flex-col md:flex-row md:items-center gap-4 border border-gray-200 hover:border-[#024ddf]">
                                 <img src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=100&h=100&fit=crop" 
-                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded-xl object-cover" />
+                                     alt="Event" class="w-full md:w-20 h-32 md:h-20 rounded object-cover" />
                                 <div class="flex-1">
-                                    <h4 class="font-semibold">International Soccer Match</h4>
-                                    <div class="flex flex-wrap gap-3 text-sm text-gray-400 mt-1">
-                                        <span><i class="fas fa-calendar-alt mr-1 text-purple-400"></i> Aug 20, 2026</span>
-                                        <span><i class="fas fa-map-marker-alt mr-1 text-pink-400"></i> Wembley Stadium, UK</span>
-                                        <span><i class="fas fa-users mr-1 text-blue-400"></i> 2 sold</span>
+                                    <h4 class="font-semibold text-[#121212]">International Soccer Match</h4>
+                                    <div class="flex flex-wrap gap-3 text-sm text-gray-500 mt-1">
+                                        <span><i class="fas fa-calendar-alt mr-1 text-[#024ddf]"></i> Aug 20, 2026</span>
+                                        <span><i class="fas fa-map-marker-alt mr-1 text-[#ef4444]"></i> Wembley Stadium, UK</span>
+                                        <span><i class="fas fa-users mr-1 text-[#024ddf]"></i> 2 sold</span>
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap items-center gap-3">
-                                    <span class="text-purple-400 font-bold">$159.99</span>
+                                    <span class="text-[#024ddf] font-bold">$159.99</span>
                                     <span class="status-badge held">Escrow Held</span>
-                                    <span class="text-sm text-gray-400">$319.98 pending</span>
+                                    <span class="text-sm text-gray-500">$319.98 pending</span>
                                 </div>
                             </div>
                         </div>
@@ -703,58 +976,58 @@
                 <!-- FAVORITES SECTION -->
                 <!-- ======================================== -->
                 <div id="section-favorites" class="hidden fade-in">
-                    <div class="glass-card p-6">
-                        <h2 class="text-2xl font-bold mb-6">My Favorites</h2>
+                    <div class="card p-5">
+                        <h2 class="text-2xl font-bold text-[#121212] mb-4">My Favorites</h2>
                         
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div class="ticket-item glass-card p-4 flex items-center gap-4">
+                        <div class="grid md:grid-cols-2 gap-3">
+                            <div class="ticket-item card p-3 flex items-center gap-4 border border-gray-200 hover:border-[#024ddf]">
                                 <img src="https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=80&h=80&fit=crop" 
-                                     alt="Event" class="w-16 h-16 rounded-xl object-cover" />
+                                     alt="Event" class="w-14 h-14 rounded object-cover" />
                                 <div class="flex-1">
-                                    <h4 class="font-semibold text-sm">Comedy Night - Kevin Hart</h4>
-                                    <p class="text-xs text-gray-400">Sep 5, 2026 • NYC</p>
-                                    <span class="text-purple-400 font-bold text-sm">$79.99</span>
+                                    <h4 class="font-semibold text-sm text-[#121212]">Comedy Night - Kevin Hart</h4>
+                                    <p class="text-xs text-gray-500">Sep 5, 2026 • NYC</p>
+                                    <span class="text-[#024ddf] font-bold text-sm">$79.99</span>
                                 </div>
-                                <button onclick="showToast('Added to cart')" class="gradient-btn px-3 py-1 rounded-xl text-white text-xs">
+                                <button onclick="showToast('Added to cart')" class="btn-primary btn-sm">
                                     Buy
                                 </button>
                             </div>
                             
-                            <div class="ticket-item glass-card p-4 flex items-center gap-4">
+                            <div class="ticket-item card p-3 flex items-center gap-4 border border-gray-200 hover:border-[#024ddf]">
                                 <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=80&h=80&fit=crop" 
-                                     alt="Event" class="w-16 h-16 rounded-xl object-cover" />
+                                     alt="Event" class="w-14 h-14 rounded object-cover" />
                                 <div class="flex-1">
-                                    <h4 class="font-semibold text-sm">EDM Night - DJ Festival</h4>
-                                    <p class="text-xs text-gray-400">Jul 25, 2026 • Miami</p>
-                                    <span class="text-purple-400 font-bold text-sm">$99.99</span>
+                                    <h4 class="font-semibold text-sm text-[#121212]">EDM Night - DJ Festival</h4>
+                                    <p class="text-xs text-gray-500">Jul 25, 2026 • Miami</p>
+                                    <span class="text-[#024ddf] font-bold text-sm">$99.99</span>
                                 </div>
-                                <button onclick="showToast('Added to cart')" class="gradient-btn px-3 py-1 rounded-xl text-white text-xs">
+                                <button onclick="showToast('Added to cart')" class="btn-primary btn-sm">
                                     Buy
                                 </button>
                             </div>
                             
-                            <div class="ticket-item glass-card p-4 flex items-center gap-4">
+                            <div class="ticket-item card p-3 flex items-center gap-4 border border-gray-200 hover:border-[#024ddf]">
                                 <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=80&h=80&fit=crop" 
-                                     alt="Event" class="w-16 h-16 rounded-xl object-cover" />
+                                     alt="Event" class="w-14 h-14 rounded object-cover" />
                                 <div class="flex-1">
-                                    <h4 class="font-semibold text-sm">Harry Potter Exhibition</h4>
-                                    <p class="text-xs text-gray-400">Oct 15, 2026 • London</p>
-                                    <span class="text-purple-400 font-bold text-sm">$45.00</span>
+                                    <h4 class="font-semibold text-sm text-[#121212]">Harry Potter Exhibition</h4>
+                                    <p class="text-xs text-gray-500">Oct 15, 2026 • London</p>
+                                    <span class="text-[#024ddf] font-bold text-sm">$45.00</span>
                                 </div>
-                                <button onclick="showToast('Added to cart')" class="gradient-btn px-3 py-1 rounded-xl text-white text-xs">
+                                <button onclick="showToast('Added to cart')" class="btn-primary btn-sm">
                                     Buy
                                 </button>
                             </div>
                             
-                            <div class="ticket-item glass-card p-4 flex items-center gap-4">
+                            <div class="ticket-item card p-3 flex items-center gap-4 border border-gray-200 hover:border-[#024ddf]">
                                 <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=80&h=80&fit=crop" 
-                                     alt="Event" class="w-16 h-16 rounded-xl object-cover" />
+                                     alt="Event" class="w-14 h-14 rounded object-cover" />
                                 <div class="flex-1">
-                                    <h4 class="font-semibold text-sm">Summer Music Festival</h4>
-                                    <p class="text-xs text-gray-400">Jul 15, 2026 • NYC</p>
-                                    <span class="text-purple-400 font-bold text-sm">$149.99</span>
+                                    <h4 class="font-semibold text-sm text-[#121212]">Summer Music Festival</h4>
+                                    <p class="text-xs text-gray-500">Jul 15, 2026 • NYC</p>
+                                    <span class="text-[#024ddf] font-bold text-sm">$149.99</span>
                                 </div>
-                                <button onclick="showToast('Added to cart')" class="gradient-btn px-3 py-1 rounded-xl text-white text-xs">
+                                <button onclick="showToast('Added to cart')" class="btn-primary btn-sm">
                                     Buy
                                 </button>
                             </div>
@@ -766,50 +1039,50 @@
                 <!-- MESSAGES SECTION -->
                 <!-- ======================================== -->
                 <div id="section-messages" class="hidden fade-in">
-                    <div class="glass-card p-6">
-                        <h2 class="text-2xl font-bold mb-6">Messages</h2>
+                    <div class="card p-5">
+                        <h2 class="text-2xl font-bold text-[#121212] mb-4">Messages</h2>
                         
-                        <div class="space-y-3">
-                            <div class="ticket-item glass-card p-4 flex items-center gap-4 cursor-pointer hover:border-purple-500/50" onclick="showToast('Opening chat...')">
-                                <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold">
+                        <div class="space-y-2">
+                            <div class="ticket-item card p-3 flex items-center gap-4 cursor-pointer hover:border-[#024ddf]" onclick="showToast('Opening chat...')">
+                                <div class="w-10 h-10 rounded-full bg-[#024ddf] flex items-center justify-center text-white font-bold text-sm">
                                     JS
                                 </div>
                                 <div class="flex-1">
                                     <div class="flex justify-between">
-                                        <h4 class="font-semibold">Jane Smith</h4>
+                                        <h4 class="font-semibold text-[#121212]">Jane Smith</h4>
                                         <span class="text-xs text-gray-400">2 min ago</span>
                                     </div>
-                                    <p class="text-sm text-gray-400">Hey! Is the VIP ticket still available?</p>
+                                    <p class="text-sm text-gray-500">Hey! Is the VIP ticket still available?</p>
                                 </div>
-                                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-[#ef4444]"></span>
                             </div>
                             
-                            <div class="ticket-item glass-card p-4 flex items-center gap-4 cursor-pointer hover:border-purple-500/50" onclick="showToast('Opening chat...')">
-                                <div class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400 font-bold">
+                            <div class="ticket-item card p-3 flex items-center gap-4 cursor-pointer hover:border-[#024ddf]" onclick="showToast('Opening chat...')">
+                                <div class="w-10 h-10 rounded-full bg-[#ec4899] flex items-center justify-center text-white font-bold text-sm">
                                     MR
                                 </div>
                                 <div class="flex-1">
                                     <div class="flex justify-between">
-                                        <h4 class="font-semibold">Mike Ross</h4>
+                                        <h4 class="font-semibold text-[#121212]">Mike Ross</h4>
                                         <span class="text-xs text-gray-400">1 hour ago</span>
                                     </div>
-                                    <p class="text-sm text-gray-400">Can you send the QR code for the event?</p>
+                                    <p class="text-sm text-gray-500">Can you send the QR code for the event?</p>
                                 </div>
-                                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-[#ef4444]"></span>
                             </div>
                             
-                            <div class="ticket-item glass-card p-4 flex items-center gap-4 cursor-pointer hover:border-purple-500/50" onclick="showToast('Opening chat...')">
-                                <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold">
+                            <div class="ticket-item card p-3 flex items-center gap-4 cursor-pointer hover:border-[#024ddf]" onclick="showToast('Opening chat...')">
+                                <div class="w-10 h-10 rounded-full bg-[#3b82f6] flex items-center justify-center text-white font-bold text-sm">
                                     TL
                                 </div>
                                 <div class="flex-1">
                                     <div class="flex justify-between">
-                                        <h4 class="font-semibold">Taylor Lee</h4>
+                                        <h4 class="font-semibold text-[#121212]">Taylor Lee</h4>
                                         <span class="text-xs text-gray-400">3 hours ago</span>
                                     </div>
-                                    <p class="text-sm text-gray-400">Thanks for the tickets! Great seats!</p>
+                                    <p class="text-sm text-gray-500">Thanks for the tickets! Great seats!</p>
                                 </div>
-                                <span class="w-3 h-3 rounded-full bg-gray-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-gray-300"></span>
                             </div>
                         </div>
                     </div>
@@ -819,15 +1092,15 @@
                 <!-- PROFILE SECTION -->
                 <!-- ======================================== -->
                 <div id="section-profile" class="hidden fade-in">
-                    <div class="glass-card p-6">
-                        <h2 class="text-2xl font-bold mb-6">Profile Settings</h2>
+                    <div class="card p-5">
+                        <h2 class="text-2xl font-bold text-[#121212] mb-4">Profile Settings</h2>
                         
                         <div class="space-y-6">
                             <!-- Avatar -->
                             <div class="flex items-center gap-6">
                                 <div class="profile-avatar">JD</div>
                                 <div>
-                                    <button class="gradient-btn px-4 py-2 rounded-xl text-white text-sm">
+                                    <button class="btn-primary btn-sm">
                                         <i class="fas fa-camera mr-1"></i> Change Photo
                                     </button>
                                     <p class="text-xs text-gray-400 mt-1">PNG, JPG up to 2MB</p>
@@ -837,24 +1110,24 @@
                             <!-- Form -->
                             <div class="grid md:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="text-sm text-gray-400 block mb-1">Full Name</label>
-                                    <input type="text" value="John Doe" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                    <label class="text-sm text-gray-600 block mb-1">Full Name</label>
+                                    <input type="text" value="John Doe" class="w-full border border-gray-200 rounded px-4 py-2.5 text-[#121212] focus:border-[#024ddf] focus:outline-none focus:ring-1 focus:ring-[#024ddf]" />
                                 </div>
                                 <div>
-                                    <label class="text-sm text-gray-400 block mb-1">Email Address</label>
-                                    <input type="email" value="john@example.com" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                    <label class="text-sm text-gray-600 block mb-1">Email Address</label>
+                                    <input type="email" value="john@example.com" class="w-full border border-gray-200 rounded px-4 py-2.5 text-[#121212] focus:border-[#024ddf] focus:outline-none focus:ring-1 focus:ring-[#024ddf]" />
                                 </div>
                                 <div>
-                                    <label class="text-sm text-gray-400 block mb-1">Phone Number</label>
-                                    <input type="tel" value="+1 (555) 123-4567" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                    <label class="text-sm text-gray-600 block mb-1">Phone Number</label>
+                                    <input type="tel" value="+1 (555) 123-4567" class="w-full border border-gray-200 rounded px-4 py-2.5 text-[#121212] focus:border-[#024ddf] focus:outline-none focus:ring-1 focus:ring-[#024ddf]" />
                                 </div>
                                 <div>
-                                    <label class="text-sm text-gray-400 block mb-1">Location</label>
-                                    <input type="text" value="New York, USA" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500" />
+                                    <label class="text-sm text-gray-600 block mb-1">Location</label>
+                                    <input type="text" value="New York, USA" class="w-full border border-gray-200 rounded px-4 py-2.5 text-[#121212] focus:border-[#024ddf] focus:outline-none focus:ring-1 focus:ring-[#024ddf]" />
                                 </div>
                             </div>
                             
-                            <button onclick="showToast('✅ Profile updated successfully!')" class="gradient-btn px-6 py-3 rounded-xl text-white font-semibold">
+                            <button onclick="showToast('✅ Profile updated successfully!')" class="btn-primary">
                                 <i class="fas fa-save mr-2"></i> Save Changes
                             </button>
                         </div>
@@ -897,22 +1170,22 @@
     <div id="qrModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0" onclick="closeQRModal()"></div>
         <div class="absolute inset-0 flex items-center justify-center p-4">
-            <div class="glass-card max-w-sm w-full p-6 relative">
-                <button onclick="closeQRModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
+            <div class="card max-w-sm w-full p-6 relative">
+                <button onclick="closeQRModal()" class="absolute top-4 right-4 text-gray-400 hover:text-[#121212] text-2xl transition">
                     <i class="fas fa-times"></i>
                 </button>
                 
                 <div class="text-center">
-                    <h3 class="text-xl font-bold mb-2" id="qrEventName">Event Name</h3>
-                    <p class="text-gray-400 text-sm mb-4">Scan this QR code at the venue</p>
+                    <h3 class="text-xl font-bold text-[#121212] mb-2" id="qrEventName">Event Name</h3>
+                    <p class="text-gray-500 text-sm mb-4">Scan this QR code at the venue</p>
                     
                     <div class="qr-container" id="qrCodeContainer">
                         <!-- QR Code will be rendered here -->
                     </div>
                     
-                    <p class="text-xs text-gray-500 mt-4" id="qrTicketId">Ticket #: ---</p>
+                    <p class="text-xs text-gray-400 mt-4" id="qrTicketId">Ticket #: ---</p>
                     
-                    <button onclick="closeQRModal()" class="w-full gradient-btn py-3 rounded-xl text-white font-semibold mt-4">
+                    <button onclick="closeQRModal()" class="w-full btn-primary mt-4">
                         <i class="fas fa-check mr-2"></i> Done
                     </button>
                 </div>
@@ -921,14 +1194,84 @@
     </div>
 
     <!-- ======================================== -->
-    <!-- TOAST CONTAINER -->
+    <!-- FOOTER - Ticketmaster Style -->
     <!-- ======================================== -->
-    <div id="toastContainer"></div>
+    <footer class="footer">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
+                            <i class="fas fa-ticket-alt text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">Tix<span class="text-[#6c5ce7]">Hub</span></span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Secure ticket marketplace with escrow protection.</p>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link">About Us</a></li>
+                        <li><a href="#" class="footer-link">How It Works</a></li>
+                        <li><a href="#" class="footer-link">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link">Help Center</a></li>
+                        <li><a href="#" class="footer-link">Contact Us</a></li>
+                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Follow Us</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
+                            <i class="fab fa-twitter text-gray-400 hover:text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
+                            <i class="fab fa-instagram text-gray-400 hover:text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
+                            <i class="fab fa-facebook text-gray-400 hover:text-white"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2026 TixHub. All rights reserved.
+            </div>
+        </div>
+    </footer>
 
     <!-- ======================================== -->
     <!-- JAVASCRIPT -->
     <!-- ======================================== -->
     <script>
+        // ========================================
+        // MOBILE MENU
+        // ========================================
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('open');
+            const icon = this.querySelector('i');
+            if (mobileMenu.classList.contains('open')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('open');
+                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
+            });
+        });
+
         // ========================================
         // SECTION SWITCHING
         // ========================================
@@ -961,7 +1304,6 @@
                 }
             });
             
-            // Scroll to top on mobile
             if (window.innerWidth < 768) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
@@ -974,11 +1316,9 @@
             document.getElementById('qrEventName').textContent = eventName;
             document.getElementById('qrTicketId').textContent = `Ticket #: ${ticketId}`;
             
-            // Clear previous QR
             const container = document.getElementById('qrCodeContainer');
             container.innerHTML = '';
             
-            // Generate QR
             const qrData = JSON.stringify({
                 event: eventName,
                 ticket: ticketId,
@@ -986,12 +1326,11 @@
                 date: new Date().toISOString()
             });
             
-            // Create QR using QRCode.js
             new QRCode(container, {
                 text: qrData,
-                width: 160,
-                height: 160,
-                colorDark: "#1a1a2e",
+                width: 140,
+                height: 140,
+                colorDark: "#121212",
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H
             });
@@ -1006,10 +1345,10 @@
         }
 
         // ========================================
-        // TOAST NOTIFICATION
+        // TOAST
         // ========================================
         function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
+            document.querySelectorAll('.toast').forEach(t => t.remove());
             
             const icons = {
                 success: 'fa-check-circle',
@@ -1019,8 +1358,8 @@
             
             const colors = {
                 success: '#10b981',
-                error: '#fd79a8',
-                info: '#6c5ce7'
+                error: '#ef4444',
+                info: '#024ddf'
             };
             
             const toast = document.createElement('div');
@@ -1029,13 +1368,13 @@
                 <i class="fas ${icons[type]}" style="color: ${colors[type]}; font-size: 1.25rem;"></i>
                 <span>${message}</span>
             `;
-            container.appendChild(toast);
+            document.body.appendChild(toast);
             
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100px)';
-                toast.style.transition = 'all 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
+                toast.style.transform = 'translateX(-50%) translateY(20px)';
+                toast.style.transition = 'all 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
             }, 4000);
         }
 
@@ -1051,10 +1390,10 @@
         // ========================================
         // INIT
         // ========================================
-        console.log('🎫 TixHub - Dashboard Loaded');
+        console.log('🎫 TixHub - Dashboard');
+        console.log('🇺🇸 Ticketmaster-style design with USA flag circle');
         console.log('👋 Welcome back, John!');
         
-        // Show welcome toast
         setTimeout(() => {
             showToast('👋 Welcome back, John!', 'success');
         }, 500);
