@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>TixHub - Premium Ticket Marketplace</title>
+    <title>TixHub - Secure Ticket Marketplace</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,22 +16,31 @@
     
     <style>
         /* ======================================== */
-        /* BASE STYLES */
+        /* TICKETMASTER INSPIRED STYLES */
         /* ======================================== */
+        :root {
+            --primary-dark: #0C1B4D;
+            --primary-blue: #1E3A8A;
+            --primary-light: #2563EB;
+            --accent-red: #DC2626;
+            --accent-gold: #F59E0B;
+            --bg-white: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --text-dark: #1E293B;
+            --text-gray: #64748B;
+            --text-light: #94A3B8;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
-        html {
-            scroll-behavior: smooth;
-        }
-        
         body {
             font-family: 'Inter', sans-serif;
-            background: #07070f;
-            color: #ffffff;
+            background: var(--bg-white);
+            color: var(--text-dark);
             overflow-x: hidden;
         }
         
@@ -40,380 +49,218 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0a0a1a;
+            background: #E2E8F0;
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            background: var(--primary-blue);
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #7c6cf7, #fd89b8);
+            background: var(--primary-dark);
         }
         
-        /* ======================================== */
-        /* GLASSMORPHISM */
-        /* ======================================== */
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+        /* Cards - Ticketmaster Style */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0, 0, 0, 0.04);
         }
         
-        .glass-card {
-            background: rgba(26, 26, 46, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .card:hover {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
         }
         
-        .glass-card:hover {
-            border-color: rgba(108, 92, 231, 0.3);
-            box-shadow: 0 20px 60px rgba(108, 92, 231, 0.08);
-        }
-        
-        .glass-card-premium {
-            background: rgba(26, 26, 46, 0.4);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .glass-card-premium:hover {
-            border-color: rgba(108, 92, 231, 0.2);
-            transform: translateY(-8px);
-            box-shadow: 0 30px 80px rgba(108, 92, 231, 0.1);
-        }
-        
-        /* ======================================== */
-        /* GRADIENT BUTTONS */
-        /* ======================================== */
+        /* Buttons - Ticketmaster Style */
         .btn-primary {
-            background: linear-gradient(135deg, #6c5ce7, #a855f7);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
+            background: var(--primary-blue);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .btn-primary:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 20px 50px rgba(108, 92, 231, 0.4);
-        }
-        
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.08), transparent);
-            transform: rotate(45deg) translateX(-100%);
-            transition: 0.8s;
-        }
-        
-        .btn-primary:hover::after {
-            transform: rotate(45deg) translateX(100%);
+            background: var(--primary-dark);
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(30, 58, 138, 0.3);
         }
         
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: transparent;
+            color: var(--primary-blue);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid var(--primary-blue);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-        
-        .btn-gradient-pink {
-            background: linear-gradient(135deg, #ec4899, #f472b6);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .btn-gradient-pink:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 20px 50px rgba(236, 72, 153, 0.4);
-        }
-        
-        /* ======================================== */
-        /* HERO ANIMATIONS */
-        /* ======================================== */
-        .hero-gradient {
-            background: radial-gradient(ellipse at 30% 50%, rgba(108, 92, 231, 0.15) 0%, transparent 70%),
-                        radial-gradient(ellipse at 70% 50%, rgba(253, 121, 168, 0.1) 0%, transparent 70%),
-                        radial-gradient(ellipse at 50% 100%, rgba(8, 145, 178, 0.08) 0%, transparent 50%);
-        }
-        
-        .floating-shapes {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-        
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(108, 92, 231, 0.1), transparent 70%);
-            animation: floatShape 20s ease-in-out infinite;
-        }
-        
-        .shape:nth-child(1) {
-            width: 400px;
-            height: 400px;
-            top: -100px;
-            right: -100px;
-            animation-delay: 0s;
-        }
-        
-        .shape:nth-child(2) {
-            width: 300px;
-            height: 300px;
-            bottom: -50px;
-            left: -50px;
-            animation-delay: -7s;
-            background: radial-gradient(circle, rgba(253, 121, 168, 0.08), transparent 70%);
-        }
-        
-        .shape:nth-child(3) {
-            width: 200px;
-            height: 200px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -14s;
-            background: radial-gradient(circle, rgba(8, 145, 178, 0.06), transparent 70%);
-        }
-        
-        @keyframes floatShape {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -30px) scale(1.05); }
-            50% { transform: translate(-20px, 20px) scale(0.95); }
-            75% { transform: translate(15px, -15px) scale(1.02); }
-        }
-        
-        /* ======================================== */
-        /* ANIMATED TEXT GRADIENT */
-        /* ======================================== */
-        .text-gradient-animated {
-            background: linear-gradient(135deg, #6c5ce7, #a855f7, #ec4899, #f472b6);
-            background-size: 300% 300%;
-            animation: gradientShift 6s ease-in-out infinite;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        /* ======================================== */
-        /* FEATURE CARDS */
-        /* ======================================== */
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .glass-card-premium:hover .feature-icon {
-            transform: scale(1.1) rotate(-5deg);
-        }
-        
-        /* ======================================== */
-        /* STATS COUNTER */
-        /* ======================================== */
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #6c5ce7, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-        }
-        
-        .stat-label {
-            color: #9ca3af;
-            font-size: 0.875rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-        
-        /* ======================================== */
-        /* CATEGORY CARDS */
-        /* ======================================== */
-        .category-card {
-            padding: 24px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .category-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(253, 121, 168, 0.05));
-            opacity: 0;
-            transition: all 0.5s ease;
-        }
-        
-        .category-card:hover::before {
-            opacity: 1;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(108, 92, 231, 0.3);
-        }
-        
-        .category-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-            margin: 0 auto 16px;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .category-card:hover .category-icon {
-            transform: scale(1.1) rotate(-5deg);
-        }
-        
-        /* ======================================== */
-        /* TESTIMONIALS */
-        /* ======================================== */
-        .testimonial-card {
-            padding: 32px;
-            position: relative;
-        }
-        
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 16px;
-            right: 24px;
-            font-size: 4rem;
-            font-weight: 900;
-            color: rgba(108, 92, 231, 0.1);
-            font-family: Georgia, serif;
-        }
-        
-        .testimonial-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
+            background: var(--primary-blue);
             color: #fff;
-            flex-shrink: 0;
+            transform: scale(1.02);
         }
         
-        /* ======================================== */
-        /* TRUST BADGES */
-        /* ======================================== */
-        .trust-badge {
-            display: flex;
+        .btn-red {
+            background: var(--accent-red);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 16px;
-            border-radius: 100px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.8rem;
-            color: #9ca3af;
-            transition: all 0.3s ease;
         }
         
-        .trust-badge:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(108, 92, 231, 0.2);
-            color: #fff;
+        .btn-red:hover {
+            background: #B91C1C;
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
         }
         
-        .trust-badge i {
-            font-size: 1rem;
-        }
-        
-        /* ======================================== */
-        /* NAVBAR */
-        /* ======================================== */
+        /* Navbar - Ticketmaster Style */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 16px 20px;
-            transition: all 0.4s ease;
+            padding: 14px 20px;
+            background: var(--bg-white);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
         }
         
         .navbar-scrolled {
-            background: rgba(7, 7, 15, 0.92);
-            backdrop-filter: blur(30px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 12px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
         }
         
         .nav-link {
             position: relative;
-            color: #9ca3af;
+            color: var(--text-gray);
             transition: all 0.3s ease;
             font-weight: 500;
             font-size: 0.9rem;
+            padding: 4px 0;
         }
         
         .nav-link:hover {
-            color: #fff;
+            color: var(--text-dark);
         }
         
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -4px;
+            bottom: -2px;
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(135deg, #6c5ce7, #a855f7);
+            background: var(--primary-blue);
             transition: width 0.3s ease;
             border-radius: 2px;
         }
         
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        .nav-link-active {
-            color: #fff;
-        }
-        
+        .nav-link:hover::after,
         .nav-link-active::after {
             width: 100%;
         }
         
-        /* ======================================== */
-        /* MOBILE MENU */
-        /* ======================================== */
+        .nav-link-active {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        
+        /* Hero Section - Ticketmaster Style */
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--bg-white) 0%, #EFF6FF 100%);
+        }
+        
+        /* USA Flag Circle */
+        .flag-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(0, 0, 0, 0.08);
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+        
+        .flag-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Hero Stats */
+        .hero-stat {
+            text-align: center;
+            padding: 16px 24px;
+        }
+        
+        .hero-stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+        
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+        
+        /* Feature Cards - Ticketmaster Style */
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: #EFF6FF;
+            color: var(--primary-blue);
+        }
+        
+        /* CTA Section - Ticketmaster Style */
+        .cta-gradient {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
+            border-radius: 24px;
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-gradient::before {
+            content: '🎫';
+            position: absolute;
+            right: -20px;
+            top: -20px;
+            font-size: 200px;
+            opacity: 0.05;
+        }
+        
+        /* Mobile Menu */
         .mobile-menu {
             display: none;
             position: absolute;
@@ -422,200 +269,64 @@
             right: 0;
             margin-top: 8px;
             padding: 20px;
-            background: rgba(7, 7, 15, 0.95);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--bg-white);
             border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.04);
         }
         
         .mobile-menu.open {
             display: block;
         }
         
-        /* ======================================== */
-        /* HERO SEARCH */
-        /* ======================================== */
-        .hero-search {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 60px;
-            padding: 6px 6px 6px 24px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            max-width: 600px;
-            margin: 0 auto;
-            transition: all 0.4s ease;
-        }
-        
-        .hero-search:focus-within {
-            border-color: rgba(108, 92, 231, 0.4);
-            box-shadow: 0 0 40px rgba(108, 92, 231, 0.08);
-            transform: scale(1.02);
-        }
-        
-        .hero-search input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 1rem;
-            padding: 12px 0;
-            outline: none;
-        }
-        
-        .hero-search input::placeholder {
-            color: #6b7280;
-        }
-        
-        .hero-search .search-btn {
-            background: linear-gradient(135deg, #6c5ce7, #a855f7);
-            border: none;
-            padding: 12px 28px;
-            border-radius: 60px;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-        
-        .hero-search .search-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
-        }
-        
-        /* ======================================== */
-        /* CTA SECTION */
-        /* ======================================== */
-        .cta-gradient {
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(253, 121, 168, 0.05));
-            border: 1px solid rgba(108, 92, 231, 0.1);
-            border-radius: 32px;
-            padding: 60px 40px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-gradient::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(108, 92, 231, 0.1), transparent 70%);
-            border-radius: 50%;
-        }
-        
-        .cta-gradient::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(253, 121, 168, 0.08), transparent 70%);
-            border-radius: 50%;
-        }
-        
-        /* ======================================== */
-        /* FOOTER */
-        /* ======================================== */
-        .footer-link {
-            color: #6b7280;
-            transition: all 0.3s ease;
-            text-decoration: none;
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            padding: 16px 28px;
+            border-radius: 16px;
+            background: var(--bg-white);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            color: var(--text-dark);
             font-size: 0.9rem;
-        }
-        
-        .footer-link:hover {
-            color: #fff;
-        }
-        
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            max-width: 90%;
+            width: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            transition: all 0.3s ease;
+            gap: 12px;
         }
         
-        .social-icon:hover {
-            background: rgba(108, 92, 231, 0.1);
-            border-color: rgba(108, 92, 231, 0.3);
-            color: #fff;
-            transform: translateY(-3px);
+        @keyframes slideUp {
+            0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
         }
         
-        /* ======================================== */
-        /* RESPONSIVE */
-        /* ======================================== */
+        /* Responsive */
         @media (max-width: 768px) {
             .navbar {
-                padding: 12px 16px;
+                padding: 10px 16px;
             }
             
-            .stat-number {
-                font-size: 2rem;
-            }
-            
-            .hero-search {
-                border-radius: 16px;
-                flex-direction: column;
-                padding: 8px;
-                background: rgba(255, 255, 255, 0.03);
-            }
-            
-            .hero-search input {
-                width: 100%;
-                padding: 14px 16px;
-                border-radius: 12px;
-                background: rgba(255, 255, 255, 0.03);
-            }
-            
-            .hero-search .search-btn {
-                width: 100%;
-                justify-content: center;
-                padding: 14px;
-                border-radius: 12px;
+            .hero-stat-number {
+                font-size: 1.5rem;
             }
             
             .cta-gradient {
                 padding: 32px 20px;
             }
             
-            .category-card {
-                padding: 16px;
-            }
-            
-            .testimonial-card {
-                padding: 20px;
+            .flag-circle {
+                width: 40px;
+                height: 40px;
             }
         }
         
-        @media (max-width: 480px) {
-            .stat-number {
-                font-size: 1.5rem;
-            }
-            
-            h1 {
-                font-size: 2rem !important;
-            }
-            
-            .glass-card-premium {
-                padding: 16px !important;
-            }
-        }
-        
-        /* ======================================== */
-        /* ANIMATIONS */
-        /* ======================================== */
+        /* Animations */
         .animate-fade-up {
             opacity: 0;
             transform: translateY(30px);
@@ -645,48 +356,12 @@
             }
         }
         
-        /* ======================================== */
-        /* SHIMMER LOADING */
-        /* ======================================== */
-        .shimmer {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.02), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 3s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        
-        /* ======================================== */
-        /* TOAST */
-        /* ======================================== */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            padding: 16px 28px;
-            border-radius: 16px;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #fff;
-            font-size: 0.9rem;
-            max-width: 90%;
-            width: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        @keyframes slideUp {
-            0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
-            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+        /* Text Gradient */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
     </style>
 </head>
@@ -699,11 +374,11 @@
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <!-- Logo -->
             <a href="index.html" class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/25">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0C1B4D] to-[#1E3A8A] flex items-center justify-center shadow-lg shadow-blue-900/20">
                     <i class="fas fa-ticket-alt text-white text-lg"></i>
                 </div>
-                <span class="text-2xl font-bold text-white tracking-tight">
-                    Tix<span class="text-gradient-animated">Hub</span>
+                <span class="text-2xl font-bold text-[#0C1B4D] tracking-tight">
+                    Tix<span class="text-[#1E3A8A]">Hub</span>
                 </span>
             </a>
             
@@ -712,22 +387,22 @@
                 <a href="index.html" class="nav-link nav-link-active">Home</a>
                 <a href="buy.html" class="nav-link">Buy Tickets</a>
                 <a href="sell.html" class="nav-link">Sell Tickets</a>
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#testimonials" class="nav-link">Reviews</a>
+                <a href="matches.html" class="nav-link">Matches</a>
+                <a href="stadiums.html" class="nav-link">Stadiums</a>
             </div>
             
             <!-- Desktop Auth -->
             <div class="hidden md:flex items-center gap-3">
-                <a href="auth.html" class="text-gray-400 hover:text-white transition font-medium text-sm">
+                <a href="auth.html" class="text-gray-500 hover:text-[#0C1B4D] transition font-medium text-sm">
                     Sign In
                 </a>
-                <a href="auth.html" class="btn-primary px-5 py-2.5 rounded-xl text-white text-sm font-semibold">
+                <a href="auth.html" class="btn-primary text-sm">
                     <i class="fas fa-rocket mr-2"></i>Get Started
                 </a>
             </div>
             
             <!-- Mobile Toggle -->
-            <button id="mobileToggle" class="md:hidden text-white text-2xl p-2">
+            <button id="mobileToggle" class="md:hidden text-[#0C1B4D] text-2xl p-2">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
@@ -735,14 +410,14 @@
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="mobile-menu md:hidden">
             <div class="flex flex-col gap-4">
-                <a href="index.html" class="text-white font-semibold py-2 border-b border-white/5">Home</a>
-                <a href="buy.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Buy Tickets</a>
-                <a href="sell.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Sell Tickets</a>
-                <a href="#features" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Features</a>
-                <a href="#testimonials" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Reviews</a>
+                <a href="index.html" class="text-[#0C1B4D] font-semibold py-2 border-b border-gray-100">Home</a>
+                <a href="buy.html" class="text-gray-500 hover:text-[#0C1B4D] py-2 border-b border-gray-100 transition">Buy Tickets</a>
+                <a href="sell.html" class="text-gray-500 hover:text-[#0C1B4D] py-2 border-b border-gray-100 transition">Sell Tickets</a>
+                <a href="matches.html" class="text-gray-500 hover:text-[#0C1B4D] py-2 border-b border-gray-100 transition">Matches</a>
+                <a href="stadiums.html" class="text-gray-500 hover:text-[#0C1B4D] py-2 border-b border-gray-100 transition">Stadiums</a>
                 <div class="flex flex-col gap-3 pt-2">
-                    <a href="auth.html" class="text-center text-gray-400 hover:text-white transition py-2">Sign In</a>
-                    <a href="auth.html" class="btn-primary text-center py-3 rounded-xl text-white font-semibold">
+                    <a href="auth.html" class="text-center text-gray-500 hover:text-[#0C1B4D] transition py-2">Sign In</a>
+                    <a href="auth.html" class="btn-primary text-center justify-center py-3 rounded-xl">
                         <i class="fas fa-rocket mr-2"></i>Get Started
                     </a>
                 </div>
@@ -753,158 +428,149 @@
     <!-- ======================================== -->
     <!-- HERO SECTION -->
     <!-- ======================================== -->
-    <section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 hero-gradient">
-        
-        <!-- Floating Shapes -->
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
-        
-        <div class="max-w-7xl mx-auto px-4 py-12 relative z-10">
-            <div class="text-center max-w-4xl mx-auto">
-                <!-- Badge -->
-                <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-6 animate-fade-up">
-                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    <span class="text-sm text-gray-300">🔥 10,000+ tickets sold this month</span>
+    <section class="min-h-screen flex items-center justify-center px-4 pt-24 pb-12 hero-gradient">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div>
+                    <!-- Badge -->
+                    <div class="inline-flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full mb-6 animate-fade-up">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span class="text-sm text-[#1E3A8A] font-medium">🔥 10,000+ tickets sold this month</span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-6 animate-fade-up animate-fade-up-delay-1">
+                        Find Your <span class="text-gradient">Perfect</span>
+                        <br />
+                        <span class="text-[#0C1B4D]">Ticket</span>
+                    </h1>
+                    
+                    <p class="text-lg text-gray-500 max-w-lg mb-8 animate-fade-up animate-fade-up-delay-2">
+                        Every transaction is protected by our secure platform. Buy and sell tickets with confidence.
+                    </p>
+                    
+                    <!-- Search Bar -->
+                    <div class="flex flex-col sm:flex-row gap-3 animate-fade-up animate-fade-up-delay-3">
+                        <div class="flex-1 relative">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input 
+                                type="text" 
+                                id="heroSearch"
+                                placeholder="Search events, artists, or venues..."
+                                class="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#1E3A8A] focus:ring-2 focus:ring-blue-100 outline-none transition text-gray-700 text-sm"
+                            />
+                        </div>
+                        <button onclick="searchEvents()" class="btn-primary px-8 py-3.5 rounded-xl">
+                            <i class="fas fa-arrow-right mr-2"></i>Search
+                        </button>
+                    </div>
+                    
+                    <!-- Trust Badges -->
+                    <div class="flex flex-wrap gap-4 mt-8 animate-fade-up animate-fade-up-delay-4">
+                        <span class="flex items-center gap-2 text-sm text-gray-500">
+                            <i class="fas fa-shield-alt text-[#1E3A8A]"></i>
+                            Secure Escrow
+                        </span>
+                        <span class="flex items-center gap-2 text-sm text-gray-500">
+                            <i class="fas fa-lock text-[#1E3A8A]"></i>
+                            256-bit Encryption
+                        </span>
+                        <span class="flex items-center gap-2 text-sm text-gray-500">
+                            <i class="fas fa-headset text-[#1E3A8A]"></i>
+                            24/7 Support
+                        </span>
+                    </div>
                 </div>
                 
-                <!-- Heading -->
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.1] mb-6 animate-fade-up animate-fade-up-delay-1">
-                    Buy & Sell
-                    <span class="text-gradient-animated">Tickets</span>
-                    <br />
-                    <span class="text-white">With Complete</span>
-                    <span class="text-gradient-animated">Security</span>
-                </h1>
-                
-                <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-8 animate-fade-up animate-fade-up-delay-2">
-                    Every transaction is protected by our escrow system. Your money is safe 
-                    until you confirm ticket delivery.
-                </p>
-                
-                <!-- Search Bar -->
-                <div class="hero-search animate-fade-up animate-fade-up-delay-3">
-                    <i class="fas fa-search text-gray-500 text-lg ml-2"></i>
-                    <input type="text" placeholder="Search events, artists, or venues..." />
-                    <button class="search-btn" onclick="window.location.href='buy.html'">
-                        <i class="fas fa-arrow-right mr-2"></i>Search
-                    </button>
-                </div>
-                
-                <!-- Trust Badges -->
-                <div class="flex flex-wrap justify-center gap-3 mt-8 animate-fade-up animate-fade-up-delay-4">
-                    <span class="trust-badge">
-                        <i class="fas fa-shield-alt text-purple-400"></i>
-                        Escrow Protected
-                    </span>
-                    <span class="trust-badge">
-                        <i class="fas fa-lock text-green-400"></i>
-                        256-bit Encryption
-                    </span>
-                    <span class="trust-badge">
-                        <i class="fas fa-headset text-blue-400"></i>
-                        24/7 Support
-                    </span>
-                    <span class="trust-badge">
-                        <i class="fas fa-credit-card text-pink-400"></i>
-                        Multiple Payments
-                    </span>
+                <!-- Right Content -->
+                <div class="flex flex-col items-center animate-fade-up animate-fade-up-delay-3">
+                    <!-- USA Flag Circle -->
+                    <div class="flag-circle w-24 h-24 border-4 border-white shadow-xl">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA Flag" />
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-4 w-full mt-6">
+                        <div class="card p-4 text-center">
+                            <div class="text-2xl font-bold text-[#0C1B4D]">50K+</div>
+                            <div class="text-xs text-gray-500">Happy Users</div>
+                        </div>
+                        <div class="card p-4 text-center">
+                            <div class="text-2xl font-bold text-[#0C1B4D]">$2M+</div>
+                            <div class="text-xs text-gray-500">Protected</div>
+                        </div>
+                        <div class="card p-4 text-center">
+                            <div class="text-2xl font-bold text-[#0C1B4D]">99.9%</div>
+                            <div class="text-xs text-gray-500">Satisfaction</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mt-16 animate-fade-up animate-fade-up-delay-5">
-                <div class="glass-card-premium p-6 text-center">
-                    <div class="stat-number">50K+</div>
-                    <div class="stat-label">Happy Users</div>
-                </div>
-                <div class="glass-card-premium p-6 text-center">
-                    <div class="stat-number">$2M+</div>
-                    <div class="stat-label">Transactions Protected</div>
-                </div>
-                <div class="glass-card-premium p-6 text-center">
-                    <div class="stat-number">99.9%</div>
-                    <div class="stat-label">Satisfaction Rate</div>
-                </div>
-                <div class="glass-card-premium p-6 text-center">
-                    <div class="stat-number">10K+</div>
-                    <div class="stat-label">Tickets Listed</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <a href="#categories" class="text-gray-500 hover:text-gray-300 transition">
-                <i class="fas fa-chevron-down text-2xl"></i>
-            </a>
         </div>
     </section>
 
     <!-- ======================================== -->
     <!-- CATEGORIES SECTION -->
     <!-- ======================================== -->
-    <section id="categories" class="py-20 px-4">
+    <section class="py-16 px-4 bg-white">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12">
-                <span class="text-purple-400 font-semibold text-sm uppercase tracking-wider">Categories</span>
-                <h2 class="text-4xl md:text-5xl font-bold mt-3">
-                    Explore <span class="text-gradient-animated">Events</span>
+                <span class="text-[#1E3A8A] font-semibold text-sm uppercase tracking-wider">Categories</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-3 text-[#0C1B4D]">
+                    Explore <span class="text-gradient">Events</span>
                 </h2>
-                <p class="text-gray-400 mt-3 max-w-2xl mx-auto">
+                <p class="text-gray-500 mt-3 max-w-2xl mx-auto">
                     Find tickets for the best events in your city
                 </p>
             </div>
             
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                <a href="buy.html?category=concert" class="glass-card-premium category-card">
-                    <div class="category-icon bg-purple-500/20 text-purple-400">
-                        <i class="fas fa-music"></i>
+                <a href="buy.html?category=concert" class="card p-6 text-center hover:border-[#1E3A8A]">
+                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
+                        🎵
                     </div>
-                    <h3 class="font-semibold text-sm">Concerts</h3>
-                    <p class="text-gray-500 text-xs mt-1">2,345 events</p>
+                    <h3 class="font-semibold text-sm text-[#0C1B4D]">Concerts</h3>
+                    <p class="text-gray-400 text-xs mt-1">2,345 events</p>
                 </a>
                 
-                <a href="buy.html?category=sports" class="glass-card-premium category-card">
-                    <div class="category-icon bg-blue-500/20 text-blue-400">
-                        <i class="fas fa-futbol"></i>
+                <a href="buy.html?category=sports" class="card p-6 text-center hover:border-[#1E3A8A]">
+                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
+                        ⚽
                     </div>
-                    <h3 class="font-semibold text-sm">Sports</h3>
-                    <p class="text-gray-500 text-xs mt-1">1,892 events</p>
+                    <h3 class="font-semibold text-sm text-[#0C1B4D]">Sports</h3>
+                    <p class="text-gray-400 text-xs mt-1">1,892 events</p>
                 </a>
                 
-                <a href="buy.html?category=theater" class="glass-card-premium category-card">
-                    <div class="category-icon bg-pink-500/20 text-pink-400">
-                        <i class="fas fa-theater-masks"></i>
+                <a href="buy.html?category=theater" class="card p-6 text-center hover:border-[#1E3A8A]">
+                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
+                        🎭
                     </div>
-                    <h3 class="font-semibold text-sm">Theater</h3>
-                    <p class="text-gray-500 text-xs mt-1">1,234 events</p>
+                    <h3 class="font-semibold text-sm text-[#0C1B4D]">Theater</h3>
+                    <p class="text-gray-400 text-xs mt-1">1,234 events</p>
                 </a>
                 
-                <a href="buy.html?category=festival" class="glass-card-premium category-card">
-                    <div class="category-icon bg-green-500/20 text-green-400">
-                        <i class="fas fa-tree"></i>
+                <a href="buy.html?category=festival" class="card p-6 text-center hover:border-[#1E3A8A]">
+                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
+                        🎪
                     </div>
-                    <h3 class="font-semibold text-sm">Festivals</h3>
-                    <p class="text-gray-500 text-xs mt-1">876 events</p>
+                    <h3 class="font-semibold text-sm text-[#0C1B4D]">Festivals</h3>
+                    <p class="text-gray-400 text-xs mt-1">876 events</p>
                 </a>
                 
-                <a href="buy.html?category=comedy" class="glass-card-premium category-card">
-                    <div class="category-icon bg-yellow-500/20 text-yellow-400">
-                        <i class="fas fa-laugh"></i>
+                <a href="buy.html?category=comedy" class="card p-6 text-center hover:border-[#1E3A8A]">
+                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
+                        😂
                     </div>
-                    <h3 class="font-semibold text-sm">Comedy</h3>
-                    <p class="text-gray-500 text-xs mt-1">654 events</p>
+                    <h3 class="font-semibold text-sm text-[#0C1B4D]">Comedy</h3>
+                    <p class="text-gray-400 text-xs mt-1">654 events</p>
                 </a>
                 
-                <a href="buy.html?category=other" class="glass-card-premium category-card">
-                    <div class="category-icon bg-red-500/20 text-red-400">
-                        <i class="fas fa-ellipsis-h"></i>
+                <a href="buy.html?category=other" class="card p-6 text-center hover:border-[#1E3A8A]">
+                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3 text-2xl">
+                        🎯
                     </div>
-                    <h3 class="font-semibold text-sm">More</h3>
-                    <p class="text-gray-500 text-xs mt-1">1,023 events</p>
+                    <h3 class="font-semibold text-sm text-[#0C1B4D]">More</h3>
+                    <p class="text-gray-400 text-xs mt-1">1,023 events</p>
                 </a>
             </div>
         </div>
@@ -913,237 +579,41 @@
     <!-- ======================================== -->
     <!-- FEATURES SECTION -->
     <!-- ======================================== -->
-    <section id="features" class="py-20 px-4">
+    <section class="py-16 px-4 bg-[#F8FAFC]">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12">
-                <span class="text-purple-400 font-semibold text-sm uppercase tracking-wider">Features</span>
-                <h2 class="text-4xl md:text-5xl font-bold mt-3">
-                    Why Choose <span class="text-gradient-animated">TixHub</span>
+                <span class="text-[#1E3A8A] font-semibold text-sm uppercase tracking-wider">Features</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-3 text-[#0C1B4D]">
+                    Why Choose <span class="text-gradient">TixHub</span>
                 </h2>
-                <p class="text-gray-400 mt-3 max-w-2xl mx-auto">
+                <p class="text-gray-500 mt-3 max-w-2xl mx-auto">
                     Everything you need for secure ticket transactions
                 </p>
             </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Feature 1 -->
-                <div class="glass-card-premium p-8 group">
-                    <div class="feature-icon bg-purple-500/20 text-purple-400 group-hover:bg-purple-500 group-hover:text-white">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mt-4 mb-2">Escrow Protection</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Your payment is held securely until you confirm ticket delivery. 
-                        Zero risk, complete peace of mind.
-                    </p>
-                    <div class="mt-4 text-purple-400 text-sm font-medium flex items-center gap-1">
-                        Learn More <i class="fas fa-arrow-right text-xs"></i>
-                    </div>
-                </div>
-                
-                <!-- Feature 2 -->
-                <div class="glass-card-premium p-8 group">
-                    <div class="feature-icon bg-pink-500/20 text-pink-400 group-hover:bg-pink-500 group-hover:text-white">
-                        <i class="fas fa-credit-card"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mt-4 mb-2">Multiple Payments</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Pay with Credit Card, Wise, Sendwave, or Skrill. 
-                        Choose what works best for you.
-                    </p>
-                    <div class="mt-4 text-pink-400 text-sm font-medium flex items-center gap-1">
-                        Learn More <i class="fas fa-arrow-right text-xs"></i>
-                    </div>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="glass-card-premium p-8 group">
-                    <div class="feature-icon bg-blue-500/20 text-blue-400 group-hover:bg-blue-500 group-hover:text-white">
-                        <i class="fas fa-qrcode"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mt-4 mb-2">QR Code Tickets</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Get instant QR codes for contactless entry. 
-                        No physical tickets needed, ever.
-                    </p>
-                    <div class="mt-4 text-blue-400 text-sm font-medium flex items-center gap-1">
-                        Learn More <i class="fas fa-arrow-right text-xs"></i>
-                    </div>
-                </div>
-                
-                <!-- Feature 4 -->
-                <div class="glass-card-premium p-8 group">
-                    <div class="feature-icon bg-green-500/20 text-green-400 group-hover:bg-green-500 group-hover:text-white">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mt-4 mb-2">Live Chat</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Chat directly with sellers to ask questions 
-                        and coordinate ticket delivery.
-                    </p>
-                    <div class="mt-4 text-green-400 text-sm font-medium flex items-center gap-1">
-                        Learn More <i class="fas fa-arrow-right text-xs"></i>
-                    </div>
-                </div>
-                
-                <!-- Feature 5 -->
-                <div class="glass-card-premium p-8 group">
-                    <div class="feature-icon bg-red-500/20 text-red-400 group-hover:bg-red-500 group-hover:text-white">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mt-4 mb-2">Favorites & Alerts</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Save favorite events and get notified 
-                        when tickets become available.
-                    </p>
-                    <div class="mt-4 text-red-400 text-sm font-medium flex items-center gap-1">
-                        Learn More <i class="fas fa-arrow-right text-xs"></i>
-                    </div>
-                </div>
-                
-                <!-- Feature 6 -->
-                <div class="glass-card-premium p-8 group">
-                    <div class="feature-icon bg-yellow-500/20 text-yellow-400 group-hover:bg-yellow-500 group-hover:text-white">
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mt-4 mb-2">Instant Notifications</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Stay updated with real-time alerts for 
-                        purchases, sales, and messages.
-                    </p>
-                    <div class="mt-4 text-yellow-400 text-sm font-medium flex items-center gap-1">
-                        Learn More <i class="fas fa-arrow-right text-xs"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ======================================== -->
-    <!-- HOW IT WORKS -->
-    <!-- ======================================== -->
-    <section class="py-20 px-4">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <span class="text-purple-400 font-semibold text-sm uppercase tracking-wider">Process</span>
-                <h2 class="text-4xl md:text-5xl font-bold mt-3">
-                    How It <span class="text-gradient-animated">Works</span>
-                </h2>
-                <p class="text-gray-400 mt-3 max-w-2xl mx-auto">
-                    Buy or sell tickets in 4 simple steps
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="glass-card-premium p-6 text-center relative">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg shadow-purple-500/25">
-                        1
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Find Tickets</h3>
-                    <p class="text-gray-400 text-sm">Browse events and choose your perfect seats</p>
-                </div>
-                
-                <div class="glass-card-premium p-6 text-center relative">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg shadow-pink-500/25">
-                        2
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Pay Securely</h3>
-                    <p class="text-gray-400 text-sm">Payment held in escrow until ticket delivery</p>
-                </div>
-                
-                <div class="glass-card-premium p-6 text-center relative">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg shadow-blue-500/25">
-                        3
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Get Tickets</h3>
-                    <p class="text-gray-400 text-sm">Receive QR code and ticket details instantly</p>
-                </div>
-                
-                <div class="glass-card-premium p-6 text-center relative">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg shadow-green-500/25">
-                        4
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Confirm & Release</h3>
-                    <p class="text-gray-400 text-sm">Seller gets paid after your confirmation</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ======================================== -->
-    <!-- TESTIMONIALS -->
-    <!-- ======================================== -->
-    <section id="testimonials" class="py-20 px-4">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <span class="text-purple-400 font-semibold text-sm uppercase tracking-wider">Testimonials</span>
-                <h2 class="text-4xl md:text-5xl font-bold mt-3">
-                    What Our <span class="text-gradient-animated">Users Say</span>
-                </h2>
-            </div>
-            
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass-card-premium testimonial-card">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="testimonial-avatar bg-gradient-to-br from-purple-500 to-pink-500">JD</div>
-                        <div>
-                            <h4 class="font-semibold">John Doe</h4>
-                            <div class="flex text-yellow-400 text-sm">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 text-sm leading-relaxed">
-                        "TixHub made buying concert tickets so easy. The escrow system gave me 
-                        total peace of mind. Highly recommend!"
+                <div class="card p-8">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="text-xl font-bold mt-4 mb-2 text-[#0C1B4D]">Escrow Protection</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Your payment is held securely until you confirm ticket delivery. Zero risk, complete peace of mind.
                     </p>
-                    <span class="text-xs text-gray-500 mt-3 block">Verified Purchase · 2 days ago</span>
                 </div>
                 
-                <div class="glass-card-premium testimonial-card">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="testimonial-avatar bg-gradient-to-br from-pink-500 to-orange-500">SM</div>
-                        <div>
-                            <h4 class="font-semibold">Sarah Miller</h4>
-                            <div class="flex text-yellow-400 text-sm">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 text-sm leading-relaxed">
-                        "I sold my festival tickets within hours. The platform is smooth, 
-                        and the QR code system is brilliant!"
+                <div class="card p-8">
+                    <div class="feature-icon">💳</div>
+                    <h3 class="text-xl font-bold mt-4 mb-2 text-[#0C1B4D]">Multiple Payments</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Pay with Credit Card, Wise, Sendwave, or Skrill. Choose what works best for you.
                     </p>
-                    <span class="text-xs text-gray-500 mt-3 block">Verified Seller · 1 week ago</span>
                 </div>
                 
-                <div class="glass-card-premium testimonial-card">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="testimonial-avatar bg-gradient-to-br from-blue-500 to-cyan-500">MR</div>
-                        <div>
-                            <h4 class="font-semibold">Mike Ross</h4>
-                            <div class="flex text-yellow-400 text-sm">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 text-sm leading-relaxed">
-                        "Finally a ticket marketplace I can trust. The admin team is 
-                        responsive and the platform is top-notch."
+                <div class="card p-8">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="text-xl font-bold mt-4 mb-2 text-[#0C1B4D]">QR Code Tickets</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Get instant QR codes for contactless entry. No physical tickets needed, ever.
                     </p>
-                    <span class="text-xs text-gray-500 mt-3 block">Verified User · 3 days ago</span>
                 </div>
             </div>
         </div>
@@ -1152,28 +622,28 @@
     <!-- ======================================== -->
     <!-- CTA SECTION -->
     <!-- ======================================== -->
-    <section class="py-20 px-4">
+    <section class="py-16 px-4">
         <div class="max-w-5xl mx-auto">
             <div class="cta-gradient">
                 <div class="relative z-10 text-center">
-                    <span class="inline-block px-4 py-1.5 glass rounded-full text-sm text-purple-400 font-medium mb-4">
+                    <span class="inline-block px-4 py-1.5 bg-white/10 rounded-full text-white text-sm font-medium mb-4 backdrop-blur-sm">
                         <i class="fas fa-rocket mr-2"></i>Get Started Today
                     </span>
-                    <h2 class="text-3xl md:text-5xl font-bold mb-4">
-                        Ready to <span class="text-gradient-animated">Join</span> the Community?
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">
+                        Ready to <span class="text-yellow-400">Join</span> the Community?
                     </h2>
-                    <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
+                    <p class="text-blue-100 text-lg max-w-2xl mx-auto mb-8">
                         Join thousands of users who trust TixHub for secure ticket transactions.
                     </p>
                     <div class="flex flex-wrap justify-center gap-4">
-                        <a href="auth.html" class="btn-primary px-8 py-4 rounded-xl text-white font-semibold inline-flex items-center gap-2">
+                        <a href="auth.html" class="btn-red px-8 py-4 rounded-xl">
                             <i class="fas fa-user-plus"></i> Create Free Account
                         </a>
-                        <a href="buy.html" class="btn-secondary px-8 py-4 rounded-xl text-white font-semibold inline-flex items-center gap-2">
+                        <a href="buy.html" class="bg-white/10 backdrop-blur-sm px-8 py-4 rounded-xl text-white font-semibold hover:bg-white/20 transition inline-flex items-center gap-2">
                             <i class="fas fa-search"></i> Explore Events
                         </a>
                     </div>
-                    <p class="text-gray-500 text-sm mt-6">
+                    <p class="text-blue-200 text-sm mt-6">
                         <i class="fas fa-check-circle text-green-400 mr-1"></i>
                         No credit card required • Free to join
                     </p>
@@ -1185,73 +655,51 @@
     <!-- ======================================== -->
     <!-- FOOTER -->
     <!-- ======================================== -->
-    <footer class="border-t border-white/5 py-16 px-4">
+    <footer class="border-t border-gray-200 py-12 px-4 bg-white">
         <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-5 gap-8">
-                <!-- Brand -->
-                <div class="md:col-span-2">
-                    <a href="index.html" class="flex items-center gap-2.5 mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/25">
-                            <i class="fas fa-ticket-alt text-white text-lg"></i>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0C1B4D] to-[#1E3A8A] flex items-center justify-center">
+                            <i class="fas fa-ticket-alt text-white text-xl"></i>
                         </div>
-                        <span class="text-2xl font-bold text-white tracking-tight">
-                            Tix<span class="text-gradient-animated">Hub</span>
-                        </span>
-                    </a>
-                    <p class="text-gray-400 text-sm max-w-sm leading-relaxed">
-                        The most secure ticket marketplace. Every transaction is protected 
-                        by our escrow system. Buy and sell tickets with confidence.
-                    </p>
-                    <div class="flex gap-3 mt-4">
-                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                        <span class="text-2xl font-bold text-[#0C1B4D]">Tix<span class="text-[#1E3A8A]">Hub</span></span>
+                    </div>
+                    <p class="text-gray-500 text-sm">Secure ticket marketplace with escrow protection.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-[#0C1B4D]">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-500 text-sm">
+                        <li><a href="#" class="hover:text-[#1E3A8A] transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-[#1E3A8A] transition">How It Works</a></li>
+                        <li><a href="#" class="hover:text-[#1E3A8A] transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-[#0C1B4D]">Support</h4>
+                    <ul class="space-y-2 text-gray-500 text-sm">
+                        <li><a href="#" class="hover:text-[#1E3A8A] transition">Help Center</a></li>
+                        <li><a href="#" class="hover:text-[#1E3A8A] transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-[#1E3A8A] transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-[#0C1B4D]">Follow Us</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-blue-50 transition">
+                            <i class="fab fa-twitter text-gray-500 hover:text-[#1E3A8A]"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-blue-50 transition">
+                            <i class="fab fa-instagram text-gray-500 hover:text-[#1E3A8A]"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-blue-50 transition">
+                            <i class="fab fa-facebook text-gray-500 hover:text-[#1E3A8A]"></i>
+                        </a>
                     </div>
                 </div>
-                
-                <!-- Quick Links -->
-                <div>
-                    <h4 class="font-semibold mb-4 text-sm">Platform</h4>
-                    <ul class="space-y-2.5">
-                        <li><a href="buy.html" class="footer-link">Buy Tickets</a></li>
-                        <li><a href="sell.html" class="footer-link">Sell Tickets</a></li>
-                        <li><a href="#" class="footer-link">How It Works</a></li>
-                        <li><a href="#" class="footer-link">Pricing</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4 text-sm">Company</h4>
-                    <ul class="space-y-2.5">
-                        <li><a href="#" class="footer-link">About Us</a></li>
-                        <li><a href="#" class="footer-link">Careers</a></li>
-                        <li><a href="#" class="footer-link">Blog</a></li>
-                        <li><a href="#" class="footer-link">Press</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4 text-sm">Support</h4>
-                    <ul class="space-y-2.5">
-                        <li><a href="#" class="footer-link">Help Center</a></li>
-                        <li><a href="#" class="footer-link">Contact Us</a></li>
-                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
-                        <li><a href="#" class="footer-link">Terms of Service</a></li>
-                    </ul>
-                </div>
             </div>
-            
-            <div class="border-t border-white/5 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-gray-500 text-sm">
-                    &copy; 2026 TixHub. All rights reserved.
-                </p>
-                <div class="flex gap-6 text-sm text-gray-500">
-                    <a href="#" class="hover:text-gray-300 transition">Privacy</a>
-                    <a href="#" class="hover:text-gray-300 transition">Terms</a>
-                    <a href="#" class="hover:text-gray-300 transition">Cookies</a>
-                </div>
+            <div class="border-t border-gray-200 mt-8 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2026 TixHub. All rights reserved.
             </div>
         </div>
     </footer>
@@ -1261,7 +709,7 @@
     <!-- ======================================== -->
     <script>
         // ========================================
-        // NAVBAR SCROLL EFFECT
+        // NAVBAR SCROLL
         // ========================================
         const navbar = document.getElementById('navbar');
         
@@ -1289,7 +737,6 @@
             }
         });
 
-        // Close mobile menu on link click
         document.querySelectorAll('#mobileMenu a').forEach(link => {
             link.addEventListener('click', function() {
                 mobileMenu.classList.remove('open');
@@ -1298,41 +745,38 @@
         });
 
         // ========================================
-        // SMOOTH SCROLL
+        // SEARCH
         // ========================================
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+        function searchEvents() {
+            const searchInput = document.getElementById('heroSearch');
+            const query = searchInput.value.trim();
+            
+            if (query.length > 0) {
+                showToast(`🔍 Searching for "${query}"...`);
+                setTimeout(() => {
+                    window.location.href = `buy.html?search=${encodeURIComponent(query)}`;
+                }, 800);
+            } else {
+                showToast('Please enter an event or artist name');
+            }
+        }
+
+        document.getElementById('heroSearch')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchEvents();
+            }
         });
 
         // ========================================
-        // TOAST NOTIFICATION
+        // TOAST
         // ========================================
-        function showToast(message, type = 'info') {
-            // Remove existing toasts
+        function showToast(message) {
             document.querySelectorAll('.toast').forEach(t => t.remove());
-            
-            const icons = {
-                success: 'fa-check-circle',
-                error: 'fa-exclamation-circle',
-                info: 'fa-info-circle'
-            };
-            
-            const colors = {
-                success: '#10b981',
-                error: '#ef4444',
-                info: '#6c5ce7'
-            };
             
             const toast = document.createElement('div');
             toast.className = 'toast';
             toast.innerHTML = `
-                <i class="fas ${icons[type]}" style="color: ${colors[type]}; font-size: 1.25rem;"></i>
+                <i class="fas fa-info-circle text-[#1E3A8A]"></i>
                 <span>${message}</span>
             `;
             document.body.appendChild(toast);
@@ -1346,7 +790,7 @@
         }
 
         // ========================================
-        // INTERSECTION OBSERVER FOR ANIMATIONS
+        // INTERSECTION OBSERVER
         // ========================================
         const observerOptions = {
             threshold: 0.1,
@@ -1362,8 +806,7 @@
             });
         }, observerOptions);
         
-        // Observe all premium cards
-        document.querySelectorAll('.glass-card-premium, .glass-card').forEach(card => {
+        document.querySelectorAll('.card').forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(30px)';
             card.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
@@ -1371,88 +814,14 @@
         });
 
         // ========================================
-        // HERO SEARCH FUNCTIONALITY
-        // ========================================
-        document.querySelector('.hero-search .search-btn')?.addEventListener('click', function() {
-            const input = document.querySelector('.hero-search input');
-            if (input.value.trim().length > 0) {
-                showToast(`🔍 Searching for "${input.value.trim()}"...`, 'info');
-                setTimeout(() => {
-                    window.location.href = `buy.html?search=${encodeURIComponent(input.value.trim())}`;
-                }, 800);
-            } else {
-                showToast('Please enter an event or artist name', 'error');
-                input.focus();
-            }
-        });
-
-        document.querySelector('.hero-search input')?.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.querySelector('.hero-search .search-btn').click();
-            }
-        });
-
-        // ========================================
-        // CATEGORY CARD CLICK TRACKING
-        // ========================================
-        document.querySelectorAll('.category-card').forEach(card => {
-            card.addEventListener('click', function(e) {
-                const category = this.querySelector('h3')?.textContent || 'category';
-                showToast(`📂 Showing ${category} events`, 'info');
-            });
-        });
-
-        // ========================================
-        // STATS COUNTER ANIMATION
-        // ========================================
-        function animateStats() {
-            const statNumbers = document.querySelectorAll('.stat-number');
-            statNumbers.forEach(stat => {
-                const text = stat.textContent;
-                const numericValue = parseFloat(text.replace(/[^0-9.]/g, ''));
-                const suffix = text.replace(/[0-9.]/g, '');
-                
-                if (!isNaN(numericValue)) {
-                    let current = 0;
-                    const increment = numericValue / 50;
-                    const target = numericValue;
-                    
-                    const timer = setInterval(() => {
-                        current += increment;
-                        if (current >= target) {
-                            current = target;
-                            clearInterval(timer);
-                        }
-                        stat.textContent = Math.floor(current) + suffix;
-                    }, 30);
-                }
-            });
-        }
-
-        // Trigger stats animation when visible
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateStats();
-                    statsObserver.disconnect();
-                }
-            });
-        }, { threshold: 0.5 });
-
-        document.querySelectorAll('.stat-number').forEach(stat => {
-            statsObserver.observe(stat);
-        });
-
-        // ========================================
         // CONSOLE
         // ========================================
-        console.log('🎫 TixHub - Premium Ticket Marketplace');
-        console.log('🚀 Built with ❤️ using HTML + Tailwind CSS');
-        console.log('💡 Pro Tip: Click the search button to find events!');
+        console.log('🎫 TixHub - Ticketmaster Style');
+        console.log('🇺🇸 USA Flag in circle');
+        console.log('💙 Blue color scheme inspired by Ticketmaster');
         
-        // Show welcome toast after a moment
         setTimeout(() => {
-            showToast('🎉 Welcome to TixHub! Find your next event today.', 'success');
+            showToast('🎉 Welcome to TixHub! Find your next event today.');
         }, 1500);
     </script>
 </body>
