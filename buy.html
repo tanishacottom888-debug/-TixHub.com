@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Buy Tickets - TixHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Buy Tickets - TixHub | World Cup 2026</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,6 +15,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
     <style>
+        /* ======================================== */
+        /* PREMIUM STYLES */
+        /* ======================================== */
         * {
             margin: 0;
             padding: 0;
@@ -23,17 +26,16 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background: #0a0a1a;
+            background: #07070f;
             color: #ffffff;
             overflow-x: hidden;
         }
         
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1a1a2e;
+            background: #0a0a1a;
         }
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(135deg, #6c5ce7, #fd79a8);
@@ -41,44 +43,157 @@
         }
         
         /* Glassmorphism */
-        .glass-card {
-            background: rgba(26, 26, 46, 0.7);
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        
+        .glass-card {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .glass-card:hover {
             border-color: rgba(108, 92, 231, 0.3);
-            box-shadow: 0 20px 60px rgba(108, 92, 231, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(108, 92, 231, 0.08);
         }
         
-        /* Gradient Button */
-        .gradient-btn {
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
-            transition: all 0.3s ease;
+        .glass-card-premium {
+            background: rgba(26, 26, 46, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        .gradient-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 40px rgba(108, 92, 231, 0.4);
+        .glass-card-premium:hover {
+            border-color: rgba(108, 92, 231, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 30px 80px rgba(108, 92, 231, 0.1);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #6c5ce7, #a855f7);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 20px 50px rgba(108, 92, 231, 0.4);
+        }
+        
+        .btn-worldcup {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .btn-worldcup:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 20px 50px rgba(245, 158, 11, 0.4);
+        }
+        
+        /* World Cup Banner */
+        .worldcup-banner {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(239, 68, 68, 0.05));
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 24px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .worldcup-banner::before {
+            content: '🏆';
+            position: absolute;
+            right: -20px;
+            top: -20px;
+            font-size: 120px;
+            opacity: 0.05;
+        }
+        
+        /* Badge */
+        .badge-worldcup {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-knockout {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+        
+        .badge-group {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+        
+        .badge-category {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
         }
         
         /* Ticket Card */
         .ticket-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .ticket-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(108, 92, 231, 0.4);
-            box-shadow: 0 20px 60px rgba(108, 92, 231, 0.15);
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(245, 158, 11, 0.3);
+            box-shadow: 0 30px 80px rgba(245, 158, 11, 0.1);
         }
         
         .ticket-image {
             height: 200px;
             object-fit: cover;
+        }
+        
+        /* Search Input */
+        .search-input {
+            background: rgba(26, 26, 46, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 12px 20px 12px 48px;
+            color: #fff;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.1);
+        }
+        
+        .search-input::placeholder {
+            color: #6b7280;
         }
         
         /* Filter Tags */
@@ -95,103 +210,166 @@
         
         .filter-tag:hover,
         .filter-tag.active {
-            background: rgba(108, 92, 231, 0.2);
-            border-color: #6c5ce7;
+            background: rgba(245, 158, 11, 0.15);
+            border-color: #f59e0b;
             color: #fff;
         }
         
-        .filter-tag.active {
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.3), rgba(253, 121, 168, 0.3));
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 20px;
+            transition: all 0.4s ease;
         }
         
-        /* Search Input */
-        .search-input {
-            background: rgba(26, 26, 46, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 12px 20px 12px 48px;
-            color: #fff;
-            width: 100%;
-            transition: all 0.3s ease;
+        .navbar-scrolled {
+            background: rgba(7, 7, 15, 0.92);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px 20px;
         }
         
-        .search-input:focus {
-            outline: none;
-            border-color: #6c5ce7;
-            box-shadow: 0 0 30px rgba(108, 92, 231, 0.1);
-        }
-        
-        .search-input::placeholder {
-            color: #6b7280;
-        }
-        
-        /* Quantity Badge */
-        .quantity-badge {
-            background: rgba(108, 92, 231, 0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: #a78bfa;
-        }
-        
-        /* Wishlist Button */
-        .wishlist-btn {
-            transition: all 0.3s ease;
-        }
-        
-        .wishlist-btn:hover {
-            transform: scale(1.2);
-        }
-        
-        .wishlist-btn.liked {
-            color: #fd79a8;
-        }
-        
-        /* Loading Skeleton */
-        .skeleton {
-            animation: shimmer 2s infinite;
-            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
-            background-size: 200% 100%;
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        
-        /* Navbar Link */
         .nav-link {
             position: relative;
-            transition: color 0.3s ease;
+            color: #9ca3af;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .nav-link:hover {
+            color: #fff;
         }
         
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: -4px;
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
             transition: width 0.3s ease;
+            border-radius: 2px;
         }
         
         .nav-link:hover::after {
             width: 100%;
         }
         
-        /* Filter Sidebar */
-        .filter-section {
-            position: sticky;
-            top: 100px;
+        .nav-link-active {
+            color: #fff;
+        }
+        
+        .nav-link-active::after {
+            width: 100%;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin-top: 8px;
+            padding: 20px;
+            background: rgba(7, 7, 15, 0.95);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+        }
+        
+        .mobile-menu.open {
+            display: block;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+            padding: 14px 20px;
+            border-radius: 16px;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 0.9rem;
+            max-width: 90%;
+            width: 380px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        @keyframes slideInRight {
+            0% { transform: translateX(100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
         }
         
         /* Responsive */
         @media (max-width: 768px) {
-            .filter-section {
-                position: relative;
-                top: 0;
+            .navbar {
+                padding: 12px 16px;
             }
+            
+            .ticket-image {
+                height: 160px;
+            }
+            
+            .worldcup-banner {
+                padding: 16px;
+            }
+            
+            .worldcup-banner::before {
+                font-size: 80px;
+            }
+            
+            .glass-card {
+                padding: 16px !important;
+            }
+        }
+        
+        /* Animation */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Quantity Badge */
+        .quantity-badge {
+            background: rgba(245, 158, 11, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #fbbf24;
+        }
+        
+        /* Team Flags */
+        .team-flag {
+            width: 24px;
+            height: 16px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 0 4px;
         }
         
         /* Scroll to top */
@@ -209,12 +387,6 @@
             opacity: 1;
             visibility: visible;
         }
-        
-        /* Modal */
-        .modal-overlay {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-        }
     </style>
 </head>
 <body>
@@ -222,66 +394,100 @@
     <!-- ======================================== -->
     <!-- NAVIGATION -->
     <!-- ======================================== -->
-    <nav class="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4">
-        <div class="max-w-7xl mx-auto glass-card px-6 py-3 flex items-center justify-between">
+    <nav class="navbar" id="navbar">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
             <!-- Logo -->
-            <a href="index.html" class="flex items-center gap-2">
-                <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
-                    <i class="fas fa-ticket-alt text-white text-xl"></i>
+            <a href="index.html" class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500 to-red-500 flex items-center justify-center shadow-lg shadow-yellow-500/25">
+                    <i class="fas fa-ticket-alt text-white text-lg"></i>
                 </div>
-                <span class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    TixHub
+                <span class="text-2xl font-bold text-white tracking-tight">
+                    Tix<span class="text-gradient-animated">Hub</span>
+                </span>
+                <span class="hidden md:inline text-xs bg-gradient-to-r from-yellow-500 to-red-500 text-white px-2 py-0.5 rounded-full font-bold">
+                    World Cup 2026
                 </span>
             </a>
             
-            <!-- Nav Links -->
+            <!-- Desktop Nav -->
             <div class="hidden md:flex items-center gap-8">
-                <a href="index.html" class="nav-link text-gray-300 hover:text-white">Home</a>
-                <a href="buy.html" class="nav-link text-white font-semibold">Buy Tickets</a>
-                <a href="sell.html" class="nav-link text-gray-300 hover:text-white">Sell Tickets</a>
-                <a href="#" class="nav-link text-gray-300 hover:text-white">About</a>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="buy.html" class="nav-link nav-link-active">Buy Tickets</a>
+                <a href="sell.html" class="nav-link">Sell Tickets</a>
+                <a href="#" class="nav-link">Matches</a>
+                <a href="#" class="nav-link">Stadiums</a>
             </div>
             
-            <!-- Auth -->
-            <div class="flex items-center gap-3">
-                <a href="auth.html" class="hidden md:block px-4 py-2 text-gray-300 hover:text-white transition">
-                    <i class="fas fa-user mr-2"></i>Sign In
+            <!-- Desktop Auth -->
+            <div class="hidden md:flex items-center gap-3">
+                <a href="auth.html" class="text-gray-400 hover:text-white transition font-medium text-sm">
+                    Sign In
                 </a>
-                <a href="auth.html" class="gradient-btn px-5 py-2 rounded-xl text-white text-sm font-semibold">
+                <a href="auth.html" class="btn-primary px-5 py-2.5 rounded-xl text-white text-sm font-semibold">
                     <i class="fas fa-rocket mr-2"></i>Get Started
                 </a>
-                <button id="mobileMenuBtn" class="md:hidden text-white text-2xl">
-                    <i class="fas fa-bars"></i>
-                </button>
             </div>
+            
+            <!-- Mobile Toggle -->
+            <button id="mobileToggle" class="md:hidden text-white text-2xl p-2">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="md:hidden hidden mt-3 glass-card px-6 py-4">
+        <div id="mobileMenu" class="mobile-menu md:hidden">
             <div class="flex flex-col gap-4">
-                <a href="index.html" class="text-gray-300 hover:text-white py-2 border-b border-white/5">Home</a>
-                <a href="buy.html" class="text-white py-2 border-b border-white/5 font-semibold">Buy Tickets</a>
-                <a href="sell.html" class="text-gray-300 hover:text-white py-2 border-b border-white/5">Sell Tickets</a>
-                <a href="#" class="text-gray-300 hover:text-white py-2 border-b border-white/5">About</a>
-                <a href="auth.html" class="text-gray-300 hover:text-white py-2">Sign In</a>
+                <a href="index.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Home</a>
+                <a href="buy.html" class="text-white font-semibold py-2 border-b border-white/5">Buy Tickets</a>
+                <a href="sell.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Sell Tickets</a>
+                <a href="#" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Matches</a>
+                <a href="#" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Stadiums</a>
+                <div class="flex flex-col gap-3 pt-2">
+                    <a href="auth.html" class="text-center text-gray-400 hover:text-white transition py-2">Sign In</a>
+                    <a href="auth.html" class="btn-primary text-center py-3 rounded-xl text-white font-semibold">
+                        <i class="fas fa-rocket mr-2"></i>Get Started
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- ======================================== -->
-    <!-- HERO BANNER -->
+    <!-- HERO BANNER - World Cup Edition -->
     <!-- ======================================== -->
-    <section class="pt-28 pb-12 px-4">
+    <section class="pt-28 pb-8 px-4">
         <div class="max-w-7xl mx-auto">
-            <div class="glass-card p-8 md:p-12 relative overflow-hidden">
-                <div class="absolute inset-0 gradient-bg opacity-5"></div>
+            <div class="worldcup-banner">
                 <div class="relative z-10">
-                    <h1 class="text-3xl md:text-5xl font-bold mb-3">
-                        Find Your <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Perfect Event</span>
-                    </h1>
-                    <p class="text-gray-400 text-lg">
-                        Browse thousands of tickets from trusted sellers. Every purchase protected by escrow.
-                    </p>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="badge-worldcup">🏆 FIFA World Cup 2026</span>
+                                <span class="text-xs text-gray-400">• 16 Countries</span>
+                                <span class="text-xs text-gray-400">• 64 Matches</span>
+                            </div>
+                            <h1 class="text-3xl md:text-4xl font-bold">
+                                <span class="text-gradient-animated">World Cup</span> Tickets
+                            </h1>
+                            <p class="text-gray-400 text-sm md:text-base mt-1">
+                                Official resale tickets for the biggest sporting event in the world
+                            </p>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="glass px-4 py-2 rounded-xl text-center">
+                                <div class="text-xs text-gray-400">Matches</div>
+                                <div class="text-xl font-bold text-yellow-400">64</div>
+                            </span>
+                            <span class="glass px-4 py-2 rounded-xl text-center">
+                                <div class="text-xs text-gray-400">Stadiums</div>
+                                <div class="text-xl font-bold text-red-400">12</div>
+                            </span>
+                            <span class="glass px-4 py-2 rounded-xl text-center">
+                                <div class="text-xs text-gray-400">Tickets</div>
+                                <div class="text-xl font-bold text-purple-400">50K+</div>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -293,7 +499,7 @@
     <section class="px-4 pb-20">
         <div class="max-w-7xl mx-auto">
             
-            <!-- Search & Filters Bar -->
+            <!-- Search & Filters -->
             <div class="glass-card p-6 mb-8">
                 <div class="grid md:grid-cols-4 gap-4">
                     <!-- Search -->
@@ -302,20 +508,20 @@
                         <input 
                             type="text" 
                             id="searchInput"
-                            placeholder="Search events, artists, venues..." 
+                            placeholder="Search matches, teams, stadiums..." 
                             class="search-input"
                         />
                     </div>
                     
-                    <!-- Category Filter -->
+                    <!-- Match Stage Filter -->
                     <div>
-                        <select id="categoryFilter" class="search-input appearance-none">
-                            <option value="all" class="bg-dark-200">All Categories</option>
-                            <option value="concert" class="bg-dark-200">🎵 Concerts</option>
-                            <option value="sports" class="bg-dark-200">⚽ Sports</option>
-                            <option value="theater" class="bg-dark-200">🎭 Theater</option>
-                            <option value="festival" class="bg-dark-200">🎪 Festivals</option>
-                            <option value="comedy" class="bg-dark-200">😂 Comedy</option>
+                        <select id="stageFilter" class="search-input appearance-none">
+                            <option value="all" class="bg-dark-200">All Stages</option>
+                            <option value="group" class="bg-dark-200">🏆 Group Stage</option>
+                            <option value="round16" class="bg-dark-200">⚽ Round of 16</option>
+                            <option value="quarter" class="bg-dark-200">🏅 Quarter-Finals</option>
+                            <option value="semi" class="bg-dark-200">🌟 Semi-Finals</option>
+                            <option value="final" class="bg-dark-200">🏆 Final</option>
                         </select>
                     </div>
                     
@@ -333,35 +539,40 @@
                 <!-- Filter Tags -->
                 <div class="flex flex-wrap gap-2 mt-4">
                     <span class="filter-tag active" data-filter="all">All Tickets</span>
-                    <span class="filter-tag" data-filter="concert">🎵 Concerts</span>
-                    <span class="filter-tag" data-filter="sports">⚽ Sports</span>
-                    <span class="filter-tag" data-filter="theater">🎭 Theater</span>
-                    <span class="filter-tag" data-filter="festival">🎪 Festivals</span>
-                    <span class="filter-tag" data-filter="comedy">😂 Comedy</span>
-                    <span class="filter-tag" data-filter="under50">💰 Under $50</span>
-                    <span class="filter-tag" data-filter="this-weekend">📅 This Weekend</span>
+                    <span class="filter-tag" data-filter="group">🏆 Group Stage</span>
+                    <span class="filter-tag" data-filter="knockout">⚽ Knockout</span>
+                    <span class="filter-tag" data-filter="final">🏆 Final</span>
+                    <span class="filter-tag" data-filter="cat1">⭐ Category 1</span>
+                    <span class="filter-tag" data-filter="cat2">🌟 Category 2</span>
+                    <span class="filter-tag" data-filter="cat3">🎯 Category 3</span>
+                    <span class="filter-tag" data-filter="hospitality">🍾 Hospitality</span>
+                    <span class="filter-tag" data-filter="under500">💰 Under $500</span>
                 </div>
             </div>
 
             <!-- Results Count -->
             <div class="flex justify-between items-center mb-6">
                 <span id="resultsCount" class="text-gray-400 text-sm">
-                    Showing <span id="ticketCount">0</span> tickets
+                    Showing <span id="ticketCount">0</span> World Cup tickets
                 </span>
-                <button id="viewToggle" class="text-gray-400 hover:text-white transition">
-                    <i class="fas fa-th-large mr-2"></i>
-                    <i class="fas fa-list"></i>
-                </button>
+                <div class="flex gap-2">
+                    <button id="viewGrid" class="text-purple-400 hover:text-white transition">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button id="viewList" class="text-gray-500 hover:text-white transition">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
             </div>
 
             <!-- Ticket Grid -->
             <div id="ticketGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Tickets will be rendered here by JavaScript -->
+                <!-- Tickets rendered by JavaScript -->
             </div>
 
             <!-- Load More -->
             <div class="text-center mt-10">
-                <button id="loadMoreBtn" class="glass-card px-8 py-3 text-gray-300 hover:text-white hover:border-purple-500/50 transition">
+                <button id="loadMoreBtn" class="glass-card px-8 py-3 text-gray-300 hover:text-white hover:border-yellow-500/50 transition">
                     <i class="fas fa-spinner mr-2"></i> Load More Tickets
                 </button>
             </div>
@@ -374,13 +585,13 @@
     <div id="ticketModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0" onclick="closeModal()"></div>
         <div class="absolute inset-0 flex items-center justify-center p-4">
-            <div class="glass-card max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative">
+            <div class="glass-card max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative">
                 <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
                     <i class="fas fa-times"></i>
                 </button>
                 
                 <div id="modalContent">
-                    <!-- Dynamically populated -->
+                    <!-- Dynamic content -->
                 </div>
             </div>
         </div>
@@ -398,30 +609,28 @@
                 </button>
                 
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-3">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-yellow-500/25">
                         <i class="fas fa-lock text-white text-xl"></i>
                     </div>
                     <h3 class="text-2xl font-bold">Secure Payment</h3>
                     <p class="text-gray-400 text-sm">Escrow protected transaction</p>
                 </div>
                 
-                <div id="paymentDetails" class="mb-6">
-                    <!-- Populated dynamically -->
-                </div>
+                <div id="paymentDetails" class="mb-6"></div>
                 
                 <!-- Payment Methods -->
                 <div class="space-y-3">
-                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-purple-500/50 transition" onclick="selectPayment('credit')">
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-yellow-500/50 transition" onclick="selectPayment('credit')">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
-                                <i class="fas fa-credit-card text-purple-400 text-xl"></i>
+                                <i class="fas fa-credit-card text-yellow-400 text-xl"></i>
                                 <span class="font-medium">Credit Card</span>
                             </div>
                             <i class="fas fa-check-circle text-green-400 hidden" id="check-credit"></i>
                         </div>
                     </div>
                     
-                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-purple-500/50 transition" onclick="selectPayment('wise')">
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-yellow-500/50 transition" onclick="selectPayment('wise')">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-globe text-blue-400 text-xl"></i>
@@ -431,7 +640,7 @@
                         </div>
                     </div>
                     
-                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-purple-500/50 transition" onclick="selectPayment('sendwave')">
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-yellow-500/50 transition" onclick="selectPayment('sendwave')">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-mobile-alt text-green-400 text-xl"></i>
@@ -441,7 +650,7 @@
                         </div>
                     </div>
                     
-                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-purple-500/50 transition" onclick="selectPayment('skrill')">
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-yellow-500/50 transition" onclick="selectPayment('skrill')">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-envelope text-pink-400 text-xl"></i>
@@ -453,21 +662,20 @@
                 </div>
                 
                 <!-- Escrow Info -->
-                <div class="mt-6 p-4 bg-purple-500/10 border border-purple-500/20 rounded-xl">
+                <div class="mt-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
                     <div class="flex items-start gap-3">
-                        <i class="fas fa-shield-alt text-purple-400 mt-1"></i>
+                        <i class="fas fa-shield-alt text-yellow-400 mt-1"></i>
                         <div>
                             <p class="text-sm text-gray-300">
-                                <span class="font-semibold text-purple-400">Escrow Protected</span>
+                                <span class="font-semibold text-yellow-400">Escrow Protected</span>
                                 <br />
                                 Your payment is held securely until you confirm ticket delivery.
-                                <span id="escrowTimer" class="text-purple-400 font-semibold"></span>
                             </p>
                         </div>
                     </div>
                 </div>
                 
-                <button id="payNowBtn" class="w-full gradient-btn py-3 rounded-xl text-white font-semibold mt-6 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <button id="payNowBtn" class="w-full btn-primary py-3 rounded-xl text-white font-semibold mt-6 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
                     <i class="fas fa-lock mr-2"></i> Pay Now
                 </button>
             </div>
@@ -477,7 +685,7 @@
     <!-- ======================================== -->
     <!-- SCROLL TO TOP -->
     <!-- ======================================== -->
-    <button id="scrollTopBtn" class="scroll-top w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white shadow-lg shadow-purple-500/30">
+    <button id="scrollTopBtn" class="scroll-top w-12 h-12 bg-gradient-to-br from-yellow-500 to-red-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-yellow-500/30">
         <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -489,48 +697,48 @@
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
                     <div class="flex items-center gap-2 mb-4">
-                        <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500 to-red-500 flex items-center justify-center">
                             <i class="fas fa-ticket-alt text-white text-xl"></i>
                         </div>
-                        <span class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                            TixHub
-                        </span>
+                        <span class="text-2xl font-bold text-white">Tix<span class="text-gradient-animated">Hub</span></span>
                     </div>
-                    <p class="text-gray-400 text-sm">Secure ticket marketplace with escrow protection.</p>
+                    <p class="text-gray-400 text-sm">The most secure ticket marketplace for World Cup 2026 and beyond.</p>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-purple-400 transition">About Us</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition">How It Works</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition">FAQ</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">World Cup 2026</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Matches</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Stadiums</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Hospitality</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4">Support</h4>
                     <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-purple-400 transition">Help Center</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Help Center</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4">Follow Us</h4>
                     <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-purple-500/20 transition">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
                             <i class="fab fa-twitter text-gray-400 hover:text-white"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-purple-500/20 transition">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
                             <i class="fab fa-instagram text-gray-400 hover:text-white"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-purple-500/20 transition">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-yellow-500/20 transition">
                             <i class="fab fa-facebook text-gray-400 hover:text-white"></i>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="border-t border-white/5 mt-8 pt-8 text-center text-gray-500 text-sm">
-                &copy; 2026 TixHub. All rights reserved.
+                &copy; 2026 TixHub. All rights reserved. | FIFA World Cup 2026
             </div>
         </div>
     </footer>
@@ -540,135 +748,183 @@
     <!-- ======================================== -->
     <script>
         // ========================================
-        // SAMPLE TICKET DATA
+        // WORLD CUP TICKET DATA
         // ========================================
-        const sampleTickets = [
+        const worldCupTickets = [
             {
                 id: 1,
-                eventName: "Summer Music Festival 2026",
-                category: "festival",
-                date: "2026-07-15",
-                time: "2:00 PM",
-                location: "Central Park, NYC",
-                price: 149.99,
+                eventName: "FIFA World Cup 2026 - Final",
+                category: "final",
+                stage: "Final",
+                team1: "Brazil",
+                team2: "Argentina",
+                date: "2026-07-19",
+                time: "6:00 PM",
+                location: "MetLife Stadium, New Jersey",
+                price: 2499.99,
                 quantity: 45,
-                image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=300&fit=crop",
-                seller: "EventPro Tickets",
-                rating: 4.8,
-                seatInfo: "VIP Section A",
-                description: "The biggest summer music festival featuring top artists from around the world."
+                image: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=400&h=300&fit=crop",
+                seller: "FIFA Official Resale",
+                rating: 4.9,
+                seatCategory: "Category 1",
+                seatInfo: "Sideline, Row 5",
+                description: "The biggest match in football history! Brazil vs Argentina in the World Cup Final.",
+                hospitality: true,
+                verified: true
             },
             {
                 id: 2,
-                eventName: "NBA Finals - Game 7",
-                category: "sports",
-                date: "2026-06-20",
-                time: "7:30 PM",
-                location: "Staples Center, LA",
-                price: 299.99,
-                quantity: 12,
+                eventName: "FIFA World Cup 2026 - Semi-Final",
+                category: "semi",
+                stage: "Semi-Final",
+                team1: "France",
+                team2: "England",
+                date: "2026-07-15",
+                time: "4:00 PM",
+                location: "AT&T Stadium, Texas",
+                price: 1899.99,
+                quantity: 28,
                 image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=400&h=300&fit=crop",
-                seller: "SportsTix Inc.",
-                rating: 4.9,
-                seatInfo: "Courtside Row B",
-                description: "Experience the thrill of Game 7 of the NBA Finals. Courtside seats with premium amenities."
+                seller: "World Cup Tickets Inc.",
+                rating: 4.8,
+                seatCategory: "Category 2",
+                seatInfo: "Upper Tier, Row 12",
+                description: "European giants clash in the World Cup Semi-Final. France vs England.",
+                hospitality: false,
+                verified: true
             },
             {
                 id: 3,
-                eventName: "Hamilton - Broadway Show",
-                category: "theater",
-                date: "2026-08-10",
+                eventName: "FIFA World Cup 2026 - Quarter-Final",
+                category: "quarter",
+                stage: "Quarter-Final",
+                team1: "Germany",
+                team2: "Spain",
+                date: "2026-07-10",
                 time: "8:00 PM",
-                location: "Richard Rodgers Theatre, NYC",
-                price: 189.50,
-                quantity: 28,
+                location: "SoFi Stadium, Los Angeles",
+                price: 1299.99,
+                quantity: 60,
                 image: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=400&h=300&fit=crop",
-                seller: "Broadway Direct",
-                rating: 4.9,
-                seatInfo: "Orchestra Center",
-                description: "The award-winning musical that took the world by storm. Limited tickets available!"
+                seller: "Elite Sports Tickets",
+                rating: 4.7,
+                seatCategory: "Category 2",
+                seatInfo: "Midfield, Row 18",
+                description: "Two European powerhouses battle for a spot in the Semi-Finals.",
+                hospitality: false,
+                verified: true
             },
             {
                 id: 4,
-                eventName: "Comedy Night with Kevin Hart",
-                category: "comedy",
-                date: "2026-09-05",
-                time: "9:00 PM",
-                location: "Madison Square Garden, NYC",
-                price: 79.99,
-                quantity: 60,
-                image: "https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=400&h=300&fit=crop",
-                seller: "Comedy Central",
-                rating: 4.7,
-                seatInfo: "Lower Level",
-                description: "An unforgettable night of laughter with Kevin Hart and special guests."
+                eventName: "FIFA World Cup 2026 - Group Stage",
+                category: "group",
+                stage: "Group Stage",
+                team1: "USA",
+                team2: "Mexico",
+                date: "2026-06-15",
+                time: "2:00 PM",
+                location: "Levi's Stadium, California",
+                price: 399.99,
+                quantity: 120,
+                image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=300&fit=crop",
+                seller: "North American Tickets",
+                rating: 4.5,
+                seatCategory: "Category 3",
+                seatInfo: "Corner Flag, Row 25",
+                description: "North American rivals face off in the Group Stage. USA vs Mexico.",
+                hospitality: false,
+                verified: true
             },
             {
                 id: 5,
-                eventName: "EDM Night - DJ Festival",
-                category: "concert",
-                date: "2026-07-25",
-                time: "10:00 PM",
-                location: "Miami Beach, FL",
-                price: 99.99,
+                eventName: "FIFA World Cup 2026 - Group Stage",
+                category: "group",
+                stage: "Group Stage",
+                team1: "Portugal",
+                team2: "Netherlands",
+                date: "2026-06-18",
+                time: "12:00 PM",
+                location: "Hard Rock Stadium, Florida",
+                price: 449.99,
                 quantity: 85,
                 image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&h=300&fit=crop",
-                seller: "EDM Productions",
+                seller: "Euro Sports Exchange",
                 rating: 4.6,
-                seatInfo: "General Admission",
-                description: "The ultimate EDM experience with top DJs and incredible light shows."
+                seatCategory: "Category 3",
+                seatInfo: "Behind Goal, Row 20",
+                description: "European giants Portugal vs Netherlands in an epic Group Stage match.",
+                hospitality: false,
+                verified: true
             },
             {
                 id: 6,
-                eventName: "International Soccer Match",
-                category: "sports",
-                date: "2026-08-20",
-                time: "3:00 PM",
-                location: "Wembley Stadium, UK",
-                price: 159.99,
+                eventName: "FIFA World Cup 2026 - Round of 16",
+                category: "round16",
+                stage: "Round of 16",
+                team1: "Italy",
+                team2: "Croatia",
+                date: "2026-07-03",
+                time: "10:00 AM",
+                location: "Arrowhead Stadium, Kansas",
+                price: 899.99,
                 quantity: 34,
-                image: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=400&h=300&fit=crop",
-                seller: "SoccerWorld",
+                image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=300&fit=crop",
+                seller: "World Cup Direct",
                 rating: 4.8,
-                seatInfo: "Midfield Section",
-                description: "International friendly match between top national teams. Historic rivalry renewed!"
+                seatCategory: "Category 2",
+                seatInfo: "Sideline, Row 14",
+                description: "Knockout stage action! Italy vs Croatia for a place in the Quarter-Finals.",
+                hospitality: false,
+                verified: true
             },
             {
                 id: 7,
-                eventName: "Jazz & Blues Festival",
-                category: "festival",
-                date: "2026-09-12",
-                time: "12:00 PM",
-                location: "New Orleans, LA",
-                price: 89.99,
-                quantity: 100,
-                image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=300&fit=crop",
-                seller: "JazzFest Productions",
-                rating: 4.5,
-                seatInfo: "General Admission",
-                description: "Experience the soul of New Orleans with world-class jazz and blues performances."
+                eventName: "FIFA World Cup 2026 - Final (Hospitality)",
+                category: "final",
+                stage: "Final",
+                team1: "TBD",
+                team2: "TBD",
+                date: "2026-07-19",
+                time: "6:00 PM",
+                location: "MetLife Stadium, New Jersey",
+                price: 5499.99,
+                quantity: 12,
+                image: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=400&h=300&fit=crop",
+                seller: "FIFA Hospitality",
+                rating: 5.0,
+                seatCategory: "Hospitality",
+                seatInfo: "VIP Suite, Full Package",
+                description: "Ultimate World Cup experience! VIP hospitality package includes premium seats, gourmet dining, and exclusive access.",
+                hospitality: true,
+                verified: true
             },
             {
                 id: 8,
-                eventName: "Harry Potter Exhibition",
-                category: "theater",
-                date: "2026-10-15",
-                time: "6:00 PM",
-                location: "Exhibition Centre, London",
-                price: 45.00,
-                quantity: 120,
-                image: "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=400&h=300&fit=crop",
-                seller: "MagicEvents",
-                rating: 4.7,
-                seatInfo: "Standard Entry",
-                description: "Step into the wizarding world with this immersive Harry Potter exhibition."
+                eventName: "FIFA World Cup 2026 - Semi-Final",
+                category: "semi",
+                stage: "Semi-Final",
+                team1: "Argentina",
+                team2: "Brazil",
+                date: "2026-07-16",
+                time: "8:00 PM",
+                location: "SoFi Stadium, Los Angeles",
+                price: 2099.99,
+                quantity: 18,
+                image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=400&h=300&fit=crop",
+                seller: "South American Tickets",
+                rating: 4.9,
+                seatCategory: "Category 1",
+                seatInfo: "Midfield, Row 8",
+                description: "South American Superclasico! Argentina vs Brazil in the World Cup Semi-Final.",
+                hospitality: true,
+                verified: true
             }
         ];
 
         // ========================================
         // STATE
         // ========================================
-        let tickets = [...sampleTickets];
+        let tickets = [...worldCupTickets];
         let filteredTickets = [...tickets];
         let currentPage = 1;
         const ticketsPerPage = 6;
@@ -680,10 +936,10 @@
         // ========================================
         const ticketGrid = document.getElementById('ticketGrid');
         const searchInput = document.getElementById('searchInput');
-        const categoryFilter = document.getElementById('categoryFilter');
+        const stageFilter = document.getElementById('stageFilter');
         const sortFilter = document.getElementById('sortFilter');
         const filterTags = document.querySelectorAll('.filter-tag');
-        const resultsCount = document.getElementById('ticketCount');
+        const ticketCount = document.getElementById('ticketCount');
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         const scrollTopBtn = document.getElementById('scrollTopBtn');
         const modal = document.getElementById('ticketModal');
@@ -702,12 +958,12 @@
                 ticketGrid.innerHTML = `
                     <div class="col-span-full text-center py-12">
                         <i class="fas fa-ticket-alt text-5xl text-gray-600 mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">No tickets found</h3>
+                        <h3 class="text-xl font-semibold mb-2">No World Cup tickets found</h3>
                         <p class="text-gray-400">Try adjusting your filters or search terms</p>
                     </div>
                 `;
                 loadMoreBtn.style.display = 'none';
-                document.getElementById('ticketCount').textContent = '0';
+                ticketCount.textContent = '0';
                 return;
             }
 
@@ -718,14 +974,17 @@
                             src="${ticket.image}" 
                             alt="${ticket.eventName}"
                             class="ticket-image w-full"
-                            onerror="this.src='https://via.placeholder.com/400x300/1a1a2e/6c5ce7?text=No+Image'"
+                            onerror="this.src='https://via.placeholder.com/400x300/1a1a2e/f59e0b?text=World+Cup'"
                         />
-                        <div class="absolute top-3 left-3">
-                            <span class="px-3 py-1 bg-dark-500/80 backdrop-blur-sm rounded-lg text-xs text-purple-400 border border-purple-500/30">
-                                ${ticket.category.charAt(0).toUpperCase() + ticket.category.slice(1)}
-                            </span>
+                        <div class="absolute top-3 left-3 flex gap-1.5">
+                            ${ticket.stage === 'Final' ? '<span class="badge-worldcup">🏆 FINAL</span>' : ''}
+                            ${ticket.stage === 'Semi-Final' ? '<span class="badge-knockout">🌟 SEMI</span>' : ''}
+                            ${ticket.stage === 'Quarter-Final' ? '<span class="badge-knockout">🏅 QUARTER</span>' : ''}
+                            ${ticket.stage === 'Group Stage' ? '<span class="badge-group">📋 GROUP</span>' : ''}
+                            ${ticket.stage === 'Round of 16' ? '<span class="badge-group">⚽ R16</span>' : ''}
+                            ${ticket.hospitality ? '<span class="badge-category">🍾 VIP</span>' : ''}
                         </div>
-                        <button class="wishlist-btn absolute top-3 right-3 text-white/50 hover:text-pink-400 text-xl" onclick="event.stopPropagation(); toggleWishlist(${ticket.id})">
+                        <button class="absolute top-3 right-3 text-white/50 hover:text-pink-400 text-xl" onclick="event.stopPropagation(); toggleWishlist(${ticket.id})">
                             <i class="far fa-heart" id="heart-${ticket.id}"></i>
                         </button>
                         <div class="absolute bottom-3 right-3">
@@ -733,39 +992,46 @@
                                 <i class="fas fa-ticket-alt mr-1"></i> ${ticket.quantity} left
                             </span>
                         </div>
+                        ${ticket.verified ? '<div class="absolute bottom-3 left-3 flex items-center gap-1 bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded-full text-xs text-green-400"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
                     </div>
                     
                     <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-lg font-semibold line-clamp-1">${ticket.eventName}</h3>
-                            <span class="text-purple-400 font-bold">$${ticket.price.toFixed(2)}</span>
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="text-lg font-semibold line-clamp-1">${ticket.eventName}</h3>
+                                <div class="flex items-center gap-1 mt-1">
+                                    <span class="text-sm font-bold text-yellow-400">${ticket.team1}</span>
+                                    <span class="text-xs text-gray-500">vs</span>
+                                    <span class="text-sm font-bold text-red-400">${ticket.team2}</span>
+                                </div>
+                            </div>
+                            <span class="text-yellow-400 font-bold">$${ticket.price.toFixed(2)}</span>
                         </div>
                         
                         <div class="space-y-2 text-sm text-gray-400">
                             <div class="flex items-center gap-2">
-                                <i class="fas fa-calendar-alt text-purple-400 w-4"></i>
+                                <i class="fas fa-calendar-alt text-yellow-400 w-4"></i>
                                 <span>${formatDate(ticket.date)} at ${ticket.time}</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <i class="fas fa-map-marker-alt text-pink-400 w-4"></i>
+                                <i class="fas fa-map-marker-alt text-red-400 w-4"></i>
                                 <span>${ticket.location}</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-star text-yellow-400 w-4"></i>
-                                <span>${ticket.rating} · ${ticket.seller}</span>
+                                <span>${ticket.rating} · ${ticket.seatCategory}</span>
                             </div>
                         </div>
                         
-                        <button class="w-full gradient-btn py-2 rounded-xl text-white font-semibold text-sm mt-4" onclick="event.stopPropagation(); openPayment(${ticket.id})">
+                        <button class="w-full btn-primary py-2 rounded-xl text-white font-semibold text-sm mt-4" onclick="event.stopPropagation(); openPayment(${ticket.id})">
                             <i class="fas fa-shopping-cart mr-2"></i> Buy Now
                         </button>
                     </div>
                 </div>
             `).join('');
 
-            document.getElementById('ticketCount').textContent = filteredTickets.length;
+            ticketCount.textContent = filteredTickets.length;
             
-            // Show/hide load more
             if (end >= filteredTickets.length) {
                 loadMoreBtn.style.display = 'none';
             } else {
@@ -781,8 +1047,15 @@
             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         }
 
-        function formatPrice(price) {
-            return '$' + price.toFixed(2);
+        function getStageBadge(stage) {
+            const badges = {
+                'Final': '🏆 FINAL',
+                'Semi-Final': '🌟 SEMI',
+                'Quarter-Final': '🏅 QUARTER',
+                'Round of 16': '⚽ R16',
+                'Group Stage': '📋 GROUP'
+            };
+            return badges[stage] || stage;
         }
 
         // ========================================
@@ -790,22 +1063,20 @@
         // ========================================
         function filterTickets() {
             const searchTerm = searchInput.value.toLowerCase().trim();
-            const category = categoryFilter.value;
+            const stage = stageFilter.value;
             const sort = sortFilter.value;
             
             let filtered = tickets.filter(ticket => {
-                // Search filter
                 const matchesSearch = ticket.eventName.toLowerCase().includes(searchTerm) ||
-                                     ticket.location.toLowerCase().includes(searchTerm) ||
-                                     ticket.seller.toLowerCase().includes(searchTerm);
+                                     ticket.team1.toLowerCase().includes(searchTerm) ||
+                                     ticket.team2.toLowerCase().includes(searchTerm) ||
+                                     ticket.location.toLowerCase().includes(searchTerm);
                 
-                // Category filter
-                const matchesCategory = category === 'all' || ticket.category === category;
+                const matchesStage = stage === 'all' || ticket.category === stage;
                 
-                return matchesSearch && matchesCategory;
+                return matchesSearch && matchesStage;
             });
             
-            // Sort
             switch(sort) {
                 case 'newest':
                     filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -836,17 +1107,24 @@
                 
                 const filter = this.dataset.filter;
                 if (filter === 'all') {
-                    categoryFilter.value = 'all';
-                } else if (filter === 'under50') {
-                    // Handle price filter
+                    stageFilter.value = 'all';
+                } else if (['group', 'knockout', 'final'].includes(filter)) {
+                    const stageMap = {
+                        'group': 'group',
+                        'knockout': 'round16',
+                        'final': 'final'
+                    };
+                    stageFilter.value = stageMap[filter] || 'all';
+                } else if (filter === 'hospitality') {
+                    // Filter hospitality tickets
                     filterTickets();
                     return;
-                } else if (filter === 'this-weekend') {
-                    // Handle date filter
+                } else if (filter === 'under500') {
+                    // Filter under $500
                     filterTickets();
                     return;
                 } else {
-                    categoryFilter.value = filter;
+                    stageFilter.value = filter;
                 }
                 filterTickets();
             });
@@ -856,7 +1134,7 @@
         // EVENT LISTENERS
         // ========================================
         searchInput.addEventListener('input', filterTickets);
-        categoryFilter.addEventListener('change', filterTickets);
+        stageFilter.addEventListener('change', filterTickets);
         sortFilter.addEventListener('change', filterTickets);
 
         loadMoreBtn.addEventListener('click', function() {
@@ -873,9 +1151,8 @@
             heart.classList.toggle('fas');
             heart.classList.toggle('text-pink-400');
             
-            // Show toast notification
             if (heart.classList.contains('fas')) {
-                showToast('Added to wishlist ❤️');
+                showToast('❤️ Added to wishlist!');
             } else {
                 showToast('Removed from wishlist');
             }
@@ -889,34 +1166,53 @@
             if (!ticket) return;
             
             modalContent.innerHTML = `
-                <div class="flex flex-col md:flex-row gap-6">
-                    <div class="md:w-1/2">
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <div class="lg:w-1/2">
                         <img 
                             src="${ticket.image}" 
                             alt="${ticket.eventName}"
                             class="w-full h-64 object-cover rounded-xl"
-                            onerror="this.src='https://via.placeholder.com/600x400/1a1a2e/6c5ce7?text=No+Image'"
+                            onerror="this.src='https://via.placeholder.com/600x400/1a1a2e/f59e0b?text=World+Cup'"
                         />
-                        <div class="flex gap-2 mt-3">
+                        <div class="flex flex-wrap gap-2 mt-3">
                             <span class="px-3 py-1 bg-white/5 rounded-lg text-xs text-gray-300">
-                                <i class="fas fa-tag mr-1"></i> ${ticket.category}
+                                <i class="fas fa-tag mr-1 text-yellow-400"></i> ${ticket.stage}
                             </span>
                             <span class="px-3 py-1 bg-white/5 rounded-lg text-xs text-gray-300">
                                 <i class="fas fa-star mr-1 text-yellow-400"></i> ${ticket.rating}
                             </span>
+                            <span class="px-3 py-1 bg-white/5 rounded-lg text-xs text-gray-300">
+                                <i class="fas fa-chair mr-1 text-purple-400"></i> ${ticket.seatCategory}
+                            </span>
+                            ${ticket.hospitality ? '<span class="px-3 py-1 bg-yellow-500/20 rounded-lg text-xs text-yellow-400">🍾 Hospitality Package</span>' : ''}
+                            ${ticket.verified ? '<span class="px-3 py-1 bg-green-500/20 rounded-lg text-xs text-green-400">✅ Verified Seller</span>' : ''}
                         </div>
                     </div>
                     
-                    <div class="md:w-1/2">
+                    <div class="lg:w-1/2">
                         <h2 class="text-2xl font-bold mb-2">${ticket.eventName}</h2>
+                        
+                        <div class="flex items-center gap-3 mb-4 p-3 glass rounded-xl">
+                            <div class="text-center">
+                                <div class="text-sm text-gray-400">Team 1</div>
+                                <div class="text-lg font-bold text-yellow-400">${ticket.team1}</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-gray-600">VS</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm text-gray-400">Team 2</div>
+                                <div class="text-lg font-bold text-red-400">${ticket.team2}</div>
+                            </div>
+                        </div>
                         
                         <div class="space-y-3 text-gray-300 mb-4">
                             <div class="flex items-center gap-3">
-                                <i class="fas fa-calendar-alt text-purple-400 w-5"></i>
+                                <i class="fas fa-calendar-alt text-yellow-400 w-5"></i>
                                 <span>${formatDate(ticket.date)} at ${ticket.time}</span>
                             </div>
                             <div class="flex items-center gap-3">
-                                <i class="fas fa-map-marker-alt text-pink-400 w-5"></i>
+                                <i class="fas fa-map-marker-alt text-red-400 w-5"></i>
                                 <span>${ticket.location}</span>
                             </div>
                             <div class="flex items-center gap-3">
@@ -924,7 +1220,7 @@
                                 <span>Seller: ${ticket.seller}</span>
                             </div>
                             <div class="flex items-center gap-3">
-                                <i class="fas fa-chair text-green-400 w-5"></i>
+                                <i class="fas fa-chair text-purple-400 w-5"></i>
                                 <span>${ticket.seatInfo}</span>
                             </div>
                             <div class="flex items-center gap-3">
@@ -938,9 +1234,10 @@
                         <div class="flex items-center justify-between p-4 glass-card">
                             <div>
                                 <span class="text-gray-400 text-sm">Price</span>
-                                <div class="text-3xl font-bold text-purple-400">$${ticket.price.toFixed(2)}</div>
+                                <div class="text-3xl font-bold text-yellow-400">$${ticket.price.toFixed(2)}</div>
+                                ${ticket.hospitality ? '<span class="text-xs text-gray-500">Includes VIP package</span>' : ''}
                             </div>
-                            <button onclick="closeModal(); openPayment(${ticket.id})" class="gradient-btn px-6 py-3 rounded-xl text-white font-semibold">
+                            <button onclick="closeModal(); openPayment(${ticket.id})" class="btn-primary px-6 py-3 rounded-xl text-white font-semibold">
                                 <i class="fas fa-shopping-cart mr-2"></i> Buy Now
                             </button>
                         </div>
@@ -973,12 +1270,11 @@
                     <div>
                         <h4 class="font-semibold">${ticket.eventName}</h4>
                         <p class="text-gray-400 text-sm">${formatDate(ticket.date)} · ${ticket.location}</p>
-                        <p class="text-purple-400 font-bold">$${ticket.price.toFixed(2)}</p>
+                        <p class="text-yellow-400 font-bold">$${ticket.price.toFixed(2)}</p>
                     </div>
                 </div>
             `;
             
-            // Reset payment selection
             document.querySelectorAll('.payment-option').forEach(opt => {
                 opt.style.borderColor = 'rgba(255,255,255,0.08)';
             });
@@ -1008,7 +1304,7 @@
             
             const selectedElement = document.querySelector(`.payment-option:has(.fa-${method === 'credit' ? 'credit-card' : method === 'wise' ? 'globe' : method === 'sendwave' ? 'mobile-alt' : 'envelope'})`);
             if (selectedElement) {
-                selectedElement.style.borderColor = '#6c5ce7';
+                selectedElement.style.borderColor = '#f59e0b';
             }
             
             document.getElementById(`check-${method}`).classList.remove('hidden');
@@ -1020,51 +1316,62 @@
             
             const ticket = tickets.find(t => t.id === currentTicketId);
             
-            // Show processing state
             this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
             this.disabled = true;
             
-            // Simulate payment processing
             setTimeout(() => {
                 this.innerHTML = '<i class="fas fa-check mr-2"></i> Payment Successful!';
                 this.className = 'w-full bg-green-500 py-3 rounded-xl text-white font-semibold mt-6';
                 
-                // Show success message
                 setTimeout(() => {
                     closePaymentModal();
-                    showToast(`✅ Payment successful! Check your email for ticket QR code.`);
+                    showToast(`✅ World Cup tickets secured! Check your email for QR code.`);
                     
-                    // Update quantity
                     const ticketIndex = tickets.findIndex(t => t.id === currentTicketId);
                     if (ticketIndex !== -1) {
                         tickets[ticketIndex].quantity--;
                         filterTickets();
                     }
                     
-                    // Reset button
                     this.innerHTML = '<i class="fas fa-lock mr-2"></i> Pay Now';
-                    this.className = 'w-full gradient-btn py-3 rounded-xl text-white font-semibold mt-6';
+                    this.className = 'w-full btn-primary py-3 rounded-xl text-white font-semibold mt-6';
                     this.disabled = true;
                 }, 2000);
             }, 2500);
         });
 
         // ========================================
-        // TOAST NOTIFICATION
+        // TOAST
         // ========================================
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'fixed bottom-4 right-4 z-50 glass-card px-6 py-3 text-white animate-slide-up';
-            toast.innerHTML = message;
-            toast.style.animation = 'slideUp 0.3s ease-out';
+        function showToast(message, type = 'info') {
+            document.querySelectorAll('.toast').forEach(t => t.remove());
             
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            const colors = {
+                success: '#10b981',
+                error: '#ef4444',
+                info: '#f59e0b'
+            };
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <i class="fas ${icons[type]}" style="color: ${colors[type]}; font-size: 1.25rem;"></i>
+                <span>${message}</span>
+            `;
             document.body.appendChild(toast);
             
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.3s ease';
+                toast.style.transform = 'translateX(100px)';
+                toast.style.transition = 'all 0.3s ease';
                 setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            }, 4000);
         }
 
         // ========================================
@@ -1083,23 +1390,43 @@
         });
 
         // ========================================
-        // MOBILE MENU
+        // NAVBAR SCROLL
         // ========================================
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
+        const navbar = document.getElementById('navbar');
         
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            const icon = mobileMenuBtn.querySelector('i');
-            if (mobileMenu.classList.contains('hidden')) {
-                icon.className = 'fas fa-bars';
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
             } else {
-                icon.className = 'fas fa-times';
+                navbar.classList.remove('navbar-scrolled');
             }
         });
 
         // ========================================
-        // KEYBOARD SHORTCUTS
+        // MOBILE MENU
+        // ========================================
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('open');
+            const icon = this.querySelector('i');
+            if (mobileMenu.classList.contains('open')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('open');
+                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
+            });
+        });
+
+        // ========================================
+        // ESCAPE KEY
         // ========================================
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
@@ -1109,13 +1436,32 @@
         });
 
         // ========================================
+        // VIEW TOGGLE
+        // ========================================
+        document.getElementById('viewGrid').addEventListener('click', function() {
+            ticketGrid.className = 'grid md:grid-cols-2 lg:grid-cols-3 gap-6';
+            this.style.color = '#a855f7';
+            document.getElementById('viewList').style.color = '#6b7280';
+        });
+
+        document.getElementById('viewList').addEventListener('click', function() {
+            ticketGrid.className = 'grid grid-cols-1 gap-4';
+            this.style.color = '#a855f7';
+            document.getElementById('viewGrid').style.color = '#6b7280';
+        });
+
+        // ========================================
         // INIT
         // ========================================
         filterTickets();
 
-        console.log('🎫 TixHub - Buy Tickets Page Loaded');
-        console.log(`📊 ${tickets.length} tickets available`);
+        console.log('🏆 TixHub - World Cup 2026 Ticket Marketplace');
+        console.log(`🎫 ${tickets.length} World Cup tickets available`);
+        console.log('⚽ Get ready for the biggest sporting event!');
+        
+        setTimeout(() => {
+            showToast('🏆 Welcome to World Cup 2026 ticket marketplace!', 'info');
+        }, 800);
     </script>
-
 </body>
 </html>
