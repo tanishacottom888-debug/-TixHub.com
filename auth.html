@@ -533,7 +533,7 @@
                 <!-- LOGIN FORM -->
                 <!-- ======================================== -->
                 <div id="loginForm">
-                    <form id="loginFormElement" onsubmit="return handleLogin(event)">
+                    <form id="loginFormElement">
                         <div class="space-y-4">
                             <div class="relative">
                                 <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -554,7 +554,7 @@
                                 </button>
                             </div>
                             
-                            <button type="submit" id="loginBtn" class="btn-primary">
+                            <button type="button" onclick="handleLogin()" id="loginBtn" class="btn-primary">
                                 <i class="fas fa-sign-in-alt mr-2"></i> Sign In
                             </button>
                         </div>
@@ -565,7 +565,7 @@
                 <!-- SIGNUP FORM -->
                 <!-- ======================================== -->
                 <div id="signupForm" class="hidden">
-                    <form id="signupFormElement" onsubmit="return handleSignup(event)">
+                    <form id="signupFormElement">
                         <div class="space-y-4">
                             <div class="relative">
                                 <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -598,7 +598,7 @@
                                 </label>
                             </div>
                             
-                            <button type="submit" id="signupBtn" class="btn-primary">
+                            <button type="button" onclick="handleSignup()" id="signupBtn" class="btn-primary">
                                 <i class="fas fa-user-plus mr-2"></i> Create Account
                             </button>
                         </div>
@@ -663,12 +663,12 @@
                     <p class="text-gray-500 text-sm">Enter your email to receive reset instructions</p>
                 </div>
                 
-                <form onsubmit="handleForgotPassword(event)">
+                <form id="forgotForm">
                     <div class="relative mb-4">
                         <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                         <input type="email" id="resetEmail" class="form-input" placeholder="Email address" required />
                     </div>
-                    <button type="submit" class="btn-primary">
+                    <button type="button" onclick="handleForgotPassword()" class="btn-primary">
                         <i class="fas fa-paper-plane mr-2"></i> Send Reset Link
                     </button>
                 </form>
@@ -686,7 +686,7 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - All In One -->
+    <!-- JAVASCRIPT - WORKING VERSION -->
     <!-- ======================================== -->
     <script>
         // ========================================
@@ -695,7 +695,8 @@
         const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
         
-        console.log('🔐 Supabase Config:', { url: SUPABASE_URL, key: SUPABASE_ANON_KEY.substring(0, 20) + '...' });
+        console.log('🔐 TixHub Auth Page Loaded');
+        console.log('📦 Supabase URL:', SUPABASE_URL);
         
         // Initialize Supabase
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -741,7 +742,6 @@
             document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
             document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
             
-            // Clear any errors
             document.querySelectorAll('.form-input').forEach(input => {
                 input.classList.remove('error', 'success');
             });
@@ -767,10 +767,8 @@
         // ========================================
         // HANDLE LOGIN - FIXED
         // ========================================
-        async function handleLogin(e) {
-            e.preventDefault();
-            
-            console.log('🔑 Login form submitted');
+        async function handleLogin() {
+            console.log('🔑 Login button clicked');
             
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
@@ -778,12 +776,12 @@
             
             if (!email || !password) {
                 showToast('Please fill in all fields', 'error');
-                return false;
+                return;
             }
             
             if (password.length < 6) {
                 showToast('Password must be at least 6 characters', 'error');
-                return false;
+                return;
             }
             
             btn.disabled = true;
@@ -797,7 +795,7 @@
                     password: password
                 });
                 
-                console.log('📥 Login response:', { data, error });
+                console.log('📥 Login response:', data ? 'Success' : 'Error');
                 
                 if (error) throw error;
                 
@@ -811,22 +809,18 @@
                 }, 1500);
                 
             } catch (error) {
-                console.error('❌ Login error:', error);
+                console.error('❌ Login error:', error.message);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
                 showToast('❌ ' + (error.message || 'Invalid email or password'), 'error');
             }
-            
-            return false;
         }
 
         // ========================================
         // HANDLE SIGNUP - FIXED
         // ========================================
-        async function handleSignup(e) {
-            e.preventDefault();
-            
-            console.log('📝 Signup form submitted');
+        async function handleSignup() {
+            console.log('📝 Signup button clicked');
             
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
@@ -838,22 +832,22 @@
             // Validate
             if (!name || !email || !password || !confirmPassword) {
                 showToast('Please fill in all fields', 'error');
-                return false;
+                return;
             }
             
             if (password.length < 6) {
                 showToast('Password must be at least 6 characters', 'error');
-                return false;
+                return;
             }
             
             if (password !== confirmPassword) {
                 showToast('Passwords do not match', 'error');
-                return false;
+                return;
             }
             
             if (!terms) {
                 showToast('Please agree to the Terms of Service', 'error');
-                return false;
+                return;
             }
             
             btn.disabled = true;
@@ -872,7 +866,7 @@
                     }
                 });
                 
-                console.log('📥 Signup response:', { data, error });
+                console.log('📥 Signup response:', data ? 'Success' : 'Error');
                 
                 if (error) throw error;
                 
@@ -890,12 +884,12 @@
                             ]);
                         
                         if (profileError) {
-                            console.warn('⚠️ Profile creation warning:', profileError);
+                            console.warn('⚠️ Profile creation warning:', profileError.message);
                         } else {
                             console.log('✅ Profile created successfully');
                         }
                     } catch (profileErr) {
-                        console.warn('⚠️ Profile creation error:', profileErr);
+                        console.warn('⚠️ Profile creation error:', profileErr.message);
                     }
                 }
                 
@@ -909,13 +903,11 @@
                 }, 1500);
                 
             } catch (error) {
-                console.error('❌ Signup error:', error);
+                console.error('❌ Signup error:', error.message);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
                 showToast('❌ ' + (error.message || 'Account creation failed'), 'error');
             }
-            
-            return false;
         }
 
         // ========================================
@@ -946,8 +938,7 @@
             document.body.style.overflow = '';
         }
 
-        async function handleForgotPassword(e) {
-            e.preventDefault();
+        async function handleForgotPassword() {
             const email = document.getElementById('resetEmail').value.trim();
             
             if (!email) {
@@ -1037,15 +1028,12 @@
         // INIT
         // ========================================
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Auth page loaded');
+            console.log('🚀 Auth page initialized');
             checkAuth();
             document.getElementById('loginEmail').focus();
         });
 
-        console.log('🔐 TixHub - Supabase Auth Ready');
-        console.log('📦 Supabase URL:', SUPABASE_URL);
-        console.log('🇺🇸 Ticketmaster-style design');
-        console.log('💡 Tip: Use console.log to debug');
+        console.log('💡 Click Sign Up or Sign In buttons - they will respond!');
     </script>
 </body>
 </html>
