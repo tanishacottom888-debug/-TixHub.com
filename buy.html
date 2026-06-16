@@ -363,15 +363,6 @@
             color: #fbbf24;
         }
         
-        /* Team Flags */
-        .team-flag {
-            width: 24px;
-            height: 16px;
-            border-radius: 4px;
-            display: inline-block;
-            margin: 0 4px;
-        }
-        
         /* Scroll to top */
         .scroll-top {
             position: fixed;
@@ -409,13 +400,13 @@
                 </span>
             </a>
             
-            <!-- Desktop Nav -->
+            <!-- Desktop Nav - FIXED: Matches tab now links to matches.html -->
             <div class="hidden md:flex items-center gap-8">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="buy.html" class="nav-link nav-link-active">Buy Tickets</a>
                 <a href="sell.html" class="nav-link">Sell Tickets</a>
-                <a href="#" class="nav-link">Matches</a>
-                <a href="#" class="nav-link">Stadiums</a>
+                <a href="matches.html" class="nav-link">Matches</a>
+                <a href="stadiums.html" class="nav-link">Stadiums</a>
             </div>
             
             <!-- Desktop Auth -->
@@ -434,14 +425,14 @@
             </button>
         </div>
         
-        <!-- Mobile Menu -->
+        <!-- Mobile Menu - FIXED: Matches tab now links to matches.html -->
         <div id="mobileMenu" class="mobile-menu md:hidden">
             <div class="flex flex-col gap-4">
                 <a href="index.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Home</a>
                 <a href="buy.html" class="text-white font-semibold py-2 border-b border-white/5">Buy Tickets</a>
                 <a href="sell.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Sell Tickets</a>
-                <a href="#" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Matches</a>
-                <a href="#" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Stadiums</a>
+                <a href="matches.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Matches</a>
+                <a href="stadiums.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Stadiums</a>
                 <div class="flex flex-col gap-3 pt-2">
                     <a href="auth.html" class="text-center text-gray-400 hover:text-white transition py-2">Sign In</a>
                     <a href="auth.html" class="btn-primary text-center py-3 rounded-xl text-white font-semibold">
@@ -474,14 +465,14 @@
                             </p>
                         </div>
                         <div class="flex gap-3">
-                            <span class="glass px-4 py-2 rounded-xl text-center">
+                            <a href="matches.html" class="glass px-4 py-2 rounded-xl text-center hover:border-yellow-500/50 transition cursor-pointer">
                                 <div class="text-xs text-gray-400">Matches</div>
                                 <div class="text-xl font-bold text-yellow-400">64</div>
-                            </span>
-                            <span class="glass px-4 py-2 rounded-xl text-center">
+                            </a>
+                            <a href="stadiums.html" class="glass px-4 py-2 rounded-xl text-center hover:border-yellow-500/50 transition cursor-pointer">
                                 <div class="text-xs text-gray-400">Stadiums</div>
                                 <div class="text-xl font-bold text-red-400">12</div>
-                            </span>
+                            </a>
                             <span class="glass px-4 py-2 rounded-xl text-center">
                                 <div class="text-xs text-gray-400">Tickets</div>
                                 <div class="text-xl font-bold text-purple-400">50K+</div>
@@ -708,8 +699,8 @@
                     <h4 class="font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2 text-gray-400 text-sm">
                         <li><a href="#" class="hover:text-yellow-400 transition">World Cup 2026</a></li>
-                        <li><a href="#" class="hover:text-yellow-400 transition">Matches</a></li>
-                        <li><a href="#" class="hover:text-yellow-400 transition">Stadiums</a></li>
+                        <li><a href="matches.html" class="hover:text-yellow-400 transition">Matches</a></li>
+                        <li><a href="stadiums.html" class="hover:text-yellow-400 transition">Stadiums</a></li>
                         <li><a href="#" class="hover:text-yellow-400 transition">Hospitality</a></li>
                     </ul>
                 </div>
@@ -1047,17 +1038,6 @@
             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         }
 
-        function getStageBadge(stage) {
-            const badges = {
-                'Final': '🏆 FINAL',
-                'Semi-Final': '🌟 SEMI',
-                'Quarter-Final': '🏅 QUARTER',
-                'Round of 16': '⚽ R16',
-                'Group Stage': '📋 GROUP'
-            };
-            return badges[stage] || stage;
-        }
-
         // ========================================
         // FILTER TICKETS
         // ========================================
@@ -1116,11 +1096,9 @@
                     };
                     stageFilter.value = stageMap[filter] || 'all';
                 } else if (filter === 'hospitality') {
-                    // Filter hospitality tickets
                     filterTickets();
                     return;
                 } else if (filter === 'under500') {
-                    // Filter under $500
                     filterTickets();
                     return;
                 } else {
@@ -1458,6 +1436,7 @@
         console.log('🏆 TixHub - World Cup 2026 Ticket Marketplace');
         console.log(`🎫 ${tickets.length} World Cup tickets available`);
         console.log('⚽ Get ready for the biggest sporting event!');
+        console.log('📌 Navigation: Matches → matches.html, Stadiums → stadiums.html');
         
         setTimeout(() => {
             showToast('🏆 Welcome to World Cup 2026 ticket marketplace!', 'info');
