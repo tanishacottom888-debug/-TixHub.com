@@ -79,6 +79,17 @@
             transform: scale(0.98);
         }
         
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+        
         /* Badges */
         .badge-worldcup {
             background: linear-gradient(135deg, #f59e0b, #ef4444);
@@ -115,68 +126,6 @@
             font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
-        }
-        
-        .badge-stage {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        
-        .badge-group {
-            background: rgba(59, 130, 246, 0.2);
-            color: #3b82f6;
-        }
-        
-        .badge-knockout {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-        }
-        
-        .badge-final {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(239, 68, 68, 0.3));
-            color: #f59e0b;
-        }
-        
-        /* Match Card */
-        .match-card {
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-        }
-        
-        .match-card:hover {
-            transform: translateY(-6px) scale(1.01);
-            border-color: rgba(245, 158, 11, 0.3);
-            box-shadow: 0 30px 80px rgba(245, 158, 11, 0.08);
-        }
-        
-        .match-card.tomorrow {
-            border-color: rgba(245, 158, 11, 0.2);
-            background: rgba(245, 158, 11, 0.03);
-        }
-        
-        .match-card.live {
-            border-color: rgba(239, 68, 68, 0.3);
-            background: rgba(239, 68, 68, 0.03);
-        }
-        
-        /* Team Flag */
-        .team-flag {
-            font-size: 2.5rem;
-            line-height: 1;
-        }
-        
-        .team-name {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-        
-        .team-score {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #fff;
         }
         
         /* Navbar */
@@ -276,29 +225,42 @@
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
         }
         
-        /* Countdown */
-        .countdown {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            margin-top: 8px;
+        /* Match Card */
+        .match-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
         }
         
-        .countdown-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #fbbf24;
+        .match-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: rgba(245, 158, 11, 0.3);
+            box-shadow: 0 30px 80px rgba(245, 158, 11, 0.08);
         }
         
-        .countdown-item span {
-            display: block;
-            font-size: 0.5rem;
-            font-weight: 400;
-            color: #6b7280;
-            text-transform: uppercase;
+        .match-card.tomorrow {
+            border-color: rgba(245, 158, 11, 0.2);
+            background: rgba(245, 158, 11, 0.03);
+        }
+        
+        .match-card.live {
+            border-color: rgba(239, 68, 68, 0.3);
+            background: rgba(239, 68, 68, 0.03);
+        }
+        
+        .team-flag {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+        
+        .team-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .team-score {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
         }
         
         /* Toast */
@@ -328,6 +290,117 @@
             100% { transform: translateX(0); opacity: 1; }
         }
         
+        /* Modal */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        
+        /* Seat Map */
+        .seat-map-container {
+            background: rgba(26, 26, 46, 0.4);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .seat-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        
+        .seat {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px 6px 12px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #6b7280;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .seat:hover {
+            transform: scale(1.1);
+        }
+        
+        .seat.available {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+        
+        .seat.available:hover {
+            background: rgba(16, 185, 129, 0.3);
+            border-color: #10b981;
+        }
+        
+        .seat.selected {
+            background: rgba(245, 158, 11, 0.3);
+            border-color: #f59e0b;
+            color: #fbbf24;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+        }
+        
+        .seat.unavailable {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: #6b7280;
+            cursor: not-allowed;
+        }
+        
+        .seat.vip {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+        }
+        
+        .seat.premium {
+            background: rgba(108, 92, 231, 0.15);
+            border-color: rgba(108, 92, 231, 0.2);
+            color: #a78bfa;
+        }
+        
+        .seat-label {
+            font-size: 0.6rem;
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        
+        .seat-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+        
+        .seat-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            color: #9ca3af;
+        }
+        
+        .seat-legend-item .seat {
+            width: 20px;
+            height: 20px;
+            cursor: default;
+        }
+        
+        .seat-legend-item .seat:hover {
+            transform: none;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .navbar {
@@ -355,9 +428,14 @@
                 padding: 6px 12px;
             }
             
-            .countdown-item {
-                padding: 2px 8px;
-                font-size: 0.65rem;
+            .seat {
+                width: 26px;
+                height: 26px;
+                font-size: 0.4rem;
+            }
+            
+            .seat-row {
+                gap: 4px;
             }
         }
         
@@ -377,15 +455,26 @@
             visibility: visible;
         }
         
-        /* Sticky Date Header */
-        .date-header {
-            position: sticky;
-            top: 80px;
-            z-index: 10;
-            padding: 12px 0;
-            background: rgba(7, 7, 15, 0.8);
-            backdrop-filter: blur(20px);
+        /* Section labels */
+        .section-label {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #6b7280;
+            padding: 4px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 8px;
+        }
+        
+        /* Stadium field */
+        .stadium-field {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.7rem;
+            margin: 8px 0;
         }
     </style>
 </head>
@@ -413,7 +502,7 @@
                 <a href="buy.html" class="nav-link">Buy Tickets</a>
                 <a href="sell.html" class="nav-link">Sell Tickets</a>
                 <a href="matches.html" class="nav-link nav-link-active">Matches</a>
-                <a href="#" class="nav-link">Stadiums</a>
+                <a href="stadiums.html" class="nav-link">Stadiums</a>
             </div>
             
             <div class="flex items-center gap-3">
@@ -435,7 +524,7 @@
                 <a href="buy.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Buy Tickets</a>
                 <a href="sell.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Sell Tickets</a>
                 <a href="matches.html" class="text-white font-semibold py-2 border-b border-white/5">Matches</a>
-                <a href="#" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Stadiums</a>
+                <a href="stadiums.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Stadiums</a>
                 <a href="auth.html" class="text-gray-400 hover:text-white py-2 border-b border-white/5 transition">Sign In</a>
                 <a href="auth.html" class="btn-primary text-center py-3 rounded-xl text-white font-semibold">
                     <i class="fas fa-rocket mr-2"></i>Get Started
@@ -462,7 +551,7 @@
                                 Match <span class="text-gradient-animated">Schedule</span>
                             </h1>
                             <p class="text-gray-400 text-sm md:text-base mt-1">
-                                All 64 matches of the World Cup 2026
+                                All 64 matches of the World Cup 2026 - Buy tickets directly from each match
                             </p>
                         </div>
                         <div class="flex gap-4">
@@ -475,8 +564,8 @@
                                 <div class="text-2xl font-bold text-red-400">12</div>
                             </div>
                             <div class="glass px-4 py-2 rounded-xl text-center">
-                                <div class="text-xs text-gray-400">Countries</div>
-                                <div class="text-2xl font-bold text-purple-400">32</div>
+                                <div class="text-xs text-gray-400">Tickets</div>
+                                <div class="text-2xl font-bold text-purple-400">50K+</div>
                             </div>
                         </div>
                     </div>
@@ -537,12 +626,12 @@
     </section>
 
     <!-- ======================================== -->
-    <!-- MATCH DETAIL MODAL -->
+    <!-- MATCH DETAIL MODAL WITH SEAT MAP -->
     <!-- ======================================== -->
     <div id="matchModal" class="fixed inset-0 z-50 hidden">
-        <div class="modal-overlay absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeMatchModal()"></div>
+        <div class="modal-overlay absolute inset-0" onclick="closeMatchModal()"></div>
         <div class="absolute inset-0 flex items-center justify-center p-4">
-            <div class="glass-card max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative">
+            <div class="glass-card max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative">
                 <button onclick="closeMatchModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
                     <i class="fas fa-times"></i>
                 </button>
@@ -550,6 +639,91 @@
                 <div id="matchModalContent">
                     <!-- Dynamic content -->
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- PAYMENT MODAL -->
+    <!-- ======================================== -->
+    <div id="paymentModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closePaymentModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="glass-card max-w-md w-full p-6 md:p-8 relative">
+                <button onclick="closePaymentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-yellow-500/25">
+                        <i class="fas fa-lock text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold">Secure Payment</h3>
+                    <p class="text-gray-400 text-sm">Escrow protected transaction</p>
+                </div>
+                
+                <div id="paymentDetails" class="mb-6"></div>
+                
+                <!-- Payment Methods -->
+                <div class="space-y-3">
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-yellow-500/50 transition" onclick="selectPayment('credit')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-credit-card text-yellow-400 text-xl"></i>
+                                <span class="font-medium">Credit Card</span>
+                            </div>
+                            <i class="fas fa-check-circle text-green-400 hidden" id="check-credit"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-yellow-500/50 transition" onclick="selectPayment('wise')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-globe text-blue-400 text-xl"></i>
+                                <span class="font-medium">Wise</span>
+                            </div>
+                            <i class="fas fa-check-circle text-green-400 hidden" id="check-wise"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-yellow-500/50 transition" onclick="selectPayment('sendwave')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-mobile-alt text-green-400 text-xl"></i>
+                                <span class="font-medium">Sendwave</span>
+                            </div>
+                            <i class="fas fa-check-circle text-green-400 hidden" id="check-sendwave"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-option glass-card p-4 cursor-pointer hover:border-yellow-500/50 transition" onclick="selectPayment('skrill')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-envelope text-pink-400 text-xl"></i>
+                                <span class="font-medium">Skrill</span>
+                            </div>
+                            <i class="fas fa-check-circle text-green-400 hidden" id="check-skrill"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Escrow Info -->
+                <div class="mt-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-shield-alt text-yellow-400 mt-1"></i>
+                        <div>
+                            <p class="text-sm text-gray-300">
+                                <span class="font-semibold text-yellow-400">Escrow Protected</span>
+                                <br />
+                                Your payment is held securely until you confirm ticket delivery.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="payNowBtn" class="w-full btn-primary py-3 rounded-xl text-white font-semibold mt-6 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <i class="fas fa-lock mr-2"></i> Pay Now
+                </button>
             </div>
         </div>
     </div>
@@ -581,7 +755,7 @@
                     <ul class="space-y-2 text-gray-400 text-sm">
                         <li><a href="#" class="hover:text-yellow-400 transition">World Cup 2026</a></li>
                         <li><a href="matches.html" class="hover:text-yellow-400 transition">Matches</a></li>
-                        <li><a href="#" class="hover:text-yellow-400 transition">Stadiums</a></li>
+                        <li><a href="stadiums.html" class="hover:text-yellow-400 transition">Stadiums</a></li>
                         <li><a href="#" class="hover:text-yellow-400 transition">Hospitality</a></li>
                     </ul>
                 </div>
@@ -624,7 +798,7 @@
         // ========================================
         const allMatches = [
             // ========================================
-            // TOMORROW'S MATCHES (Starting from tomorrow)
+            // TOMORROW'S MATCHES
             // ========================================
             {
                 id: 1,
@@ -641,7 +815,13 @@
                 status: "upcoming",
                 isTomorrow: true,
                 ticketsAvailable: 245,
-                ticketPrice: 299.99
+                ticketPrice: 299.99,
+                sections: {
+                    "VIP": { price: 599.99, available: 45 },
+                    "Premium": { price: 399.99, available: 80 },
+                    "Standard": { price: 299.99, available: 120 }
+                },
+                seatMap: generateSeatMap()
             },
             {
                 id: 2,
@@ -658,7 +838,13 @@
                 status: "upcoming",
                 isTomorrow: true,
                 ticketsAvailable: 180,
-                ticketPrice: 249.99
+                ticketPrice: 249.99,
+                sections: {
+                    "VIP": { price: 499.99, available: 30 },
+                    "Premium": { price: 349.99, available: 60 },
+                    "Standard": { price: 249.99, available: 90 }
+                },
+                seatMap: generateSeatMap()
             },
             {
                 id: 3,
@@ -675,7 +861,13 @@
                 status: "upcoming",
                 isTomorrow: true,
                 ticketsAvailable: 320,
-                ticketPrice: 349.99
+                ticketPrice: 349.99,
+                sections: {
+                    "VIP": { price: 699.99, available: 50 },
+                    "Premium": { price: 449.99, available: 100 },
+                    "Standard": { price: 349.99, available: 170 }
+                },
+                seatMap: generateSeatMap()
             },
             {
                 id: 4,
@@ -692,7 +884,13 @@
                 status: "upcoming",
                 isTomorrow: true,
                 ticketsAvailable: 198,
-                ticketPrice: 279.99
+                ticketPrice: 279.99,
+                sections: {
+                    "VIP": { price: 549.99, available: 35 },
+                    "Premium": { price: 379.99, available: 70 },
+                    "Standard": { price: 279.99, available: 93 }
+                },
+                seatMap: generateSeatMap()
             },
             {
                 id: 5,
@@ -709,7 +907,13 @@
                 status: "upcoming",
                 isTomorrow: true,
                 ticketsAvailable: 156,
-                ticketPrice: 329.99
+                ticketPrice: 329.99,
+                sections: {
+                    "VIP": { price: 649.99, available: 25 },
+                    "Premium": { price: 429.99, available: 55 },
+                    "Standard": { price: 329.99, available: 76 }
+                },
+                seatMap: generateSeatMap()
             },
             {
                 id: 6,
@@ -726,9 +930,14 @@
                 status: "upcoming",
                 isTomorrow: true,
                 ticketsAvailable: 210,
-                ticketPrice: 299.99
+                ticketPrice: 299.99,
+                sections: {
+                    "VIP": { price: 599.99, available: 40 },
+                    "Premium": { price: 399.99, available: 70 },
+                    "Standard": { price: 299.99, available: 100 }
+                },
+                seatMap: generateSeatMap()
             },
-
             // ========================================
             // DAY AFTER TOMORROW
             // ========================================
@@ -747,31 +956,19 @@
                 status: "upcoming",
                 isTomorrow: false,
                 ticketsAvailable: 175,
-                ticketPrice: 219.99
+                ticketPrice: 219.99,
+                sections: {
+                    "VIP": { price: 449.99, available: 30 },
+                    "Premium": { price: 319.99, available: 60 },
+                    "Standard": { price: 219.99, available: 85 }
+                },
+                seatMap: generateSeatMap()
             },
+            // ========================================
+            // KNOCKOUT STAGE
+            // ========================================
             {
                 id: 8,
-                stage: "Group Stage",
-                stageType: "group",
-                team1: "Switzerland",
-                team2: "Colombia",
-                flag1: "🇨🇭",
-                flag2: "🇨🇴",
-                date: getDayAfterTomorrowDate(),
-                time: "4:00 PM",
-                stadium: "Mercedes-Benz Stadium, Georgia",
-                group: "Group H",
-                status: "upcoming",
-                isTomorrow: false,
-                ticketsAvailable: 190,
-                ticketPrice: 199.99
-            },
-
-            // ========================================
-            // KNOCKOUT STAGE - Round of 16
-            // ========================================
-            {
-                id: 9,
                 stage: "Round of 16",
                 stageType: "knockout",
                 team1: "Brazil",
@@ -785,141 +982,19 @@
                 status: "upcoming",
                 isTomorrow: false,
                 ticketsAvailable: 89,
-                ticketPrice: 799.99
+                ticketPrice: 799.99,
+                sections: {
+                    "VIP": { price: 1499.99, available: 15 },
+                    "Premium": { price: 1099.99, available: 30 },
+                    "Standard": { price: 799.99, available: 44 }
+                },
+                seatMap: generateSeatMap()
             },
-            {
-                id: 10,
-                stage: "Round of 16",
-                stageType: "knockout",
-                team1: "France",
-                team2: "Netherlands",
-                flag1: "🇫🇷",
-                flag2: "🇳🇱",
-                date: "2026-07-03",
-                time: "4:00 PM",
-                stadium: "AT&T Stadium, Texas",
-                group: "R16-2",
-                status: "upcoming",
-                isTomorrow: false,
-                ticketsAvailable: 67,
-                ticketPrice: 849.99
-            },
-            {
-                id: 11,
-                stage: "Round of 16",
-                stageType: "knockout",
-                team1: "Argentina",
-                team2: "USA",
-                flag1: "🇦🇷",
-                flag2: "🇺🇸",
-                date: "2026-07-04",
-                time: "12:00 PM",
-                stadium: "SoFi Stadium, Los Angeles",
-                group: "R16-3",
-                status: "upcoming",
-                isTomorrow: false,
-                ticketsAvailable: 92,
-                ticketPrice: 899.99
-            },
-            {
-                id: 12,
-                stage: "Round of 16",
-                stageType: "knockout",
-                team1: "England",
-                team2: "Portugal",
-                flag1: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-                flag2: "🇵🇹",
-                date: "2026-07-04",
-                time: "4:00 PM",
-                stadium: "Levi's Stadium, California",
-                group: "R16-4",
-                status: "upcoming",
-                isTomorrow: false,
-                ticketsAvailable: 78,
-                ticketPrice: 879.99
-            },
-
-            // ========================================
-            // QUARTER-FINALS
-            // ========================================
-            {
-                id: 13,
-                stage: "Quarter-Final",
-                stageType: "knockout",
-                team1: "Brazil",
-                team2: "France",
-                flag1: "🇧🇷",
-                flag2: "🇫🇷",
-                date: "2026-07-10",
-                time: "2:00 PM",
-                stadium: "Hard Rock Stadium, Florida",
-                group: "QF-1",
-                status: "upcoming",
-                isTomorrow: false,
-                ticketsAvailable: 45,
-                ticketPrice: 1299.99
-            },
-            {
-                id: 14,
-                stage: "Quarter-Final",
-                stageType: "knockout",
-                team1: "Argentina",
-                team2: "England",
-                flag1: "🇦🇷",
-                flag2: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-                date: "2026-07-11",
-                time: "2:00 PM",
-                stadium: "Arrowhead Stadium, Kansas",
-                group: "QF-2",
-                status: "upcoming",
-                isTomorrow: false,
-                ticketsAvailable: 52,
-                ticketPrice: 1399.99
-            },
-
-            // ========================================
-            // SEMI-FINALS
-            // ========================================
-            {
-                id: 15,
-                stage: "Semi-Final",
-                stageType: "knockout",
-                team1: "Brazil",
-                team2: "Argentina",
-                flag1: "🇧🇷",
-                flag2: "🇦🇷",
-                date: "2026-07-15",
-                time: "4:00 PM",
-                stadium: "SoFi Stadium, Los Angeles",
-                group: "SF-1",
-                status: "upcoming",
-                isTomorrow: false,
-                ticketsAvailable: 28,
-                ticketPrice: 1899.99
-            },
-            {
-                id: 16,
-                stage: "Semi-Final",
-                stageType: "knockout",
-                team1: "France",
-                team2: "England",
-                flag1: "🇫🇷",
-                flag2: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-                date: "2026-07-16",
-                time: "4:00 PM",
-                stadium: "AT&T Stadium, Texas",
-                group: "SF-2",
-                status: "upcoming",
-                isTomorrow: false,
-                ticketsAvailable: 34,
-                ticketPrice: 1999.99
-            },
-
             // ========================================
             // FINAL
             // ========================================
             {
-                id: 17,
+                id: 9,
                 stage: "Final",
                 stageType: "final",
                 team1: "TBD",
@@ -933,14 +1008,19 @@
                 status: "upcoming",
                 isTomorrow: false,
                 ticketsAvailable: 12,
-                ticketPrice: 2499.99
+                ticketPrice: 2499.99,
+                sections: {
+                    "VIP": { price: 5499.99, available: 3 },
+                    "Premium": { price: 3499.99, available: 4 },
+                    "Standard": { price: 2499.99, available: 5 }
+                },
+                seatMap: generateSeatMap()
             },
-
             // ========================================
-            // LIVE MATCH (Currently playing)
+            // LIVE MATCH
             // ========================================
             {
-                id: 18,
+                id: 10,
                 stage: "Group Stage",
                 stageType: "group",
                 team1: "Spain",
@@ -956,12 +1036,18 @@
                 liveScore: "2-1",
                 minute: "78",
                 ticketsAvailable: 45,
-                ticketPrice: 399.99
+                ticketPrice: 399.99,
+                sections: {
+                    "VIP": { price: 799.99, available: 8 },
+                    "Premium": { price: 549.99, available: 15 },
+                    "Standard": { price: 399.99, available: 22 }
+                },
+                seatMap: generateSeatMap()
             }
         ];
 
         // ========================================
-        // HELPER FUNCTIONS FOR DATES
+        // HELPER FUNCTIONS
         // ========================================
         function getTodayDate() {
             const d = new Date();
@@ -1000,11 +1086,35 @@
         }
 
         function getStageBadge(stage) {
-            if (stage === 'Final') return '<span class="badge-final">🏆 Final</span>';
-            if (stage.includes('Semi')) return '<span class="badge-knockout">🌟 Semi-Final</span>';
-            if (stage.includes('Quarter')) return '<span class="badge-knockout">🏅 Quarter-Final</span>';
-            if (stage === 'Round of 16') return '<span class="badge-knockout">⚽ R16</span>';
-            return '<span class="badge-group">📋 Group Stage</span>';
+            if (stage === 'Final') return '<span class="badge-worldcup">🏆 Final</span>';
+            if (stage.includes('Semi')) return '<span class="badge-knockout" style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;padding:4px 12px;border-radius:20px;font-size:0.65rem;font-weight:700;">🌟 Semi-Final</span>';
+            if (stage.includes('Quarter')) return '<span class="badge-knockout" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:4px 12px;border-radius:20px;font-size:0.65rem;font-weight:700;">🏅 Quarter-Final</span>';
+            if (stage === 'Round of 16') return '<span class="badge-knockout" style="background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;padding:4px 12px;border-radius:20px;font-size:0.65rem;font-weight:700;">⚽ R16</span>';
+            return '<span class="badge-group" style="background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:4px 12px;border-radius:20px;font-size:0.65rem;font-weight:700;">📋 Group Stage</span>';
+        }
+
+        function generateSeatMap() {
+            const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+            const seats = [];
+            rows.forEach((row, rowIndex) => {
+                const seatCount = rowIndex < 2 ? 20 : rowIndex < 4 ? 18 : 16;
+                const seatsInRow = [];
+                for (let i = 1; i <= seatCount; i++) {
+                    const isVIP = rowIndex < 2;
+                    const isPremium = rowIndex >= 2 && rowIndex < 4;
+                    const available = Math.random() > 0.3;
+                    seatsInRow.push({
+                        id: `${row}${i}`,
+                        row: row,
+                        number: i,
+                        type: isVIP ? 'vip' : isPremium ? 'premium' : 'standard',
+                        available: available,
+                        selected: false
+                    });
+                }
+                seats.push(seatsInRow);
+            });
+            return seats;
         }
 
         // ========================================
@@ -1013,8 +1123,12 @@
         let matches = [...allMatches];
         let filteredMatches = [...matches];
         let currentPage = 1;
-        const matchesPerPage = 8;
+        const matchesPerPage = 6;
         let activeFilter = 'all';
+        let selectedSeats = [];
+        let selectedMatch = null;
+        let selectedPayment = null;
+        let currentMatchId = null;
 
         // ========================================
         // DOM ELEMENTS
@@ -1023,6 +1137,9 @@
         const filterTags = document.querySelectorAll('.filter-tag');
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         const scrollTopBtn = document.getElementById('scrollTopBtn');
+        const modal = document.getElementById('matchModal');
+        const modalContent = document.getElementById('matchModalContent');
+        const paymentModal = document.getElementById('paymentModal');
 
         // ========================================
         // RENDER MATCHES
@@ -1044,100 +1161,72 @@
                 return;
             }
 
-            // Group matches by date
-            const groupedMatches = {};
-            matchesToShow.forEach(match => {
-                const dateKey = match.date;
-                if (!groupedMatches[dateKey]) {
-                    groupedMatches[dateKey] = [];
-                }
-                groupedMatches[dateKey].push(match);
-            });
-
             let html = '';
             
-            // Sort dates
-            const sortedDates = Object.keys(groupedMatches).sort((a, b) => {
-                return new Date(a) - new Date(b);
-            });
-
-            sortedDates.forEach(dateKey => {
-                const matchesOnDate = groupedMatches[dateKey];
-                const dateLabel = formatDate(dateKey);
-                const isTomorrow = dateLabel === 'Tomorrow';
-                const isToday = dateLabel === 'Today';
+            matchesToShow.forEach(match => {
+                const isLive = match.status === 'live';
+                const isTomorrowMatch = match.isTomorrow || formatDate(match.date) === 'Tomorrow';
+                const dateLabel = formatDate(match.date);
+                const cardClass = isLive ? 'match-card live' : isTomorrowMatch ? 'match-card tomorrow' : 'match-card';
                 
                 html += `
-                    <div class="date-header">
-                        <div class="flex items-center gap-3">
-                            <h3 class="text-lg font-bold ${isTomorrow ? 'text-yellow-400' : isToday ? 'text-red-400' : 'text-white'}">
-                                ${isTomorrow ? '⏰ ' : ''}${isToday ? '🔴 ' : ''}${dateLabel}
-                            </h3>
-                            ${isTomorrow ? '<span class="badge-tomorrow">TOMORROW</span>' : ''}
-                            ${isToday ? '<span class="badge-live">LIVE</span>' : ''}
-                            <span class="text-xs text-gray-500">${matchesOnDate.length} matches</span>
+                    <div class="glass-card ${cardClass} p-4 md:p-6" onclick="openMatchModal(${match.id})">
+                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                            <!-- Teams -->
+                            <div class="flex-1 flex items-center justify-center md:justify-start gap-4">
+                                <div class="text-center">
+                                    <div class="team-flag">${match.flag1}</div>
+                                    <div class="team-name text-yellow-400">${match.team1}</div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    ${isLive ? 
+                                        `<div class="team-score text-red-400">${match.liveScore}</div>
+                                         <div class="text-xs text-red-400">${match.minute}'</div>` :
+                                        `<div class="text-2xl font-bold text-gray-600">VS</div>`
+                                    }
+                                </div>
+                                
+                                <div class="text-center">
+                                    <div class="team-flag">${match.flag2}</div>
+                                    <div class="team-name text-red-400">${match.team2}</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Match Info -->
+                            <div class="flex-1 text-center md:text-left">
+                                <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
+                                    ${getStageBadge(match.stage)}
+                                    ${isLive ? '<span class="badge-live">🔴 LIVE</span>' : ''}
+                                    ${isTomorrowMatch && !isLive ? '<span class="badge-tomorrow">⏰ Tomorrow</span>' : ''}
+                                    ${dateLabel === 'Today' && !isLive ? '<span class="badge-tomorrow" style="background:#3b82f6;color:#fff;">📅 Today</span>' : ''}
+                                </div>
+                                <div class="text-sm text-gray-400 mt-2">
+                                    <i class="fas fa-clock mr-1 text-yellow-400"></i> ${match.time}
+                                    <span class="mx-2">•</span>
+                                    <i class="fas fa-map-marker-alt mr-1 text-red-400"></i> ${match.stadium}
+                                </div>
+                                <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-1">
+                                    <span class="text-xs text-gray-500">
+                                        <i class="fas fa-ticket-alt mr-1 text-purple-400"></i> 
+                                        ${match.ticketsAvailable} tickets left
+                                    </span>
+                                    <span class="text-xs text-yellow-400 font-bold">
+                                        From $${match.ticketPrice}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Action -->
+                            <div class="flex flex-col items-center gap-2">
+                                <button onclick="event.stopPropagation(); openMatchModal(${match.id})" class="btn-primary px-6 py-2 rounded-xl text-white text-sm font-semibold w-full md:w-auto">
+                                    <i class="fas fa-ticket-alt mr-1"></i> Buy Tickets
+                                </button>
+                                <span class="text-xs text-gray-500">${match.group}</span>
+                            </div>
                         </div>
                     </div>
                 `;
-                
-                matchesOnDate.forEach(match => {
-                    const isLive = match.status === 'live';
-                    const isTomorrowMatch = match.isTomorrow || dateLabel === 'Tomorrow';
-                    const cardClass = isLive ? 'match-card live' : isTomorrowMatch ? 'match-card tomorrow' : 'match-card';
-                    
-                    html += `
-                        <div class="glass-card ${cardClass} p-4 md:p-6" onclick="openMatchModal(${match.id})">
-                            <div class="flex flex-col md:flex-row md:items-center gap-4">
-                                <!-- Teams -->
-                                <div class="flex-1 flex items-center justify-center md:justify-start gap-4">
-                                    <div class="text-center">
-                                        <div class="team-flag">${match.flag1}</div>
-                                        <div class="team-name text-yellow-400">${match.team1}</div>
-                                    </div>
-                                    
-                                    <div class="text-center">
-                                        ${isLive ? 
-                                            `<div class="team-score text-red-400">${match.liveScore}</div>
-                                             <div class="text-xs text-red-400">${match.minute}'</div>` :
-                                            `<div class="text-2xl font-bold text-gray-600">VS</div>`
-                                        }
-                                    </div>
-                                    
-                                    <div class="text-center">
-                                        <div class="team-flag">${match.flag2}</div>
-                                        <div class="team-name text-red-400">${match.team2}</div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Match Info -->
-                                <div class="flex-1 text-center md:text-left">
-                                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
-                                        ${getStageBadge(match.stage)}
-                                        ${isLive ? '<span class="badge-live">🔴 LIVE</span>' : ''}
-                                        ${isTomorrowMatch && !isLive ? '<span class="badge-tomorrow">⏰ Tomorrow</span>' : ''}
-                                    </div>
-                                    <div class="text-sm text-gray-400 mt-2">
-                                        <i class="fas fa-clock mr-1 text-yellow-400"></i> ${match.time}
-                                        <span class="mx-2">•</span>
-                                        <i class="fas fa-map-marker-alt mr-1 text-red-400"></i> ${match.stadium}
-                                    </div>
-                                    <div class="text-xs text-gray-500 mt-1">
-                                        <i class="fas fa-ticket-alt mr-1 text-purple-400"></i> 
-                                        ${match.ticketsAvailable} tickets available from $${match.ticketPrice}
-                                    </div>
-                                </div>
-                                
-                                <!-- Action -->
-                                <div class="flex flex-col items-center gap-2">
-                                    <button onclick="event.stopPropagation(); buyTickets(${match.id})" class="btn-primary px-6 py-2 rounded-xl text-white text-sm font-semibold w-full md:w-auto">
-                                        <i class="fas fa-ticket-alt mr-1"></i> Buy Tickets
-                                    </button>
-                                    <span class="text-xs text-gray-500">${match.group}</span>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
             });
 
             matchesContainer.innerHTML = html;
@@ -1177,13 +1266,11 @@
                     filtered = matches.filter(m => formatDate(m.date) === 'Today');
                     break;
                 case 'week':
-                    const weekAgo = new Date();
-                    weekAgo.setDate(weekAgo.getDate() - 7);
                     const weekLater = new Date();
                     weekLater.setDate(weekLater.getDate() + 7);
                     filtered = matches.filter(m => {
                         const d = new Date(m.date);
-                        return d >= weekAgo && d <= weekLater;
+                        return d <= weekLater;
                     });
                     break;
                 default:
@@ -1207,22 +1294,198 @@
         });
 
         // ========================================
+        // SEAT MAP RENDERER
+        // ========================================
+        function renderSeatMap(seatMap, match) {
+            let html = `
+                <div class="seat-map-container">
+                    <div class="text-center mb-3">
+                        <span class="text-sm text-gray-400">${match.stadium}</span>
+                        <div class="text-xs text-gray-500">Select your seats below</div>
+                    </div>
+                    
+                    <div class="stadium-field">
+                        <i class="fas fa-tv mr-2"></i> SCREEN
+                        <div style="font-size:0.6rem;color:#4b5563;">⬆️ Pitch View</div>
+                    </div>
+            `;
+            
+            seatMap.forEach((row, rowIndex) => {
+                const rowLabel = String.fromCharCode(65 + rowIndex);
+                html += `<div class="seat-row">`;
+                html += `<div class="seat-label" style="width:20px;">${rowLabel}</div>`;
+                
+                row.forEach(seat => {
+                    let seatClass = 'seat';
+                    if (!seat.available) {
+                        seatClass += ' unavailable';
+                    } else if (seat.type === 'vip') {
+                        seatClass += ' vip';
+                    } else if (seat.type === 'premium') {
+                        seatClass += ' premium';
+                    } else {
+                        seatClass += ' available';
+                    }
+                    
+                    if (seat.selected) {
+                        seatClass += ' selected';
+                    }
+                    
+                    const isVIP = seat.type === 'vip';
+                    const isPremium = seat.type === 'premium';
+                    let label = seat.number;
+                    let title = `Row ${rowLabel}, Seat ${seat.number}`;
+                    if (isVIP) title += ' (VIP)';
+                    else if (isPremium) title += ' (Premium)';
+                    
+                    html += `
+                        <div class="${seatClass}" 
+                             onclick="toggleSeat(${match.id}, '${seat.id}')"
+                             title="${title}"
+                             data-seat="${seat.id}"
+                             data-available="${seat.available}">
+                            ${isVIP ? '⭐' : isPremium ? '◆' : ''}
+                        </div>
+                    `;
+                });
+                
+                html += `</div>`;
+            });
+            
+            // Legend
+            html += `
+                    <div class="seat-legend">
+                        <div class="seat-legend-item">
+                            <div class="seat available" style="cursor:default;"></div>
+                            <span>Available</span>
+                        </div>
+                        <div class="seat-legend-item">
+                            <div class="seat selected" style="cursor:default;"></div>
+                            <span>Selected</span>
+                        </div>
+                        <div class="seat-legend-item">
+                            <div class="seat unavailable" style="cursor:default;"></div>
+                            <span>Sold</span>
+                        </div>
+                        <div class="seat-legend-item">
+                            <div class="seat vip" style="cursor:default;"></div>
+                            <span>VIP</span>
+                        </div>
+                        <div class="seat-legend-item">
+                            <div class="seat premium" style="cursor:default;"></div>
+                            <span>Premium</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+
+        // ========================================
+        // SEAT SELECTION
+        // ========================================
+        function toggleSeat(matchId, seatId) {
+            const match = matches.find(m => m.id === matchId);
+            if (!match) return;
+            
+            // Find the seat in the seatMap
+            let seatFound = false;
+            match.seatMap.forEach(row => {
+                row.forEach(seat => {
+                    if (seat.id === seatId) {
+                        seatFound = true;
+                        if (seat.available) {
+                            seat.selected = !seat.selected;
+                            if (seat.selected) {
+                                selectedSeats.push(seat.id);
+                            } else {
+                                selectedSeats = selectedSeats.filter(s => s !== seat.id);
+                            }
+                        }
+                    }
+                });
+            });
+            
+            if (seatFound) {
+                // Re-render the seat map
+                const seatMapContainer = document.querySelector('.seat-map-container');
+                if (seatMapContainer) {
+                    const newSeatMap = renderSeatMap(match.seatMap, match);
+                    seatMapContainer.outerHTML = newSeatMap;
+                }
+                
+                // Update ticket count and price
+                updateTicketSummary(match);
+            }
+        }
+
+        // ========================================
+        // UPDATE TICKET SUMMARY
+        // ========================================
+        function updateTicketSummary(match) {
+            const selectedCount = selectedSeats.length;
+            const totalPrice = selectedCount * match.ticketPrice;
+            
+            const summaryElement = document.getElementById('ticketSummary');
+            if (summaryElement) {
+                if (selectedCount > 0) {
+                    summaryElement.innerHTML = `
+                        <div class="flex justify-between items-center p-3 glass rounded-xl">
+                            <div>
+                                <span class="text-sm text-gray-400">Selected Seats</span>
+                                <div class="font-bold">${selectedCount} tickets</div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm text-gray-400">Total</span>
+                                <div class="text-xl font-bold text-yellow-400">$${totalPrice.toFixed(2)}</div>
+                            </div>
+                            <button onclick="proceedToPayment(${match.id})" class="btn-primary px-4 py-2 rounded-xl text-white text-sm font-semibold">
+                                <i class="fas fa-shopping-cart mr-1"></i> Buy Now
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    summaryElement.innerHTML = `
+                        <div class="text-center text-gray-400 text-sm p-3">
+                            <i class="fas fa-hand-pointer mr-2"></i>
+                            Select seats to continue
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // ========================================
         // MATCH MODAL
         // ========================================
         function openMatchModal(id) {
             const match = matches.find(m => m.id === id);
             if (!match) return;
             
-            document.getElementById('matchModalContent').innerHTML = `
-                <div class="text-center">
-                    <div class="flex items-center justify-center gap-6 mb-4">
+            selectedMatch = match;
+            selectedSeats = [];
+            
+            // Reset seat selections
+            match.seatMap.forEach(row => {
+                row.forEach(seat => {
+                    seat.selected = false;
+                });
+            });
+            
+            const seatMapHtml = renderSeatMap(match.seatMap, match);
+            const isLive = match.status === 'live';
+            
+            modalContent.innerHTML = `
+                <div class="text-center mb-4">
+                    <div class="flex items-center justify-center gap-6 mb-3">
                         <div>
                             <div class="team-flag text-5xl">${match.flag1}</div>
-                            <div class="text-xl font-bold text-yellow-400 mt-2">${match.team1}</div>
+                            <div class="text-xl font-bold text-yellow-400 mt-1">${match.team1}</div>
                         </div>
                         <div class="text-center">
                             <div class="text-4xl font-bold text-gray-600">VS</div>
-                            ${match.status === 'live' ? 
+                            ${isLive ? 
                                 `<div class="text-3xl font-bold text-red-400">${match.liveScore}</div>
                                  <div class="text-sm text-red-400">${match.minute}'</div>` : 
                                 `<div class="text-sm text-gray-500">${match.time}</div>`
@@ -1230,56 +1493,200 @@
                         </div>
                         <div>
                             <div class="team-flag text-5xl">${match.flag2}</div>
-                            <div class="text-xl font-bold text-red-400 mt-2">${match.team2}</div>
+                            <div class="text-xl font-bold text-red-400 mt-1">${match.team2}</div>
                         </div>
                     </div>
                     
-                    <div class="glass p-4 rounded-xl mb-4">
-                        <div class="flex flex-wrap justify-center gap-4 text-sm">
-                            <span><i class="fas fa-trophy text-yellow-400 mr-1"></i> ${match.stage}</span>
-                            <span><i class="fas fa-calendar-alt text-purple-400 mr-1"></i> ${formatDate(match.date)}</span>
-                            <span><i class="fas fa-clock text-blue-400 mr-1"></i> ${match.time}</span>
-                            <span><i class="fas fa-map-marker-alt text-red-400 mr-1"></i> ${match.stadium}</span>
+                    <div class="flex flex-wrap justify-center gap-3 text-sm">
+                        <span class="glass px-3 py-1 rounded-full">${getStageBadge(match.stage)}</span>
+                        <span class="glass px-3 py-1 rounded-full text-gray-300">
+                            <i class="fas fa-calendar-alt mr-1 text-yellow-400"></i> ${formatDate(match.date)}
+                        </span>
+                        <span class="glass px-3 py-1 rounded-full text-gray-300">
+                            <i class="fas fa-clock mr-1 text-blue-400"></i> ${match.time}
+                        </span>
+                        <span class="glass px-3 py-1 rounded-full text-gray-300">
+                            <i class="fas fa-map-marker-alt mr-1 text-red-400"></i> ${match.stadium}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-5 gap-4 mt-4">
+                    <div class="md:col-span-3">
+                        <h4 class="font-semibold text-sm mb-2 flex items-center gap-2">
+                            <i class="fas fa-chair text-yellow-400"></i> Select Your Seats
+                            <span class="text-xs text-gray-500">(${match.ticketsAvailable} available)</span>
+                        </h4>
+                        ${seatMapHtml}
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <div class="glass p-4 rounded-xl sticky top-4">
+                            <h4 class="font-semibold text-sm mb-3">Ticket Summary</h4>
+                            <div id="ticketSummary">
+                                <div class="text-center text-gray-400 text-sm p-3">
+                                    <i class="fas fa-hand-pointer mr-2"></i>
+                                    Select seats to continue
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-white/5">
+                                <div class="flex justify-between text-xs text-gray-500">
+                                    <span>Section Prices</span>
+                                </div>
+                                <div class="space-y-1 mt-1">
+                                    <div class="flex justify-between text-xs">
+                                        <span><span class="text-yellow-400">⭐</span> VIP</span>
+                                        <span class="text-yellow-400">$${match.sections.VIP.price}</span>
+                                    </div>
+                                    <div class="flex justify-between text-xs">
+                                        <span><span class="text-purple-400">◆</span> Premium</span>
+                                        <span class="text-purple-400">$${match.sections.Premium.price}</span>
+                                    </div>
+                                    <div class="flex justify-between text-xs">
+                                        <span><span class="text-green-400">●</span> Standard</span>
+                                        <span class="text-green-400">$${match.sections.Standard.price}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3 p-2 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
+                                <div class="flex items-start gap-2">
+                                    <i class="fas fa-shield-alt text-yellow-400 text-xs mt-0.5"></i>
+                                    <p class="text-xs text-gray-400">
+                                        <span class="text-yellow-400 font-semibold">Escrow Protected</span>
+                                        <br />
+                                        Payment held securely until ticket delivery
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="flex flex-wrap justify-center gap-3 mb-4">
-                        <span class="glass px-4 py-2 rounded-xl text-sm">
-                            <i class="fas fa-users mr-1 text-purple-400"></i> Group: ${match.group}
-                        </span>
-                        <span class="glass px-4 py-2 rounded-xl text-sm">
-                            <i class="fas fa-ticket-alt mr-1 text-green-400"></i> ${match.ticketsAvailable} tickets left
-                        </span>
-                        <span class="glass px-4 py-2 rounded-xl text-sm">
-                            <i class="fas fa-dollar-sign mr-1 text-yellow-400"></i> From $${match.ticketPrice}
-                        </span>
-                    </div>
-                    
-                    <button onclick="closeMatchModal(); buyTickets(${match.id})" class="btn-primary px-8 py-3 rounded-xl text-white font-semibold w-full">
-                        <i class="fas fa-ticket-alt mr-2"></i> Buy Tickets Now
-                    </button>
                 </div>
             `;
             
-            document.getElementById('matchModal').classList.remove('hidden');
+            modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
 
         function closeMatchModal() {
-            document.getElementById('matchModal').classList.add('hidden');
+            modal.classList.add('hidden');
             document.body.style.overflow = '';
+            selectedSeats = [];
         }
 
         // ========================================
-        // BUY TICKETS
+        // PROCEED TO PAYMENT
         // ========================================
-        function buyTickets(id) {
-            closeMatchModal();
-            showToast('🎫 Redirecting to ticket purchase...', 'success');
-            setTimeout(() => {
-                window.location.href = `buy.html?match=${id}`;
-            }, 800);
+        function proceedToPayment(matchId) {
+            if (selectedSeats.length === 0) {
+                showToast('⚠️ Please select at least one seat', 'error');
+                return;
+            }
+            
+            const match = matches.find(m => m.id === matchId);
+            if (!match) return;
+            
+            currentMatchId = matchId;
+            selectedPayment = null;
+            
+            const totalPrice = selectedSeats.length * match.ticketPrice;
+            
+            document.getElementById('paymentDetails').innerHTML = `
+                <div class="flex items-center gap-4 p-3 glass-card">
+                    <div class="text-center">
+                        <div class="team-flag text-2xl">${match.flag1}</div>
+                        <div class="text-xs text-yellow-400">${match.team1}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500">VS</div>
+                        <div class="text-xs font-bold text-gray-400">${match.stage}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="team-flag text-2xl">${match.flag2}</div>
+                        <div class="text-xs text-red-400">${match.team2}</div>
+                    </div>
+                    <div class="flex-1 text-right">
+                        <div class="text-xs text-gray-400">${selectedSeats.length} seats</div>
+                        <div class="text-lg font-bold text-yellow-400">$${totalPrice.toFixed(2)}</div>
+                    </div>
+                </div>
+                <div class="text-xs text-gray-500 mt-2 text-center">
+                    Seats: ${selectedSeats.join(', ')}
+                </div>
+            `;
+            
+            document.querySelectorAll('.payment-option').forEach(opt => {
+                opt.style.borderColor = 'rgba(255,255,255,0.08)';
+            });
+            document.querySelectorAll('[id^="check-"]').forEach(check => {
+                check.classList.add('hidden');
+            });
+            document.getElementById('payNowBtn').disabled = true;
+            
+            paymentModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         }
+
+        function closePaymentModal() {
+            paymentModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function selectPayment(method) {
+            selectedPayment = method;
+            
+            document.querySelectorAll('.payment-option').forEach(opt => {
+                opt.style.borderColor = 'rgba(255,255,255,0.08)';
+            });
+            document.querySelectorAll('[id^="check-"]').forEach(check => {
+                check.classList.add('hidden');
+            });
+            
+            const selectedElement = document.querySelector(`.payment-option:has(.fa-${method === 'credit' ? 'credit-card' : method === 'wise' ? 'globe' : method === 'sendwave' ? 'mobile-alt' : 'envelope'})`);
+            if (selectedElement) {
+                selectedElement.style.borderColor = '#f59e0b';
+            }
+            
+            document.getElementById(`check-${method}`).classList.remove('hidden');
+            document.getElementById('payNowBtn').disabled = false;
+        }
+
+        document.getElementById('payNowBtn').addEventListener('click', function() {
+            if (!selectedPayment) return;
+            
+            const match = matches.find(m => m.id === currentMatchId);
+            if (!match) return;
+            
+            const totalPrice = selectedSeats.length * match.ticketPrice;
+            
+            this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+            this.disabled = true;
+            
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check mr-2"></i> Payment Successful!';
+                this.className = 'w-full bg-green-500 py-3 rounded-xl text-white font-semibold mt-6';
+                
+                setTimeout(() => {
+                    closePaymentModal();
+                    closeMatchModal();
+                    showToast(`✅ ${selectedSeats.length} tickets secured for ${match.team1} vs ${match.team2}! Check your email.`, 'success');
+                    
+                    // Update ticket count
+                    const matchIndex = matches.findIndex(m => m.id === currentMatchId);
+                    if (matchIndex !== -1) {
+                        matches[matchIndex].ticketsAvailable -= selectedSeats.length;
+                        filterMatches(activeFilter);
+                    }
+                    
+                    selectedSeats = [];
+                    
+                    this.innerHTML = '<i class="fas fa-lock mr-2"></i> Pay Now';
+                    this.className = 'w-full btn-primary py-3 rounded-xl text-white font-semibold mt-6';
+                    this.disabled = true;
+                }, 2000);
+            }, 2500);
+        });
 
         // ========================================
         // TOAST
@@ -1397,6 +1804,7 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeMatchModal();
+                closePaymentModal();
             }
         });
 
@@ -1411,9 +1819,10 @@
         console.log(`⚽ ${matches.length} matches loaded`);
         console.log('📅 Tomorrow\'s matches: ' + matches.filter(m => m.isTomorrow).length);
         console.log('🔴 Live matches: ' + matches.filter(m => m.status === 'live').length);
+        console.log('💺 Interactive seat map available for all matches!');
         
         setTimeout(() => {
-            showToast('🏆 Welcome to the World Cup 2026 Match Center!', 'info');
+            showToast('🏆 Welcome to the World Cup 2026 Match Center! Select your seats now.', 'info');
         }, 800);
     </script>
 </body>
