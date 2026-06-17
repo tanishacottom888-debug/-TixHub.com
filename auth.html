@@ -205,10 +205,10 @@
                 <div id="loginForm">
                     <form id="loginFormElement" onsubmit="return false;">
                         <div style="margin-bottom:16px;">
-                            <input type="email" id="loginEmail" class="form-input" placeholder="Email address" />
+                            <input type="email" id="loginEmail" class="form-input" placeholder="Email address" autocomplete="email" />
                         </div>
                         <div style="margin-bottom:16px;">
-                            <input type="password" id="loginPassword" class="form-input" placeholder="Password" />
+                            <input type="password" id="loginPassword" class="form-input" placeholder="Password" autocomplete="current-password" />
                         </div>
                         <div style="text-align:right;margin-bottom:16px;">
                             <button type="button" id="forgotPasswordBtn" style="background:none;border:none;color:#024ddf;font-size:14px;cursor:pointer;">Forgot password?</button>
@@ -223,16 +223,16 @@
                 <div id="signupForm" style="display:none;">
                     <form id="signupFormElement" onsubmit="return false;">
                         <div style="margin-bottom:16px;">
-                            <input type="text" id="signupName" class="form-input" placeholder="Full name" />
+                            <input type="text" id="signupName" class="form-input" placeholder="Full name" autocomplete="name" />
                         </div>
                         <div style="margin-bottom:16px;">
-                            <input type="email" id="signupEmail" class="form-input" placeholder="Email address" />
+                            <input type="email" id="signupEmail" class="form-input" placeholder="Email address" autocomplete="email" />
                         </div>
                         <div style="margin-bottom:16px;">
-                            <input type="password" id="signupPassword" class="form-input" placeholder="Create password (min 6 chars)" />
+                            <input type="password" id="signupPassword" class="form-input" placeholder="Create password (min 6 chars)" autocomplete="new-password" />
                         </div>
                         <div style="margin-bottom:16px;">
-                            <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm password" />
+                            <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm password" autocomplete="new-password" />
                         </div>
                         <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
                             <input type="checkbox" id="termsCheck" style="margin-top:4px;width:18px;height:18px;accent-color:#024ddf;" />
@@ -276,7 +276,7 @@
                 <p style="color:#646464;font-size:14px;">Enter your email to receive reset instructions</p>
             </div>
             <div style="margin-bottom:16px;">
-                <input type="email" id="resetEmail" class="form-input" placeholder="Email address" />
+                <input type="email" id="resetEmail" class="form-input" placeholder="Email address" autocomplete="email" />
             </div>
             <button id="resetPasswordBtn" class="btn-primary">
                 <i class="fas fa-paper-plane mr-2"></i> Send Reset Link
@@ -289,21 +289,27 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - COMPLETE FIX -->
+    <!-- JAVASCRIPT - FIXED -->
     <!-- ======================================== -->
     <script>
         // ============================================================
-        // SUPABASE CONFIGURATION
+        // SUPABASE CONFIGURATION - ONLY DECLARED ONCE
         // ============================================================
-        const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
+        // Check if supabase already exists to avoid duplicate declaration
+        if (typeof window._supabaseClient === 'undefined') {
+            const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
+            const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
+            
+            console.log('🚀 Auth page loaded');
+            console.log('📦 Supabase URL:', SUPABASE_URL);
+            
+            // Create Supabase client - store globally
+            window._supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            console.log('✅ Supabase client created');
+        }
         
-        console.log('🚀 Auth page loaded');
-        console.log('📦 Supabase URL:', SUPABASE_URL);
-        
-        // Create Supabase client
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        console.log('✅ Supabase client created');
+        // Use the existing client
+        const supabase = window._supabaseClient;
 
         // ============================================================
         // DOM ELEMENTS
@@ -324,7 +330,7 @@
         const mobileMenu = document.getElementById('mobileMenu');
 
         // ============================================================
-        // CREATE ACCOUNT FUNCTION - FIXED
+        // CREATE ACCOUNT FUNCTION
         // ============================================================
         async function createAccount(email, password, fullName) {
             console.log('📤 Creating account for:', email);
@@ -343,7 +349,6 @@
                 if (error) {
                     console.error('❌ Signup error:', error.message);
                     
-                    // Check if it's a duplicate email error
                     if (error.message.includes('already registered')) {
                         return { success: false, error: 'This email is already registered. Please sign in instead.' };
                     }
@@ -352,7 +357,6 @@
                 }
 
                 console.log('✅ Account created! User ID:', data.user?.id);
-                console.log('📧 Confirmation email sent to:', email);
                 
                 // Try to create profile
                 if (data.user) {
@@ -377,9 +381,7 @@
                     }
                 }
 
-                // Check if email confirmation is required
                 if (data.user && data.user.confirmed_at === null) {
-                    console.log('📧 Email confirmation required - check your inbox!');
                     return { 
                         success: true, 
                         data: data, 
@@ -466,7 +468,7 @@
         }
 
         // ============================================================
-        // HANDLE SIGNUP - FIXED
+        // HANDLE SIGNUP
         // ============================================================
         async function handleSignup() {
             console.log('📝 Signup button clicked');
@@ -515,7 +517,6 @@
                     
                     if (result.requiresConfirmation) {
                         showToast('📧 Check your email to confirm your account!', 'info');
-                        // Switch to login tab
                         switchTab('login');
                     } else {
                         showToast('✅ Account created! Redirecting...', 'success');
