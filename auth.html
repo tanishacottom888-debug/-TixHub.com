@@ -289,11 +289,11 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - ALL FUNCTIONS DEFINED -->
+    <!-- JAVASCRIPT - EVERYTHING HERE, NO EXTERNAL FILE -->
     <!-- ======================================== -->
     <script>
         // ============================================================
-        // 1. SUPABASE CONFIGURATION
+        // 1. SUPABASE CONFIGURATION - DECLARED ONCE
         // ============================================================
         const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
@@ -301,30 +301,12 @@
         console.log('🚀 Auth page loaded');
         console.log('📦 Supabase URL:', SUPABASE_URL);
         
-        // Create Supabase client
+        // Create Supabase client - ONLY ONCE
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         console.log('✅ Supabase client created');
 
         // ============================================================
-        // 2. DOM ELEMENTS
-        // ============================================================
-        const loginTab = document.getElementById('loginTab');
-        const signupTab = document.getElementById('signupTab');
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
-        const loginBtn = document.getElementById('loginBtn');
-        const signupBtn = document.getElementById('signupBtn');
-        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
-        const resetPasswordBtn = document.getElementById('resetPasswordBtn');
-        const closeForgotBtn = document.getElementById('closeForgotBtn');
-        const forgotModal = document.getElementById('forgotModal');
-        const googleBtn = document.getElementById('googleBtn');
-        const facebookBtn = document.getElementById('facebookBtn');
-        const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        // ============================================================
-        // 3. SIGNUP FUNCTION
+        // 2. AUTH FUNCTIONS
         // ============================================================
         async function signUp(email, password, fullName) {
             console.log('📤 Creating account for:', email);
@@ -342,6 +324,9 @@
 
                 if (error) {
                     console.error('❌ Signup error:', error.message);
+                    if (error.message.includes('already registered')) {
+                        return { success: false, error: 'This email is already registered. Please sign in.' };
+                    }
                     return { success: false, error: error.message };
                 }
 
@@ -349,7 +334,7 @@
                 
                 if (data.user) {
                     try {
-                        const { error: profileError } = await supabase
+                        await supabase
                             .from('profiles')
                             .insert([
                                 {
@@ -358,12 +343,7 @@
                                     created_at: new Date().toISOString()
                                 }
                             ]);
-                        
-                        if (profileError) {
-                            console.warn('⚠️ Profile warning:', profileError.message);
-                        } else {
-                            console.log('✅ Profile created');
-                        }
+                        console.log('✅ Profile created');
                     } catch (e) {
                         console.warn('⚠️ Profile error:', e.message);
                     }
@@ -377,9 +357,6 @@
             }
         }
 
-        // ============================================================
-        // 4. SIGNIN FUNCTION
-        // ============================================================
         async function signIn(email, password) {
             try {
                 const { data, error } = await supabase.auth.signInWithPassword({
@@ -390,27 +367,40 @@
                 if (error) throw error;
                 return { success: true, data: data };
             } catch (error) {
-                console.error('❌ Sign in error:', error.message);
                 return { success: false, error: error.message };
             }
         }
 
-        // ============================================================
-        // 5. RESET PASSWORD FUNCTION
-        // ============================================================
         async function resetPassword(email) {
             try {
                 const { error } = await supabase.auth.resetPasswordForEmail(email);
                 if (error) throw error;
                 return { success: true };
             } catch (error) {
-                console.error('❌ Reset password error:', error.message);
                 return { success: false, error: error.message };
             }
         }
 
         // ============================================================
-        // 6. TAB SWITCHING - DEFINED BEFORE ONCLICK CALLS
+        // 3. DOM ELEMENTS
+        // ============================================================
+        const loginTab = document.getElementById('loginTab');
+        const signupTab = document.getElementById('signupTab');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+        const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+        const closeForgotBtn = document.getElementById('closeForgotBtn');
+        const forgotModal = document.getElementById('forgotModal');
+        const googleBtn = document.getElementById('googleBtn');
+        const facebookBtn = document.getElementById('facebookBtn');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        // ============================================================
+        // 4. TAB SWITCHING
         // ============================================================
         function switchTab(tab) {
             console.log('📋 Switching to:', tab);
@@ -420,18 +410,16 @@
                 signupTab.classList.remove('active');
                 loginForm.style.display = 'block';
                 signupForm.style.display = 'none';
-                console.log('✅ Switched to Login');
             } else {
                 signupTab.classList.add('active');
                 loginTab.classList.remove('active');
                 signupForm.style.display = 'block';
                 loginForm.style.display = 'none';
-                console.log('✅ Switched to Sign Up');
             }
         }
 
         // ============================================================
-        // 7. HANDLE LOGIN
+        // 5. HANDLE LOGIN
         // ============================================================
         async function handleLogin() {
             console.log('🔑 Login clicked');
@@ -449,7 +437,6 @@
             
             try {
                 const result = await signIn(email, password);
-                console.log('📥 Login result:', result);
                 
                 if (result.success) {
                     loginBtn.disabled = false;
@@ -469,7 +456,7 @@
         }
 
         // ============================================================
-        // 8. HANDLE SIGNUP
+        // 6. HANDLE SIGNUP
         // ============================================================
         async function handleSignup() {
             console.log('📝 Signup button clicked');
@@ -509,14 +496,12 @@
             
             try {
                 const result = await signUp(email, password, name);
-                console.log('📥 Signup result:', result);
                 
                 if (result.success) {
                     signupBtn.disabled = false;
                     signupBtn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
                     showToast('✅ Account created! Redirecting...', 'success');
                     setTimeout(() => { 
-                        console.log('🔄 Redirecting to dashboard...');
                         window.location.href = 'dashboard.html'; 
                     }, 1500);
                 } else {
@@ -525,7 +510,6 @@
                     showToast('❌ ' + (result.error || 'Account creation failed'), 'error');
                 }
             } catch (error) {
-                console.error('❌ Unexpected error:', error);
                 signupBtn.disabled = false;
                 signupBtn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
                 showToast('❌ ' + (error.message || 'Something went wrong'), 'error');
@@ -533,7 +517,7 @@
         }
 
         // ============================================================
-        // 9. SOCIAL LOGIN
+        // 7. SOCIAL LOGIN
         // ============================================================
         function socialLogin(provider) {
             showToast('Connecting to ' + provider + '...', 'info');
@@ -544,7 +528,7 @@
         }
 
         // ============================================================
-        // 10. FORGOT PASSWORD
+        // 8. FORGOT PASSWORD
         // ============================================================
         function showForgotPassword() {
             forgotModal.style.display = 'flex';
@@ -572,13 +556,12 @@
         }
 
         // ============================================================
-        // 11. CHECK IF ALREADY LOGGED IN
+        // 9. CHECK AUTH
         // ============================================================
         async function checkAuth() {
             try {
                 const { data: { session } } = await supabase.auth.getSession();
                 if (session) {
-                    console.log('👤 Already logged in, redirecting...');
                     window.location.href = 'dashboard.html';
                 }
             } catch (error) {
@@ -587,7 +570,7 @@
         }
 
         // ============================================================
-        // 12. TOAST
+        // 10. TOAST
         // ============================================================
         function showToast(message, type = 'info') {
             document.querySelectorAll('.toast').forEach(el => el.remove());
@@ -604,28 +587,18 @@
         }
 
         // ============================================================
-        // 13. BIND ALL EVENTS
+        // 11. BIND EVENTS
         // ============================================================
-        // Tab switching - NO ONCLICK IN HTML
         loginTab.addEventListener('click', function() { switchTab('login'); });
         signupTab.addEventListener('click', function() { switchTab('signup'); });
-
-        // Login
         loginBtn.addEventListener('click', handleLogin);
-        
-        // Signup
         signupBtn.addEventListener('click', handleSignup);
-
-        // Forgot password
         forgotPasswordBtn.addEventListener('click', showForgotPassword);
         closeForgotBtn.addEventListener('click', closeForgotModal);
         resetPasswordBtn.addEventListener('click', handleForgotPassword);
-
-        // Social login
         googleBtn.addEventListener('click', function() { socialLogin('google'); });
         facebookBtn.addEventListener('click', function() { socialLogin('facebook'); });
 
-        // Mobile menu
         mobileToggle.addEventListener('click', function() {
             mobileMenu.classList.toggle('open');
         });
@@ -636,7 +609,6 @@
             });
         });
 
-        // Enter key support
         document.getElementById('loginPassword').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') handleLogin();
         });
@@ -645,11 +617,10 @@
         });
 
         // ============================================================
-        // 14. INIT
+        // 12. INIT
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             console.log('💡 Ready! Click Sign Up to create an account.');
-            console.log('📌 Tab switching works: Click "Sign Up" to switch tabs!');
             document.getElementById('loginEmail').focus();
             checkAuth();
         });
