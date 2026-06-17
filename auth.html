@@ -191,12 +191,12 @@
 
             <div class="card">
                 
-                <!-- Tab Switcher - WITH onclick DIRECTLY -->
+                <!-- Tab Switcher -->
                 <div style="display:flex;gap:8px;margin-bottom:24px;background:#f6f6f6;padding:4px;border-radius:4px;">
-                    <button id="loginTab" class="tab-btn active" onclick="switchTab('login')">
+                    <button id="loginTab" class="tab-btn active">
                         <i class="fas fa-sign-in-alt mr-2"></i> Sign In
                     </button>
-                    <button id="signupTab" class="tab-btn" onclick="switchTab('signup')">
+                    <button id="signupTab" class="tab-btn">
                         <i class="fas fa-user-plus mr-2"></i> Sign Up
                     </button>
                 </div>
@@ -211,9 +211,9 @@
                             <input type="password" id="loginPassword" class="form-input" placeholder="Password" autocomplete="current-password" />
                         </div>
                         <div style="text-align:right;margin-bottom:16px;">
-                            <button type="button" onclick="showForgotPassword()" style="background:none;border:none;color:#024ddf;font-size:14px;cursor:pointer;">Forgot password?</button>
+                            <button type="button" id="forgotPasswordBtn" style="background:none;border:none;color:#024ddf;font-size:14px;cursor:pointer;">Forgot password?</button>
                         </div>
-                        <button type="button" onclick="handleLogin()" id="loginBtn" class="btn-primary">
+                        <button type="button" id="loginBtn" class="btn-primary">
                             <i class="fas fa-sign-in-alt mr-2"></i> Sign In
                         </button>
                     </form>
@@ -240,7 +240,7 @@
                                 I agree to the <a href="#" style="color:#024ddf;">Terms of Service</a> and <a href="#" style="color:#024ddf;">Privacy Policy</a>
                             </label>
                         </div>
-                        <button type="button" onclick="handleSignup()" id="signupBtn" class="btn-primary">
+                        <button type="button" id="signupBtn" class="btn-primary">
                             <i class="fas fa-user-plus mr-2"></i> Create Account
                         </button>
                     </form>
@@ -253,10 +253,10 @@
                 </div>
 
                 <div style="space-y:12px;">
-                    <button onclick="socialLogin('google')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
+                    <button id="googleBtn" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
                         <i class="fab fa-google" style="color:#ea4335;"></i> Continue with Google
                     </button>
-                    <button onclick="socialLogin('facebook')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
+                    <button id="facebookBtn" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
                         <i class="fab fa-facebook" style="color:#1877f2;"></i> Continue with Facebook
                     </button>
                 </div>
@@ -267,7 +267,7 @@
     <!-- FORGOT PASSWORD MODAL -->
     <div id="forgotModal" style="display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;">
         <div style="background:#fff;border-radius:4px;max-width:400px;width:100%;padding:24px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
-            <button onclick="closeForgotModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;color:#646464;cursor:pointer;">✕</button>
+            <button id="closeForgotBtn" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;color:#646464;cursor:pointer;">✕</button>
             <div style="text-align:center;margin-bottom:24px;">
                 <div style="width:64px;height:64px;border-radius:50%;background:#024ddf;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 8px 20px rgba(2,77,223,0.2);">
                     <i class="fas fa-key text-white text-xl"></i>
@@ -278,7 +278,7 @@
             <div style="margin-bottom:16px;">
                 <input type="email" id="resetEmail" class="form-input" placeholder="Email address" autocomplete="email" />
             </div>
-            <button onclick="handleForgotPassword()" class="btn-primary">
+            <button id="resetPasswordBtn" class="btn-primary">
                 <i class="fas fa-paper-plane mr-2"></i> Send Reset Link
             </button>
         </div>
@@ -293,7 +293,7 @@
     <!-- ======================================== -->
     <script>
         // ============================================================
-        // SUPABASE CONFIGURATION
+        // 1. SUPABASE CONFIGURATION
         // ============================================================
         const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
@@ -306,7 +306,25 @@
         console.log('✅ Supabase client created');
 
         // ============================================================
-        // SIGNUP FUNCTION
+        // 2. DOM ELEMENTS
+        // ============================================================
+        const loginTab = document.getElementById('loginTab');
+        const signupTab = document.getElementById('signupTab');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+        const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+        const closeForgotBtn = document.getElementById('closeForgotBtn');
+        const forgotModal = document.getElementById('forgotModal');
+        const googleBtn = document.getElementById('googleBtn');
+        const facebookBtn = document.getElementById('facebookBtn');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        // ============================================================
+        // 3. SIGNUP FUNCTION
         // ============================================================
         async function signUp(email, password, fullName) {
             console.log('📤 Creating account for:', email);
@@ -329,7 +347,6 @@
 
                 console.log('✅ Account created! User ID:', data.user?.id);
                 
-                // Try to create profile
                 if (data.user) {
                     try {
                         const { error: profileError } = await supabase
@@ -361,7 +378,7 @@
         }
 
         // ============================================================
-        // SIGNIN FUNCTION
+        // 4. SIGNIN FUNCTION
         // ============================================================
         async function signIn(email, password) {
             try {
@@ -379,7 +396,7 @@
         }
 
         // ============================================================
-        // RESET PASSWORD FUNCTION
+        // 5. RESET PASSWORD FUNCTION
         // ============================================================
         async function resetPassword(email) {
             try {
@@ -393,15 +410,10 @@
         }
 
         // ============================================================
-        // TAB SWITCHING - THIS IS WHAT WAS BROKEN
+        // 6. TAB SWITCHING - DEFINED BEFORE ONCLICK CALLS
         // ============================================================
         function switchTab(tab) {
             console.log('📋 Switching to:', tab);
-            
-            const loginTab = document.getElementById('loginTab');
-            const signupTab = document.getElementById('signupTab');
-            const loginForm = document.getElementById('loginForm');
-            const signupForm = document.getElementById('signupForm');
             
             if (tab === 'login') {
                 loginTab.classList.add('active');
@@ -419,46 +431,45 @@
         }
 
         // ============================================================
-        // HANDLE LOGIN
+        // 7. HANDLE LOGIN
         // ============================================================
         async function handleLogin() {
             console.log('🔑 Login clicked');
             
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
-            const btn = document.getElementById('loginBtn');
             
             if (!email || !password) {
                 showToast('Please fill in all fields', 'error');
                 return;
             }
             
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
             
             try {
                 const result = await signIn(email, password);
                 console.log('📥 Login result:', result);
                 
                 if (result.success) {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
                     showToast('✅ Welcome back!', 'success');
                     setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
                 } else {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
                     showToast('❌ ' + (result.error || 'Invalid email or password'), 'error');
                 }
             } catch (error) {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
                 showToast('❌ ' + (error.message || 'Something went wrong'), 'error');
             }
         }
 
         // ============================================================
-        // HANDLE SIGNUP
+        // 8. HANDLE SIGNUP
         // ============================================================
         async function handleSignup() {
             console.log('📝 Signup button clicked');
@@ -468,14 +479,11 @@
             const password = document.getElementById('signupPassword').value;
             const confirm = document.getElementById('signupConfirmPassword').value;
             const terms = document.getElementById('termsCheck').checked;
-            const btn = document.getElementById('signupBtn');
             
             console.log('📋 Name:', name);
             console.log('📋 Email:', email);
             console.log('📋 Password length:', password.length);
-            console.log('📋 Terms checked:', terms);
             
-            // Validate
             if (!name || !email || !password || !confirm) {
                 showToast('Please fill in all fields', 'error');
                 return;
@@ -496,36 +504,36 @@
                 return;
             }
             
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
+            signupBtn.disabled = true;
+            signupBtn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
             try {
                 const result = await signUp(email, password, name);
                 console.log('📥 Signup result:', result);
                 
                 if (result.success) {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                    signupBtn.disabled = false;
+                    signupBtn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
                     showToast('✅ Account created! Redirecting...', 'success');
                     setTimeout(() => { 
                         console.log('🔄 Redirecting to dashboard...');
                         window.location.href = 'dashboard.html'; 
                     }, 1500);
                 } else {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                    signupBtn.disabled = false;
+                    signupBtn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
                     showToast('❌ ' + (result.error || 'Account creation failed'), 'error');
                 }
             } catch (error) {
                 console.error('❌ Unexpected error:', error);
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                signupBtn.disabled = false;
+                signupBtn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
                 showToast('❌ ' + (error.message || 'Something went wrong'), 'error');
             }
         }
 
         // ============================================================
-        // SOCIAL LOGIN
+        // 9. SOCIAL LOGIN
         // ============================================================
         function socialLogin(provider) {
             showToast('Connecting to ' + provider + '...', 'info');
@@ -536,14 +544,14 @@
         }
 
         // ============================================================
-        // FORGOT PASSWORD
+        // 10. FORGOT PASSWORD
         // ============================================================
         function showForgotPassword() {
-            document.getElementById('forgotModal').style.display = 'flex';
+            forgotModal.style.display = 'flex';
         }
         
         function closeForgotModal() {
-            document.getElementById('forgotModal').style.display = 'none';
+            forgotModal.style.display = 'none';
         }
 
         async function handleForgotPassword() {
@@ -564,7 +572,7 @@
         }
 
         // ============================================================
-        // CHECK IF ALREADY LOGGED IN
+        // 11. CHECK IF ALREADY LOGGED IN
         // ============================================================
         async function checkAuth() {
             try {
@@ -579,7 +587,7 @@
         }
 
         // ============================================================
-        // TOAST
+        // 12. TOAST
         // ============================================================
         function showToast(message, type = 'info') {
             document.querySelectorAll('.toast').forEach(el => el.remove());
@@ -596,21 +604,39 @@
         }
 
         // ============================================================
-        // MOBILE MENU
+        // 13. BIND ALL EVENTS
         // ============================================================
-        document.getElementById('mobileToggle').addEventListener('click', function() {
-            document.getElementById('mobileMenu').classList.toggle('open');
+        // Tab switching - NO ONCLICK IN HTML
+        loginTab.addEventListener('click', function() { switchTab('login'); });
+        signupTab.addEventListener('click', function() { switchTab('signup'); });
+
+        // Login
+        loginBtn.addEventListener('click', handleLogin);
+        
+        // Signup
+        signupBtn.addEventListener('click', handleSignup);
+
+        // Forgot password
+        forgotPasswordBtn.addEventListener('click', showForgotPassword);
+        closeForgotBtn.addEventListener('click', closeForgotModal);
+        resetPasswordBtn.addEventListener('click', handleForgotPassword);
+
+        // Social login
+        googleBtn.addEventListener('click', function() { socialLogin('google'); });
+        facebookBtn.addEventListener('click', function() { socialLogin('facebook'); });
+
+        // Mobile menu
+        mobileToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('open');
         });
 
         document.querySelectorAll('#mobileMenu a').forEach(function(link) {
             link.addEventListener('click', function() {
-                document.getElementById('mobileMenu').classList.remove('open');
+                mobileMenu.classList.remove('open');
             });
         });
 
-        // ============================================================
-        // ENTER KEY SUPPORT
-        // ============================================================
+        // Enter key support
         document.getElementById('loginPassword').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') handleLogin();
         });
@@ -619,7 +645,7 @@
         });
 
         // ============================================================
-        // INIT
+        // 14. INIT
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             console.log('💡 Ready! Click Sign Up to create an account.');
