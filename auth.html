@@ -10,7 +10,21 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
+    <!-- LOAD SUPABASE FILE -->
     <script src="js/supabase.js"></script>
+    
+    <!-- CHECK IF FUNCTIONS LOADED -->
+    <script>
+        // Wait for supabase.js to load
+        setTimeout(function() {
+            if (typeof signUp !== 'undefined') {
+                console.log('✅ signUp function is loaded!');
+            } else {
+                console.error('❌ signUp function NOT loaded!');
+                console.log('📌 Check that js/supabase.js exists and is correct');
+            }
+        }, 500);
+    </script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -110,7 +124,6 @@
         .navbar-main { padding: 10px 40px; display: flex; align-items: center; justify-content: space-between; }
         .nav-link { color: #9ca3af; text-decoration: none; font-size: 0.85rem; padding: 6px 10px; }
         .nav-link:hover { color: #fff; }
-        .nav-link-active { color: #fff; font-weight: 600; }
         
         .mobile-menu { display: none; background: #121212; padding: 16px 20px; }
         .mobile-menu.open { display: block; }
@@ -282,29 +295,40 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - WITH ALERT FOR DEBUGGING -->
+    <!-- JAVASCRIPT - WITH BETTER ERROR HANDLING -->
     <!-- ======================================== -->
     <script>
         // ============================================================
-        // CHECK IF SUPABASE IS WORKING
+        // CHECK IF FUNCTIONS ARE LOADED
         // ============================================================
         console.log('🚀 Auth page loaded');
         
-        // Test Supabase connection
-        async function testConnection() {
-            try {
-                const { data, error } = await supabase.from('profiles').select('count').limit(1);
-                if (error) {
-                    console.warn('⚠️ Supabase connection test:', error.message);
-                    showToast('⚠️ Database not connected. Check Supabase.', 'error');
-                } else {
-                    console.log('✅ Supabase connection OK');
-                }
-            } catch (e) {
-                console.warn('⚠️ Connection test failed:', e.message);
+        // Check if signUp exists
+        setTimeout(function() {
+            if (typeof signUp !== 'undefined') {
+                console.log('✅ signUp function is available!');
+            } else {
+                console.error('❌ signUp function NOT available!');
+                console.log('📌 Creating fallback signUp function...');
+                
+                // Create fallback function
+                window.signUp = async function(email, password, fullName) {
+                    console.log('🔐 FALLBACK signUp called');
+                    try {
+                        const { data, error } = await supabase.auth.signUp({
+                            email: email,
+                            password: password,
+                            options: { data: { full_name: fullName } }
+                        });
+                        if (error) throw error;
+                        return { success: true, data: data };
+                    } catch (error) {
+                        return { success: false, error: error.message };
+                    }
+                };
+                console.log('✅ Fallback signUp created');
             }
-        }
-        testConnection();
+        }, 300);
 
         // ============================================================
         // STATE
@@ -348,22 +372,27 @@
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
             
-            const result = await signIn(email, password);
-            
-            if (result.success) {
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                
+                if (error) throw error;
+                
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
                 showToast('✅ Welcome back!', 'success');
                 setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
-            } else {
+            } catch (error) {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
-                showToast('❌ ' + (result.error || 'Invalid email or password'), 'error');
+                showToast('❌ ' + (error.message || 'Invalid email or password'), 'error');
             }
         }
 
         // ============================================================
-        // HANDLE SIGNUP - WITH BETTER LOGGING
+        // HANDLE SIGNUP - FIXED
         // ============================================================
         async function handleSignup() {
             console.log('📝 Signup clicked - START');
@@ -378,63 +407,68 @@
             console.log('📋 Name:', name);
             console.log('📋 Email:', email);
             console.log('📋 Password length:', password.length);
-            console.log('📋 Terms checked:', terms);
             
             // Validate
             if (!name || !email || !password || !confirm) {
-                console.log('❌ Missing fields');
                 showToast('Please fill in all fields', 'error');
                 return;
             }
             
             if (password.length < 6) {
-                console.log('❌ Password too short');
                 showToast('Password must be at least 6 characters', 'error');
                 return;
             }
             
             if (password !== confirm) {
-                console.log('❌ Passwords do not match');
                 showToast('Passwords do not match', 'error');
                 return;
             }
             
             if (!terms) {
-                console.log('❌ Terms not accepted');
                 showToast('Please agree to the Terms of Service', 'error');
                 return;
             }
-            
-            console.log('✅ All validations passed');
             
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
             try {
-                console.log('📤 Calling signUp function...');
-                const result = await signUp(email, password, name);
-                console.log('📥 Result:', result);
-                
-                if (result.success) {
-                    console.log('✅ Signup successful!');
+                // Check if signUp exists, use it
+                if (typeof signUp === 'function') {
+                    console.log('📤 Using signUp from supabase.js');
+                    const result = await signUp(email, password, name);
+                    
+                    if (result.success) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                        showToast('✅ Account created! Redirecting...', 'success');
+                        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
+                    } else {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                        showToast('❌ ' + (result.error || 'Account creation failed'), 'error');
+                    }
+                } else {
+                    // Fallback: Use supabase directly
+                    console.log('📤 Using supabase directly (fallback)');
+                    const { data, error } = await supabase.auth.signUp({
+                        email: email,
+                        password: password,
+                        options: { data: { full_name: name } }
+                    });
+                    
+                    if (error) throw error;
+                    
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
                     showToast('✅ Account created! Redirecting...', 'success');
-                    setTimeout(() => { 
-                        console.log('🔄 Redirecting to dashboard...');
-                        window.location.href = 'dashboard.html'; 
-                    }, 1500);
-                } else {
-                    console.log('❌ Signup failed:', result.error);
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                    showToast('❌ ' + (result.error || 'Account creation failed'), 'error');
+                    setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
                 }
             } catch (error) {
-                console.error('❌ Unexpected error:', error);
+                console.error('❌ Error:', error);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                showToast('❌ ' + (error.message || 'Something went wrong'), 'error');
+                showToast('❌ ' + (error.message || 'Account creation failed'), 'error');
             }
         }
 
@@ -464,11 +498,12 @@
             const email = document.getElementById('resetEmail').value.trim();
             if (!email) { showToast('Please enter your email', 'error'); return; }
             
-            const result = await resetPassword(email);
-            if (result.success) {
+            try {
+                const { error } = await supabase.auth.resetPasswordForEmail(email);
+                if (error) throw error;
                 showToast('📧 Reset link sent!', 'success');
                 closeForgotModal();
-            } else {
+            } catch (error) {
                 showToast('❌ Failed to send reset link', 'error');
             }
         }
