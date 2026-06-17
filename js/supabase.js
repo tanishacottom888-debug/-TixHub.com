@@ -1,142 +1,535 @@
-// ============================================================
-// SUPABASE CONFIGURATION
-// ============================================================
-const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
-
-// Initialize Supabase
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-console.log('✅ Supabase client initialized');
-
-// ============================================================
-// AUTH FUNCTIONS
-// ============================================================
-
-// Sign Up - Simplified
-async function signUp(email, password, fullName) {
-    try {
-        console.log('📤 Signing up:', email);
-        
-        const { data, error } = await supabase.auth.signUp({
-            email: email,
-            password: password,
-            options: {
-                data: {
-                    full_name: fullName,
-                }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Sign In - TixHub</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    
+    <!-- LOAD SUPABASE FILE -->
+    <script src="js/supabase.js"></script>
+    
+    <!-- CHECK IF FUNCTIONS LOADED -->
+    <script>
+        // Wait for supabase.js to load
+        setTimeout(function() {
+            if (typeof signUp !== 'undefined') {
+                console.log('✅ signUp function is loaded!');
+            } else {
+                console.error('❌ signUp function NOT loaded!');
+                console.log('📌 Check that js/supabase.js exists and is correct');
             }
-        });
-
-        if (error) {
-            console.error('❌ Signup error:', error.message);
-            return { success: false, error: error.message };
+        }, 500);
+    </script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        .btn-primary {
+            background: #024ddf;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            min-height: 44px;
+            transition: all 0.3s ease;
         }
+        .btn-primary:hover { background: #0139a7; }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .form-input {
+            border: 1px solid #bfbfbf;
+            border-radius: 4px;
+            padding: 12px 16px;
+            font-size: 16px;
+            width: 100%;
+            min-height: 44px;
+            background: #fff;
+            color: #121212;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus { outline: none; border-color: #024ddf; box-shadow: 0 0 0 3px rgba(2, 77, 223, 0.1); }
+        
+        .card {
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            border: 1px solid #bfbfbf;
+            padding: 24px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: #646464;
+            font-size: 0.95rem;
+        }
+        .tab-btn.active { background: #024ddf; color: #fff; }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            padding: 14px 24px;
+            border-radius: 4px;
+            background: #121212;
+            color: #fff;
+            font-size: 0.85rem;
+            max-width: 90%;
+            width: auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            animation: slideUp 0.4s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        @keyframes slideUp {
+            0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s ease infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .flag-circle { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); display: inline-flex; align-items: center; justify-content: center; background: #fff; }
+        .flag-circle img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #121212; }
+        .navbar-top { padding: 6px 40px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .navbar-main { padding: 10px 40px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-link { color: #9ca3af; text-decoration: none; font-size: 0.85rem; padding: 6px 10px; }
+        .nav-link:hover { color: #fff; }
+        
+        .mobile-menu { display: none; background: #121212; padding: 16px 20px; }
+        .mobile-menu.open { display: block; }
+        .mobile-menu a { display: block; color: #9ca3af; padding: 10px 0; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .mobile-menu a:hover { color: #fff; }
+        
+        .footer { background: #121212; color: #fff; padding: 24px 40px 16px; margin-top: auto; text-align: center; color: #9ca3af; font-size: 0.85rem; }
+        
+        @media (max-width: 768px) {
+            .navbar-top { padding: 6px 16px; }
+            .navbar-main { padding: 10px 16px; flex-wrap: wrap; }
+            .card { padding: 16px !important; }
+        }
+    </style>
+</head>
+<body>
 
-        console.log('✅ User created:', data.user?.id);
+    <nav class="navbar">
+        <div class="navbar-top hidden md:flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <button class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
+                    <span class="flag-circle">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA Flag" />
+                    </span>
+                    <span>US</span>
+                </button>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Hotels</a>
+                <a href="sell.html" class="text-gray-400 hover:text-white transition text-sm">Sell</a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Help</a>
+            </div>
+        </div>
+        
+        <div class="navbar-main">
+            <div class="flex items-center gap-6">
+                <a href="index.html" class="flex items-center gap-2 text-white text-xl font-bold">
+                    Tix<span style="color:#6c5ce7;">Hub</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="buy.html" class="nav-link">Buy Tickets</a>
+                    <a href="sell.html" class="nav-link">Sell Tickets</a>
+                    <a href="matches.html" class="nav-link">Matches</a>
+                    <a href="stadiums.html" class="nav-link">Stadiums</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="auth.html" class="hidden md:block text-gray-300 hover:text-white transition text-sm">Sign In</a>
+                <a href="auth.html" class="btn-primary text-sm px-5 py-2 min-h-[36px]" style="width:auto;">Get Started</a>
+                <button id="mobileToggle" class="lg:hidden text-white text-2xl p-2">☰</button>
+            </div>
+        </div>
+        
+        <div id="mobileMenu" class="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy Tickets</a>
+            <a href="sell.html">Sell Tickets</a>
+            <a href="matches.html">Matches</a>
+            <a href="stadiums.html">Stadiums</a>
+            <a href="auth.html" class="text-white font-semibold">Sign In</a>
+        </div>
+    </nav>
 
-        // Try to create profile - but don't fail if it doesn't work
-        if (data.user) {
-            try {
-                const { error: profileError } = await supabase
-                    .from('profiles')
-                    .insert([
-                        {
-                            id: data.user.id,
-                            full_name: fullName,
-                            created_at: new Date().toISOString()
-                        }
-                    ]);
+    <!-- ======================================== -->
+    <!-- AUTH CONTAINER -->
+    <!-- ======================================== -->
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:100px 16px 40px;">
+        <div style="width:100%;max-width:400px;">
+            
+            <div style="text-align:center;margin-bottom:32px;">
+                <div style="width:64px;height:64px;border-radius:50%;background:#024ddf;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 8px 20px rgba(2,77,223,0.2);">
+                    <i class="fas fa-ticket-alt text-white text-2xl"></i>
+                </div>
+                <h1 style="font-size:28px;font-weight:700;color:#121212;">Welcome to <span style="color:#024ddf;">TixHub</span></h1>
+                <p style="color:#646464;font-size:14px;">Buy and sell tickets with complete security</p>
+            </div>
+
+            <div class="card">
                 
-                if (profileError) {
-                    console.warn('⚠️ Profile warning:', profileError.message);
-                    // Profile failed but user is created - still return success
-                } else {
-                    console.log('✅ Profile created');
-                }
-            } catch (e) {
-                console.warn('⚠️ Profile error:', e.message);
-                // Don't fail the whole signup
+                <div style="display:flex;gap:8px;margin-bottom:24px;background:#f6f6f6;padding:4px;border-radius:4px;">
+                    <button id="loginTab" class="tab-btn active" onclick="switchTab('login')">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Sign In
+                    </button>
+                    <button id="signupTab" class="tab-btn" onclick="switchTab('signup')">
+                        <i class="fas fa-user-plus mr-2"></i> Sign Up
+                    </button>
+                </div>
+
+                <!-- LOGIN FORM -->
+                <div id="loginForm">
+                    <div style="margin-bottom:16px;">
+                        <input type="email" id="loginEmail" class="form-input" placeholder="Email address" />
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <input type="password" id="loginPassword" class="form-input" placeholder="Password" />
+                    </div>
+                    <div style="text-align:right;margin-bottom:16px;">
+                        <button onclick="showForgotPassword()" style="background:none;border:none;color:#024ddf;font-size:14px;cursor:pointer;">Forgot password?</button>
+                    </div>
+                    <button onclick="handleLogin()" id="loginBtn" class="btn-primary">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Sign In
+                    </button>
+                </div>
+
+                <!-- SIGNUP FORM -->
+                <div id="signupForm" style="display:none;">
+                    <div style="margin-bottom:16px;">
+                        <input type="text" id="signupName" class="form-input" placeholder="Full name" />
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <input type="email" id="signupEmail" class="form-input" placeholder="Email address" />
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <input type="password" id="signupPassword" class="form-input" placeholder="Create password (min 6 chars)" />
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm password" />
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
+                        <input type="checkbox" id="termsCheck" style="margin-top:4px;width:18px;height:18px;accent-color:#024ddf;" />
+                        <label style="font-size:12px;color:#646464;">
+                            I agree to the <a href="#" style="color:#024ddf;">Terms of Service</a> and <a href="#" style="color:#024ddf;">Privacy Policy</a>
+                        </label>
+                    </div>
+                    <button onclick="handleSignup()" id="signupBtn" class="btn-primary">
+                        <i class="fas fa-user-plus mr-2"></i> Create Account
+                    </button>
+                </div>
+
+                <div style="display:flex;align-items:center;gap:16px;margin:24px 0;color:#646464;font-size:12px;">
+                    <hr style="flex:1;border:none;border-top:1px solid #bfbfbf;" />
+                    <span>OR</span>
+                    <hr style="flex:1;border:none;border-top:1px solid #bfbfbf;" />
+                </div>
+
+                <div style="space-y:12px;">
+                    <button onclick="socialLogin('google')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
+                        <i class="fab fa-google" style="color:#ea4335;"></i> Continue with Google
+                    </button>
+                    <button onclick="socialLogin('facebook')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
+                        <i class="fab fa-facebook" style="color:#1877f2;"></i> Continue with Facebook
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORGOT PASSWORD MODAL -->
+    <div id="forgotModal" style="display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;">
+        <div style="background:#fff;border-radius:4px;max-width:400px;width:100%;padding:24px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+            <button onclick="closeForgotModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;color:#646464;cursor:pointer;">✕</button>
+            <div style="text-align:center;margin-bottom:24px;">
+                <div style="width:64px;height:64px;border-radius:50%;background:#024ddf;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 8px 20px rgba(2,77,223,0.2);">
+                    <i class="fas fa-key text-white text-xl"></i>
+                </div>
+                <h3 style="font-size:20px;font-weight:700;color:#121212;">Reset Password</h3>
+                <p style="color:#646464;font-size:14px;">Enter your email to receive reset instructions</p>
+            </div>
+            <div style="margin-bottom:16px;">
+                <input type="email" id="resetEmail" class="form-input" placeholder="Email address" />
+            </div>
+            <button onclick="handleForgotPassword()" class="btn-primary">
+                <i class="fas fa-paper-plane mr-2"></i> Send Reset Link
+            </button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        &copy; 2026 TixHub. All rights reserved.
+    </footer>
+
+    <!-- ======================================== -->
+    <!-- JAVASCRIPT - WITH BETTER ERROR HANDLING -->
+    <!-- ======================================== -->
+    <script>
+        // ============================================================
+        // CHECK IF FUNCTIONS ARE LOADED
+        // ============================================================
+        console.log('🚀 Auth page loaded');
+        
+        // Check if signUp exists
+        setTimeout(function() {
+            if (typeof signUp !== 'undefined') {
+                console.log('✅ signUp function is available!');
+            } else {
+                console.error('❌ signUp function NOT available!');
+                console.log('📌 Creating fallback signUp function...');
+                
+                // Create fallback function
+                window.signUp = async function(email, password, fullName) {
+                    console.log('🔐 FALLBACK signUp called');
+                    try {
+                        const { data, error } = await supabase.auth.signUp({
+                            email: email,
+                            password: password,
+                            options: { data: { full_name: fullName } }
+                        });
+                        if (error) throw error;
+                        return { success: true, data: data };
+                    } catch (error) {
+                        return { success: false, error: error.message };
+                    }
+                };
+                console.log('✅ Fallback signUp created');
+            }
+        }, 300);
+
+        // ============================================================
+        // STATE
+        // ============================================================
+        let currentTab = 'login';
+
+        // ============================================================
+        // MOBILE MENU
+        // ============================================================
+        document.getElementById('mobileToggle').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        });
+
+        // ============================================================
+        // TAB SWITCHING
+        // ============================================================
+        function switchTab(tab) {
+            currentTab = tab;
+            document.getElementById('loginTab').classList.toggle('active', tab === 'login');
+            document.getElementById('signupTab').classList.toggle('active', tab === 'signup');
+            document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+            console.log('📋 Switched to', tab, 'tab');
+        }
+
+        // ============================================================
+        // HANDLE LOGIN
+        // ============================================================
+        async function handleLogin() {
+            console.log('🔑 Login clicked');
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('loginBtn');
+            
+            if (!email || !password) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                
+                if (error) throw error;
+                
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
+                showToast('✅ Welcome back!', 'success');
+                setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+            } catch (error) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
+                showToast('❌ ' + (error.message || 'Invalid email or password'), 'error');
             }
         }
 
-        return { success: true, data: data };
+        // ============================================================
+        // HANDLE SIGNUP - FIXED
+        // ============================================================
+        async function handleSignup() {
+            console.log('📝 Signup clicked - START');
+            
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('signupConfirmPassword').value;
+            const terms = document.getElementById('termsCheck').checked;
+            const btn = document.getElementById('signupBtn');
+            
+            console.log('📋 Name:', name);
+            console.log('📋 Email:', email);
+            console.log('📋 Password length:', password.length);
+            
+            // Validate
+            if (!name || !email || !password || !confirm) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showToast('Password must be at least 6 characters', 'error');
+                return;
+            }
+            
+            if (password !== confirm) {
+                showToast('Passwords do not match', 'error');
+                return;
+            }
+            
+            if (!terms) {
+                showToast('Please agree to the Terms of Service', 'error');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
+            
+            try {
+                // Check if signUp exists, use it
+                if (typeof signUp === 'function') {
+                    console.log('📤 Using signUp from supabase.js');
+                    const result = await signUp(email, password, name);
+                    
+                    if (result.success) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                        showToast('✅ Account created! Redirecting...', 'success');
+                        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
+                    } else {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                        showToast('❌ ' + (result.error || 'Account creation failed'), 'error');
+                    }
+                } else {
+                    // Fallback: Use supabase directly
+                    console.log('📤 Using supabase directly (fallback)');
+                    const { data, error } = await supabase.auth.signUp({
+                        email: email,
+                        password: password,
+                        options: { data: { full_name: name } }
+                    });
+                    
+                    if (error) throw error;
+                    
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                    showToast('✅ Account created! Redirecting...', 'success');
+                    setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
+                }
+            } catch (error) {
+                console.error('❌ Error:', error);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                showToast('❌ ' + (error.message || 'Account creation failed'), 'error');
+            }
+        }
+
+        // ============================================================
+        // SOCIAL LOGIN
+        // ============================================================
+        function socialLogin(provider) {
+            showToast('Connecting to ' + provider + '...', 'info');
+            supabase.auth.signInWithOAuth({
+                provider: provider,
+                options: { redirectTo: window.location.origin + '/dashboard.html' }
+            });
+        }
+
+        // ============================================================
+        // FORGOT PASSWORD
+        // ============================================================
+        function showForgotPassword() {
+            document.getElementById('forgotModal').style.display = 'flex';
+        }
         
-    } catch (error) {
-        console.error('❌ Signup error:', error.message);
-        return { success: false, error: error.message };
-    }
-}
+        function closeForgotModal() {
+            document.getElementById('forgotModal').style.display = 'none';
+        }
 
-// Sign In
-async function signIn(email, password) {
-    try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
+        async function handleForgotPassword() {
+            const email = document.getElementById('resetEmail').value.trim();
+            if (!email) { showToast('Please enter your email', 'error'); return; }
+            
+            try {
+                const { error } = await supabase.auth.resetPasswordForEmail(email);
+                if (error) throw error;
+                showToast('📧 Reset link sent!', 'success');
+                closeForgotModal();
+            } catch (error) {
+                showToast('❌ Failed to send reset link', 'error');
+            }
+        }
 
-        if (error) throw error;
-        return { success: true, data: data };
-    } catch (error) {
-        console.error('❌ Sign in error:', error.message);
-        return { success: false, error: error.message };
-    }
-}
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function showToast(message, type = 'info') {
+            document.querySelectorAll('.toast').forEach(el => el.remove());
+            
+            const colors = { success: '#10b981', error: '#ef4444', info: '#024ddf' };
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fas ${icons[type]}" style="color:${colors[type]};"></i> <span>${message}</span>`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 4000);
+        }
 
-// Reset Password
-async function resetPassword(email) {
-    try {
-        const { error } = await supabase.auth.resetPasswordForEmail(email);
-        if (error) throw error;
-        return { success: true };
-    } catch (error) {
-        console.error('❌ Reset password error:', error.message);
-        return { success: false, error: error.message };
-    }
-}
-
-// Get Current User
-async function getCurrentUser() {
-    try {
-        const { data: { user } } = await supabase.auth.getUser();
-        return { success: true, user: user };
-    } catch (error) {
-        return { success: false, error: error.message };
-    }
-}
-
-// Sign Out
-async function signOut() {
-    try {
-        const { error } = await supabase.auth.signOut();
-        if (error) throw error;
-        return { success: true };
-    } catch (error) {
-        return { success: false, error: error.message };
-    }
-}
-
-// Check if logged in
-async function isLoggedIn() {
-    try {
-        const { data: { session } } = await supabase.auth.getSession();
-        return !!session;
-    } catch (error) {
-        return false;
-    }
-}
-
-// ============================================================
-// MAKE FUNCTIONS GLOBAL
-// ============================================================
-window.supabase = supabase;
-window.signUp = signUp;
-window.signIn = signIn;
-window.signOut = signOut;
-window.getCurrentUser = getCurrentUser;
-window.resetPassword = resetPassword;
-window.isLoggedIn = isLoggedIn;
-
-console.log('🔐 TixHub Auth Functions Ready');
-console.log('📦 Available: signUp, signIn, signOut, resetPassword');
+        // ============================================================
+        // INIT
+        // ============================================================
+        document.getElementById('loginEmail').focus();
+        console.log('💡 Open console (F12) to see what happens when you click Sign Up!');
+    </script>
+</body>
+</html>
