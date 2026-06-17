@@ -5,16 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Sign In - TixHub</title>
     
-    <!-- Tailwind CSS - Only for development -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    
-    <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
     <style>
@@ -208,7 +201,7 @@
                     </button>
                 </div>
 
-                <!-- LOGIN FORM - Wrapped in form -->
+                <!-- LOGIN FORM -->
                 <div id="loginForm">
                     <form id="loginFormElement" onsubmit="return false;">
                         <div style="margin-bottom:16px;">
@@ -226,7 +219,7 @@
                     </form>
                 </div>
 
-                <!-- SIGNUP FORM - Wrapped in form -->
+                <!-- SIGNUP FORM -->
                 <div id="signupForm" style="display:none;">
                     <form id="signupFormElement" onsubmit="return false;">
                         <div style="margin-bottom:16px;">
@@ -296,27 +289,21 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - FIXED ALL ISSUES -->
+    <!-- JAVASCRIPT - COMPLETE FIX -->
     <!-- ======================================== -->
     <script>
         // ============================================================
         // SUPABASE CONFIGURATION
         // ============================================================
-        // Check if supabase already exists to avoid duplicate declaration
-        if (typeof window._supabaseClient === 'undefined') {
-            const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
-            const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
-            
-            console.log('🚀 Auth page loaded');
-            console.log('📦 Supabase URL:', SUPABASE_URL);
-            
-            // Create Supabase client - store globally
-            window._supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            console.log('✅ Supabase client created');
-        }
+        const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
         
-        // Use the existing client
-        const supabase = window._supabaseClient;
+        console.log('🚀 Auth page loaded');
+        console.log('📦 Supabase URL:', SUPABASE_URL);
+        
+        // Create Supabase client
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client created');
 
         // ============================================================
         // DOM ELEMENTS
@@ -337,7 +324,7 @@
         const mobileMenu = document.getElementById('mobileMenu');
 
         // ============================================================
-        // CREATE ACCOUNT FUNCTION
+        // CREATE ACCOUNT FUNCTION - FIXED
         // ============================================================
         async function createAccount(email, password, fullName) {
             console.log('📤 Creating account for:', email);
@@ -355,10 +342,17 @@
 
                 if (error) {
                     console.error('❌ Signup error:', error.message);
+                    
+                    // Check if it's a duplicate email error
+                    if (error.message.includes('already registered')) {
+                        return { success: false, error: 'This email is already registered. Please sign in instead.' };
+                    }
+                    
                     return { success: false, error: error.message };
                 }
 
                 console.log('✅ Account created! User ID:', data.user?.id);
+                console.log('📧 Confirmation email sent to:', email);
                 
                 // Try to create profile
                 if (data.user) {
@@ -381,6 +375,16 @@
                     } catch (e) {
                         console.warn('⚠️ Profile error:', e.message);
                     }
+                }
+
+                // Check if email confirmation is required
+                if (data.user && data.user.confirmed_at === null) {
+                    console.log('📧 Email confirmation required - check your inbox!');
+                    return { 
+                        success: true, 
+                        data: data, 
+                        requiresConfirmation: true 
+                    };
                 }
 
                 return { success: true, data: data };
@@ -438,12 +442,22 @@
                     password: password
                 });
                 
-                if (error) throw error;
+                if (error) {
+                    if (error.message.includes('Email not confirmed')) {
+                        showToast('⚠️ Please confirm your email first. Check your inbox!', 'error');
+                    } else {
+                        showToast('❌ ' + (error.message || 'Invalid email or password'), 'error');
+                    }
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
+                    return;
+                }
                 
                 loginBtn.disabled = false;
                 loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
                 showToast('✅ Welcome back!', 'success');
                 setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+                
             } catch (error) {
                 loginBtn.disabled = false;
                 loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
@@ -452,7 +466,7 @@
         }
 
         // ============================================================
-        // HANDLE SIGNUP
+        // HANDLE SIGNUP - FIXED
         // ============================================================
         async function handleSignup() {
             console.log('📝 Signup button clicked');
@@ -498,11 +512,18 @@
                 if (result.success) {
                     signupBtn.disabled = false;
                     signupBtn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                    showToast('✅ Account created! Redirecting...', 'success');
-                    setTimeout(() => { 
-                        console.log('🔄 Redirecting to dashboard...');
-                        window.location.href = 'dashboard.html'; 
-                    }, 1500);
+                    
+                    if (result.requiresConfirmation) {
+                        showToast('📧 Check your email to confirm your account!', 'info');
+                        // Switch to login tab
+                        switchTab('login');
+                    } else {
+                        showToast('✅ Account created! Redirecting...', 'success');
+                        setTimeout(() => { 
+                            console.log('🔄 Redirecting to dashboard...');
+                            window.location.href = 'dashboard.html'; 
+                        }, 1500);
+                    }
                 } else {
                     signupBtn.disabled = false;
                     signupBtn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
@@ -587,38 +608,26 @@
         // ============================================================
         // BIND ALL EVENTS
         // ============================================================
-        // Tab switching
         loginTab.addEventListener('click', function() { switchTab('login'); });
         signupTab.addEventListener('click', function() { switchTab('signup'); });
-
-        // Login
         loginBtn.addEventListener('click', handleLogin);
-        
-        // Signup
         signupBtn.addEventListener('click', handleSignup);
-
-        // Forgot password
         forgotPasswordBtn.addEventListener('click', showForgotPassword);
         closeForgotBtn.addEventListener('click', closeForgotModal);
         resetPasswordBtn.addEventListener('click', handleForgotPassword);
-
-        // Social login
         googleBtn.addEventListener('click', function() { socialLogin('google'); });
         facebookBtn.addEventListener('click', function() { socialLogin('facebook'); });
 
-        // Mobile menu
         mobileToggle.addEventListener('click', function() {
             mobileMenu.classList.toggle('open');
         });
 
-        // Close mobile menu on link click
         document.querySelectorAll('#mobileMenu a').forEach(function(link) {
             link.addEventListener('click', function() {
                 mobileMenu.classList.remove('open');
             });
         });
 
-        // Enter key support
         document.getElementById('loginPassword').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') handleLogin();
         });
