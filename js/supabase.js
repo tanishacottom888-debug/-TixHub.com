@@ -13,9 +13,11 @@ console.log('✅ Supabase client initialized');
 // AUTH FUNCTIONS
 // ============================================================
 
-// Sign Up
+// Sign Up - Simplified
 async function signUp(email, password, fullName) {
     try {
+        console.log('📤 Signing up:', email);
+        
         const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
@@ -26,10 +28,42 @@ async function signUp(email, password, fullName) {
             }
         });
 
-        if (error) throw error;
+        if (error) {
+            console.error('❌ Signup error:', error.message);
+            return { success: false, error: error.message };
+        }
+
+        console.log('✅ User created:', data.user?.id);
+
+        // Try to create profile - but don't fail if it doesn't work
+        if (data.user) {
+            try {
+                const { error: profileError } = await supabase
+                    .from('profiles')
+                    .insert([
+                        {
+                            id: data.user.id,
+                            full_name: fullName,
+                            created_at: new Date().toISOString()
+                        }
+                    ]);
+                
+                if (profileError) {
+                    console.warn('⚠️ Profile warning:', profileError.message);
+                    // Profile failed but user is created - still return success
+                } else {
+                    console.log('✅ Profile created');
+                }
+            } catch (e) {
+                console.warn('⚠️ Profile error:', e.message);
+                // Don't fail the whole signup
+            }
+        }
+
         return { success: true, data: data };
+        
     } catch (error) {
-        console.error('Sign up error:', error.message);
+        console.error('❌ Signup error:', error.message);
         return { success: false, error: error.message };
     }
 }
@@ -45,7 +79,7 @@ async function signIn(email, password) {
         if (error) throw error;
         return { success: true, data: data };
     } catch (error) {
-        console.error('Sign in error:', error.message);
+        console.error('❌ Sign in error:', error.message);
         return { success: false, error: error.message };
     }
 }
@@ -57,7 +91,7 @@ async function resetPassword(email) {
         if (error) throw error;
         return { success: true };
     } catch (error) {
-        console.error('Reset password error:', error.message);
+        console.error('❌ Reset password error:', error.message);
         return { success: false, error: error.message };
     }
 }
@@ -68,7 +102,6 @@ async function getCurrentUser() {
         const { data: { user } } = await supabase.auth.getUser();
         return { success: true, user: user };
     } catch (error) {
-        console.error('Get user error:', error.message);
         return { success: false, error: error.message };
     }
 }
@@ -80,7 +113,6 @@ async function signOut() {
         if (error) throw error;
         return { success: true };
     } catch (error) {
-        console.error('Sign out error:', error.message);
         return { success: false, error: error.message };
     }
 }
@@ -95,7 +127,9 @@ async function isLoggedIn() {
     }
 }
 
-// Make functions globally available
+// ============================================================
+// MAKE FUNCTIONS GLOBAL
+// ============================================================
 window.supabase = supabase;
 window.signUp = signUp;
 window.signIn = signIn;
@@ -105,4 +139,4 @@ window.resetPassword = resetPassword;
 window.isLoggedIn = isLoggedIn;
 
 console.log('🔐 TixHub Auth Functions Ready');
-console.log('📦 Functions: signUp, signIn, signOut, resetPassword, getCurrentUser');
+console.log('📦 Available: signUp, signIn, signOut, resetPassword');
