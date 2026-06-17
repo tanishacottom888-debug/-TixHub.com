@@ -5,239 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Sign In - TixHub</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    
-    <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
+    <!-- YOUR SUPABASE FILE -->
+    <script src="js/supabase.js"></script>
+    
     <style>
-        /* ======================================== */
-        /* TICKETMASTER INSPIRED STYLES */
-        /* ======================================== */
-        :root {
-            --tm-blue: #024ddf;
-            --tm-blue-hover: #0139a7;
-            --tm-dark: #121212;
-            --tm-gray: #646464;
-            --tm-gray-light: #bfbfbf;
-            --tm-gray-bg: #f6f6f6;
-            --tm-white: #ffffff;
-            --tm-gold: #ffb932;
-            --tm-red: #eb0000;
-            --tm-text: #121212;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', 'Averta', helvetica, arial, sans-serif;
-            background: var(--tm-white);
-            color: var(--tm-text);
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--tm-gray-bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--tm-gray-light);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--tm-gray);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; }
         
         .btn-primary {
-            background: var(--tm-blue);
+            background: #024ddf;
             color: #fff;
             padding: 12px 28px;
             border-radius: 4px;
             font-weight: 600;
-            transition: all 0.3s ease;
             border: none;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 16px;
-            line-height: 1.4;
-            min-height: 44px;
-            text-decoration: none;
             width: 100%;
-            justify-content: center;
+            font-size: 16px;
+            min-height: 44px;
+            transition: all 0.3s ease;
         }
-        
-        .btn-primary:hover {
-            background: var(--tm-blue-hover);
-            transform: scale(1.02);
-        }
-        
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .btn-primary:hover { background: #0139a7; }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
         
         .btn-secondary {
             background: transparent;
-            color: var(--tm-text);
+            color: #121212;
             padding: 12px 28px;
             border-radius: 4px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            border: 1px solid var(--tm-gray-light);
+            border: 1px solid #bfbfbf;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            width: 100%;
             font-size: 16px;
-            line-height: 1.4;
             min-height: 44px;
-            text-decoration: none;
-            width: 100%;
-            justify-content: center;
-        }
-        
-        .btn-secondary:hover {
-            border-color: var(--tm-dark);
-            background: var(--tm-gray-bg);
-        }
-        
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: var(--tm-dark);
             transition: all 0.3s ease;
         }
-        
-        .navbar-top {
-            padding: 6px 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        
-        .navbar-main {
-            padding: 10px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .nav-link {
-            position: relative;
-            color: #9ca3af;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            font-size: 0.85rem;
-            padding: 6px 10px;
-            text-decoration: none;
-        }
-        
-        .nav-link:hover {
-            color: #fff;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: var(--tm-blue);
-            transition: width 0.3s ease;
-            border-radius: 2px;
-        }
-        
-        .nav-link:hover::after,
-        .nav-link-active::after {
-            width: 60%;
-        }
-        
-        .nav-link-active {
-            color: #fff;
-            font-weight: 600;
-        }
-        
-        .flag-circle {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            flex-shrink: 0;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #fff;
-        }
-        
-        .flag-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .card {
-            background: var(--tm-white);
-            border-radius: 4px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border: 1px solid var(--tm-gray-light);
-            overflow: hidden;
-        }
-        
-        .card:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
+        .btn-secondary:hover { background: #f6f6f6; }
         
         .form-input {
-            border: 1px solid var(--tm-gray-light);
+            border: 1px solid #bfbfbf;
             border-radius: 4px;
-            padding: 12px 16px 12px 44px;
+            padding: 12px 16px;
             font-size: 16px;
             width: 100%;
-            transition: all 0.3s ease;
-            background: var(--tm-white);
-            color: var(--tm-text);
             min-height: 44px;
+            background: #fff;
+            color: #121212;
+            transition: all 0.3s ease;
         }
+        .form-input:focus { outline: none; border-color: #024ddf; box-shadow: 0 0 0 3px rgba(2, 77, 223, 0.1); }
+        .form-input::placeholder { color: #646464; }
         
-        .form-input:focus {
-            outline: none;
-            border-color: var(--tm-blue);
-            box-shadow: 0 0 0 3px rgba(2, 77, 223, 0.1);
-        }
-        
-        .form-input::placeholder {
-            color: var(--tm-gray);
-        }
-        
-        .form-input.error {
-            border-color: var(--tm-red);
-        }
-        
-        .form-input.success {
-            border-color: #10b981;
+        .card {
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            border: 1px solid #bfbfbf;
+            padding: 24px;
         }
         
         .tab-btn {
@@ -246,107 +76,15 @@
             text-align: center;
             border-radius: 4px;
             font-weight: 600;
-            transition: all 0.3s ease;
             cursor: pointer;
             background: transparent;
             border: none;
-            color: var(--tm-gray);
+            color: #646464;
             font-size: 0.95rem;
-        }
-        
-        .tab-btn.active {
-            background: var(--tm-blue);
-            color: #fff;
-        }
-        
-        .tab-btn:hover:not(.active) {
-            color: var(--tm-text);
-            background: var(--tm-gray-bg);
-        }
-        
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 12px;
-            border-radius: 4px;
-            border: 1px solid var(--tm-gray-light);
-            background: var(--tm-white);
-            color: var(--tm-text);
             transition: all 0.3s ease;
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            min-height: 44px;
         }
-        
-        .social-btn:hover {
-            border-color: var(--tm-blue);
-            background: var(--tm-gray-bg);
-        }
-        
-        .password-toggle {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--tm-gray);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: none;
-            border: none;
-            padding: 4px;
-        }
-        
-        .password-toggle:hover {
-            color: var(--tm-text);
-        }
-        
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            color: var(--tm-gray);
-            font-size: 0.8rem;
-        }
-        
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--tm-gray-light);
-        }
-        
-        .mobile-menu {
-            display: none;
-            background: var(--tm-dark);
-            padding: 16px 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .mobile-menu.open {
-            display: block;
-        }
-        
-        .mobile-menu a {
-            display: block;
-            color: #9ca3af;
-            padding: 10px 0;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.9rem;
-        }
-        
-        .mobile-menu a:hover {
-            color: #fff;
-        }
-        
-        .mobile-menu a:last-child {
-            border-bottom: none;
-        }
+        .tab-btn.active { background: #024ddf; color: #fff; }
+        .tab-btn:hover:not(.active) { color: #121212; background: #f6f6f6; }
         
         .toast {
             position: fixed;
@@ -356,26 +94,20 @@
             z-index: 9999;
             padding: 14px 24px;
             border-radius: 4px;
-            background: var(--tm-dark);
+            background: #121212;
             color: #fff;
             font-size: 0.85rem;
             max-width: 90%;
             width: auto;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
             animation: slideUp 0.4s ease-out;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
         @keyframes slideUp {
             0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
             100% { transform: translateX(-50%) translateY(0); opacity: 1; }
-        }
-        
-        .modal-overlay {
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
         }
         
         .spinner {
@@ -387,43 +119,47 @@
             border-top-color: #fff;
             animation: spin 0.8s ease infinite;
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .flag-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
         }
+        .flag-circle img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: #121212;
+        }
+        .navbar-top { padding: 6px 40px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .navbar-main { padding: 10px 40px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-link { color: #9ca3af; text-decoration: none; font-size: 0.85rem; padding: 6px 10px; transition: all 0.3s ease; }
+        .nav-link:hover { color: #fff; }
+        .nav-link-active { color: #fff; font-weight: 600; }
+        
+        .mobile-menu { display: none; background: #121212; padding: 16px 20px; }
+        .mobile-menu.open { display: block; }
+        .mobile-menu a { display: block; color: #9ca3af; padding: 10px 0; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+        .mobile-menu a:hover { color: #fff; }
+        .mobile-menu a:last-child { border-bottom: none; }
+        
+        .footer { background: #121212; color: #fff; padding: 24px 40px 16px; margin-top: auto; text-align: center; font-size: 0.85rem; color: #9ca3af; }
         
         @media (max-width: 768px) {
-            .navbar-top {
-                padding: 6px 16px;
-            }
-            .navbar-main {
-                padding: 10px 16px;
-                flex-wrap: wrap;
-            }
-            .card {
-                padding: 20px !important;
-            }
-            .form-input {
-                font-size: 16px;
-                padding: 12px 14px 12px 40px;
-            }
-            .social-btn {
-                font-size: 0.8rem;
-                padding: 10px;
-            }
-        }
-        
-        .footer {
-            background: var(--tm-dark);
-            color: #fff;
-            padding: 24px 40px 16px;
-            margin-top: auto;
-        }
-        
-        @media (max-width: 768px) {
-            .footer {
-                padding: 20px 16px 12px;
-            }
+            .navbar-top { padding: 6px 16px; }
+            .navbar-main { padding: 10px 16px; flex-wrap: wrap; }
+            .card { padding: 16px !important; }
         }
     </style>
 </head>
@@ -441,30 +177,19 @@
                     </span>
                     <span>US</span>
                 </button>
-                <a href="#" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-1">
-                    <i class="fas fa-hotel"></i> Hotels
-                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Hotels</a>
                 <a href="sell.html" class="text-gray-400 hover:text-white transition text-sm">Sell</a>
                 <a href="#" class="text-gray-400 hover:text-white transition text-sm">Gift Cards</a>
                 <a href="#" class="text-gray-400 hover:text-white transition text-sm">Help</a>
                 <a href="#" class="text-gray-400 hover:text-white transition text-sm">VIP</a>
             </div>
-            <div class="flex items-center gap-4">
-                <span class="text-xs text-gray-500">PayPal Preferred</span>
-            </div>
         </div>
         
         <div class="navbar-main">
             <div class="flex items-center gap-6">
-                <a href="index.html" class="flex items-center gap-2">
-                    <div class="w-9 h-9 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
-                        <i class="fas fa-ticket-alt text-white text-sm"></i>
-                    </div>
-                    <span class="text-xl font-bold text-white tracking-tight">
-                        Tix<span class="text-[#6c5ce7]">Hub</span>
-                    </span>
+                <a href="index.html" class="flex items-center gap-2 text-white text-xl font-bold">
+                    Tix<span style="color:#6c5ce7;">Hub</span>
                 </a>
-                
                 <div class="hidden lg:flex items-center gap-1">
                     <a href="index.html" class="nav-link">Home</a>
                     <a href="buy.html" class="nav-link">Buy Tickets</a>
@@ -473,17 +198,10 @@
                     <a href="stadiums.html" class="nav-link">Stadiums</a>
                 </div>
             </div>
-            
             <div class="flex items-center gap-3">
-                <a href="auth.html" class="hidden md:block text-gray-300 hover:text-white transition text-sm font-medium">
-                    Sign In
-                </a>
-                <a href="auth.html" class="btn-primary text-sm px-5 py-2 min-h-[36px]">
-                    <i class="fas fa-rocket mr-1"></i> Get Started
-                </a>
-                <button id="mobileToggle" class="lg:hidden text-white text-2xl p-2">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <a href="auth.html" class="hidden md:block text-gray-300 hover:text-white transition text-sm">Sign In</a>
+                <a href="auth.html" class="btn-primary text-sm px-5 py-2 min-h-[36px]" style="width:auto;">Get Started</a>
+                <button id="mobileToggle" class="lg:hidden text-white text-2xl p-2">☰</button>
             </div>
         </div>
         
@@ -500,27 +218,23 @@
     <!-- ======================================== -->
     <!-- AUTH CONTAINER -->
     <!-- ======================================== -->
-    <div class="flex-1 flex items-center justify-center px-4 pt-28 pb-8">
-        <div class="w-full max-w-md">
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:100px 16px 40px;">
+        <div style="width:100%;max-width:400px;">
             
             <!-- Header -->
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 rounded-full bg-[#024ddf] flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/20">
+            <div style="text-align:center;margin-bottom:32px;">
+                <div style="width:64px;height:64px;border-radius:50%;background:#024ddf;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 8px 20px rgba(2,77,223,0.2);">
                     <i class="fas fa-ticket-alt text-white text-2xl"></i>
                 </div>
-                <h1 class="text-2xl md:text-3xl font-bold text-[#121212]">
-                    Welcome to <span class="text-[#024ddf]">TixHub</span>
-                </h1>
-                <p class="text-gray-500 text-sm">
-                    Buy and sell tickets with complete security
-                </p>
+                <h1 style="font-size:28px;font-weight:700;color:#121212;">Welcome to <span style="color:#024ddf;">TixHub</span></h1>
+                <p style="color:#646464;font-size:14px;">Buy and sell tickets with complete security</p>
             </div>
 
             <!-- Auth Card -->
-            <div class="card p-6 md:p-8">
+            <div class="card">
                 
                 <!-- Tab Switcher -->
-                <div class="flex gap-2 mb-6 bg-gray-50 p-1 rounded">
+                <div style="display:flex;gap:8px;margin-bottom:24px;background:#f6f6f6;padding:4px;border-radius:4px;">
                     <button id="loginTab" class="tab-btn active" onclick="switchTab('login')">
                         <i class="fas fa-sign-in-alt mr-2"></i> Sign In
                     </button>
@@ -529,112 +243,69 @@
                     </button>
                 </div>
 
-                <!-- ======================================== -->
                 <!-- LOGIN FORM -->
-                <!-- ======================================== -->
                 <div id="loginForm">
-                    <div class="space-y-4">
-                        <div class="relative">
-                            <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="email" id="loginEmail" class="form-input" placeholder="Email address" required />
+                    <div style="space-y:4;">
+                        <div style="margin-bottom:16px;">
+                            <input type="email" id="loginEmail" class="form-input" placeholder="Email address" />
                         </div>
-                        
-                        <div class="relative">
-                            <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="password" id="loginPassword" class="form-input" placeholder="Password" required minlength="6" />
-                            <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                        <div style="margin-bottom:16px;">
+                            <input type="password" id="loginPassword" class="form-input" placeholder="Password" />
                         </div>
-                        
-                        <div class="text-right">
-                            <button type="button" onclick="showForgotPassword()" class="text-sm text-[#024ddf] hover:text-[#0139a7] transition">
-                                Forgot password?
-                            </button>
+                        <div style="text-align:right;margin-bottom:16px;">
+                            <button onclick="showForgotPassword()" style="background:none;border:none;color:#024ddf;font-size:14px;cursor:pointer;">Forgot password?</button>
                         </div>
-                        
-                        <button type="button" onclick="handleLogin()" id="loginBtn" class="btn-primary">
+                        <button onclick="handleLogin()" id="loginBtn" class="btn-primary">
                             <i class="fas fa-sign-in-alt mr-2"></i> Sign In
                         </button>
                     </div>
                 </div>
 
-                <!-- ======================================== -->
                 <!-- SIGNUP FORM -->
-                <!-- ======================================== -->
-                <div id="signupForm" class="hidden">
-                    <div class="space-y-4">
-                        <div class="relative">
-                            <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="text" id="signupName" class="form-input" placeholder="Full name" required />
+                <div id="signupForm" style="display:none;">
+                    <div>
+                        <div style="margin-bottom:16px;">
+                            <input type="text" id="signupName" class="form-input" placeholder="Full name" />
                         </div>
-                        
-                        <div class="relative">
-                            <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="email" id="signupEmail" class="form-input" placeholder="Email address" required />
+                        <div style="margin-bottom:16px;">
+                            <input type="email" id="signupEmail" class="form-input" placeholder="Email address" />
                         </div>
-                        
-                        <div class="relative">
-                            <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="password" id="signupPassword" class="form-input" placeholder="Create password (min 6 chars)" required minlength="6" />
-                            <button type="button" class="password-toggle" onclick="togglePassword('signupPassword')">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                        <div style="margin-bottom:16px;">
+                            <input type="password" id="signupPassword" class="form-input" placeholder="Create password (min 6 chars)" />
                         </div>
-                        
-                        <div class="relative">
-                            <i class="fas fa-check-circle absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm password" required minlength="6" />
+                        <div style="margin-bottom:16px;">
+                            <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm password" />
                         </div>
-                        
-                        <div class="flex items-start gap-3">
-                            <input type="checkbox" id="termsCheck" class="mt-1 w-5 h-5 accent-[#024ddf] shrink-0" required />
-                            <label for="termsCheck" class="text-xs text-gray-500">
-                                I agree to the <a href="#" class="text-[#024ddf] hover:text-[#0139a7] transition">Terms of Service</a> 
-                                and <a href="#" class="text-[#024ddf] hover:text-[#0139a7] transition">Privacy Policy</a>
+                        <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
+                            <input type="checkbox" id="termsCheck" style="margin-top:4px;width:18px;height:18px;accent-color:#024ddf;" />
+                            <label style="font-size:12px;color:#646464;">
+                                I agree to the <a href="#" style="color:#024ddf;">Terms of Service</a> and <a href="#" style="color:#024ddf;">Privacy Policy</a>
                             </label>
                         </div>
-                        
-                        <button type="button" onclick="handleSignup()" id="signupBtn" class="btn-primary">
+                        <button onclick="handleSignup()" id="signupBtn" class="btn-primary">
                             <i class="fas fa-user-plus mr-2"></i> Create Account
                         </button>
                     </div>
                 </div>
 
-                <!-- ======================================== -->
                 <!-- DIVIDER -->
-                <!-- ======================================== -->
-                <div class="divider my-6">
+                <div style="display:flex;align-items:center;gap:16px;margin:24px 0;color:#646464;font-size:12px;">
+                    <hr style="flex:1;border:none;border-top:1px solid #bfbfbf;" />
                     <span>OR</span>
+                    <hr style="flex:1;border:none;border-top:1px solid #bfbfbf;" />
                 </div>
 
-                <!-- ======================================== -->
                 <!-- SOCIAL LOGIN -->
-                <!-- ======================================== -->
-                <div class="space-y-3">
-                    <button onclick="socialLogin('google')" class="social-btn">
-                        <i class="fab fa-google text-[#ea4335] text-lg"></i> Continue with Google
+                <div style="space-y:12px;">
+                    <button onclick="socialLogin('google')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
+                        <i class="fab fa-google" style="color:#ea4335;"></i> Continue with Google
                     </button>
-                    <button onclick="socialLogin('facebook')" class="social-btn">
-                        <i class="fab fa-facebook text-[#1877f2] text-lg"></i> Continue with Facebook
+                    <button onclick="socialLogin('facebook')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
+                        <i class="fab fa-facebook" style="color:#1877f2;"></i> Continue with Facebook
                     </button>
-                    <button onclick="socialLogin('apple')" class="social-btn">
-                        <i class="fab fa-apple text-[#121212] text-lg"></i> Continue with Apple
+                    <button onclick="socialLogin('apple')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
+                        <i class="fab fa-apple"></i> Continue with Apple
                     </button>
-                </div>
-            </div>
-
-            <div class="text-center mt-6">
-                <div class="flex flex-wrap justify-center gap-4 text-xs text-gray-500">
-                    <span class="flex items-center gap-1">
-                        <i class="fas fa-lock text-[#10b981] text-xs"></i> 256-bit SSL
-                    </span>
-                    <span class="flex items-center gap-1">
-                        <i class="fas fa-shield-alt text-[#024ddf] text-xs"></i> Escrow Protected
-                    </span>
-                    <span class="flex items-center gap-1">
-                        <i class="fas fa-headset text-[#024ddf] text-xs"></i> 24/7 Support
-                    </span>
                 </div>
             </div>
         </div>
@@ -643,30 +314,22 @@
     <!-- ======================================== -->
     <!-- FORGOT PASSWORD MODAL -->
     <!-- ======================================== -->
-    <div id="forgotModal" class="fixed inset-0 z-50 hidden">
-        <div class="modal-overlay absolute inset-0" onclick="closeForgotModal()"></div>
-        <div class="absolute inset-0 flex items-center justify-center p-4">
-            <div class="card max-w-md w-full p-6 md:p-8 relative">
-                <button onclick="closeForgotModal()" class="absolute top-4 right-4 text-gray-400 hover:text-[#121212] text-2xl transition">
-                    <i class="fas fa-times"></i>
-                </button>
-                
-                <div class="text-center mb-6">
-                    <div class="w-16 h-16 rounded-full bg-[#024ddf] flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-500/20">
-                        <i class="fas fa-key text-white text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-[#121212]">Reset Password</h3>
-                    <p class="text-gray-500 text-sm">Enter your email to receive reset instructions</p>
+    <div id="forgotModal" style="display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;">
+        <div style="background:#fff;border-radius:4px;max-width:400px;width:100%;padding:24px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+            <button onclick="closeForgotModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;color:#646464;cursor:pointer;">✕</button>
+            <div style="text-align:center;margin-bottom:24px;">
+                <div style="width:64px;height:64px;border-radius:50%;background:#024ddf;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 8px 20px rgba(2,77,223,0.2);">
+                    <i class="fas fa-key text-white text-xl"></i>
                 </div>
-                
-                <div class="relative mb-4">
-                    <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                    <input type="email" id="resetEmail" class="form-input" placeholder="Email address" required />
-                </div>
-                <button type="button" onclick="handleForgotPassword()" class="btn-primary">
-                    <i class="fas fa-paper-plane mr-2"></i> Send Reset Link
-                </button>
+                <h3 style="font-size:20px;font-weight:700;color:#121212;">Reset Password</h3>
+                <p style="color:#646464;font-size:14px;">Enter your email to receive reset instructions</p>
             </div>
+            <div style="margin-bottom:16px;">
+                <input type="email" id="resetEmail" class="form-input" placeholder="Email address" />
+            </div>
+            <button onclick="handleForgotPassword()" class="btn-primary">
+                <i class="fas fa-paper-plane mr-2"></i> Send Reset Link
+            </button>
         </div>
     </div>
 
@@ -674,29 +337,13 @@
     <!-- FOOTER -->
     <!-- ======================================== -->
     <footer class="footer">
-        <div class="max-w-7xl mx-auto text-center text-gray-500 text-sm">
-            &copy; 2026 TixHub. All rights reserved.
-        </div>
+        &copy; 2026 TixHub. All rights reserved.
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - WITH BETTER ERROR HANDLING -->
+    <!-- JAVASCRIPT -->
     <!-- ======================================== -->
     <script>
-        // ============================================================
-        // SUPABASE CONFIGURATION
-        // ============================================================
-        const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
-        
-        console.log('🔐 TixHub Auth Page Loaded');
-        console.log('📦 Supabase URL:', SUPABASE_URL);
-        console.log('🔑 Supabase Key:', SUPABASE_ANON_KEY.substring(0, 20) + '...');
-        
-        // Initialize Supabase
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        console.log('✅ Supabase client initialized');
-
         // ============================================================
         // STATE
         // ============================================================
@@ -705,24 +352,8 @@
         // ============================================================
         // MOBILE MENU
         // ============================================================
-        const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        mobileToggle.addEventListener('click', function() {
-            mobileMenu.classList.toggle('open');
-            const icon = this.querySelector('i');
-            if (mobileMenu.classList.contains('open')) {
-                icon.className = 'fas fa-times';
-            } else {
-                icon.className = 'fas fa-bars';
-            }
-        });
-
-        document.querySelectorAll('#mobileMenu a').forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenu.classList.remove('open');
-                document.querySelector('#mobileToggle i').className = 'fas fa-bars';
-            });
+        document.getElementById('mobileToggle').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('open');
         });
 
         // ============================================================
@@ -732,124 +363,72 @@
             currentTab = tab;
             document.getElementById('loginTab').classList.toggle('active', tab === 'login');
             document.getElementById('signupTab').classList.toggle('active', tab === 'signup');
-            document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
-            document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
-            console.log(`📋 Switched to ${tab} tab`);
+            document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+            console.log('📋 Switched to', tab, 'tab');
         }
 
         // ============================================================
-        // PASSWORD TOGGLE
-        // ============================================================
-        function togglePassword(inputId) {
-            const input = document.getElementById(inputId);
-            const icon = input.parentElement.querySelector('.password-toggle i');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.className = 'fas fa-eye-slash';
-            } else {
-                input.type = 'password';
-                icon.className = 'fas fa-eye';
-            }
-        }
-
-        // ============================================================
-        // HANDLE LOGIN - WITH CONSOLE LOGS
+        // HANDLE LOGIN
         // ============================================================
         async function handleLogin() {
-            console.log('🔑 Login button clicked');
+            console.log('🔑 Login clicked');
             
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
             const btn = document.getElementById('loginBtn');
-            
-            console.log('📧 Email:', email);
-            console.log('🔒 Password length:', password.length);
             
             if (!email || !password) {
                 showToast('Please fill in all fields', 'error');
                 return;
             }
             
-            if (password.length < 6) {
-                showToast('Password must be at least 6 characters', 'error');
-                return;
-            }
-            
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
             
-            try {
-                console.log('📤 Attempting login for:', email);
-                
-                const { data, error } = await supabase.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
-                
-                if (error) {
-                    console.error('❌ Login error:', error.message);
-                    throw error;
-                }
-                
-                console.log('✅ Login successful!');
-                console.log('👤 User:', data.user.email);
-                
+            const result = await signIn(email, password);
+            
+            if (result.success) {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
-                
-                showToast('✅ Welcome back! Redirecting...', 'success');
-                
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1500);
-                
-            } catch (error) {
-                console.error('❌ Login error:', error.message);
+                showToast('✅ Welcome back!', 'success');
+                setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+            } else {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
-                showToast('❌ ' + (error.message || 'Invalid email or password'), 'error');
+                showToast('❌ ' + (result.error || 'Invalid email or password'), 'error');
             }
         }
 
         // ============================================================
-        // HANDLE SIGNUP - WITH CONSOLE LOGS
+        // HANDLE SIGNUP
         // ============================================================
         async function handleSignup() {
-            console.log('📝 Signup button clicked');
+            console.log('📝 Signup clicked');
             
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
             const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            const confirm = document.getElementById('signupConfirmPassword').value;
             const terms = document.getElementById('termsCheck').checked;
             const btn = document.getElementById('signupBtn');
             
-            console.log('👤 Name:', name);
-            console.log('📧 Email:', email);
-            console.log('🔒 Password length:', password.length);
-            console.log('✅ Terms checked:', terms);
-            
-            // Validate
-            if (!name || !email || !password || !confirmPassword) {
-                console.log('❌ Validation failed: Missing fields');
+            if (!name || !email || !password || !confirm) {
                 showToast('Please fill in all fields', 'error');
                 return;
             }
             
             if (password.length < 6) {
-                console.log('❌ Validation failed: Password too short');
                 showToast('Password must be at least 6 characters', 'error');
                 return;
             }
             
-            if (password !== confirmPassword) {
-                console.log('❌ Validation failed: Passwords do not match');
+            if (password !== confirm) {
                 showToast('Passwords do not match', 'error');
                 return;
             }
             
             if (!terms) {
-                console.log('❌ Validation failed: Terms not accepted');
                 showToast('Please agree to the Terms of Service', 'error');
                 return;
             }
@@ -857,75 +436,17 @@
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
-            try {
-                console.log('📤 Attempting signup for:', email);
-                
-                const { data, error } = await supabase.auth.signUp({
-                    email: email,
-                    password: password,
-                    options: {
-                        data: {
-                            full_name: name,
-                        }
-                    }
-                });
-                
-                if (error) {
-                    console.error('❌ Signup error:', error.message);
-                    throw error;
-                }
-                
-                console.log('✅ Signup successful!');
-                console.log('👤 User created:', data.user.email);
-                console.log('🆔 User ID:', data.user.id);
-                
-                // Create profile in profiles table
-                if (data.user) {
-                    try {
-                        console.log('📝 Creating profile for user:', data.user.id);
-                        
-                        const { error: profileError } = await supabase
-                            .from('profiles')
-                            .insert([
-                                {
-                                    id: data.user.id,
-                                    full_name: name,
-                                    created_at: new Date().toISOString()
-                                }
-                            ]);
-                        
-                        if (profileError) {
-                            console.error('❌ Profile creation error:', profileError.message);
-                            showToast('⚠️ Account created but profile failed. Please contact support.', 'error');
-                            btn.disabled = false;
-                            btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                            return;
-                        } else {
-                            console.log('✅ Profile created successfully');
-                        }
-                    } catch (profileErr) {
-                        console.error('❌ Profile creation error:', profileErr.message);
-                        showToast('⚠️ Account created but profile failed. Please contact support.', 'error');
-                        btn.disabled = false;
-                        btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                        return;
-                    }
-                }
-                
+            const result = await signUp(email, password, name);
+            
+            if (result.success) {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                
-                showToast('🎉 Account created! Redirecting...', 'success');
-                
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1500);
-                
-            } catch (error) {
-                console.error('❌ Signup error:', error.message);
+                showToast('✅ Account created!', 'success');
+                setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+            } else {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                showToast('❌ ' + (error.message || 'Account creation failed'), 'error');
+                showToast('❌ ' + (result.error || 'Account creation failed'), 'error');
             }
         }
 
@@ -933,14 +454,10 @@
         // SOCIAL LOGIN
         // ============================================================
         function socialLogin(provider) {
-            console.log(`🔗 Social login with ${provider}`);
-            showToast(`Connecting to ${provider}...`, 'info');
-            
+            showToast('Connecting to ' + provider + '...', 'info');
             supabase.auth.signInWithOAuth({
                 provider: provider,
-                options: {
-                    redirectTo: window.location.origin + '/dashboard.html'
-                }
+                options: { redirectTo: window.location.origin + '/dashboard.html' }
             });
         }
 
@@ -948,49 +465,23 @@
         // FORGOT PASSWORD
         // ============================================================
         function showForgotPassword() {
-            document.getElementById('forgotModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+            document.getElementById('forgotModal').style.display = 'flex';
         }
-
+        
         function closeForgotModal() {
-            document.getElementById('forgotModal').classList.add('hidden');
-            document.body.style.overflow = '';
+            document.getElementById('forgotModal').style.display = 'none';
         }
 
         async function handleForgotPassword() {
             const email = document.getElementById('resetEmail').value.trim();
+            if (!email) { showToast('Please enter your email', 'error'); return; }
             
-            if (!email) {
-                showToast('Please enter your email', 'error');
-                return;
-            }
-            
-            try {
-                const { error } = await supabase.auth.resetPasswordForEmail(email);
-                
-                if (error) throw error;
-                
-                showToast('📧 Reset link sent to your email!', 'success');
+            const result = await resetPassword(email);
+            if (result.success) {
+                showToast('📧 Reset link sent!', 'success');
                 closeForgotModal();
-            } catch (error) {
-                showToast('❌ Failed to send reset link: ' + error.message, 'error');
-            }
-        }
-
-        // ============================================================
-        // CHECK IF ALREADY LOGGED IN
-        // ============================================================
-        async function checkAuth() {
-            try {
-                const { data: { session } } = await supabase.auth.getSession();
-                if (session) {
-                    console.log('👤 User already logged in, redirecting to dashboard');
-                    window.location.href = 'dashboard.html';
-                } else {
-                    console.log('👤 No active session');
-                }
-            } catch (error) {
-                console.error('⚠️ Session check error:', error);
+            } else {
+                showToast('❌ Failed to send reset link', 'error');
             }
         }
 
@@ -998,68 +489,25 @@
         // TOAST
         // ============================================================
         function showToast(message, type = 'info') {
-            document.querySelectorAll('.toast').forEach(t => t.remove());
+            document.querySelectorAll('.toast').forEach(el => el.remove());
             
-            const icons = {
-                success: 'fa-check-circle',
-                error: 'fa-exclamation-circle',
-                info: 'fa-info-circle'
-            };
-            
-            const colors = {
-                success: '#10b981',
-                error: '#ef4444',
-                info: '#024ddf'
-            };
+            const colors = { success: '#10b981', error: '#ef4444', info: '#024ddf' };
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
             
             const toast = document.createElement('div');
             toast.className = 'toast';
-            toast.innerHTML = `
-                <i class="fas ${icons[type]}" style="color: ${colors[type]}; font-size: 1.25rem;"></i>
-                <span>${message}</span>
-            `;
+            toast.innerHTML = `<i class="fas ${icons[type]}" style="color:${colors[type]};"></i> <span>${message}</span>`;
             document.body.appendChild(toast);
             
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(-50%) translateY(20px)';
-                toast.style.transition = 'all 0.4s ease';
-                setTimeout(() => toast.remove(), 400);
-            }, 4000);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
         }
-
-        // ============================================================
-        // KEYBOARD SHORTCUTS
-        // ============================================================
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeForgotModal();
-            if (e.ctrlKey && e.key === '1') {
-                e.preventDefault();
-                switchTab('login');
-            }
-            if (e.ctrlKey && e.key === '2') {
-                e.preventDefault();
-                switchTab('signup');
-            }
-        });
 
         // ============================================================
         // INIT
         // ============================================================
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Auth page initialized');
-            checkAuth();
-            document.getElementById('loginEmail').focus();
-        });
-
-        console.log('💡 Click Sign Up or Sign In buttons - they will respond!');
-        console.log('🔒 Using secure HTTPS connection to Supabase');
-        console.log('');
-        console.log('📋 To test signup:');
-        console.log('   1. Enter a valid email');
-        console.log('   2. Enter a password (min 6 chars)');
-        console.log('   3. Check the console for logs');
-        console.log('   4. Check Supabase dashboard for new user');
+        console.log('🚀 Auth page loaded');
+        console.log('📦 Supabase functions available:', typeof signUp === 'function' ? '✅' : '❌');
+        document.getElementById('loginEmail').focus();
     </script>
 </body>
 </html>
