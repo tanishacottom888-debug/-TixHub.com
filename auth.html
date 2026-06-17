@@ -10,7 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
-    <!-- YOUR SUPABASE FILE -->
     <script src="js/supabase.js"></script>
     
     <style>
@@ -33,21 +32,6 @@
         .btn-primary:hover { background: #0139a7; }
         .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
         
-        .btn-secondary {
-            background: transparent;
-            color: #121212;
-            padding: 12px 28px;
-            border-radius: 4px;
-            font-weight: 600;
-            border: 1px solid #bfbfbf;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-            min-height: 44px;
-            transition: all 0.3s ease;
-        }
-        .btn-secondary:hover { background: #f6f6f6; }
-        
         .form-input {
             border: 1px solid #bfbfbf;
             border-radius: 4px;
@@ -60,7 +44,6 @@
             transition: all 0.3s ease;
         }
         .form-input:focus { outline: none; border-color: #024ddf; box-shadow: 0 0 0 3px rgba(2, 77, 223, 0.1); }
-        .form-input::placeholder { color: #646464; }
         
         .card {
             background: #fff;
@@ -81,10 +64,8 @@
             border: none;
             color: #646464;
             font-size: 0.95rem;
-            transition: all 0.3s ease;
         }
         .tab-btn.active { background: #024ddf; color: #fff; }
-        .tab-btn:hover:not(.active) { color: #121212; background: #f6f6f6; }
         
         .toast {
             position: fixed;
@@ -121,40 +102,22 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        .flag-circle {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.2);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #fff;
-        }
+        .flag-circle { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); display: inline-flex; align-items: center; justify-content: center; background: #fff; }
         .flag-circle img { width: 100%; height: 100%; object-fit: cover; }
         
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: #121212;
-        }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #121212; }
         .navbar-top { padding: 6px 40px; border-bottom: 1px solid rgba(255,255,255,0.06); }
         .navbar-main { padding: 10px 40px; display: flex; align-items: center; justify-content: space-between; }
-        .nav-link { color: #9ca3af; text-decoration: none; font-size: 0.85rem; padding: 6px 10px; transition: all 0.3s ease; }
+        .nav-link { color: #9ca3af; text-decoration: none; font-size: 0.85rem; padding: 6px 10px; }
         .nav-link:hover { color: #fff; }
         .nav-link-active { color: #fff; font-weight: 600; }
         
         .mobile-menu { display: none; background: #121212; padding: 16px 20px; }
         .mobile-menu.open { display: block; }
-        .mobile-menu a { display: block; color: #9ca3af; padding: 10px 0; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+        .mobile-menu a { display: block; color: #9ca3af; padding: 10px 0; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .mobile-menu a:hover { color: #fff; }
-        .mobile-menu a:last-child { border-bottom: none; }
         
-        .footer { background: #121212; color: #fff; padding: 24px 40px 16px; margin-top: auto; text-align: center; font-size: 0.85rem; color: #9ca3af; }
+        .footer { background: #121212; color: #fff; padding: 24px 40px 16px; margin-top: auto; text-align: center; color: #9ca3af; font-size: 0.85rem; }
         
         @media (max-width: 768px) {
             .navbar-top { padding: 6px 16px; }
@@ -165,9 +128,6 @@
 </head>
 <body>
 
-    <!-- ======================================== -->
-    <!-- NAVIGATION -->
-    <!-- ======================================== -->
     <nav class="navbar">
         <div class="navbar-top hidden md:flex items-center justify-between">
             <div class="flex items-center gap-6">
@@ -179,9 +139,7 @@
                 </button>
                 <a href="#" class="text-gray-400 hover:text-white transition text-sm">Hotels</a>
                 <a href="sell.html" class="text-gray-400 hover:text-white transition text-sm">Sell</a>
-                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Gift Cards</a>
                 <a href="#" class="text-gray-400 hover:text-white transition text-sm">Help</a>
-                <a href="#" class="text-gray-400 hover:text-white transition text-sm">VIP</a>
             </div>
         </div>
         
@@ -221,7 +179,6 @@
     <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:100px 16px 40px;">
         <div style="width:100%;max-width:400px;">
             
-            <!-- Header -->
             <div style="text-align:center;margin-bottom:32px;">
                 <div style="width:64px;height:64px;border-radius:50%;background:#024ddf;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 8px 20px rgba(2,77,223,0.2);">
                     <i class="fas fa-ticket-alt text-white text-2xl"></i>
@@ -230,10 +187,8 @@
                 <p style="color:#646464;font-size:14px;">Buy and sell tickets with complete security</p>
             </div>
 
-            <!-- Auth Card -->
             <div class="card">
                 
-                <!-- Tab Switcher -->
                 <div style="display:flex;gap:8px;margin-bottom:24px;background:#f6f6f6;padding:4px;border-radius:4px;">
                     <button id="loginTab" class="tab-btn active" onclick="switchTab('login')">
                         <i class="fas fa-sign-in-alt mr-2"></i> Sign In
@@ -245,57 +200,51 @@
 
                 <!-- LOGIN FORM -->
                 <div id="loginForm">
-                    <div style="space-y:4;">
-                        <div style="margin-bottom:16px;">
-                            <input type="email" id="loginEmail" class="form-input" placeholder="Email address" />
-                        </div>
-                        <div style="margin-bottom:16px;">
-                            <input type="password" id="loginPassword" class="form-input" placeholder="Password" />
-                        </div>
-                        <div style="text-align:right;margin-bottom:16px;">
-                            <button onclick="showForgotPassword()" style="background:none;border:none;color:#024ddf;font-size:14px;cursor:pointer;">Forgot password?</button>
-                        </div>
-                        <button onclick="handleLogin()" id="loginBtn" class="btn-primary">
-                            <i class="fas fa-sign-in-alt mr-2"></i> Sign In
-                        </button>
+                    <div style="margin-bottom:16px;">
+                        <input type="email" id="loginEmail" class="form-input" placeholder="Email address" />
                     </div>
+                    <div style="margin-bottom:16px;">
+                        <input type="password" id="loginPassword" class="form-input" placeholder="Password" />
+                    </div>
+                    <div style="text-align:right;margin-bottom:16px;">
+                        <button onclick="showForgotPassword()" style="background:none;border:none;color:#024ddf;font-size:14px;cursor:pointer;">Forgot password?</button>
+                    </div>
+                    <button onclick="handleLogin()" id="loginBtn" class="btn-primary">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Sign In
+                    </button>
                 </div>
 
                 <!-- SIGNUP FORM -->
                 <div id="signupForm" style="display:none;">
-                    <div>
-                        <div style="margin-bottom:16px;">
-                            <input type="text" id="signupName" class="form-input" placeholder="Full name" />
-                        </div>
-                        <div style="margin-bottom:16px;">
-                            <input type="email" id="signupEmail" class="form-input" placeholder="Email address" />
-                        </div>
-                        <div style="margin-bottom:16px;">
-                            <input type="password" id="signupPassword" class="form-input" placeholder="Create password (min 6 chars)" />
-                        </div>
-                        <div style="margin-bottom:16px;">
-                            <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm password" />
-                        </div>
-                        <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
-                            <input type="checkbox" id="termsCheck" style="margin-top:4px;width:18px;height:18px;accent-color:#024ddf;" />
-                            <label style="font-size:12px;color:#646464;">
-                                I agree to the <a href="#" style="color:#024ddf;">Terms of Service</a> and <a href="#" style="color:#024ddf;">Privacy Policy</a>
-                            </label>
-                        </div>
-                        <button onclick="handleSignup()" id="signupBtn" class="btn-primary">
-                            <i class="fas fa-user-plus mr-2"></i> Create Account
-                        </button>
+                    <div style="margin-bottom:16px;">
+                        <input type="text" id="signupName" class="form-input" placeholder="Full name" />
                     </div>
+                    <div style="margin-bottom:16px;">
+                        <input type="email" id="signupEmail" class="form-input" placeholder="Email address" />
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <input type="password" id="signupPassword" class="form-input" placeholder="Create password (min 6 chars)" />
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm password" />
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
+                        <input type="checkbox" id="termsCheck" style="margin-top:4px;width:18px;height:18px;accent-color:#024ddf;" />
+                        <label style="font-size:12px;color:#646464;">
+                            I agree to the <a href="#" style="color:#024ddf;">Terms of Service</a> and <a href="#" style="color:#024ddf;">Privacy Policy</a>
+                        </label>
+                    </div>
+                    <button onclick="handleSignup()" id="signupBtn" class="btn-primary">
+                        <i class="fas fa-user-plus mr-2"></i> Create Account
+                    </button>
                 </div>
 
-                <!-- DIVIDER -->
                 <div style="display:flex;align-items:center;gap:16px;margin:24px 0;color:#646464;font-size:12px;">
                     <hr style="flex:1;border:none;border-top:1px solid #bfbfbf;" />
                     <span>OR</span>
                     <hr style="flex:1;border:none;border-top:1px solid #bfbfbf;" />
                 </div>
 
-                <!-- SOCIAL LOGIN -->
                 <div style="space-y:12px;">
                     <button onclick="socialLogin('google')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
                         <i class="fab fa-google" style="color:#ea4335;"></i> Continue with Google
@@ -303,17 +252,12 @@
                     <button onclick="socialLogin('facebook')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
                         <i class="fab fa-facebook" style="color:#1877f2;"></i> Continue with Facebook
                     </button>
-                    <button onclick="socialLogin('apple')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:4px;border:1px solid #bfbfbf;background:#fff;color:#121212;cursor:pointer;font-weight:500;min-height:44px;">
-                        <i class="fab fa-apple"></i> Continue with Apple
-                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ======================================== -->
     <!-- FORGOT PASSWORD MODAL -->
-    <!-- ======================================== -->
     <div id="forgotModal" style="display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;">
         <div style="background:#fff;border-radius:4px;max-width:400px;width:100%;padding:24px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
             <button onclick="closeForgotModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;color:#646464;cursor:pointer;">✕</button>
@@ -333,17 +277,35 @@
         </div>
     </div>
 
-    <!-- ======================================== -->
-    <!-- FOOTER -->
-    <!-- ======================================== -->
     <footer class="footer">
         &copy; 2026 TixHub. All rights reserved.
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT -->
+    <!-- JAVASCRIPT - WITH ALERT FOR DEBUGGING -->
     <!-- ======================================== -->
     <script>
+        // ============================================================
+        // CHECK IF SUPABASE IS WORKING
+        // ============================================================
+        console.log('🚀 Auth page loaded');
+        
+        // Test Supabase connection
+        async function testConnection() {
+            try {
+                const { data, error } = await supabase.from('profiles').select('count').limit(1);
+                if (error) {
+                    console.warn('⚠️ Supabase connection test:', error.message);
+                    showToast('⚠️ Database not connected. Check Supabase.', 'error');
+                } else {
+                    console.log('✅ Supabase connection OK');
+                }
+            } catch (e) {
+                console.warn('⚠️ Connection test failed:', e.message);
+            }
+        }
+        testConnection();
+
         // ============================================================
         // STATE
         // ============================================================
@@ -401,10 +363,10 @@
         }
 
         // ============================================================
-        // HANDLE SIGNUP
+        // HANDLE SIGNUP - WITH BETTER LOGGING
         // ============================================================
         async function handleSignup() {
-            console.log('📝 Signup clicked');
+            console.log('📝 Signup clicked - START');
             
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
@@ -413,40 +375,66 @@
             const terms = document.getElementById('termsCheck').checked;
             const btn = document.getElementById('signupBtn');
             
+            console.log('📋 Name:', name);
+            console.log('📋 Email:', email);
+            console.log('📋 Password length:', password.length);
+            console.log('📋 Terms checked:', terms);
+            
+            // Validate
             if (!name || !email || !password || !confirm) {
+                console.log('❌ Missing fields');
                 showToast('Please fill in all fields', 'error');
                 return;
             }
             
             if (password.length < 6) {
+                console.log('❌ Password too short');
                 showToast('Password must be at least 6 characters', 'error');
                 return;
             }
             
             if (password !== confirm) {
+                console.log('❌ Passwords do not match');
                 showToast('Passwords do not match', 'error');
                 return;
             }
             
             if (!terms) {
+                console.log('❌ Terms not accepted');
                 showToast('Please agree to the Terms of Service', 'error');
                 return;
             }
             
+            console.log('✅ All validations passed');
+            
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
-            const result = await signUp(email, password, name);
-            
-            if (result.success) {
+            try {
+                console.log('📤 Calling signUp function...');
+                const result = await signUp(email, password, name);
+                console.log('📥 Result:', result);
+                
+                if (result.success) {
+                    console.log('✅ Signup successful!');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                    showToast('✅ Account created! Redirecting...', 'success');
+                    setTimeout(() => { 
+                        console.log('🔄 Redirecting to dashboard...');
+                        window.location.href = 'dashboard.html'; 
+                    }, 1500);
+                } else {
+                    console.log('❌ Signup failed:', result.error);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                    showToast('❌ ' + (result.error || 'Account creation failed'), 'error');
+                }
+            } catch (error) {
+                console.error('❌ Unexpected error:', error);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                showToast('✅ Account created!', 'success');
-                setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
-            } else {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                showToast('❌ ' + (result.error || 'Account creation failed'), 'error');
+                showToast('❌ ' + (error.message || 'Something went wrong'), 'error');
             }
         }
 
@@ -499,15 +487,14 @@
             toast.innerHTML = `<i class="fas ${icons[type]}" style="color:${colors[type]};"></i> <span>${message}</span>`;
             document.body.appendChild(toast);
             
-            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 4000);
         }
 
         // ============================================================
         // INIT
         // ============================================================
-        console.log('🚀 Auth page loaded');
-        console.log('📦 Supabase functions available:', typeof signUp === 'function' ? '✅' : '❌');
         document.getElementById('loginEmail').focus();
+        console.log('💡 Open console (F12) to see what happens when you click Sign Up!');
     </script>
 </body>
 </html>
