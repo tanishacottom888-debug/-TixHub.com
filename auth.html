@@ -127,9 +127,7 @@
 </head>
 <body>
 
-    <!-- ======================================== -->
     <!-- NAVIGATION -->
-    <!-- ======================================== -->
     <nav class="navbar">
         <div class="navbar-top hidden md:flex items-center justify-between">
             <div class="flex items-center gap-6">
@@ -175,9 +173,7 @@
         </div>
     </nav>
 
-    <!-- ======================================== -->
     <!-- AUTH CONTAINER -->
-    <!-- ======================================== -->
     <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:100px 16px 40px;">
         <div style="width:100%;max-width:400px;">
             
@@ -289,24 +285,59 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - EVERYTHING HERE, NO EXTERNAL FILE -->
+    <!-- JAVASCRIPT - ALL IN ONE FILE -->
     <!-- ======================================== -->
     <script>
-        // ============================================================
-        // 1. SUPABASE CONFIGURATION - DECLARED ONCE
-        // ============================================================
+        // SUPABASE CONFIGURATION
         const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
         
         console.log('🚀 Auth page loaded');
         console.log('📦 Supabase URL:', SUPABASE_URL);
         
-        // Create Supabase client - ONLY ONCE
+        // CREATE SUPABASE CLIENT - ONLY ONCE
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         console.log('✅ Supabase client created');
 
         // ============================================================
-        // 2. AUTH FUNCTIONS
+        // DOM ELEMENTS
+        // ============================================================
+        const loginTab = document.getElementById('loginTab');
+        const signupTab = document.getElementById('signupTab');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+        const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+        const closeForgotBtn = document.getElementById('closeForgotBtn');
+        const forgotModal = document.getElementById('forgotModal');
+        const googleBtn = document.getElementById('googleBtn');
+        const facebookBtn = document.getElementById('facebookBtn');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        // ============================================================
+        // TAB SWITCHING
+        // ============================================================
+        function switchTab(tab) {
+            console.log('📋 Switching to:', tab);
+            
+            if (tab === 'login') {
+                loginTab.classList.add('active');
+                signupTab.classList.remove('active');
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+            } else {
+                signupTab.classList.add('active');
+                loginTab.classList.remove('active');
+                signupForm.style.display = 'block';
+                loginForm.style.display = 'none';
+            }
+        }
+
+        // ============================================================
+        // AUTH FUNCTIONS
         // ============================================================
         async function signUp(email, password, fullName) {
             console.log('📤 Creating account for:', email);
@@ -324,9 +355,6 @@
 
                 if (error) {
                     console.error('❌ Signup error:', error.message);
-                    if (error.message.includes('already registered')) {
-                        return { success: false, error: 'This email is already registered. Please sign in.' };
-                    }
                     return { success: false, error: error.message };
                 }
 
@@ -382,44 +410,7 @@
         }
 
         // ============================================================
-        // 3. DOM ELEMENTS
-        // ============================================================
-        const loginTab = document.getElementById('loginTab');
-        const signupTab = document.getElementById('signupTab');
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
-        const loginBtn = document.getElementById('loginBtn');
-        const signupBtn = document.getElementById('signupBtn');
-        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
-        const resetPasswordBtn = document.getElementById('resetPasswordBtn');
-        const closeForgotBtn = document.getElementById('closeForgotBtn');
-        const forgotModal = document.getElementById('forgotModal');
-        const googleBtn = document.getElementById('googleBtn');
-        const facebookBtn = document.getElementById('facebookBtn');
-        const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        // ============================================================
-        // 4. TAB SWITCHING
-        // ============================================================
-        function switchTab(tab) {
-            console.log('📋 Switching to:', tab);
-            
-            if (tab === 'login') {
-                loginTab.classList.add('active');
-                signupTab.classList.remove('active');
-                loginForm.style.display = 'block';
-                signupForm.style.display = 'none';
-            } else {
-                signupTab.classList.add('active');
-                loginTab.classList.remove('active');
-                signupForm.style.display = 'block';
-                loginForm.style.display = 'none';
-            }
-        }
-
-        // ============================================================
-        // 5. HANDLE LOGIN
+        // HANDLE LOGIN
         // ============================================================
         async function handleLogin() {
             console.log('🔑 Login clicked');
@@ -456,7 +447,7 @@
         }
 
         // ============================================================
-        // 6. HANDLE SIGNUP
+        // HANDLE SIGNUP
         // ============================================================
         async function handleSignup() {
             console.log('📝 Signup button clicked');
@@ -466,10 +457,6 @@
             const password = document.getElementById('signupPassword').value;
             const confirm = document.getElementById('signupConfirmPassword').value;
             const terms = document.getElementById('termsCheck').checked;
-            
-            console.log('📋 Name:', name);
-            console.log('📋 Email:', email);
-            console.log('📋 Password length:', password.length);
             
             if (!name || !email || !password || !confirm) {
                 showToast('Please fill in all fields', 'error');
@@ -517,7 +504,7 @@
         }
 
         // ============================================================
-        // 7. SOCIAL LOGIN
+        // SOCIAL LOGIN
         // ============================================================
         function socialLogin(provider) {
             showToast('Connecting to ' + provider + '...', 'info');
@@ -528,7 +515,7 @@
         }
 
         // ============================================================
-        // 8. FORGOT PASSWORD
+        // FORGOT PASSWORD
         // ============================================================
         function showForgotPassword() {
             forgotModal.style.display = 'flex';
@@ -556,7 +543,7 @@
         }
 
         // ============================================================
-        // 9. CHECK AUTH
+        // CHECK AUTH
         // ============================================================
         async function checkAuth() {
             try {
@@ -570,7 +557,7 @@
         }
 
         // ============================================================
-        // 10. TOAST
+        // TOAST
         // ============================================================
         function showToast(message, type = 'info') {
             document.querySelectorAll('.toast').forEach(el => el.remove());
@@ -587,7 +574,7 @@
         }
 
         // ============================================================
-        // 11. BIND EVENTS
+        // BIND EVENTS
         // ============================================================
         loginTab.addEventListener('click', function() { switchTab('login'); });
         signupTab.addEventListener('click', function() { switchTab('signup'); });
@@ -617,7 +604,7 @@
         });
 
         // ============================================================
-        // 12. INIT
+        // INIT
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             console.log('💡 Ready! Click Sign Up to create an account.');
