@@ -7,24 +7,10 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
-    <!-- LOAD SUPABASE FILE -->
-    <script src="js/supabase.js"></script>
-    
-    <!-- CHECK IF FUNCTIONS LOADED -->
-    <script>
-        // Wait for supabase.js to load
-        setTimeout(function() {
-            if (typeof signUp !== 'undefined') {
-                console.log('✅ signUp function is loaded!');
-            } else {
-                console.error('❌ signUp function NOT loaded!');
-                console.log('📌 Check that js/supabase.js exists and is correct');
-            }
-        }, 500);
-    </script>
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -80,6 +66,7 @@
             font-size: 0.95rem;
         }
         .tab-btn.active { background: #024ddf; color: #fff; }
+        .tab-btn:hover:not(.active) { background: #f6f6f6; }
         
         .toast {
             position: fixed;
@@ -122,8 +109,9 @@
         .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #121212; }
         .navbar-top { padding: 6px 40px; border-bottom: 1px solid rgba(255,255,255,0.06); }
         .navbar-main { padding: 10px 40px; display: flex; align-items: center; justify-content: space-between; }
-        .nav-link { color: #9ca3af; text-decoration: none; font-size: 0.85rem; padding: 6px 10px; }
+        .nav-link { color: #9ca3af; text-decoration: none; font-size: 0.85rem; padding: 6px 10px; transition: all 0.3s ease; }
         .nav-link:hover { color: #fff; }
+        .nav-link-active { color: #fff; font-weight: 600; }
         
         .mobile-menu { display: none; background: #121212; padding: 16px 20px; }
         .mobile-menu.open { display: block; }
@@ -141,6 +129,9 @@
 </head>
 <body>
 
+    <!-- ======================================== -->
+    <!-- NAVIGATION -->
+    <!-- ======================================== -->
     <nav class="navbar">
         <div class="navbar-top hidden md:flex items-center justify-between">
             <div class="flex items-center gap-6">
@@ -295,40 +286,76 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - WITH BETTER ERROR HANDLING -->
+    <!-- JAVASCRIPT - COMPLETE WORKING SOLUTION -->
     <!-- ======================================== -->
     <script>
         // ============================================================
-        // CHECK IF FUNCTIONS ARE LOADED
+        // SUPABASE CONFIGURATION - DIRECT IN THIS FILE
         // ============================================================
-        console.log('🚀 Auth page loaded');
+        const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
         
-        // Check if signUp exists
-        setTimeout(function() {
-            if (typeof signUp !== 'undefined') {
-                console.log('✅ signUp function is available!');
-            } else {
-                console.error('❌ signUp function NOT available!');
-                console.log('📌 Creating fallback signUp function...');
-                
-                // Create fallback function
-                window.signUp = async function(email, password, fullName) {
-                    console.log('🔐 FALLBACK signUp called');
-                    try {
-                        const { data, error } = await supabase.auth.signUp({
-                            email: email,
-                            password: password,
-                            options: { data: { full_name: fullName } }
-                        });
-                        if (error) throw error;
-                        return { success: true, data: data };
-                    } catch (error) {
-                        return { success: false, error: error.message };
+        console.log('🚀 Auth page loaded');
+        console.log('📦 Supabase URL:', SUPABASE_URL);
+        
+        // Create Supabase client
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client created');
+
+        // ============================================================
+        // SIGNUP FUNCTION - DIRECTLY IN THIS FILE
+        // ============================================================
+        async function createAccount(email, password, fullName) {
+            console.log('📤 Creating account for:', email);
+            
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: fullName,
+                        }
                     }
-                };
-                console.log('✅ Fallback signUp created');
+                });
+
+                if (error) {
+                    console.error('❌ Signup error:', error.message);
+                    return { success: false, error: error.message };
+                }
+
+                console.log('✅ Account created! User ID:', data.user?.id);
+                
+                // Try to create profile (optional - don't fail if it doesn't work)
+                if (data.user) {
+                    try {
+                        const { error: profileError } = await supabase
+                            .from('profiles')
+                            .insert([
+                                {
+                                    id: data.user.id,
+                                    full_name: fullName,
+                                    created_at: new Date().toISOString()
+                                }
+                            ]);
+                        
+                        if (profileError) {
+                            console.warn('⚠️ Profile warning:', profileError.message);
+                        } else {
+                            console.log('✅ Profile created');
+                        }
+                    } catch (e) {
+                        console.warn('⚠️ Profile error:', e.message);
+                    }
+                }
+
+                return { success: true, data: data };
+                
+            } catch (error) {
+                console.error('❌ Unexpected error:', error.message);
+                return { success: false, error: error.message };
             }
-        }, 300);
+        }
 
         // ============================================================
         // STATE
@@ -395,7 +422,7 @@
         // HANDLE SIGNUP - FIXED
         // ============================================================
         async function handleSignup() {
-            console.log('📝 Signup clicked - START');
+            console.log('📝 Signup button clicked - START');
             
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
@@ -407,6 +434,7 @@
             console.log('📋 Name:', name);
             console.log('📋 Email:', email);
             console.log('📋 Password length:', password.length);
+            console.log('📋 Terms checked:', terms);
             
             // Validate
             if (!name || !email || !password || !confirm) {
@@ -433,42 +461,27 @@
             btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
             try {
-                // Check if signUp exists, use it
-                if (typeof signUp === 'function') {
-                    console.log('📤 Using signUp from supabase.js');
-                    const result = await signUp(email, password, name);
-                    
-                    if (result.success) {
-                        btn.disabled = false;
-                        btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                        showToast('✅ Account created! Redirecting...', 'success');
-                        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
-                    } else {
-                        btn.disabled = false;
-                        btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                        showToast('❌ ' + (result.error || 'Account creation failed'), 'error');
-                    }
-                } else {
-                    // Fallback: Use supabase directly
-                    console.log('📤 Using supabase directly (fallback)');
-                    const { data, error } = await supabase.auth.signUp({
-                        email: email,
-                        password: password,
-                        options: { data: { full_name: name } }
-                    });
-                    
-                    if (error) throw error;
-                    
+                const result = await createAccount(email, password, name);
+                console.log('📥 Result:', result);
+                
+                if (result.success) {
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
                     showToast('✅ Account created! Redirecting...', 'success');
-                    setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
+                    setTimeout(() => { 
+                        console.log('🔄 Redirecting to dashboard...');
+                        window.location.href = 'dashboard.html'; 
+                    }, 1500);
+                } else {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                    showToast('❌ ' + (result.error || 'Account creation failed'), 'error');
                 }
             } catch (error) {
-                console.error('❌ Error:', error);
+                console.error('❌ Unexpected error:', error);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
-                showToast('❌ ' + (error.message || 'Account creation failed'), 'error');
+                showToast('❌ ' + (error.message || 'Something went wrong'), 'error');
             }
         }
 
@@ -509,6 +522,22 @@
         }
 
         // ============================================================
+        // CHECK IF ALREADY LOGGED IN
+        // ============================================================
+        async function checkAuth() {
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session) {
+                    console.log('👤 Already logged in, redirecting...');
+                    window.location.href = 'dashboard.html';
+                }
+            } catch (error) {
+                console.log('⚠️ Not logged in');
+            }
+        }
+        checkAuth();
+
+        // ============================================================
         // TOAST
         // ============================================================
         function showToast(message, type = 'info') {
@@ -529,7 +558,8 @@
         // INIT
         // ============================================================
         document.getElementById('loginEmail').focus();
-        console.log('💡 Open console (F12) to see what happens when you click Sign Up!');
+        console.log('💡 Ready! Click Sign Up to create an account.');
+        console.log('📌 All Supabase functions are in this file - no external dependencies!');
     </script>
 </body>
 </html>
