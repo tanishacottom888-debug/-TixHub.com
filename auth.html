@@ -5,17 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Sign In - TixHub</title>
     
-    <!-- Tailwind CSS - Only for development -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    
-    <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    
+    <!-- IMPORTANT: Load supabase.js FIRST -->
+    <script src="js/supabase.js"></script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -296,27 +292,23 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - FIXED: NO DUPLICATE DECLARATION -->
+    <!-- JAVASCRIPT - NO DUPLICATE DECLARATION -->
     <!-- ======================================== -->
     <script>
         // ============================================================
-        // SUPABASE CONFIGURATION - ONLY DECLARED ONCE
+        // DO NOT DECLARE supabase HERE - it's already in supabase.js
         // ============================================================
-        // Check if supabase already exists to avoid duplicate declaration
-        if (typeof window._supabaseClient === 'undefined') {
-            const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
-            const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
-            
-            console.log('🚀 Auth page loaded');
-            console.log('📦 Supabase URL:', SUPABASE_URL);
-            
-            // Create Supabase client - store globally
-            window._supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            console.log('✅ Supabase client created');
-        }
+        console.log('🚀 Auth page loaded');
         
-        // Use the existing client
-        const supabase = window._supabaseClient;
+        // Check if signUp function is available from supabase.js
+        setTimeout(function() {
+            if (typeof signUp !== 'undefined') {
+                console.log('✅ signUp function is available from supabase.js');
+            } else {
+                console.error('❌ signUp function NOT found!');
+                console.log('⚠️ Make sure js/supabase.js is loaded correctly');
+            }
+        }, 500);
 
         // ============================================================
         // DOM ELEMENTS
@@ -335,74 +327,6 @@
         const facebookBtn = document.getElementById('facebookBtn');
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileMenu = document.getElementById('mobileMenu');
-
-        // ============================================================
-        // CREATE ACCOUNT FUNCTION
-        // ============================================================
-        async function createAccount(email, password, fullName) {
-            console.log('📤 Creating account for:', email);
-            
-            try {
-                const { data, error } = await supabase.auth.signUp({
-                    email: email,
-                    password: password,
-                    options: {
-                        data: {
-                            full_name: fullName,
-                        }
-                    }
-                });
-
-                if (error) {
-                    console.error('❌ Signup error:', error.message);
-                    
-                    if (error.message.includes('already registered')) {
-                        return { success: false, error: 'This email is already registered. Please sign in instead.' };
-                    }
-                    
-                    return { success: false, error: error.message };
-                }
-
-                console.log('✅ Account created! User ID:', data.user?.id);
-                
-                // Try to create profile
-                if (data.user) {
-                    try {
-                        const { error: profileError } = await supabase
-                            .from('profiles')
-                            .insert([
-                                {
-                                    id: data.user.id,
-                                    full_name: fullName,
-                                    created_at: new Date().toISOString()
-                                }
-                            ]);
-                        
-                        if (profileError) {
-                            console.warn('⚠️ Profile warning:', profileError.message);
-                        } else {
-                            console.log('✅ Profile created');
-                        }
-                    } catch (e) {
-                        console.warn('⚠️ Profile error:', e.message);
-                    }
-                }
-
-                if (data.user && data.user.confirmed_at === null) {
-                    return { 
-                        success: true, 
-                        data: data, 
-                        requiresConfirmation: true 
-                    };
-                }
-
-                return { success: true, data: data };
-                
-            } catch (error) {
-                console.error('❌ Unexpected error:', error.message);
-                return { success: false, error: error.message };
-            }
-        }
 
         // ============================================================
         // STATE
@@ -429,7 +353,7 @@
         }
 
         // ============================================================
-        // HANDLE LOGIN
+        // HANDLE LOGIN - Uses signIn from supabase.js
         // ============================================================
         async function handleLogin() {
             console.log('🔑 Login clicked');
@@ -446,27 +370,19 @@
             loginBtn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
             
             try {
-                const { data, error } = await supabase.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
+                // Use signIn from supabase.js
+                const result = await signIn(email, password);
                 
-                if (error) {
-                    if (error.message.includes('Email not confirmed')) {
-                        showToast('⚠️ Please confirm your email first. Check your inbox!', 'error');
-                    } else {
-                        showToast('❌ ' + (error.message || 'Invalid email or password'), 'error');
-                    }
+                if (result.success) {
                     loginBtn.disabled = false;
                     loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
-                    return;
+                    showToast('✅ Welcome back!', 'success');
+                    setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+                } else {
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
+                    showToast('❌ ' + (result.error || 'Invalid email or password'), 'error');
                 }
-                
-                loginBtn.disabled = false;
-                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
-                showToast('✅ Welcome back!', 'success');
-                setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
-                
             } catch (error) {
                 loginBtn.disabled = false;
                 loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
@@ -475,7 +391,7 @@
         }
 
         // ============================================================
-        // HANDLE SIGNUP
+        // HANDLE SIGNUP - Uses signUp from supabase.js
         // ============================================================
         async function handleSignup() {
             console.log('📝 Signup button clicked');
@@ -515,7 +431,8 @@
             signupBtn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
             try {
-                const result = await createAccount(email, password, name);
+                // Use signUp from supabase.js
+                const result = await signUp(email, password, name);
                 console.log('📥 Result:', result);
                 
                 if (result.success) {
@@ -550,14 +467,15 @@
         // ============================================================
         function socialLogin(provider) {
             showToast('Connecting to ' + provider + '...', 'info');
-            supabase.auth.signInWithOAuth({
+            // Use supabase from the global scope (from supabase.js)
+            window.supabase.auth.signInWithOAuth({
                 provider: provider,
                 options: { redirectTo: window.location.origin + '/dashboard.html' }
             });
         }
 
         // ============================================================
-        // FORGOT PASSWORD
+        // FORGOT PASSWORD - Uses resetPassword from supabase.js
         // ============================================================
         function showForgotPassword() {
             forgotModal.style.display = 'flex';
@@ -572,10 +490,13 @@
             if (!email) { showToast('Please enter your email', 'error'); return; }
             
             try {
-                const { error } = await supabase.auth.resetPasswordForEmail(email);
-                if (error) throw error;
-                showToast('📧 Reset link sent!', 'success');
-                closeForgotModal();
+                const result = await resetPassword(email);
+                if (result.success) {
+                    showToast('📧 Reset link sent!', 'success');
+                    closeForgotModal();
+                } else {
+                    showToast('❌ Failed to send reset link', 'error');
+                }
             } catch (error) {
                 showToast('❌ Failed to send reset link', 'error');
             }
@@ -586,7 +507,8 @@
         // ============================================================
         async function checkAuth() {
             try {
-                const { data: { session } } = await supabase.auth.getSession();
+                // Use supabase from the global scope
+                const { data: { session } } = await window.supabase.auth.getSession();
                 if (session) {
                     console.log('👤 Already logged in, redirecting...');
                     window.location.href = 'dashboard.html';
