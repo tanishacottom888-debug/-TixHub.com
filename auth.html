@@ -680,17 +680,18 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - SECURE VERSION -->
+    <!-- JAVASCRIPT - WITH BETTER ERROR HANDLING -->
     <!-- ======================================== -->
     <script>
         // ============================================================
-        // SUPABASE CONFIGURATION - SECURE
+        // SUPABASE CONFIGURATION
         // ============================================================
         const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
         
         console.log('🔐 TixHub Auth Page Loaded');
         console.log('📦 Supabase URL:', SUPABASE_URL);
+        console.log('🔑 Supabase Key:', SUPABASE_ANON_KEY.substring(0, 20) + '...');
         
         // Initialize Supabase
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -752,7 +753,7 @@
         }
 
         // ============================================================
-        // HANDLE LOGIN
+        // HANDLE LOGIN - WITH CONSOLE LOGS
         // ============================================================
         async function handleLogin() {
             console.log('🔑 Login button clicked');
@@ -760,6 +761,9 @@
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
             const btn = document.getElementById('loginBtn');
+            
+            console.log('📧 Email:', email);
+            console.log('🔒 Password length:', password.length);
             
             if (!email || !password) {
                 showToast('Please fill in all fields', 'error');
@@ -775,12 +779,20 @@
             btn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
             
             try {
+                console.log('📤 Attempting login for:', email);
+                
                 const { data, error } = await supabase.auth.signInWithPassword({
                     email: email,
                     password: password
                 });
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('❌ Login error:', error.message);
+                    throw error;
+                }
+                
+                console.log('✅ Login successful!');
+                console.log('👤 User:', data.user.email);
                 
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Sign In';
@@ -800,7 +812,7 @@
         }
 
         // ============================================================
-        // HANDLE SIGNUP
+        // HANDLE SIGNUP - WITH CONSOLE LOGS
         // ============================================================
         async function handleSignup() {
             console.log('📝 Signup button clicked');
@@ -812,23 +824,32 @@
             const terms = document.getElementById('termsCheck').checked;
             const btn = document.getElementById('signupBtn');
             
+            console.log('👤 Name:', name);
+            console.log('📧 Email:', email);
+            console.log('🔒 Password length:', password.length);
+            console.log('✅ Terms checked:', terms);
+            
             // Validate
             if (!name || !email || !password || !confirmPassword) {
+                console.log('❌ Validation failed: Missing fields');
                 showToast('Please fill in all fields', 'error');
                 return;
             }
             
             if (password.length < 6) {
+                console.log('❌ Validation failed: Password too short');
                 showToast('Password must be at least 6 characters', 'error');
                 return;
             }
             
             if (password !== confirmPassword) {
+                console.log('❌ Validation failed: Passwords do not match');
                 showToast('Passwords do not match', 'error');
                 return;
             }
             
             if (!terms) {
+                console.log('❌ Validation failed: Terms not accepted');
                 showToast('Please agree to the Terms of Service', 'error');
                 return;
             }
@@ -837,6 +858,8 @@
             btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
             try {
+                console.log('📤 Attempting signup for:', email);
+                
                 const { data, error } = await supabase.auth.signUp({
                     email: email,
                     password: password,
@@ -847,12 +870,21 @@
                     }
                 });
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('❌ Signup error:', error.message);
+                    throw error;
+                }
                 
-                // Create profile
+                console.log('✅ Signup successful!');
+                console.log('👤 User created:', data.user.email);
+                console.log('🆔 User ID:', data.user.id);
+                
+                // Create profile in profiles table
                 if (data.user) {
                     try {
-                        await supabase
+                        console.log('📝 Creating profile for user:', data.user.id);
+                        
+                        const { error: profileError } = await supabase
                             .from('profiles')
                             .insert([
                                 {
@@ -861,9 +893,22 @@
                                     created_at: new Date().toISOString()
                                 }
                             ]);
-                        console.log('✅ Profile created');
+                        
+                        if (profileError) {
+                            console.error('❌ Profile creation error:', profileError.message);
+                            showToast('⚠️ Account created but profile failed. Please contact support.', 'error');
+                            btn.disabled = false;
+                            btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                            return;
+                        } else {
+                            console.log('✅ Profile created successfully');
+                        }
                     } catch (profileErr) {
-                        console.warn('⚠️ Profile creation warning:', profileErr.message);
+                        console.error('❌ Profile creation error:', profileErr.message);
+                        showToast('⚠️ Account created but profile failed. Please contact support.', 'error');
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i> Create Account';
+                        return;
                     }
                 }
                 
@@ -941,6 +986,8 @@
                 if (session) {
                     console.log('👤 User already logged in, redirecting to dashboard');
                     window.location.href = 'dashboard.html';
+                } else {
+                    console.log('👤 No active session');
                 }
             } catch (error) {
                 console.error('⚠️ Session check error:', error);
@@ -1007,6 +1054,12 @@
 
         console.log('💡 Click Sign Up or Sign In buttons - they will respond!');
         console.log('🔒 Using secure HTTPS connection to Supabase');
+        console.log('');
+        console.log('📋 To test signup:');
+        console.log('   1. Enter a valid email');
+        console.log('   2. Enter a password (min 6 chars)');
+        console.log('   3. Check the console for logs');
+        console.log('   4. Check Supabase dashboard for new user');
     </script>
 </body>
 </html>
