@@ -10,9 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
-    <!-- IMPORTANT: Load supabase.js FIRST -->
-    <script src="js/supabase.js"></script>
-    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; }
@@ -292,23 +289,116 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - NO DUPLICATE DECLARATION -->
+    <!-- JAVASCRIPT - EVERYTHING IN ONE FILE -->
     <!-- ======================================== -->
     <script>
         // ============================================================
-        // DO NOT DECLARE supabase HERE - it's already in supabase.js
+        // SUPABASE CONFIGURATION - DIRECTLY IN THIS FILE
         // ============================================================
-        console.log('🚀 Auth page loaded');
+        const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
         
-        // Check if signUp function is available from supabase.js
-        setTimeout(function() {
-            if (typeof signUp !== 'undefined') {
-                console.log('✅ signUp function is available from supabase.js');
-            } else {
-                console.error('❌ signUp function NOT found!');
-                console.log('⚠️ Make sure js/supabase.js is loaded correctly');
+        console.log('🚀 Auth page loaded');
+        console.log('📦 Supabase URL:', SUPABASE_URL);
+        
+        // Create Supabase client
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase client created');
+
+        // ============================================================
+        // SIGNUP FUNCTION - DIRECTLY IN THIS FILE
+        // ============================================================
+        async function signUp(email, password, fullName) {
+            console.log('📤 Creating account for:', email);
+            
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: fullName,
+                        }
+                    }
+                });
+
+                if (error) {
+                    console.error('❌ Signup error:', error.message);
+                    return { success: false, error: error.message };
+                }
+
+                console.log('✅ Account created! User ID:', data.user?.id);
+                
+                // Try to create profile
+                if (data.user) {
+                    try {
+                        const { error: profileError } = await supabase
+                            .from('profiles')
+                            .insert([
+                                {
+                                    id: data.user.id,
+                                    full_name: fullName,
+                                    created_at: new Date().toISOString()
+                                }
+                            ]);
+                        
+                        if (profileError) {
+                            console.warn('⚠️ Profile warning:', profileError.message);
+                        } else {
+                            console.log('✅ Profile created');
+                        }
+                    } catch (e) {
+                        console.warn('⚠️ Profile error:', e.message);
+                    }
+                }
+
+                if (data.user && data.user.confirmed_at === null) {
+                    return { 
+                        success: true, 
+                        data: data, 
+                        requiresConfirmation: true 
+                    };
+                }
+
+                return { success: true, data: data };
+                
+            } catch (error) {
+                console.error('❌ Unexpected error:', error.message);
+                return { success: false, error: error.message };
             }
-        }, 500);
+        }
+
+        // ============================================================
+        // SIGNIN FUNCTION - DIRECTLY IN THIS FILE
+        // ============================================================
+        async function signIn(email, password) {
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) throw error;
+                return { success: true, data: data };
+            } catch (error) {
+                console.error('❌ Sign in error:', error.message);
+                return { success: false, error: error.message };
+            }
+        }
+
+        // ============================================================
+        // RESET PASSWORD - DIRECTLY IN THIS FILE
+        // ============================================================
+        async function resetPassword(email) {
+            try {
+                const { error } = await supabase.auth.resetPasswordForEmail(email);
+                if (error) throw error;
+                return { success: true };
+            } catch (error) {
+                console.error('❌ Reset password error:', error.message);
+                return { success: false, error: error.message };
+            }
+        }
 
         // ============================================================
         // DOM ELEMENTS
@@ -353,7 +443,7 @@
         }
 
         // ============================================================
-        // HANDLE LOGIN - Uses signIn from supabase.js
+        // HANDLE LOGIN
         // ============================================================
         async function handleLogin() {
             console.log('🔑 Login clicked');
@@ -370,7 +460,6 @@
             loginBtn.innerHTML = '<span class="spinner mr-2"></span> Signing In...';
             
             try {
-                // Use signIn from supabase.js
                 const result = await signIn(email, password);
                 
                 if (result.success) {
@@ -391,7 +480,7 @@
         }
 
         // ============================================================
-        // HANDLE SIGNUP - Uses signUp from supabase.js
+        // HANDLE SIGNUP
         // ============================================================
         async function handleSignup() {
             console.log('📝 Signup button clicked');
@@ -431,7 +520,6 @@
             signupBtn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
             try {
-                // Use signUp from supabase.js
                 const result = await signUp(email, password, name);
                 console.log('📥 Result:', result);
                 
@@ -467,15 +555,14 @@
         // ============================================================
         function socialLogin(provider) {
             showToast('Connecting to ' + provider + '...', 'info');
-            // Use supabase from the global scope (from supabase.js)
-            window.supabase.auth.signInWithOAuth({
+            supabase.auth.signInWithOAuth({
                 provider: provider,
                 options: { redirectTo: window.location.origin + '/dashboard.html' }
             });
         }
 
         // ============================================================
-        // FORGOT PASSWORD - Uses resetPassword from supabase.js
+        // FORGOT PASSWORD
         // ============================================================
         function showForgotPassword() {
             forgotModal.style.display = 'flex';
@@ -507,8 +594,7 @@
         // ============================================================
         async function checkAuth() {
             try {
-                // Use supabase from the global scope
-                const { data: { session } } = await window.supabase.auth.getSession();
+                const { data: { session } } = await supabase.auth.getSession();
                 if (session) {
                     console.log('👤 Already logged in, redirecting...');
                     window.location.href = 'dashboard.html';
