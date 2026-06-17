@@ -283,11 +283,11 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - COMPLETE WORKING VERSION -->
+    <!-- JAVASCRIPT - ALL FUNCTIONS DEFINED BEFORE USE -->
     <!-- ======================================== -->
     <script>
         // ============================================================
-        // SUPABASE CONFIGURATION - DIRECT IN THIS FILE
+        // SUPABASE CONFIGURATION
         // ============================================================
         const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
@@ -300,7 +300,7 @@
         console.log('✅ Supabase client created');
 
         // ============================================================
-        // CREATE ACCOUNT FUNCTION - DIRECT IN THIS FILE
+        // CREATE ACCOUNT FUNCTION
         // ============================================================
         async function createAccount(email, password, fullName) {
             console.log('📤 Creating account for:', email);
@@ -367,7 +367,7 @@
         });
 
         // ============================================================
-        // TAB SWITCHING
+        // TAB SWITCHING - DEFINED FIRST
         // ============================================================
         function switchTab(tab) {
             currentTab = tab;
@@ -416,7 +416,7 @@
         }
 
         // ============================================================
-        // HANDLE SIGNUP - THIS IS THE MAIN FUNCTION
+        // HANDLE SIGNUP
         // ============================================================
         async function handleSignup() {
             console.log('📝 Signup button clicked');
@@ -431,7 +431,6 @@
             console.log('📋 Name:', name);
             console.log('📋 Email:', email);
             console.log('📋 Password length:', password.length);
-            console.log('📋 Terms checked:', terms);
             
             // Validate
             if (!name || !email || !password || !confirm) {
@@ -458,7 +457,6 @@
             btn.innerHTML = '<span class="spinner mr-2"></span> Creating Account...';
             
             try {
-                // Call createAccount function
                 const result = await createAccount(email, password, name);
                 console.log('📥 Result:', result);
                 
@@ -533,7 +531,6 @@
                 console.log('⚠️ Not logged in');
             }
         }
-        checkAuth();
 
         // ============================================================
         // TOAST
@@ -553,11 +550,13 @@
         }
 
         // ============================================================
-        // INIT
+        // INIT - RUN AFTER ALL FUNCTIONS ARE DEFINED
         // ============================================================
-        document.getElementById('loginEmail').focus();
-        console.log('💡 Ready! Click Sign Up to create an account.');
-        console.log('📌 All functions are in this file - no external dependencies!');
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('💡 Ready! Click Sign Up to create an account.');
+            document.getElementById('loginEmail').focus();
+            checkAuth();
+        });
     </script>
 </body>
 </html>
