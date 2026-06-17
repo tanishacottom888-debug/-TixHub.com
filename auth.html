@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Sign In - TixHub</title>
     
+    <!-- Tailwind CSS - Only for development -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
     <style>
@@ -191,7 +198,7 @@
 
             <div class="card">
                 
-                <!-- Tab Switcher - NO onclick attributes -->
+                <!-- Tab Switcher -->
                 <div style="display:flex;gap:8px;margin-bottom:24px;background:#f6f6f6;padding:4px;border-radius:4px;">
                     <button id="loginTab" class="tab-btn active">
                         <i class="fas fa-sign-in-alt mr-2"></i> Sign In
@@ -201,45 +208,49 @@
                     </button>
                 </div>
 
-                <!-- LOGIN FORM -->
+                <!-- LOGIN FORM - Wrapped in form -->
                 <div id="loginForm">
-                    <div style="margin-bottom:16px;">
-                        <input type="email" id="loginEmail" class="form-input" placeholder="Email address" />
-                    </div>
-                    <div style="margin-bottom:16px;">
-                        <input type="password" id="loginPassword" class="form-input" placeholder="Password" />
-                    </div>
-                    <div style="text-align:right;margin-bottom:16px;">
-                        <button id="forgotPasswordBtn" style="background:none;border:none;color:#024ddf;font-size:14px;cursor:pointer;">Forgot password?</button>
-                    </div>
-                    <button id="loginBtn" class="btn-primary">
-                        <i class="fas fa-sign-in-alt mr-2"></i> Sign In
-                    </button>
+                    <form id="loginFormElement" onsubmit="return false;">
+                        <div style="margin-bottom:16px;">
+                            <input type="email" id="loginEmail" class="form-input" placeholder="Email address" />
+                        </div>
+                        <div style="margin-bottom:16px;">
+                            <input type="password" id="loginPassword" class="form-input" placeholder="Password" />
+                        </div>
+                        <div style="text-align:right;margin-bottom:16px;">
+                            <button type="button" id="forgotPasswordBtn" style="background:none;border:none;color:#024ddf;font-size:14px;cursor:pointer;">Forgot password?</button>
+                        </div>
+                        <button type="button" id="loginBtn" class="btn-primary">
+                            <i class="fas fa-sign-in-alt mr-2"></i> Sign In
+                        </button>
+                    </form>
                 </div>
 
-                <!-- SIGNUP FORM -->
+                <!-- SIGNUP FORM - Wrapped in form -->
                 <div id="signupForm" style="display:none;">
-                    <div style="margin-bottom:16px;">
-                        <input type="text" id="signupName" class="form-input" placeholder="Full name" />
-                    </div>
-                    <div style="margin-bottom:16px;">
-                        <input type="email" id="signupEmail" class="form-input" placeholder="Email address" />
-                    </div>
-                    <div style="margin-bottom:16px;">
-                        <input type="password" id="signupPassword" class="form-input" placeholder="Create password (min 6 chars)" />
-                    </div>
-                    <div style="margin-bottom:16px;">
-                        <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm password" />
-                    </div>
-                    <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
-                        <input type="checkbox" id="termsCheck" style="margin-top:4px;width:18px;height:18px;accent-color:#024ddf;" />
-                        <label style="font-size:12px;color:#646464;">
-                            I agree to the <a href="#" style="color:#024ddf;">Terms of Service</a> and <a href="#" style="color:#024ddf;">Privacy Policy</a>
-                        </label>
-                    </div>
-                    <button id="signupBtn" class="btn-primary">
-                        <i class="fas fa-user-plus mr-2"></i> Create Account
-                    </button>
+                    <form id="signupFormElement" onsubmit="return false;">
+                        <div style="margin-bottom:16px;">
+                            <input type="text" id="signupName" class="form-input" placeholder="Full name" />
+                        </div>
+                        <div style="margin-bottom:16px;">
+                            <input type="email" id="signupEmail" class="form-input" placeholder="Email address" />
+                        </div>
+                        <div style="margin-bottom:16px;">
+                            <input type="password" id="signupPassword" class="form-input" placeholder="Create password (min 6 chars)" />
+                        </div>
+                        <div style="margin-bottom:16px;">
+                            <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm password" />
+                        </div>
+                        <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
+                            <input type="checkbox" id="termsCheck" style="margin-top:4px;width:18px;height:18px;accent-color:#024ddf;" />
+                            <label style="font-size:12px;color:#646464;">
+                                I agree to the <a href="#" style="color:#024ddf;">Terms of Service</a> and <a href="#" style="color:#024ddf;">Privacy Policy</a>
+                            </label>
+                        </div>
+                        <button type="button" id="signupBtn" class="btn-primary">
+                            <i class="fas fa-user-plus mr-2"></i> Create Account
+                        </button>
+                    </form>
                 </div>
 
                 <div style="display:flex;align-items:center;gap:16px;margin:24px 0;color:#646464;font-size:12px;">
@@ -285,21 +296,27 @@
     </footer>
 
     <!-- ======================================== -->
-    <!-- JAVASCRIPT - ALL EVENTS BOUND IN JS -->
+    <!-- JAVASCRIPT - FIXED ALL ISSUES -->
     <!-- ======================================== -->
     <script>
         // ============================================================
         // SUPABASE CONFIGURATION
         // ============================================================
-        const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
+        // Check if supabase already exists to avoid duplicate declaration
+        if (typeof window._supabaseClient === 'undefined') {
+            const SUPABASE_URL = 'https://ccopagnxjauxlokyyzuw.supabase.co';
+            const SUPABASE_ANON_KEY = 'sb_publishable_92kuIQT-82cfekghiuPJiA_ixLVsKa5';
+            
+            console.log('🚀 Auth page loaded');
+            console.log('📦 Supabase URL:', SUPABASE_URL);
+            
+            // Create Supabase client - store globally
+            window._supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            console.log('✅ Supabase client created');
+        }
         
-        console.log('🚀 Auth page loaded');
-        console.log('📦 Supabase URL:', SUPABASE_URL);
-        
-        // Create Supabase client
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        console.log('✅ Supabase client created');
+        // Use the existing client
+        const supabase = window._supabaseClient;
 
         // ============================================================
         // DOM ELEMENTS
@@ -568,7 +585,7 @@
         }
 
         // ============================================================
-        // BIND ALL EVENTS - THIS IS THE KEY FIX
+        // BIND ALL EVENTS
         // ============================================================
         // Tab switching
         loginTab.addEventListener('click', function() { switchTab('login'); });
