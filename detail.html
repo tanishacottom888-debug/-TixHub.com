@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>TixHub - Canada vs Qatar - World Cup 2026 - M27 Group B</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'proxima-nova', 'Noto Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f9fafb;
+      color: #394247;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+    a {
+      text-decoration: none;
+      color: #337ab7;
+    }
+    a:hover {
+      text-decoration: none;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .container {
+      max-width: 1170px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    .d-flex {
+      display: flex !important;
+    }
+    .d-inline-block {
+      display: inline-block;
+    }
+    .d-inline {
+      display: inline;
+    }
+    .flex-column {
+      flex-direction: column !important;
+    }
+    .w-100 {
+      width: 100% !important;
+    }
+    .h-100 {
+      height: 100%;
+    }
+    .align-items-center {
+      align-items: center !important;
+    }
+    .justify-content-center {
+      justify-content: center !important;
+    }
+    .position-relative {
+      position: relative;
+    }
+    .mb-auto {
+      margin-bottom: auto !important;
+    }
+    .my-2 {
+      margin-top: 10px !important;
+      margin-bottom: 10px !important;
+    }
+    .mb-3 {
+      margin-bottom: 15px !important;
+    }
+    .mb-4 {
+      margin-bottom: 20px !important;
+    }
+    .mt-2 {
+      margin-top: 10px !important;
+    }
+    .pt-0 {
+      padding-top: 0 !important;
+    }
+    .pb-2 {
+      padding-bottom: 10px !important;
+    }
+    .pt-2 {
+      padding-top: 10px !important;
+    }
+    .p-0 {
+      padding: 0 !important;
+    }
+    .m-0 {
+      margin: 0 !important;
+    }
+    .gap-2 {
+      gap: 10px;
+    }
+    .font-medium {
+      font-size: 16px !important;
+    }
+    .font-bold {
+      font-weight: 700 !important;
+    }
+    .cursor-pointer {
+      cursor: pointer;
+    }
+    .tc-link {
+      color: #503fa5;
+      cursor: pointer;
+    }
+    .section-header {
+      -webkit-font-smoothing: antialiased;
+      text-align: left;
+      color: #2d3539;
+      font-size: 40px;
+      font-weight: 900;
+      margin: 30px 0;
+    }
+    @media (max-width: 476px) {
+      .section-header {
+        font-size: 24px;
+      }
+    }
+
+    /* ===== BUTTONS ===== */
+    .ui-button {
+      width: 100%;
+      min-height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      transition: all .2s ease;
+      border-radius: 32px;
+      color: #000;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: normal;
+      text-transform: uppercase;
+      background-color: #29cca2;
+      border: 1px solid #29cca2;
+      cursor: pointer;
+    }
+    .ui-button:hover {
+      background-color: #22AA87;
+      border-color: #22AA87;
+    }
+    .ui-button--secondary {
+      color: #000;
+      border-color: #E3E6E8;
+      background-color: transparent;
+    }
+    .ui-button--secondary:hover {
+      background-color: #E3E6E8;
+      border-color: #E3E6E8;
+    }
+    .ui-button--tertiary {
+      border-color: #000;
+      background-color: #000;
+      color: #fff;
+    }
+    .ui-button--tertiary:hover {
+      background: rgba(0, 0, 0, .8);
+    }
+    .ui-button--size-medium {
+      min-height: 40px;
+      padding: 4px 12px;
+      font-size: 16px;
+    }
+    .ui-button--size-large {
+      font-size: 18px;
+      min-height: 48px;
+      min-width: 100px;
+      padding: 12px 16px;
+    }
+
+    .tc-button {
+      width: 100%;
+      min-height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px;
+      gap: 4px;
+      border: 1px solid #29cca2;
+      transition: all .2s ease;
+      border-radius: 4px;
+      background-color: #29cca2;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 19px;
+      cursor: pointer;
+    }
+    .tc-button:hover {
+      background-color: #22aa87;
+      border-color: #22aa87;
+    }
+    .tc-button--quaternary {
+      background-color: #fff;
+      border: 1px solid #ffffff;
+      color: #29cca2;
+    }
+    .tc-button--quaternary:hover {
+      color: #22aa87;
+      border-color: #fff;
+      background-color: #fff;
+    }
+    .tc-button--size-small {
+      min-height: 24px;
+      padding: 5px 10px;
+    }
+    .tc-button--size-medium {
+      min-height: 40px;
+      padding: 5px 12px;
+    }
+
+    .Button--clear {
+      border: 0;
+      background: none !important;
+      outline: 0;
+      text-align: left;
+      color: #a1acb3;
+      cursor: pointer;
+    }
+    .Button--clear:hover {
+      color: #29cca2;
+    }
+
+    /* ===== HEADER ===== */
+    .TopMenu {
+      display: flex;
+      align-items: center;
+      position: relative;
+      height: 70px;
+      max-width: 100%;
+      background: #fff;
+      padding: 0 20px;
+      width: 100%;
+    }
+    .TopMenu .header-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      width: 100%;
+    }
+    .TopMenu .mobile-menu {
+      width: 25%;
+    }
+    .TopMenu .mobile-menu .Button--clear {
+      padding: 0;
+    }
+    .TopMenu .mobile-menu .Button--clear span {
+      font-size: 32px;
+      color: #394247;
+    }
+    @media (max-width: 992px) {
+      .TopMenu {
+        justify-content: space-between;
+      }
+      .TopMenu .mobile-menu {
+        order: 1;
+      }
+      .TopMenu .header-options {
+        display: flex;
+        order: 3;
+        align-items: center;
+        justify-content: flex-end;
+        width: 25%;
+      }
+    }
+    @media (max-width: 769px) {
+      .TopMenu {
+        padding: 0 15px;
+      }
+      .TopMenu .mobile-menu {
+        display: flex;
+      }
+    }
+    .search__toggler {
+      font-size: 22px;
+      width: 32px;
+      cursor: pointer;
+      text-align: center;
+      margin-left: 15px;
+      line-height: 32px;
+    }
+    @media (max-width: 768px) {
+      .search__toggler {
+        font-size: 16px;
+        width: 24px;
+        margin-left: 0;
+      }
+    }
+
+    /* ===== EVENT PAGE ===== */
+    .event-page-container {
+      background: #f8f8f8;
+    }
+
+    /* ===== TOP BANNER ===== */
+    .top-banner-v2 {
+      background: #fff;
+      width: 100%;
+      padding: 5px 20px 8px;
+      position: sticky;
+      top: 38px;
+      left: 0;
+      z-index: 8;
+      border-bottom: 1px solid #E3E6E8;
+    }
+    @media (min-width: 769px) {
+      .top-banner-v2 {
+        top: 40px;
+        padding: 5px 26px;
+      }
+    }
+    .top-banner-v2__content {
+      display: flex;
+      gap: 8px;
+    }
+    @media (min-width: 769px) {
+      .top-banner-v2__content {
+        gap: 16px;
+      }
+    }
+    .top-banner-v2__image {
+      min-width: 70px;
+      height: 70px;
+      object-fit: cover;
+      background-size: cover;
+      border-radius: 8px;
+      display: none;
+    }
+    @media (min-width: 1365px) {
+      .top-banner-v2__image {
+        display: block;
+      }
+    }
+    .top-banner-v2__info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      gap: 4px;
+    }
+    .top-banner-v2__name {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    @media (min-width: 769px) {
+      .top-banner-v2__name {
+        justify-content: unset;
+      }
+    }
+    .top-banner-v2__title {
+      margin: 0;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 120%;
+    }
+    @media (min-width: 769px) {
+      .top-banner-v2__title {
+        font-size: 18px;
+      }
+    }
+    @media (min-width: 1365px) {
+      .top-banner-v2__title {
+        font-size: 24px;
+      }
+    }
+    .top-banner-v2__actions {
+      height: 30px;
+      display: flex;
+      gap: 5px;
+      margin: 0;
+      place-self: start;
+    }
+    .top-banner-v2__actions .tc-button {
+      width: 30px;
+      min-height: 30px;
+      padding: 4px;
+    }
+    .top-banner-v2__actions .expand-description-btn {
+      display: flex;
+    }
+    @media (min-width: 769px) {
+      .top-banner-v2__actions .expand-description-btn {
+        display: none;
+      }
+    }
+    @media (min-width: 1365px) {
+      .top-banner-v2__actions .tc-button {
+        width: 40px;
+        min-height: 40px;
+      }
+    }
+    .top-banner-v2__description {
+      margin: 0;
+      display: none;
+    }
+    @media (min-width: 769px) {
+      .top-banner-v2__description {
+        display: block;
+      }
+    }
+    .top-banner-v2__meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+    }
+    @media (min-width: 769px) {
+      .top-banner-v2__meta {
+        align-items: center;
+        gap: 8px;
+        flex-wrap: unset;
+      }
+    }
+    .top-banner-v2__date {
+      display: inline-block;
+      margin: 0 10px 0 0;
+      width: 100%;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 120%;
+    }
+    @media (min-width: 993px) {
+      .top-banner-v2__date {
+        width: unset;
+        margin: 0;
+      }
+    }
+    .top-banner-v2__date .event-date-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .top-banner-v2__venue {
+      display: flex;
+      margin: 0;
+      width: 100%;
+      color: #2d3539;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 120%;
+    }
+    .top-banner-v2__venue i {
+      padding: 0 4px 0 1px;
+    }
+    .top-banner-v2__venue .tc-link {
+      color: #2d3539;
+    }
+    .top-banner-v2__meta-block {
+      display: flex;
+      flex: 1 1 auto;
+      min-width: 0;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .base-text {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 120%;
+    }
+
+    /* ===== FILTER PAGE (Detail Content) ===== */
+    .filter-page {
+      max-width: 1170px;
+      padding: 20px 15px 40px;
+      margin: 0 auto;
+      display: block;
+    }
+    .filter-page .pb-2 {
+      padding-bottom: 10px !important;
+    }
+
+    /* ===== CONTENT LOADER PLACEHOLDER ===== */
+    .ssr-placeholder-layout {
+      padding: 0 15px;
+    }
+    .tc-content-loader-placeholder {
+      background: #f2f3f3;
+      border-radius: 8px;
+      width: 100%;
+      height: 260px;
+      margin-bottom: 10px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    /* ===== TICKET LISTING CARDS (would be populated dynamically) ===== */
+    .ticket-listing-card {
+      background: #fff;
+      border: 1px solid #E3E6E8;
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.2s;
+    }
+    .ticket-listing-card:hover {
+      border-color: #29cca2;
+    }
+    .ticket-listing-card .category {
+      font-weight: 700;
+      font-size: 16px;
+      color: #000;
+    }
+    .ticket-listing-card .price {
+      font-weight: 700;
+      font-size: 20px;
+      color: #000;
+    }
+    .ticket-listing-card .availability {
+      font-size: 14px;
+      color: #8f9ca3;
+    }
+    .ticket-listing-card .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .ticket-listing-card .actions .ui-button {
+      padding: 6px 16px;
+      font-size: 14px;
+      min-height: 32px;
+      width: auto;
+    }
+
+    /* ===== PRE-FOOTER SECTIONS ===== */
+    .pre-footer {
+      margin-top: 40px;
+    }
+
+    /* ===== MARKETING BANNER ===== */
+    .marketing-banner {
+      background: linear-gradient(221deg, #8873d1, #503fa5 54.59%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .marketing-banner__background {
+      height: 134px;
+      max-width: 1287px;
+      padding: 0 24px;
+      width: 100%;
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+    }
+    @media (max-width: 476px) {
+      .marketing-banner__background {
+        flex-direction: column;
+        height: auto;
+        gap: 32px;
+        padding-top: 20px;
+        padding-bottom: 32px;
+      }
+    }
+    .marketing-banner__left {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .marketing-banner__background__image {
+      background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="94" height="94" viewBox="0 0 94 94"%3E%3Ccircle cx="47" cy="47" r="47" fill="%233A559F"/%3E%3Ctext x="47" y="30" text-anchor="middle" font-size="8" font-weight="700" fill="white">THANK YOU!%3C/text%3E%3Ctext x="47" y="60" text-anchor="middle" font-size="24" font-weight="700" fill="white">f%3C/text%3E%3C/svg%3E') no-repeat;
+      background-size: contain;
+      height: 94px;
+      width: 94px;
+      display: flex;
+      flex-direction: column;
+      padding-top: 5px;
+      padding-left: 5px;
+      justify-content: space-between;
+      flex: none;
+    }
+    .marketing-banner__background__image .thanks {
+      font-size: 8px;
+      font-weight: 700;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+    }
+    .marketing-banner__content {
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+      gap: 8px;
+      align-self: center;
+    }
+    .marketing-banner__content h3 {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 0;
+    }
+    .marketing-banner__content p {
+      font-size: 16px;
+      margin: 0;
+    }
+    .marketing-banner__button {
+      width: 360px;
+    }
+    .marketing-banner__button .ui-button {
+      font-size: 16px;
+    }
+    @media (max-width: 1365px) {
+      .marketing-banner__button {
+        width: 250px;
+      }
+    }
+    @media (max-width: 476px) {
+      .marketing-banner__button {
+        width: 100%;
+      }
+    }
+    .marketing-banner__oval {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.1);
+      opacity: .2;
+      z-index: 1;
+      border-radius: 50%;
+    }
+    .marketing-banner__oval1 { left: 85px; top: 38px; width: 58px; height: 58px; }
+    .marketing-banner__oval2 { left: 189px; top: -55px; width: 110px; height: 110px; opacity: 1; }
+    .marketing-banner__oval3 { left: calc(50% - 250px); top: -32px; width: 58px; height: 58px; opacity: .4; }
+    .marketing-banner__oval4 { left: calc(50% - 100px); bottom: -61px; width: 110px; height: 110px; opacity: 1; }
+    .marketing-banner__oval5 { right: calc(50% - 150px); top: 28px; width: 44px; height: 44px; opacity: 1; }
+    .marketing-banner__oval6 { right: 350px; top: -77px; width: 110px; height: 110px; opacity: 1; }
+    .marketing-banner__oval7 { right: 220px; bottom: -29px; width: 56px; height: 56px; opacity: .5; }
+    .marketing-banner__oval8 { right: -83px; top: -130px; width: 220px; height: 220px; }
+    @media (max-width: 1365px) {
+      .marketing-banner__oval1 { display: none; }
+      .marketing-banner__oval2 { left: 113px; top: -34px; width: 66px; height: 66px; }
+      .marketing-banner__oval3 { left: calc(50% - 150px); top: -20px; width: 35px; height: 35px; }
+      .marketing-banner__oval4 { left: calc(50% - 40px); bottom: -39px; width: 66px; height: 66px; }
+      .marketing-banner__oval5 { right: calc(50% - 90px); top: 37px; width: 26px; height: 26px; }
+      .marketing-banner__oval6 { right: 210px; top: -55px; width: 65px; height: 65px; }
+      .marketing-banner__oval7 { right: 133px; bottom: -17px; width: 33px; height: 33px; }
+      .marketing-banner__oval8 { right: -50px; top: -86px; width: 130px; height: 130px; }
+    }
+    @media (max-width: 476px) {
+      .marketing-banner__oval1 { width: 16px; height: 16px; bottom: 109px; left: 26px; display: block; top: auto; }
+      .marketing-banner__oval2 { left: -15px; top: 15px; width: 78px; height: 78px; }
+      .marketing-banner__oval3 { left: 103px; top: 64px; width: 16px; height: 16px; }
+      .marketing-banner__oval4 { left: 136px; bottom: 154px; width: 9px; height: 9px; }
+      .marketing-banner__oval5 { right: 42px; top: 32px; width: 31px; height: 31px; }
+      .marketing-banner__oval6 { right: 80px; top: auto; bottom: 66px; width: 31px; height: 31px; }
+      .marketing-banner__oval7 { left: 104px; right: auto; top: auto; bottom: 94px; width: 16px; height: 16px; }
+      .marketing-banner__oval8 { right: -57px; top: 91px; width: 130px; height: 130px; }
+    }
+
+    /* ===== SEAL OF EXCELLENCE ===== */
+    .excellence-seal {
+      background-color: #f9fafb;
+      display: flex;
+      justify-content: center;
+    }
+    .excellence-seal__container {
+      display: flex;
+      gap: 40px;
+      max-width: 1287px;
+      padding: 20px 24px;
+      width: 100%;
+      align-items: center;
+    }
+    @media (max-width: 769px) {
+      .excellence-seal__container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+      }
+    }
+    .excellence-seal__details {
+      gap: 8px;
+      display: flex;
+      flex-direction: column;
+    }
+    .excellence-seal .section-header {
+      font-size: 24px;
+      margin: 0;
+    }
+    .excellence-seal__description {
+      font-size: 16px;
+    }
+    .excellence-seal__image {
+      width: 228px;
+      height: 143px;
+    }
+
+    /* ===== FOOTER CHANNELS ===== */
+    .footer-channels {
+      background: rgba(197, 197, 197, 0.16);
+      padding: 24px 0 32px;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+    }
+    .footer-channels__container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 1287px;
+      padding: 0 24px;
+      width: 100%;
+    }
+    .footer-channels__list {
+      display: flex;
+      column-gap: 40px;
+      row-gap: 16px;
+      flex-wrap: wrap;
+      opacity: .4;
+      mix-blend-mode: luminosity;
+    }
+    .footer-channels__title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      margin-top: 40px;
+      border-top: 1px solid #E3E6E8;
+    }
+    .footer .main-footer {
+      padding-top: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid #E3E6E8;
+      margin-top: 0;
+      min-height: 280px;
+    }
+    .footer__row {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    @media (min-width: 1365px) {
+      .footer__row {
+        flex-direction: row;
+        gap: 40px;
+        position: relative;
+      }
+    }
+    .footer__row .column-1 {
+      width: 100%;
+    }
+    @media (min-width: 1365px) {
+      .footer__row .column-1 {
+        width: 40%;
+      }
+    }
+    .footer__row .column-2 {
+      width: 100%;
+    }
+    @media (min-width: 1365px) {
+      .footer__row .column-2 {
+        width: 60%;
+      }
+    }
+    .footer .footer-info__company-links {
+      display: flex;
+      width: 100%;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .footer .link-list {
+      display: flex;
+      gap: 8px;
+      flex-direction: column;
+      min-width: 50%;
+    }
+    .footer .link-list .footer-link a {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 600;
+      color: #503fa5;
+      text-wrap: wrap;
+    }
+    .footer .footer-info__office {
+      min-width: 50%;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      padding-right: 10px;
+      margin-bottom: 16px;
+    }
+    @media (min-width: 1365px) {
+      .footer .footer-info__office {
+        min-width: 33.33%;
+        width: 33.33%;
+      }
+    }
+    .footer .footer-info__sitename {
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      gap: 3px;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .footer .footer-info__sitename .tc-flag {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-size: cover;
+    }
+    .footer .footer-info__address {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #394247;
+    }
+    .footer .copyright {
+      margin-top: 16px;
+      color: #8f9ca3;
+      font-size: 14px;
+      display: block;
+    }
+    .footer .separator {
+      display: block;
+      background-color: #e3e6e8;
+      width: 100%;
+      height: 1px;
+      margin: 0;
+    }
+    @media (min-width: 1365px) {
+      .footer .separator {
+        display: block;
+        margin: 0;
+        width: 1px;
+        height: 100%;
+        position: absolute;
+        left: calc(40% + 5px);
+      }
+    }
+
+    /* ===== UTILITIES ===== */
+    .hidden-md { display: block; }
+    .hidden-lg { display: block; }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .hidden-md { display: none !important; }
+    }
+    @media (min-width: 1200px) {
+      .hidden-lg { display: none !important; }
+    }
+    .visiable-sm { display: block; }
+    @media (min-width: 769px) {
+      .visiable-sm { display: none !important; }
+    }
+    .separator { margin: 0 10px; }
+    .icon { margin-right: 5px; position: relative; }
+
+    /* ===== RESPONSIVE TWEAKS ===== */
+    @media (max-width: 476px) {
+      .filter-page { padding: 10px 0 20px; }
+      .top-banner-v2 { padding: 5px 16px 8px; top: 38px; }
+      .top-banner-v2__title { font-size: 14px; }
+      .top-banner-v2__meta { flex-wrap: wrap; }
+      .marketing-banner__content h3 { font-size: 24px; }
+      .section-header { font-size: 20px; }
+      .ticket-listing-card { flex-wrap: wrap; gap: 8px; }
+      .ticket-listing-card .actions { width: 100%; justify-content: flex-end; }
+    }
+    @media (max-width: 360px) {
+      .top-banner-v2__title { font-size: 12px; }
+      .top-banner-v2__venue,
+      .top-banner-v2__date { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="top-header" style="position:sticky;top:0;z-index:1000;background:#fff;">
+    <div class="TopMenu">
+      <div class="header-options">
+        <div class="search">
+          <div class="search__toggler">
+            <i class="fas fa-search" style="font-style:normal;font-weight:900;">&#xf002;</i>
+          </div>
+        </div>
+      </div>
+      <div class="mobile-menu align-items-center visiable-sm hidden-md hidden-lg">
+        <button class="Button--clear font-medium">
+          <span style="font-size:28px;line-height:1;">&#9776;</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="event-page-container app-bg position-relative">
+
+    <!-- Top Banner -->
+    <section class="top-banner-v2" style="position:sticky;top:38px;left:0;width:100%;z-index:8;border-bottom:1px solid #E3E6E8;background:#fff;">
+      <div class="top-banner-v2__content">
+        <img class="top-banner-v2__image" src="https://imgs.ticombo.com/tc-images-main/thumbnail/events/sports/match-27-group-b-football-world-cup-2026-2606182359/thumbnail-thumbnail-21f808e6-223c-4ca4-95e1-4fd287ab7a0a.png" alt="Canada vs Qatar - World Cup 2026 - M27 Group B" style="min-width:70px;height:70px;object-fit:cover;background-size:cover;border-radius:8px;">
+        <div class="top-banner-v2__info">
+          <div class="top-banner-v2__name">
+            <h1 class="top-banner-v2__title" style="margin:0;font-weight:700;font-size:16px;line-height:120%;">Canada vs Qatar - World Cup 2026 - M27 Group B tickets</h1>
+            <div class="top-banner-v2__actions" style="display:flex;gap:5px;margin:0;place-self:start;">
+              <button class="tc-button tc-button--quaternary tc-button--size-small" style="width:30px;min-height:30px;padding:4px;border:1px solid #fff;background:#fff;color:#29cca2;border-radius:4px;cursor:pointer;">
+                <i class="far fa-flag" style="font-style:normal;">&#xf024;</i>
+              </button>
+              <button class="tc-button tc-button--quaternary tc-button--size-small" style="width:30px;min-height:30px;padding:4px;border:1px solid #fff;background:#fff;color:#29cca2;border-radius:4px;cursor:pointer;">
+                <i class="far fa-heart" style="font-style:normal;">&#xf004;</i>
+              </button>
+              <button class="tc-button tc-button--quaternary tc-button--size-small expand-description-btn" style="width:30px;min-height:30px;padding:4px;border:1px solid #fff;background:#fff;color:#29cca2;border-radius:4px;cursor:pointer;">
+                <i class="fa fa-angle-up" style="font-style:normal;">&#xf106;</i>
+              </button>
+            </div>
+          </div>
+          <p class="top-banner-v2__description base-text" style="margin:0;display:none;">Group B - Canada vs TBD B</p>
+          <div class="top-banner-v2__meta" style="display:flex;flex-wrap:wrap;align-items:center;gap:4px;width:100%;">
+            <div class="top-banner-v2__date base-text" style="display:inline-block;margin:0 10px 0 0;font-weight:400;font-size:14px;line-height:120%;">
+              <span class="event-date-container" style="display:flex;flex-wrap:wrap;">
+                <i class="far fa-calendar-check" style="font-style:normal;">&#xf274;</i>
+                <span>Thu, Jun 18 26, 15:00 PDT</span>
+                <span class="d-inline-block">&nbsp;- Thu, Jun 18 26, 15:45 PDT</span>
+              </span>
+            </div>
+            <div class="top-banner-v2__meta-block" style="display:flex;flex:1 1 auto;min-width:0;justify-content:space-between;align-items:center;width:100%;">
+              <div class="top-banner-v2__venue base-text" style="display:flex;margin:0;width:100%;color:#2d3539;font-weight:400;font-size:14px;line-height:120%;">
+                <i class="fas fa-map-marker-alt" style="font-style:normal;">&#xf3c5;</i>
+                <a class="tc-link" href="#" style="color:#2d3539;cursor:pointer;">
+                  <span class="d-inline">BC Place Vancouver,&nbsp;</span>
+                  <span class="d-inline">Vancouver, Canada</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Page Content -->
+    <div class="filter-page" style="max-width:1170px;padding:20px 15px 40px;margin:0 auto;display:block;">
+
+      <!-- Skeleton Loader (shows while content loads) -->
+      <div class="ssr-placeholder-layout mt-2 p-0">
+        <div class="w-100">
+          <div class="pb-2">
+            <div class="tc-content-loader-placeholder" style="background:#f2f3f3;border-radius:8px;width:100%;height:260px;margin-bottom:10px;"></div>
+          </div>
+          <div class="pb-2">
+            <div class="tc-content-loader-placeholder" style="background:#f2f3f3;border-radius:8px;width:100%;height:260px;margin-bottom:10px;"></div>
+          </div>
+          <div class="pb-2">
+            <div class="tc-content-loader-placeholder" style="background:#f2f3f3;border-radius:8px;width:100%;height:260px;margin-bottom:10px;"></div>
+          </div>
+          <div class="pb-2">
+            <div class="tc-content-loader-placeholder" style="background:#f2f3f3;border-radius:8px;width:100%;height:260px;margin-bottom:10px;"></div>
+          </div>
+          <div class="pb-2">
+            <div class="tc-content-loader-placeholder" style="background:#f2f3f3;border-radius:8px;width:100%;height:260px;margin-bottom:10px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TICKET LISTINGS (would be populated dynamically) ===== -->
+      <!-- This section represents what the user would see after loading -->
+      <div style="margin-top:20px;">
+        <h3 style="font-size:20px;font-weight:700;margin-bottom:16px;color:#000;">Available Tickets</h3>
+
+        <!-- Ticket Listing 1 -->
+        <div class="ticket-listing-card" style="background:#fff;border:1px solid #E3E6E8;border-radius:16px;padding:16px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div class="category" style="font-weight:700;font-size:16px;color:#000;">Category 1</div>
+            <div class="availability" style="font-size:14px;color:#8f9ca3;">75 tickets available</div>
+          </div>
+          <div class="actions" style="display:flex;gap:8px;align-items:center;">
+            <div class="price" style="font-weight:700;font-size:20px;color:#000;">€3,013</div>
+            <button class="ui-button ui-button--size-medium" style="padding:6px 16px;font-size:14px;min-height:32px;width:auto;border-radius:32px;background:#29cca2;border:1px solid #29cca2;color:#000;font-weight:700;cursor:pointer;">Select</button>
+          </div>
+        </div>
+
+        <!-- Ticket Listing 2 -->
+        <div class="ticket-listing-card" style="background:#fff;border:1px solid #E3E6E8;border-radius:16px;padding:16px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div class="category" style="font-weight:700;font-size:16px;color:#000;">Category 2</div>
+            <div class="availability" style="font-size:14px;color:#8f9ca3;">63 tickets available</div>
+          </div>
+          <div class="actions" style="display:flex;gap:8px;align-items:center;">
+            <div class="price" style="font-weight:700;font-size:20px;color:#000;">€2,935</div>
+            <button class="ui-button ui-button--size-medium" style="padding:6px 16px;font-size:14px;min-height:32px;width:auto;border-radius:32px;background:#29cca2;border:1px solid #29cca2;color:#000;font-weight:700;cursor:pointer;">Select</button>
+          </div>
+        </div>
+
+        <!-- Ticket Listing 3 -->
+        <div class="ticket-listing-card" style="background:#fff;border:1px solid #E3E6E8;border-radius:16px;padding:16px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div class="category" style="font-weight:700;font-size:16px;color:#000;">Category 3</div>
+            <div class="availability" style="font-size:14px;color:#8f9ca3;">46 tickets available</div>
+          </div>
+          <div class="actions" style="display:flex;gap:8px;align-items:center;">
+            <div class="price" style="font-weight:700;font-size:20px;color:#000;">€3,043</div>
+            <button class="ui-button ui-button--size-medium" style="padding:6px 16px;font-size:14px;min-height:32px;width:auto;border-radius:32px;background:#29cca2;border:1px solid #29cca2;color:#000;font-weight:700;cursor:pointer;">Select</button>
+          </div>
+        </div>
+
+        <!-- Ticket Listing 4 - VIP -->
+        <div class="ticket-listing-card" style="background:#fff;border:1px solid #E3E6E8;border-radius:16px;padding:16px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div class="category" style="font-weight:700;font-size:16px;color:#000;">VIP</div>
+            <div class="availability" style="font-size:14px;color:#8f9ca3;">2 tickets available</div>
+          </div>
+          <div class="actions" style="display:flex;gap:8px;align-items:center;">
+            <div class="price" style="font-weight:700;font-size:20px;color:#000;">€17,337</div>
+            <button class="ui-button ui-button--size-medium" style="padding:6px 16px;font-size:14px;min-height:32px;width:auto;border-radius:32px;background:#29cca2;border:1px solid #29cca2;color:#000;font-weight:700;cursor:pointer;">Select</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PRE-FOOTER ===== -->
+    <section class="pre-footer" style="margin-top:40px;">
+
+      <!-- Marketing Banner -->
+      <section class="marketing-banner" style="background:linear-gradient(221deg,#8873d1,#503fa5 54.59%);display:flex;flex-direction:column;align-items:center;position:relative;z-index:0;overflow:hidden;">
+        <div class="marketing-banner__background" style="height:134px;max-width:1287px;padding:0 24px;width:100%;align-items:center;display:flex;justify-content:space-between;">
+          <div class="marketing-banner__left" style="display:flex;gap:24px;align-items:center;">
+            <div class="marketing-banner__background__image" style="background:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'94\' height=\'94\' viewBox=\'0 0 94 94\'%3E%3Ccircle cx=\'47\' cy=\'47\' r=\'47\' fill=\'%233A559F\'/%3E%3Ctext x=\'47\' y=\'30\' text-anchor=\'middle\' font-size=\'8\' font-weight=\'700\' fill=\'white\'>THANK YOU!%3C/text%3E%3Ctext x=\'47\' y=\'60\' text-anchor=\'middle\' font-size=\'24\' font-weight=\'700\' fill=\'white\'>f%3C/text%3E%3C/svg%3E') no-repeat;background-size:contain;height:94px;width:94px;display:flex;flex-direction:column;padding-top:5px;padding-left:5px;justify-content:space-between;flex:none;">
+              <span class="thanks" style="font-size:8px;font-weight:700;width:100%;text-align:center;color:#fff;">THANK YOU!</span>
+              <svg width="11.5" height="11.5" viewBox="0 0 103 103" class="facebook"><path fill="#3A559F" fill-rule="nonzero" d="M0 0v103h54.854V63.213h-13.41V46.971h13.41v-13.64c0-9.92 8.042-17.962 17.962-17.962h14.018v14.605h-10.03a5.708 5.708 0 0 0-5.708 5.707v11.29h15.486l-2.14 16.242H71.096V103H103V0H0z"/></svg>
+            </div>
+            <div class="marketing-banner__content" style="display:flex;flex-direction:column;color:#fff;gap:8px;align-self:center;">
+              <h3 style="font-size:32px;font-weight:700;margin:0;">The no 1 marketplace in the world.</h3>
+              <p style="font-size:16px;margin:0;">TixHub® is now the most followed of all reselling platforms in Europe. Thank you!</p>
+            </div>
+          </div>
+          <div class="marketing-banner__button" style="width:360px;">
+            <button class="ui-button ui-button--tertiary ui-button--size-medium" style="width:100%;min-height:40px;padding:4px 12px;font-size:16px;border-color:#000;background:#000;color:#fff;border-radius:32px;font-weight:700;text-transform:uppercase;cursor:pointer;">Start Selling</button>
+          </div>
+        </div>
+        <div class="marketing-banner__oval marketing-banner__oval1"></div>
+        <div class="marketing-banner__oval marketing-banner__oval2"></div>
+        <div class="marketing-banner__oval marketing-banner__oval3"></div>
+        <div class="marketing-banner__oval marketing-banner__oval4"></div>
+        <div class="marketing-banner__oval marketing-banner__oval5"></div>
+        <div class="marketing-banner__oval marketing-banner__oval6"></div>
+        <div class="marketing-banner__oval marketing-banner__oval7"></div>
+        <div class="marketing-banner__oval marketing-banner__oval8"></div>
+      </section>
+
+      <!-- Seal of Excellence -->
+      <section class="excellence-seal" style="background-color:#f9fafb;display:flex;justify-content:center;">
+        <div class="excellence-seal__container" style="display:flex;gap:40px;max-width:1287px;padding:20px 24px;width:100%;align-items:center;">
+          <div class="excellence-seal__details" style="gap:8px;display:flex;flex-direction:column;">
+            <p class="section-header" style="font-size:24px;margin:0;font-weight:900;color:#2d3539;">Seal of Excellence by EU Commission</p>
+            <p class="excellence-seal__description" style="font-size:16px;">TixHub GmbH (parent company) is recognized under Horizon 2020, the EU's research and innovation funding program for its proposal No. 782393.</p>
+          </div>
+          <a href="#" target="_blank" rel="noopener">
+            <img src="/imgs/index/eu-seal-of-excellence.png" alt="EU Seal of Excellence" class="excellence-seal__image" style="width:228px;height:143px;">
+          </a>
+        </div>
+      </section>
+
+      <!-- Footer Channels -->
+      <section class="footer-channels" style="background:rgba(197,197,197,0.16);padding:24px 0 32px;align-items:center;display:flex;flex-direction:column;">
+        <div class="footer-channels__container" style="display:flex;flex-direction:column;gap:16px;max-width:1287px;padding:0 24px;width:100%;">
+          <h3 class="footer-channels__title" style="font-size:18px;font-weight:700;margin:0;">As seen on the news</h3>
+          <div class="footer-channels__list" style="display:flex;column-gap:40px;row-gap:16px;flex-wrap:wrap;opacity:.4;mix-blend-mode:luminosity;">
+            <img src="/imgs/landing/media/svgs/bbc.svg" alt="BBC" width="120" height="40">
+            <img src="/imgs/landing/media/svgs/sky-news.svg" alt="Sky News" width="120" height="40">
+            <img src="/imgs/landing/media/svgs/independent.svg" alt="Independent" width="120" height="40">
+            <img src="/imgs/landing/media/svgs/the-sun.svg" alt="The Sun" width="120" height="40">
+            <img src="/imgs/landing/media/svgs/daily-mail.svg" alt="Daily Mail" width="120" height="40">
+            <img src="/imgs/landing/media/svgs/evening-standard.svg" alt="Evening Standard" width="120" height="40">
+            <img src="/imgs/landing/media/svgs/forbes.svg" alt="Forbes" width="120" height="40">
+            <img src="/imgs/landing/media/svgs/yahoo.svg" alt="Yahoo" width="120" height="40">
+          </div>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="main-footer">
+      <div class="container">
+        <div class="footer__row" style="position:relative;">
+          <div class="column-1">
+            <div class="footer-info__company-links">
+              <ul class="link-list">
+                <li class="footer-link"><a href="#">About Us</a></li>
+                <li class="footer-link"><a href="#">Team</a></li>
+                <li class="footer-link"><a href="#">TixProtect</a></li>
+                <li class="footer-link"><a href="#">Imprint</a></li>
+                <li class="footer-link"><a href="#">Terms and Conditions</a></li>
+                <li class="footer-link"><a href="#">Affiliate Program</a></li>
+              </ul>
+              <ul class="link-list">
+                <li class="footer-link"><a href="#">Corporate Services</a></li>
+                <li class="footer-link"><a href="#">FAQ</a></li>
+                <li class="footer-link"><a href="#">How it works</a></li>
+                <li class="footer-link"><a href="#">Hotels</a></li>
+                <li class="footer-link"><a href="#">World Cup Hub</a></li>
+                <li class="footer-link"><a href="#">Contact us</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="separator" style="display:block;background-color:#e3e6e8;width:100%;height:1px;margin:0;"></div>
+          <div class="column-2">
+            <h4 class="font-bold m-0 mb-4">TixHub Offices</h4>
+            <div class="footer-info">
+              <div class="footer-info__offices" style="display:flex;flex-wrap:wrap;margin:0 -10px;">
+                <div class="footer-info__office" style="min-width:50%;width:50%;display:flex;flex-direction:column;flex-wrap:wrap;padding-left:10px;padding-right:10px;margin-bottom:16px;">
+                  <div class="footer-info__sitename" style="font-size:14px;font-weight:700;display:flex;gap:3px;align-items:center;margin-bottom:4px;">
+                    <span class="tc-flag" style="width:14px;height:14px;border-radius:50%;background-size:cover;background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">Germany</span>
+                  </div>
+                  <div class="footer-info__address" style="font-size:14px;font-style:normal;font-weight:400;line-height:normal;color:#394247;">Unter den Linden 24, 10117 Berlin, Germany</div>
+                </div>
+                <div class="footer-info__office" style="min-width:50%;width:50%;display:flex;flex-direction:column;flex-wrap:wrap;padding-left:10px;padding-right:10px;margin-bottom:16px;">
+                  <div class="footer-info__sitename" style="font-size:14px;font-weight:700;display:flex;gap:3px;align-items:center;margin-bottom:4px;">
+                    <span class="tc-flag" style="width:14px;height:14px;border-radius:50%;background-size:cover;background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">United Kingdom</span>
+                  </div>
+                  <div class="footer-info__address" style="font-size:14px;font-style:normal;font-weight:400;line-height:normal;color:#394247;">167 City Road, London, Greater London, EC1V 1AW, UK</div>
+                </div>
+                <div class="footer-info__office" style="min-width:50%;width:50%;display:flex;flex-direction:column;flex-wrap:wrap;padding-left:10px;padding-right:10px;margin-bottom:16px;">
+                  <div class="footer-info__sitename" style="font-size:14px;font-weight:700;display:flex;gap:3px;align-items:center;margin-bottom:4px;">
+                    <span class="tc-flag" style="width:14px;height:14px;border-radius:50%;background-size:cover;background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">United States</span>
+                  </div>
+                  <div class="footer-info__address" style="font-size:14px;font-style:normal;font-weight:400;line-height:normal;color:#394247;">131 Continental Dr, Suite 305, Newark, Delaware 19713</div>
+                </div>
+                <div class="footer-info__office" style="min-width:50%;width:50%;display:flex;flex-direction:column;flex-wrap:wrap;padding-left:10px;padding-right:10px;margin-bottom:16px;">
+                  <div class="footer-info__sitename" style="font-size:14px;font-weight:700;display:flex;gap:3px;align-items:center;margin-bottom:4px;">
+                    <span class="tc-flag" style="width:14px;height:14px;border-radius:50%;background-size:cover;background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">Switzerland</span>
+                  </div>
+                  <div class="footer-info__address" style="font-size:14px;font-style:normal;font-weight:400;line-height:normal;color:#394247;">Dorfstrasse 52a, 6390 Engelberg, Switzerland</div>
+                </div>
+                <div class="footer-info__office" style="min-width:50%;width:50%;display:flex;flex-direction:column;flex-wrap:wrap;padding-left:10px;padding-right:10px;margin-bottom:16px;">
+                  <div class="footer-info__sitename" style="font-size:14px;font-weight:700;display:flex;gap:3px;align-items:center;margin-bottom:4px;">
+                    <span class="tc-flag" style="width:14px;height:14px;border-radius:50%;background-size:cover;background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">Bulgaria</span>
+                  </div>
+                  <div class="footer-info__address" style="font-size:14px;font-style:normal;font-weight:400;line-height:normal;color:#394247;">Regus Sofia City West, bul Totleben 53-55, 1606 Sofia</div>
+                </div>
+                <div class="footer-info__office" style="min-width:50%;width:50%;display:flex;flex-direction:column;flex-wrap:wrap;padding-left:10px;padding-right:10px;margin-bottom:16px;">
+                  <div class="footer-info__sitename" style="font-size:14px;font-weight:700;display:flex;gap:3px;align-items:center;margin-bottom:4px;">
+                    <span class="tc-flag" style="width:14px;height:14px;border-radius:50%;background-size:cover;background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">United Arab Emirates</span>
+                  </div>
+                  <div class="footer-info__address" style="font-size:14px;font-style:normal;font-weight:400;line-height:normal;color:#394247;">UAE Dubai Silicon Oasis, DDP Building A1, Office 302</div>
+                </div>
+              </div>
+              <div class="footer-info__provider" style="margin-top:16px;color:#8f9ca3;font-size:14px;font-style:normal;font-weight:400;line-height:normal;">
+                Platform provider legal entity might vary depending on location, event and/or domain. For details check specific Event page, <a class="tc-link" href="#" style="color:#503fa5;cursor:pointer;">Imprint</a> and <a class="tc-link" href="#" style="color:#503fa5;cursor:pointer;">Terms.</a>
+                <span class="copyright" style="margin-top:16px;color:#8f9ca3;font-size:14px;display:block;">© 2026 TixHub. All rights reserved.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
