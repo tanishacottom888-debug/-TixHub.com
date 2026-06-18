@@ -1,842 +1,1555 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>TixHub - Buy Verified Tickets for Concerts, Sports, Theater and Events</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    
-    <!-- Google Fonts - Similar to Averta -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    
-    <style>
-        /* ======================================== */
-        /* TICKETMASTER INSPIRED STYLES */
-        /* ======================================== */
-        :root {
-            --tm-blue: #024ddf;
-            --tm-blue-hover: #0139a7;
-            --tm-dark: #121212;
-            --tm-gray: #646464;
-            --tm-gray-light: #bfbfbf;
-            --tm-gray-bg: #f6f6f6;
-            --tm-white: #ffffff;
-            --tm-gold: #ffb932;
-            --tm-red: #eb0000;
-            --tm-text: #121212;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', 'Averta', helvetica, arial, sans-serif;
-            background: var(--tm-white);
-            color: var(--tm-text);
-            overflow-x: hidden;
-        }
-        
-        /* Custom Scrollbar - Ticketmaster Style */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--tm-gray-bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--tm-gray-light);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--tm-gray);
-        }
-        
-        /* ======================================== */
-        /* TICKETMASTER STYLE BUTTONS */
-        /* ======================================== */
-        .btn-primary {
-            background: var(--tm-blue);
-            color: #fff;
-            padding: 12px 28px;
-            border-radius: 4px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 16px;
-            line-height: 1.4;
-            min-height: 44px;
-            text-decoration: none;
-        }
-        
-        .btn-primary:hover {
-            background: var(--tm-blue-hover);
-            transform: scale(1.02);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: var(--tm-text);
-            padding: 12px 28px;
-            border-radius: 4px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid var(--tm-gray-light);
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 16px;
-            line-height: 1.4;
-            min-height: 44px;
-            text-decoration: none;
-        }
-        
-        .btn-secondary:hover {
-            border-color: var(--tm-dark);
-            background: var(--tm-gray-bg);
-        }
-        
-        /* ======================================== */
-        /* NAVBAR - Ticketmaster Style */
-        /* ======================================== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: var(--tm-dark);
-            transition: all 0.3s ease;
-        }
-        
-        .navbar-top {
-            padding: 8px 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .navbar-main {
-            padding: 12px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .nav-link {
-            position: relative;
-            color: #9ca3af;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            font-size: 0.9rem;
-            padding: 8px 12px;
-            text-decoration: none;
-        }
-        
-        .nav-link:hover {
-            color: #fff;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: var(--tm-blue);
-            transition: width 0.3s ease;
-            border-radius: 2px;
-        }
-        
-        .nav-link:hover::after,
-        .nav-link-active::after {
-            width: 60%;
-        }
-        
-        .nav-link-active {
-            color: #fff;
-            font-weight: 600;
-        }
-        
-        /* ======================================== */
-        /* COUNTRY SELECTOR - USA Flag Circle */
-        /* ======================================== */
-        .flag-circle {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            flex-shrink: 0;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #fff;
-        }
-        
-        .flag-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .flag-circle-large {
-            width: 48px;
-            height: 48px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        /* ======================================== */
-        /* SEARCH BAR - Ticketmaster Style */
-        /* ======================================== */
-        .search-container {
-            background: var(--tm-white);
-            border-radius: 4px;
-            border: 1px solid var(--tm-gray-light);
-            overflow: hidden;
-            display: flex;
-            align-items: stretch;
-            max-width: 1000px;
-            margin: 0 auto;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-        
-        .search-container:focus-within {
-            border-color: var(--tm-blue);
-            box-shadow: 0 0 0 3px rgba(2, 77, 223, 0.1);
-        }
-        
-        .search-field {
-            flex: 1;
-            padding: 12px 16px 12px 44px;
-            border: none;
-            font-size: 16px;
-            color: var(--tm-text);
-            background: transparent;
-            min-height: 48px;
-            outline: none;
-        }
-        
-        .search-field::placeholder {
-            color: var(--tm-gray);
-        }
-        
-        .search-icon-wrapper {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--tm-gray);
-        }
-        
-        .search-divider {
-            width: 1px;
-            background: var(--tm-gray-light);
-            flex-shrink: 0;
-        }
-        
-        .search-btn {
-            background: var(--tm-blue);
-            color: #fff;
-            padding: 12px 32px;
-            border: none;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            min-height: 48px;
-            white-space: nowrap;
-        }
-        
-        .search-btn:hover {
-            background: var(--tm-blue-hover);
-        }
-        
-        /* ======================================== */
-        /* HERO SECTION */
-        /* ======================================== */
-        .hero-section {
-            background: var(--tm-gray-bg);
-            padding: 120px 40px 60px;
-        }
-        
-        /* ======================================== */
-        /* CARDS - Ticketmaster Style */
-        /* ======================================== */
-        .card {
-            background: var(--tm-white);
-            border-radius: 4px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border: 1px solid var(--tm-gray-light);
-            overflow: hidden;
-        }
-        
-        .card:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-            transform: translateY(-4px);
-        }
-        
-        /* ======================================== */
-        /* FOOTER - Ticketmaster Style */
-        /* ======================================== */
-        .footer {
-            background: var(--tm-dark);
-            color: #fff;
-            padding: 48px 40px 24px;
-        }
-        
-        .footer-link {
-            color: #9ca3af;
-            transition: color 0.3s ease;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        
-        .footer-link:hover {
-            color: #fff;
-        }
-        
-        .footer-heading {
-            font-weight: 600;
-            font-size: 1rem;
-            color: #fff;
-            margin-bottom: 16px;
-        }
-        
-        /* ======================================== */
-        /* RESPONSIVE */
-        /* ======================================== */
-        @media (max-width: 768px) {
-            .navbar-top {
-                padding: 8px 16px;
-            }
-            .navbar-main {
-                padding: 12px 16px;
-                flex-wrap: wrap;
-            }
-            .hero-section {
-                padding: 100px 16px 40px;
-            }
-            .search-container {
-                flex-direction: column;
-                border-radius: 8px;
-            }
-            .search-field {
-                padding: 14px 16px 14px 44px;
-            }
-            .search-divider {
-                display: none;
-            }
-            .search-btn {
-                border-radius: 0 0 8px 8px;
-                width: 100%;
-            }
-            .footer {
-                padding: 32px 16px 16px;
-            }
-        }
-        
-        /* ======================================== */
-        /* ANIMATIONS */
-        /* ======================================== */
-        .fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-        
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* ======================================== */
-        /* TOAST */
-        /* ======================================== */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            padding: 16px 28px;
-            border-radius: 4px;
-            background: var(--tm-dark);
-            color: #fff;
-            font-size: 0.9rem;
-            max-width: 90%;
-            width: auto;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.4s ease-out;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        @keyframes slideUp {
-            0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
-            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
-        }
-        
-        /* Mobile Menu */
-        .mobile-menu {
-            display: none;
-            background: var(--tm-dark);
-            padding: 16px 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .mobile-menu.open {
-            display: block;
-        }
-        
-        .mobile-menu a {
-            display: block;
-            color: #9ca3af;
-            padding: 10px 0;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .mobile-menu a:hover {
-            color: #fff;
-        }
-        
-        .mobile-menu a:last-child {
-            border-bottom: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>TixHub - World Cup 2026 Tickets</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'proxima-nova', 'Noto Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f9fafb;
+      color: #394247;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+    a {
+      text-decoration: none;
+      color: #337ab7;
+    }
+    a:hover {
+      text-decoration: none;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .container {
+      max-width: 1170px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    .d-flex {
+      display: flex !important;
+    }
+    .flex-column {
+      flex-direction: column !important;
+    }
+    .w-100 {
+      width: 100% !important;
+    }
+    .h-100 {
+      height: 100%;
+    }
+    .align-items-center {
+      align-items: center !important;
+    }
+    .justify-content-center {
+      justify-content: center !important;
+    }
+    .position-relative {
+      position: relative;
+    }
+    .mb-auto {
+      margin-bottom: auto !important;
+    }
+    .my-2 {
+      margin-top: 10px !important;
+      margin-bottom: 10px !important;
+    }
+    .mb-3 {
+      margin-bottom: 15px !important;
+    }
+    .mb-4 {
+      margin-bottom: 20px !important;
+    }
+    .pt-0 {
+      padding-top: 0 !important;
+    }
+    .pb-2 {
+      padding-bottom: 10px !important;
+    }
+    .pt-2 {
+      padding-top: 10px !important;
+    }
+    .m-0 {
+      margin: 0 !important;
+    }
+    .gap-2 {
+      gap: 10px;
+    }
+    .font-medium {
+      font-size: 16px !important;
+    }
+    .font-bold {
+      font-weight: 700 !important;
+    }
+    .cursor-pointer {
+      cursor: pointer;
+    }
+    .tc-link {
+      color: #503fa5;
+      cursor: pointer;
+    }
+
+    /* ===== BUTTONS (from source) ===== */
+    .ui-button {
+      width: 100%;
+      min-height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      transition: all .2s ease;
+      border-radius: 32px;
+      color: #000;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background-color: #29cca2;
+      border: 1px solid #29cca2;
+      cursor: pointer;
+    }
+    .ui-button:hover {
+      background-color: #22AA87;
+      border-color: #22AA87;
+    }
+    .ui-button--secondary {
+      color: #000;
+      border-color: #E3E6E8;
+      background-color: transparent;
+    }
+    .ui-button--secondary:hover {
+      background-color: #E3E6E8;
+      border-color: #E3E6E8;
+    }
+    .ui-button--tertiary {
+      border-color: #000;
+      background-color: #000;
+      color: #fff;
+    }
+    .ui-button--tertiary:hover {
+      background: rgba(0, 0, 0, .8);
+    }
+    .ui-button--size-medium {
+      min-height: 40px;
+      padding: 4px 12px;
+      font-size: 16px;
+    }
+    .Button--clear {
+      border: 0;
+      background: none !important;
+      outline: 0;
+      text-align: left;
+      color: #a1acb3;
+      cursor: pointer;
+    }
+    .Button--clear:hover {
+      color: #29cca2;
+    }
+
+    /* ===== HEADER ===== */
+    .TopMenu {
+      display: flex;
+      align-items: center;
+      position: relative;
+      height: 70px;
+      max-width: 100%;
+      background: #fff;
+      padding: 0 20px;
+      width: 100%;
+    }
+    .TopMenu .header-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      width: 100%;
+    }
+    .TopMenu .mobile-menu {
+      width: 25%;
+    }
+    .TopMenu .mobile-menu .Button--clear {
+      padding: 0;
+    }
+    .TopMenu .mobile-menu .Button--clear span {
+      font-size: 32px;
+      color: #394247;
+    }
+    @media (max-width: 992px) {
+      .TopMenu {
+        justify-content: space-between;
+      }
+      .TopMenu .mobile-menu {
+        order: 1;
+      }
+      .TopMenu .header-options {
+        display: flex;
+        order: 3;
+        align-items: center;
+        justify-content: flex-end;
+        width: 25%;
+      }
+    }
+    @media (max-width: 769px) {
+      .TopMenu {
+        padding: 0 15px;
+      }
+    }
+    .search__toggler {
+      font-size: 22px;
+      width: 32px;
+      cursor: pointer;
+      text-align: center;
+      margin-left: 15px;
+      line-height: 32px;
+    }
+    @media (max-width: 768px) {
+      .search__toggler {
+        font-size: 16px;
+        width: 24px;
+        text-align: center;
+        margin-left: 0;
+      }
+    }
+
+    /* ===== ENTITY PAGE ===== */
+    .entity-page {
+      background-color: #f8f8f8;
+      min-height: 80vh;
+    }
+    .filter-page {
+      max-width: 1270px;
+      padding: 20px 15px 40px;
+      margin: 0 auto;
+    }
+    .container-ash {
+      background: #f8f8f8;
+    }
+
+    /* ===== ENTITY BANNER ===== */
+    .entity-banner {
+      max-width: 1270px;
+      margin: 0 auto;
+      padding: 20px 20px 0;
+    }
+    @media (max-width: 476px) {
+      .entity-banner {
+        padding: 0;
+      }
+    }
+    .entity-banner__header-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      padding: 0 0 10px 0;
+    }
+    @media (max-width: 476px) {
+      .entity-banner__header-section {
+        display: block;
+        padding: 0 16px 10px;
+      }
+      .entity-banner__header-section__desktop {
+        display: none !important;
+      }
+    }
+    .entity-banner__header-section__title-section__title {
+      font-size: 32px !important;
+      line-height: 40px;
+      margin-top: 0;
+      margin-bottom: 0;
+      font-weight: 900;
+      color: #000;
+    }
+    @media (min-width: 476px) {
+      .entity-banner__header-section__title-section__title {
+        font-size: 40px !important;
+      }
+    }
+    .entity-banner__header-section__right-section__dates-section {
+      color: #000;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+
+    /* ===== FILTERS SECTION ===== */
+    .entity-banner__filters-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    @media (min-width: 476px) {
+      .entity-banner__filters-section {
+        flex-direction: row;
+        gap: 20px;
+      }
+    }
+    .entity-banner__filters-section__image-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    @media (min-width: 476px) {
+      .entity-banner__filters-section__image-wrapper {
+        width: 50%;
+        max-width: 608px;
+      }
+    }
+    .entity-banner__filters-section__image {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+    .entity-banner__filters-section__filter-bar {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 100%;
+      min-width: 0;
+      gap: 12px;
+      width: 100%;
+    }
+    @media (max-width: 476px) {
+      .entity-banner__filters-section__filter-bar {
+        padding: 0 16px;
+      }
+    }
+
+    /* ===== FILTER TABS ===== */
+    .filter-tabs {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(max-content, 1fr);
+      border-radius: 24px;
+      background: #000;
+      padding: 4px;
+      margin: 0 0 10px 0;
+      min-width: fit-content;
+      width: 100%;
+    }
+    .filter-tabs a {
+      display: flex;
+      height: 44px;
+      padding: 10.5px 12px;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      border-radius: 24px;
+      background: #000;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .filter-tabs a.active {
+      background: #fff;
+      color: #000;
+    }
+    .filter-tabs a .filter-tabs__img {
+      width: 24px;
+      height: 24px;
+      filter: invert(1);
+    }
+    .filter-tabs a.active .filter-tabs__img {
+      filter: invert(0);
+    }
+    @media (max-width: 476px) {
+      .filter-tabs a {
+        padding: 8px 10px;
+        font-size: 12px;
+        gap: 4px;
+      }
+      .filter-tabs a .filter-tabs__img {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    /* ===== FILTER CARDS ===== */
+    .entity-filter-card {
+      position: relative;
+      cursor: pointer;
+      display: inline-grid;
+      align-items: stretch;
+      border: 1px solid #E3E6E8;
+      border-radius: 20px;
+      overflow: hidden;
+      width: 100%;
+      background-color: #fff;
+      box-shadow: 0 0 13px rgba(0, 0, 0, 0.07);
+      margin-bottom: 8px;
+    }
+    @media (min-width: 476px) {
+      .entity-filter-card {
+        grid-auto-flow: column;
+        grid-template-columns: 1fr;
+        width: max-content;
+        max-width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+    .entity-filter-card__left {
+      gap: 8px;
+      display: flex;
+      align-items: center;
+      color: #2d3539;
+      background: #fff;
+      border-radius: 20px;
+      padding: 15px 10px;
+      font-size: 14px;
+      overflow: auto;
+      position: relative;
+      z-index: 2;
+    }
+    @media (min-width: 476px) {
+      .entity-filter-card__left {
+        font-size: 16px;
+        height: 40px;
+        padding: 8px 16px;
+        overflow: hidden;
+      }
+    }
+    .entity-filter-card__thumbnail {
+      width: 20px;
+      height: 20px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .entity-filter-card__name {
+      color: #2d3539;
+      white-space: nowrap;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+    @media (min-width: 476px) {
+      .entity-filter-card__name {
+        font-size: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    .entity-filter-card__separator {
+      font-size: 12px;
+      color: #2d3539;
+      margin: 0 2px;
+      flex-shrink: 0;
+    }
+    .entity-filter-card__info {
+      font-size: 13px;
+      font-weight: 400;
+      color: #2d3539;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .entity-filter-card__right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #29cca2;
+      cursor: pointer;
+      padding: 8px;
+      font-size: 13px;
+      border-top: 1px solid #E3E6E8;
+      min-height: 30px;
+    }
+    .entity-filter-card__right span {
+      text-align: center;
+      width: 100%;
+    }
+    .entity-filter-card__right .entity-filter-card__info {
+      color: #2d3539;
+      font-weight: 700;
+    }
+    .entity-filter-card__tickets {
+      color: #000;
+      white-space: nowrap;
+      font-weight: 700;
+      text-align: center;
+    }
+    @media (min-width: 476px) {
+      .entity-filter-card__right {
+        border-top: none;
+        border-radius: 0 20px 20px 0;
+        padding: 8px 20px;
+        margin-left: -10px;
+        z-index: 1;
+        min-height: 40px;
+      }
+      .entity-filter-card__right .entity-filter-card__info {
+        display: none;
+      }
+      .entity-filter-card__tickets {
+        margin-top: -3px;
+      }
+    }
+    @media (max-width: 475px) {
+      .entity-filter-card__right .entity-filter-card__info {
+        display: inline;
+      }
+      .entity-filter-card__right .entity-filter-card__tickets {
+        display: none;
+      }
+      .entity-filter-card__desktop-only {
+        display: none !important;
+      }
+    }
+
+    .show-more {
+      width: 100%;
+      margin: 0;
+      text-align: center;
+      padding: 10px 0;
+    }
+    .show-more .ui-button {
+      max-width: 200px;
+      margin: 0 auto;
+    }
+
+    /* ===== WIDGETS ===== */
+    .widget--links {
+      max-width: 1240px;
+      align-items: center;
+      display: flex;
+      gap: 24px;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 2px 24px rgba(0, 0, 0, 0.08);
+      padding: 16px 24px;
+      border: 1px solid #29cca2;
+      background: rgba(41, 204, 162, 0.2);
+      position: relative;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 769px) {
+      .widget--links {
+        flex-direction: column;
+        min-height: 160px;
+      }
+    }
+    .widget--links .links-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      font-size: 16px;
+    }
+    @media (min-width: 769px) {
+      .widget--links .links-group {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+      }
+    }
+    .widget--links .links-group__title {
+      color: #000;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .widget--links .links-group__list {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 769px) {
+      .widget--links .links-group__list {
+        flex-direction: column;
+      }
+    }
+    .widget--links .links-group__list a {
+      color: #29cca2 !important;
+      font-weight: 700;
+    }
+    .widget--links .links-group__list .ui-button {
+      width: auto;
+      padding: 6px 16px;
+      min-height: 32px;
+      font-size: 14px;
+    }
+    .widget--links .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #171a1c;
+      font-size: 20px;
+      position: absolute;
+      top: 16px;
+      right: 20px;
+    }
+    @media (min-width: 769px) {
+      .widget--links .icon {
+        position: static;
+        margin-left: auto;
+      }
+    }
+
+    /* ===== SEARCH RESULT CARDS ===== */
+    .search-result {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 476px) {
+      .search-result {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+    }
+    @media (max-width: 476px) {
+      .search-result {
+        padding: 0 16px;
+      }
+    }
+
+    .searchresult-box {
+      position: relative;
+      background: #fff;
+      box-shadow: 0 0 13px rgba(0, 0, 0, 0.07);
+      margin-bottom: 0;
+      color: #394247;
+      border-radius: 15px;
+      overflow: hidden;
+      padding: 10px 20px 10px 110px;
+      min-height: 170px;
+      border: 1px solid #E3E6E8;
+      transition: border-color 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .searchresult-box:hover {
+      border-color: #29cca2;
+    }
+    @media (max-width: 576px) {
+      .searchresult-box {
+        padding: 10px 15px 10px 80px;
+      }
+    }
+    .searchresult-box__image {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      background-color: #f2f3f3;
+      background-size: cover;
+      background-position: center;
+      pointer-events: none;
+    }
+    @media (max-width: 576px) {
+      .searchresult-box__image {
+        width: 60px;
+        height: 60px;
+      }
+    }
+    .searchresult-box__date {
+      position: absolute;
+      top: 100px;
+      left: 10px;
+    }
+    @media (max-width: 576px) {
+      .searchresult-box__date {
+        display: none;
+      }
+    }
+    .searchresult-box__title {
+      color: #000;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1.25;
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    @media (min-width: 476px) {
+      .searchresult-box__title {
+        font-size: 18px;
+        max-height: 48px;
+      }
+    }
+    .searchresult-box__venue-name {
+      font-weight: 400;
+      font-size: 12px;
+      color: #8f9ca3;
+    }
+    @media (min-width: 476px) {
+      .searchresult-box__venue-name {
+        font-size: 14px;
+      }
+    }
+    .searchresult-box__venue-location {
+      color: #2d3539;
+      font-weight: 400;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .searchresult-box__venue-location i {
+      width: 16px;
+      height: 16px;
+      align-content: center;
+      text-align: center;
+      color: #8f9ca3;
+      font-size: 14px;
+    }
+    @media (min-width: 476px) {
+      .searchresult-box__venue-location {
+        font-size: 14px;
+      }
+      .searchresult-box__venue-location i {
+        font-size: 16px;
+      }
+    }
+    .searchresult-box__tickets-count {
+      font-weight: 400;
+      font-size: 14px;
+      color: #000;
+      margin-top: 2px;
+    }
+    @media (min-width: 476px) {
+      .searchresult-box__tickets-count {
+        font-size: 16px;
+      }
+    }
+    .searchresult-box__pricing {
+      border-top: 1px solid rgba(0, 0, 0, 0.07);
+      padding-top: 8px;
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    @media (min-width: 476px) {
+      .searchresult-box__pricing {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        margin-top: 8px;
+      }
+    }
+    .searchresult-box__price {
+      font-weight: 700;
+      display: flex;
+      font-size: 16px;
+      gap: 6px;
+      align-items: center;
+    }
+    .searchresult-box__price .from-text {
+      color: #000;
+      font-weight: 400;
+      font-size: 14px;
+    }
+    @media (min-width: 476px) {
+      .searchresult-box__price {
+        font-size: 20px;
+      }
+      .searchresult-box__price .from-text {
+        font-size: 14px;
+      }
+    }
+    .searchresult-box__action {
+      width: 100%;
+    }
+    .searchresult-box__action .ui-button {
+      font-size: 14px;
+      min-height: 32px;
+      padding: 6px 12px;
+    }
+    @media (min-width: 476px) {
+      .searchresult-box__action .ui-button {
+        font-size: 16px;
+        min-height: 40px;
+        padding: 4px 24px;
+        width: auto;
+      }
+    }
+    .searchresult-box__subscribe-icon {
+      position: absolute;
+      right: 16px;
+      top: 10px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #9da1a3;
+      cursor: pointer;
+      transition: color 0.3s;
+      z-index: 2;
+      padding: 4px;
+    }
+    .searchresult-box__subscribe-icon:hover {
+      color: #ed1c24;
+    }
+    @media (max-width: 576px) {
+      .searchresult-box__subscribe-icon {
+        right: 10px;
+        top: 8px;
+        font-size: 16px;
+      }
+    }
+
+    /* ===== CALENDAR BADGE ===== */
+    .calendar-badge {
+      border-radius: 8px;
+      overflow: hidden;
+      text-align: center;
+      font-weight: 400;
+      width: 64px;
+      line-height: 18px;
+    }
+    .calendar-badge .top,
+    .calendar-badge .bottom {
+      color: #fff;
+      align-content: center;
+      width: 100%;
+      height: 24px;
+      text-transform: uppercase;
+    }
+    .calendar-badge .top {
+      background: #ec5751;
+    }
+    .calendar-badge .middle {
+      background: #ebeced;
+      color: #000;
+      align-content: center;
+      width: 100%;
+      height: 32px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .calendar-badge .bottom {
+      background: #949494;
+    }
+    .calendar-badge .top span,
+    .calendar-badge .bottom span {
+      font-size: 12px;
+    }
+    .calendar-badge .middle span {
+      font-size: 18px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      margin-top: 40px;
+      border-top: 1px solid #E3E6E8;
+    }
+    .footer .main-footer {
+      padding-top: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid #E3E6E8;
+      margin-top: 0;
+      min-height: 280px;
+    }
+    .footer__row {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    @media (min-width: 1365px) {
+      .footer__row {
+        flex-direction: row;
+        gap: 40px;
+      }
+    }
+    .footer__row .column-1 {
+      width: 100%;
+    }
+    @media (min-width: 1365px) {
+      .footer__row .column-1 {
+        width: 40%;
+      }
+    }
+    .footer__row .column-2 {
+      width: 100%;
+    }
+    @media (min-width: 1365px) {
+      .footer__row .column-2 {
+        width: 60%;
+      }
+    }
+    .footer .footer-info__company-links {
+      display: flex;
+      width: 100%;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .footer .link-list {
+      display: flex;
+      gap: 8px;
+      flex-direction: column;
+      min-width: 50%;
+    }
+    .footer .link-list .footer-link a {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 600;
+      color: #503fa5;
+      text-wrap: wrap;
+    }
+    .footer .footer-info__office {
+      min-width: 50%;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      padding-right: 10px;
+      margin-bottom: 16px;
+    }
+    @media (min-width: 1365px) {
+      .footer .footer-info__office {
+        min-width: 33.33%;
+        width: 33.33%;
+      }
+    }
+    .footer .footer-info__sitename {
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      gap: 3px;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .footer .footer-info__sitename .tc-flag {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-size: cover;
+    }
+    .footer .footer-info__address {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #394247;
+    }
+    .footer .copyright {
+      margin-top: 16px;
+      color: #8f9ca3;
+      font-size: 14px;
+      display: block;
+    }
+
+    /* ===== UTILITIES ===== */
+    .hidden-md {
+      display: block;
+    }
+    .hidden-lg {
+      display: block;
+    }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .hidden-md {
+        display: none !important;
+      }
+    }
+    @media (min-width: 1200px) {
+      .hidden-lg {
+        display: none !important;
+      }
+    }
+    .visiable-sm {
+      display: block;
+    }
+    @media (min-width: 769px) {
+      .visiable-sm {
+        display: none !important;
+      }
+    }
+    .separator {
+      margin: 0 10px;
+    }
+    .icon {
+      margin-right: 5px;
+      position: relative;
+    }
+
+    /* Responsive tweaks for the source layout */
+    @media (max-width: 476px) {
+      .entity-banner__filters-section__image-wrapper {
+        padding: 0 16px;
+      }
+      .entity-banner__filters-section__image {
+        border-radius: 16px;
+      }
+      .filter-page {
+        padding: 10px 0 20px;
+      }
+      .searchresult-box {
+        border-radius: 16px;
+      }
+      .searchresult-box__pricing .searchresult-box__action .ui-button {
+        width: 100%;
+        font-size: 14px;
+      }
+    }
+    @media (max-width: 360px) {
+      .searchresult-box {
+        padding: 10px 10px 10px 70px;
+        min-height: 150px;
+      }
+      .searchresult-box__image {
+        width: 50px;
+        height: 50px;
+        top: 8px;
+        left: 8px;
+      }
+      .searchresult-box__title {
+        font-size: 12px;
+      }
+      .filter-tabs a {
+        font-size: 10px;
+        padding: 4px 6px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- ======================================== -->
-    <!-- NAVIGATION - Ticketmaster Style -->
-    <!-- ======================================== -->
-    <nav class="navbar">
-        <!-- Top Bar -->
-        <div class="navbar-top hidden md:flex items-center justify-between">
-            <div class="flex items-center gap-6">
-                <!-- Country Selector with USA Flag Circle -->
-                <button class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
-                    <span class="flag-circle">
-                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA Flag" />
-                    </span>
-                    <span>US</span>
-                </button>
-                
-                <a href="#" class="text-gray-400 hover:text-white transition text-sm flex items-center gap-1">
-                    <i class="fas fa-hotel"></i> Hotels
-                </a>
-                <a href="sell.html" class="text-gray-400 hover:text-white transition text-sm">Sell</a>
-                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Gift Cards</a>
-                <a href="#" class="text-gray-400 hover:text-white transition text-sm">Help</a>
-                <a href="#" class="text-gray-400 hover:text-white transition text-sm">VIP</a>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="text-xs text-gray-500">PayPal Preferred</span>
-            </div>
+  <!-- ===== HEADER ===== -->
+  <header class="top-header" style="position:sticky;top:0;z-index:1000;background:#fff;">
+    <div class="TopMenu">
+      <div class="header-options">
+        <div class="search">
+          <div class="search__toggler">
+            <i class="fas fa-search" style="font-style:normal;font-weight:900;">&#xf002;</i>
+          </div>
         </div>
-        
-        <!-- Main Nav -->
-        <div class="navbar-main">
-            <div class="flex items-center gap-6">
-                <!-- Logo -->
-                <a href="index.html" class="flex items-center gap-2">
-                    <div class="w-9 h-9 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
-                        <i class="fas fa-ticket-alt text-white text-sm"></i>
-                    </div>
-                    <span class="text-xl font-bold text-white tracking-tight">
-                        Tix<span class="text-[#6c5ce7]">Hub</span>
-                    </span>
-                </a>
-                
-                <!-- Nav Links -->
-                <div class="hidden lg:flex items-center gap-1">
-                    <a href="index.html" class="nav-link nav-link-active">Home</a>
-                    <a href="buy.html" class="nav-link">Buy Tickets</a>
-                    <a href="sell.html" class="nav-link">Sell Tickets</a>
-                    <a href="matches.html" class="nav-link">Matches</a>
-                    <a href="stadiums.html" class="nav-link">Stadiums</a>
-                </div>
-            </div>
-            
-            <div class="flex items-center gap-3">
-                <a href="auth.html" class="hidden md:block text-gray-300 hover:text-white transition text-sm font-medium">
-                    Sign In
-                </a>
-                <a href="auth.html" class="btn-primary text-sm px-5 py-2 min-h-[40px]">
-                    <i class="fas fa-rocket mr-1"></i> Get Started
-                </a>
-                <button id="mobileToggle" class="lg:hidden text-white text-2xl p-2">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="mobile-menu">
-            <a href="index.html">Home</a>
-            <a href="buy.html">Buy Tickets</a>
-            <a href="sell.html">Sell Tickets</a>
-            <a href="matches.html">Matches</a>
-            <a href="stadiums.html">Stadiums</a>
-            <a href="auth.html" class="text-white font-semibold">Sign In</a>
-        </div>
-    </nav>
+      </div>
+      <div class="mobile-menu align-items-center visiable-sm hidden-md hidden-lg">
+        <button class="Button--clear font-medium">
+          <span style="font-size:28px;line-height:1;">&#9776;</span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-    <!-- ======================================== -->
-    <!-- HERO SECTION -->
-    <!-- ======================================== -->
-    <section class="hero-section">
-        <div class="max-w-7xl mx-auto">
-            <!-- Search Bar - Ticketmaster Style -->
-            <div class="max-w-4xl mx-auto">
-                <div class="search-container">
-                    <div class="relative flex-1">
-                        <i class="fas fa-search text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
-                        <input 
-                            type="text" 
-                            id="heroSearch"
-                            placeholder="Artist, Event or Venue"
-                            class="search-field"
-                        />
-                    </div>
-                    <div class="search-divider"></div>
-                    <div class="relative flex-1">
-                        <i class="fas fa-map-marker-alt text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
-                        <input 
-                            type="text" 
-                            id="locationSearch"
-                            placeholder="City or Zip Code"
-                            class="search-field"
-                        />
-                    </div>
-                    <button onclick="searchEvents()" class="search-btn">
-                        <i class="fas fa-search mr-2"></i> Search
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Hero Content -->
-            <div class="text-center mt-12">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-[#121212] leading-tight">
-                    Find Your <span class="text-[#024ddf]">Perfect</span> Ticket
-                </h1>
-                <p class="text-gray-500 text-lg mt-4 max-w-2xl mx-auto">
-                    Buy and sell tickets with complete security. Every transaction protected by escrow.
-                </p>
-            </div>
-            
-            <!-- Two Main Options - Buy & Sell Cards -->
-            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-10">
-                <!-- Buy Card -->
-                <a href="buy.html" class="card p-8 text-center hover:border-[#024ddf]">
-                    <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-ticket-alt text-[#024ddf] text-2xl"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-[#121212]">Buy Tickets</h2>
-                    <p class="text-gray-500 text-sm mt-2">Browse events and secure your tickets instantly</p>
-                    <div class="mt-4 inline-block text-[#024ddf] font-semibold text-sm">
-                        Browse Events <i class="fas fa-arrow-right ml-1"></i>
-                    </div>
-                </a>
-                
-                <!-- Sell Card -->
-                <a href="sell.html" class="card p-8 text-center hover:border-[#024ddf]">
-                    <div class="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-store text-[#024ddf] text-2xl"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-[#121212]">Sell Tickets</h2>
-                    <p class="text-gray-500 text-sm mt-2">List your tickets and reach thousands of buyers</p>
-                    <div class="mt-4 inline-block text-[#024ddf] font-semibold text-sm">
-                        List Tickets <i class="fas fa-arrow-right ml-1"></i>
-                    </div>
-                </a>
-            </div>
-            
-            <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mt-10">
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-[#024ddf]">50K+</div>
-                    <div class="text-gray-500 text-sm">Happy Users</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-[#024ddf]">$2M+</div>
-                    <div class="text-gray-500 text-sm">Protected</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-[#024ddf]">99.9%</div>
-                    <div class="text-gray-500 text-sm">Satisfaction</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-[#024ddf]">10K+</div>
-                    <div class="text-gray-500 text-sm">Tickets Listed</div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="entity-page">
+    <div class="container-ash pt-2">
+      <div class="filter-page pt-0 pb-2">
 
-    <!-- ======================================== -->
-    <!-- CATEGORIES - Ticketmaster Style -->
-    <!-- ======================================== -->
-    <section class="py-16 px-4 max-w-7xl mx-auto">
-        <div class="text-center mb-10">
-            <h2 class="text-3xl font-bold text-[#121212]">Explore <span class="text-[#024ddf]">Events</span></h2>
-            <p class="text-gray-500 mt-2">Find tickets for the best events in your city</p>
-        </div>
-        
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <a href="buy.html?category=concert" class="card p-6 text-center hover:border-[#024ddf]">
-                <div class="text-3xl mb-2">🎵</div>
-                <h3 class="font-semibold text-sm text-[#121212]">Concerts</h3>
-                <p class="text-gray-400 text-xs mt-1">2,345 events</p>
-            </a>
-            <a href="buy.html?category=sports" class="card p-6 text-center hover:border-[#024ddf]">
-                <div class="text-3xl mb-2">⚽</div>
-                <h3 class="font-semibold text-sm text-[#121212]">Sports</h3>
-                <p class="text-gray-400 text-xs mt-1">1,892 events</p>
-            </a>
-            <a href="buy.html?category=theater" class="card p-6 text-center hover:border-[#024ddf]">
-                <div class="text-3xl mb-2">🎭</div>
-                <h3 class="font-semibold text-sm text-[#121212]">Theater</h3>
-                <p class="text-gray-400 text-xs mt-1">1,234 events</p>
-            </a>
-            <a href="buy.html?category=festival" class="card p-6 text-center hover:border-[#024ddf]">
-                <div class="text-3xl mb-2">🎪</div>
-                <h3 class="font-semibold text-sm text-[#121212]">Festivals</h3>
-                <p class="text-gray-400 text-xs mt-1">876 events</p>
-            </a>
-            <a href="buy.html?category=comedy" class="card p-6 text-center hover:border-[#024ddf]">
-                <div class="text-3xl mb-2">😂</div>
-                <h3 class="font-semibold text-sm text-[#121212]">Comedy</h3>
-                <p class="text-gray-400 text-xs mt-1">654 events</p>
-            </a>
-            <a href="buy.html?category=other" class="card p-6 text-center hover:border-[#024ddf]">
-                <div class="text-3xl mb-2">🎯</div>
-                <h3 class="font-semibold text-sm text-[#121212]">More</h3>
-                <p class="text-gray-400 text-xs mt-1">1,023 events</p>
-            </a>
-        </div>
-    </section>
-
-    <!-- ======================================== -->
-    <!-- FEATURES - Ticketmaster Style -->
-    <!-- ======================================== -->
-    <section class="py-16 px-4 bg-[#f6f6f6]">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold text-[#121212]">Why Choose <span class="text-[#024ddf]">TixHub</span></h2>
-                <p class="text-gray-500 mt-2">Everything you need for secure ticket transactions</p>
+        <!-- ===== ENTITY BANNER ===== -->
+        <div class="entity-banner">
+          <!-- Desktop Header -->
+          <div class="entity-banner__header-section entity-banner__header-section__desktop">
+            <div class="entity-banner__header-section__title-section">
+              <h1 class="entity-banner__header-section__title-section__title">World Cup 2026 tickets</h1>
             </div>
-            
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="card p-8">
-                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-4">
-                        <i class="fas fa-shield-alt text-[#024ddf] text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-[#121212]">Escrow Protection</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mt-2">
-                        Your payment is held securely until you confirm ticket delivery. Zero risk, complete peace of mind.
-                    </p>
-                </div>
-                
-                <div class="card p-8">
-                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-4">
-                        <i class="fas fa-credit-card text-[#024ddf] text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-[#121212]">Multiple Payments</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mt-2">
-                        Pay with Credit Card, Wise, Sendwave, or Skrill. Choose what works best for you.
-                    </p>
-                </div>
-                
-                <div class="card p-8">
-                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-4">
-                        <i class="fas fa-qrcode text-[#024ddf] text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-[#121212]">QR Code Tickets</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mt-2">
-                        Get instant QR codes for contactless entry. No physical tickets needed, ever.
-                    </p>
-                </div>
+            <div class="entity-banner__header-section__right-section">
+              <p class="entity-banner__header-section__right-section__dates-section">18 June 2026 - 19 July 2026</p>
             </div>
-        </div>
-    </section>
+          </div>
 
-    <!-- ======================================== -->
-    <!-- CTA SECTION -->
-    <!-- ======================================== -->
-    <section class="py-16 px-4">
-        <div class="max-w-4xl mx-auto">
-            <div class="card p-12 text-center bg-[#121212] text-white border-none">
-                <h2 class="text-3xl md:text-4xl font-bold">
-                    Ready to <span class="text-[#ffb932]">Join</span> the Community?
-                </h2>
-                <p class="text-gray-400 text-lg mt-4 max-w-2xl mx-auto">
-                    Join thousands of users who trust TixHub for secure ticket transactions.
-                </p>
-                <div class="flex flex-wrap justify-center gap-4 mt-8">
-                    <a href="auth.html" class="btn-primary bg-[#ffb932] text-[#121212] hover:bg-[#f5a800]">
-                        <i class="fas fa-user-plus"></i> Create Free Account
-                    </a>
-                    <a href="buy.html" class="btn-secondary border-white/20 text-white hover:bg-white/10">
-                        <i class="fas fa-search"></i> Explore Events
-                    </a>
-                </div>
-                <p class="text-gray-500 text-sm mt-6">
-                    <i class="fas fa-check-circle text-green-400 mr-1"></i>
-                    No credit card required • Free to join
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ======================================== -->
-    <!-- FOOTER - Ticketmaster Style -->
-    <!-- ======================================== -->
-    <footer class="footer">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-4 gap-8">
+          <!-- Filters Section -->
+          <div class="entity-banner__filters-section">
+            <!-- Image -->
+            <div class="entity-banner__filters-section__image-wrapper">
+              <div class="entity-banner__filters-section__image-sticky" style="position:relative;">
+                <img class="entity-banner__filters-section__image" src="https://imgs.ticombo.com/tc-images-main/thumbnail/entities/sports/world-cup-2026/thumbnail-worldcupnew_thumb.png" alt="World Cup 2026" style="width:100%;height:auto;border-radius:16px;">
+              </div>
+              <!-- Mobile Header (overlay style) -->
+              <div style="padding:16px 0 0 0;width:100%;display:flex;flex-direction:column;">
                 <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-10 h-10 rounded bg-gradient-to-br from-[#024ddf] to-[#0139a7] flex items-center justify-center">
-                            <i class="fas fa-ticket-alt text-white text-sm"></i>
-                        </div>
-                        <span class="text-xl font-bold text-white">Tix<span class="text-[#6c5ce7]">Hub</span></span>
-                    </div>
-                    <p class="text-gray-400 text-sm">Secure ticket marketplace with escrow protection.</p>
+                  <h1 style="font-size:28px !important;font-weight:900;color:#000;margin:0;">World Cup 2026 tickets</h1>
                 </div>
                 <div>
-                    <h4 class="footer-heading">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="footer-link">About Us</a></li>
-                        <li><a href="#" class="footer-link">How It Works</a></li>
-                        <li><a href="#" class="footer-link">FAQ</a></li>
-                    </ul>
+                  <p style="color:#000;font-size:20px;font-weight:700;margin:4px 0 0 0;">18 June 2026 - 19 July 2026</p>
                 </div>
-                <div>
-                    <h4 class="footer-heading">Support</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="footer-link">Help Center</a></li>
-                        <li><a href="#" class="footer-link">Contact Us</a></li>
-                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="footer-heading">Follow Us</h4>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
-                            <i class="fab fa-twitter text-gray-400 hover:text-white"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
-                            <i class="fab fa-instagram text-gray-400 hover:text-white"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#024ddf]/20 transition">
-                            <i class="fab fa-facebook text-gray-400 hover:text-white"></i>
-                        </a>
-                    </div>
-                </div>
+              </div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-                &copy; 2026 TixHub. All rights reserved.
+
+            <!-- Filter Bar -->
+            <div class="entity-banner__filters-section__filter-bar">
+              <!-- Tabs -->
+              <div class="filter-tabs">
+                <a href="#">
+                  <img class="filter-tabs__img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 6a4 4 0 1 1-8 0 4 4 0 0 1 8 0zm8 0a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM4 18a4 4 0 1 1 8 0 4 4 0 0 1-8 0zm8 0a4 4 0 1 1 8 0 4 4 0 0 1-8 0z' fill='white'/%3E%3C/svg%3E" alt="team">
+                  <span class="filter-tabs__label">Team</span>
+                </a>
+                <a href="#" class="active">
+                  <img class="filter-tabs__img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z' fill='black'/%3E%3C/svg%3E" alt="date">
+                  <span class="filter-tabs__label">By Date/Group</span>
+                </a>
+                <a href="#">
+                  <img class="filter-tabs__img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z' fill='white'/%3E%3C/svg%3E" alt="city">
+                  <span class="filter-tabs__label">City</span>
+                </a>
+                <a href="#">
+                  <img class="filter-tabs__img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z' fill='white'/%3E%3C/svg%3E" alt="venue">
+                  <span class="filter-tabs__label">Venue</span>
+                </a>
+              </div>
+
+              <!-- Filter Cards -->
+              <div class="entity-filter-card">
+                <div class="entity-filter-card__left">
+                  <img class="entity-filter-card__thumbnail" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M21 5v14H3V5h18zm0-2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 6c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z' fill='%232d3539'/%3E%3C/svg%3E" alt="final">
+                  <span class="entity-filter-card__name">Final World Cup 2026</span>
+                  <span class="entity-filter-card__separator entity-filter-card__desktop-only">—</span>
+                  <span class="entity-filter-card__info entity-filter-card__desktop-only">17 JUL</span>
+                </div>
+                <div class="entity-filter-card__right">
+                  <span class="entity-filter-card__info">17 JUL</span>
+                  <span class="entity-filter-card__tickets">1,880 tickets</span>
+                </div>
+              </div>
+
+              <div class="entity-filter-card">
+                <div class="entity-filter-card__left">
+                  <img class="entity-filter-card__thumbnail" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M21 5v14H3V5h18zm0-2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 6c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z' fill='%232d3539'/%3E%3C/svg%3E" alt="bronze">
+                  <span class="entity-filter-card__name">Bronze Final World Cup 2026</span>
+                  <span class="entity-filter-card__separator entity-filter-card__desktop-only">—</span>
+                  <span class="entity-filter-card__info entity-filter-card__desktop-only">17 JUL</span>
+                </div>
+                <div class="entity-filter-card__right">
+                  <span class="entity-filter-card__info">17 JUL</span>
+                  <span class="entity-filter-card__tickets">718 tickets</span>
+                </div>
+              </div>
+
+              <div class="entity-filter-card">
+                <div class="entity-filter-card__left">
+                  <img class="entity-filter-card__thumbnail" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M21 5v14H3V5h18zm0-2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 6c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z' fill='%232d3539'/%3E%3C/svg%3E" alt="semis">
+                  <span class="entity-filter-card__name">Semi Finals World Cup 2026</span>
+                  <span class="entity-filter-card__separator entity-filter-card__desktop-only">—</span>
+                  <span class="entity-filter-card__info entity-filter-card__desktop-only">12 JUL — 13 JUL</span>
+                </div>
+                <div class="entity-filter-card__right">
+                  <span class="entity-filter-card__info">12 JUL — 13 JUL</span>
+                  <span class="entity-filter-card__tickets">2,430 tickets</span>
+                </div>
+              </div>
+
+              <!-- Desktop only cards -->
+              <div class="entity-filter-card entity-filter-card__desktop-only">
+                <div class="entity-filter-card__left">
+                  <img class="entity-filter-card__thumbnail" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M21 5v14H3V5h18zm0-2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 6c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z' fill='%232d3539'/%3E%3C/svg%3E" alt="qf">
+                  <span class="entity-filter-card__name">Quarter Finals World Cup 2026</span>
+                  <span class="entity-filter-card__separator">—</span>
+                  <span class="entity-filter-card__info">8 JUL — 10 JUL</span>
+                </div>
+                <div class="entity-filter-card__right">
+                  <span class="entity-filter-card__tickets">4,450 tickets</span>
+                </div>
+              </div>
+
+              <div class="entity-filter-card entity-filter-card__desktop-only">
+                <div class="entity-filter-card__left">
+                  <img class="entity-filter-card__thumbnail" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M21 5v14H3V5h18zm0-2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 6c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z' fill='%232d3539'/%3E%3C/svg%3E" alt="r16">
+                  <span class="entity-filter-card__name">Round of 16 World Cup 2026</span>
+                  <span class="entity-filter-card__separator">—</span>
+                  <span class="entity-filter-card__info">3 JUL — 6 JUL</span>
+                </div>
+                <div class="entity-filter-card__right">
+                  <span class="entity-filter-card__tickets">9,104 tickets</span>
+                </div>
+              </div>
+
+              <div class="entity-filter-card entity-filter-card__desktop-only">
+                <div class="entity-filter-card__left">
+                  <img class="entity-filter-card__thumbnail" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M21 5v14H3V5h18zm0-2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 6c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z' fill='%232d3539'/%3E%3C/svg%3E" alt="r32">
+                  <span class="entity-filter-card__name">Round of 32 World Cup 2026</span>
+                  <span class="entity-filter-card__separator">—</span>
+                  <span class="entity-filter-card__info">27 JUN — 2 JUL</span>
+                </div>
+                <div class="entity-filter-card__right">
+                  <span class="entity-filter-card__tickets">18.1K+ tickets</span>
+                </div>
+              </div>
+
+              <!-- Show More -->
+              <div class="show-more">
+                <button class="ui-button ui-button--secondary ui-button--size-medium">Show More</button>
+              </div>
             </div>
+          </div>
         </div>
-    </footer>
 
-    <!-- ======================================== -->
-    <!-- JAVASCRIPT -->
-    <!-- ======================================== -->
-    <script>
-        // ========================================
-        // MOBILE MENU
-        // ========================================
-        const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        mobileToggle.addEventListener('click', function() {
-            mobileMenu.classList.toggle('open');
-            const icon = this.querySelector('i');
-            if (mobileMenu.classList.contains('open')) {
-                icon.className = 'fas fa-times';
-            } else {
-                icon.className = 'fas fa-bars';
-            }
-        });
+        <!-- ===== WIDGETS ===== -->
+        <div class="widgets">
+          <div class="widget--links">
+            <section class="links-group">
+              <div class="links-group__title">For Group And Vip Requests</div>
+              <ul class="links-group__list">
+                <a href="#" target="_blank" class="w-100">
+                  <button class="ui-button ui-button--tertiary ui-button--size-medium" style="width:auto;padding:6px 16px;min-height:32px;">
+                    <i class="fas fa-head-side-speak" style="font-style:normal;">&#xf75f;</i> WhatsApp
+                  </button>
+                </a>
+                <a href="#" target="_blank" class="w-100">
+                  <button class="ui-button ui-button--tertiary ui-button--size-medium" style="width:auto;padding:6px 16px;min-height:32px;">
+                    <i class="fas fa-circle-info" style="font-style:normal;">&#xf05a;</i> VIP INFO
+                  </button>
+                </a>
+              </ul>
+            </section>
+            <span class="icon" style="font-style:normal;">&#xf00d;</span>
+          </div>
+        </div>
 
-        // ========================================
-        // SEARCH
-        // ========================================
-        function searchEvents() {
-            const searchInput = document.getElementById('heroSearch');
-            const locationInput = document.getElementById('locationSearch');
-            const query = searchInput.value.trim();
-            const location = locationInput.value.trim();
-            
-            if (query.length > 0) {
-                showToast(`🔍 Searching for "${query}"${location ? ' near ' + location : ''}...`);
-                setTimeout(() => {
-                    window.location.href = `buy.html?search=${encodeURIComponent(query)}&location=${encodeURIComponent(location)}`;
-                }, 800);
-            } else {
-                showToast('Please enter an event or artist name');
-            }
-        }
+        <!-- ===== SEARCH RESULTS ===== -->
+        <div class="search-result">
 
-        document.getElementById('heroSearch')?.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchEvents();
-            }
-        });
+          <!-- Card 1 -->
+          <div class="searchresult-box">
+            <div class="searchresult-box__image" style="background-image:url('https://imgs.ticombo.com/tc-images-main/thumbnail/events/sports/match-25-group-a-football-world-cup-2026-2606182359/thumbnail-thumbnail-fe215283-462f-42a2-85ed-597d8694f413.png');"></div>
+            <div class="searchresult-box__date">
+              <div class="calendar-badge">
+                <div class="top"><span>Jun</span></div>
+                <div class="middle"><span>18</span></div>
+                <div class="bottom"><span>Thu</span></div>
+              </div>
+            </div>
+            <button class="searchresult-box__subscribe-icon"><span style="font-style:normal;">&#xf004;</span></button>
+            <div class="searchresult-box__title">Czech Republic vs South Africa - World Cup 2026 - M25 Group A</div>
+            <div class="searchresult-box__venue-name">Atlanta Stadium</div>
+            <div class="searchresult-box__venue-location"><span style="font-style:normal;">&#xf3c5;</span> Atlanta, US</div>
+            <div class="searchresult-box__tickets-count">1027 tickets</div>
+            <div class="searchresult-box__pricing">
+              <div class="searchresult-box__price">
+                <span class="from-text">from</span>
+                <span class="price-value">€270</span>
+              </div>
+              <div class="searchresult-box__action">
+                <button class="ui-button ui-button--size-medium">BUY</button>
+              </div>
+            </div>
+          </div>
 
-        document.getElementById('locationSearch')?.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchEvents();
-            }
-        });
+          <!-- Card 2 -->
+          <div class="searchresult-box">
+            <div class="searchresult-box__image" style="background-image:url('https://imgs.ticombo.com/tc-images-main/thumbnail/events/sports/match-26-group-b-football-world-cup-2026-2606182359/thumbnail-thumbnail-c412d68c-70ce-41be-95cb-70919b9c1989.png');"></div>
+            <div class="searchresult-box__date">
+              <div class="calendar-badge">
+                <div class="top"><span>Jun</span></div>
+                <div class="middle"><span>18</span></div>
+                <div class="bottom"><span>Thu</span></div>
+              </div>
+            </div>
+            <button class="searchresult-box__subscribe-icon"><span style="font-style:normal;">&#xf004;</span></button>
+            <div class="searchresult-box__title">Switzerland vs Bosnia and Herzegovina - World Cup 2026 - M26 Group B</div>
+            <div class="searchresult-box__venue-name">Los Angeles Stadium</div>
+            <div class="searchresult-box__venue-location"><span style="font-style:normal;">&#xf3c5;</span> Los Angeles, US</div>
+            <div class="searchresult-box__tickets-count">607 tickets</div>
+            <div class="searchresult-box__pricing">
+              <div class="searchresult-box__price">
+                <span class="from-text">from</span>
+                <span class="price-value">€462</span>
+              </div>
+              <div class="searchresult-box__action">
+                <button class="ui-button ui-button--size-medium">BUY</button>
+              </div>
+            </div>
+          </div>
 
-        // ========================================
-        // TOAST
-        // ========================================
-        function showToast(message) {
-            document.querySelectorAll('.toast').forEach(t => t.remove());
-            
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = `
-                <i class="fas fa-info-circle text-[#024ddf]"></i>
-                <span>${message}</span>
-            `;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(-50%) translateY(20px)';
-                toast.style.transition = 'all 0.4s ease';
-                setTimeout(() => toast.remove(), 400);
-            }, 4000);
-        }
+          <!-- Card 3 -->
+          <div class="searchresult-box">
+            <div class="searchresult-box__image" style="background-image:url('https://imgs.ticombo.com/tc-images-main/thumbnail/events/sports/match-27-group-b-football-world-cup-2026-2606182359/thumbnail-thumbnail-21f808e6-223c-4ca4-95e1-4fd287ab7a0a.png');"></div>
+            <div class="searchresult-box__date">
+              <div class="calendar-badge">
+                <div class="top"><span>Jun</span></div>
+                <div class="middle"><span>18</span></div>
+                <div class="bottom"><span>Thu</span></div>
+              </div>
+            </div>
+            <button class="searchresult-box__subscribe-icon"><span style="font-style:normal;">&#xf004;</span></button>
+            <div class="searchresult-box__title">Canada vs Qatar - World Cup 2026 - M27 Group B</div>
+            <div class="searchresult-box__venue-name">BC Place Vancouver</div>
+            <div class="searchresult-box__venue-location"><span style="font-style:normal;">&#xf3c5;</span> Vancouver, CA</div>
+            <div class="searchresult-box__tickets-count">746 tickets</div>
+            <div class="searchresult-box__pricing">
+              <div class="searchresult-box__price">
+                <span class="from-text">from</span>
+                <span class="price-value">€694</span>
+              </div>
+              <div class="searchresult-box__action">
+                <button class="ui-button ui-button--size-medium">BUY</button>
+              </div>
+            </div>
+          </div>
 
-        // ========================================
-        // CONSOLE
-        // ========================================
-        console.log('🎫 TixHub - Ticketmaster Style');
-        console.log('🇺🇸 USA Flag in circle');
-        console.log('💙 Blue color scheme inspired by Ticketmaster');
-        
-        setTimeout(() => {
-            showToast('🎉 Welcome to TixHub! Find your next event today.');
-        }, 1500);
-    </script>
+          <!-- Card 4 -->
+          <div class="searchresult-box">
+            <div class="searchresult-box__image" style="background-image:url('https://imgs.ticombo.com/tc-images-main/thumbnail/events/sports/match-28-group-a-football-world-cup-2026-2606182359/thumbnail-thumbnail-323bb1d7-b6d8-46ba-970e-a3d3056b3c63.png');"></div>
+            <div class="searchresult-box__date">
+              <div class="calendar-badge">
+                <div class="top"><span>Jun</span></div>
+                <div class="middle"><span>18</span></div>
+                <div class="bottom"><span>Thu</span></div>
+              </div>
+            </div>
+            <button class="searchresult-box__subscribe-icon"><span style="font-style:normal;">&#xf004;</span></button>
+            <div class="searchresult-box__title">Mexico vs South Korea - World Cup 2026 - M28 Group A</div>
+            <div class="searchresult-box__venue-name">Estadio Guadalajara</div>
+            <div class="searchresult-box__venue-location"><span style="font-style:normal;">&#xf3c5;</span> Guadalajara, MX</div>
+            <div class="searchresult-box__tickets-count">596 tickets</div>
+            <div class="searchresult-box__pricing">
+              <div class="searchresult-box__price">
+                <span class="from-text">from</span>
+                <span class="price-value">€2,389</span>
+              </div>
+              <div class="searchresult-box__action">
+                <button class="ui-button ui-button--size-medium">BUY</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="searchresult-box">
+            <div class="searchresult-box__image" style="background-image:url('https://imgs.ticombo.com/tc-images-main/thumbnail/events/sports/match-32-group-d-football-world-cup-2026-2606192359/thumbnail-thumbnail-58519739-32ad-4438-aa84-dc3ee6e79b78.png');"></div>
+            <div class="searchresult-box__date">
+              <div class="calendar-badge">
+                <div class="top"><span>Jun</span></div>
+                <div class="middle"><span>19</span></div>
+                <div class="bottom"><span>Fri</span></div>
+              </div>
+            </div>
+            <button class="searchresult-box__subscribe-icon"><span style="font-style:normal;">&#xf004;</span></button>
+            <div class="searchresult-box__title">USA vs Australia - World Cup 2026 - M32 Group D</div>
+            <div class="searchresult-box__venue-name">Seattle Stadium</div>
+            <div class="searchresult-box__venue-location"><span style="font-style:normal;">&#xf3c5;</span> Seattle, US</div>
+            <div class="searchresult-box__tickets-count">1026 tickets</div>
+            <div class="searchresult-box__pricing">
+              <div class="searchresult-box__price">
+                <span class="from-text">from</span>
+                <span class="price-value">€1,233</span>
+              </div>
+              <div class="searchresult-box__action">
+                <button class="ui-button ui-button--size-medium">BUY</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="searchresult-box">
+            <div class="searchresult-box__image" style="background-image:url('https://imgs.ticombo.com/tc-images-main/thumbnail/events/sports/match-30-group-c-football-world-cup-2026-2606192359/thumbnail-thumbnail-b7a02a19-6798-471c-a429-31a2f8137c51.png');"></div>
+            <div class="searchresult-box__date">
+              <div class="calendar-badge">
+                <div class="top"><span>Jun</span></div>
+                <div class="middle"><span>19</span></div>
+                <div class="bottom"><span>Fri</span></div>
+              </div>
+            </div>
+            <button class="searchresult-box__subscribe-icon"><span style="font-style:normal;">&#xf004;</span></button>
+            <div class="searchresult-box__title">Scotland vs Morocco - World Cup 2026 - M30 Group C</div>
+            <div class="searchresult-box__venue-name">Boston Stadium</div>
+            <div class="searchresult-box__venue-location"><span style="font-style:normal;">&#xf3c5;</span> Boston, US</div>
+            <div class="searchresult-box__tickets-count">1375 tickets</div>
+            <div class="searchresult-box__pricing">
+              <div class="searchresult-box__price">
+                <span class="from-text">from</span>
+                <span class="price-value">€771</span>
+              </div>
+              <div class="searchresult-box__action">
+                <button class="ui-button ui-button--size-medium">BUY</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 7 -->
+          <div class="searchresult-box">
+            <div class="searchresult-box__image" style="background-image:url('https://imgs.ticombo.com/tc-images-main/thumbnail/events/sports/match-29-group-c-football-world-cup-2026-2606192359/thumbnail-thumbnail-cf6ac910-ac45-48ab-aa52-563fa11929e0.png');"></div>
+            <div class="searchresult-box__date">
+              <div class="calendar-badge">
+                <div class="top"><span>Jun</span></div>
+                <div class="middle"><span>19</span></div>
+                <div class="bottom"><span>Fri</span></div>
+              </div>
+            </div>
+            <button class="searchresult-box__subscribe-icon"><span style="font-style:normal;">&#xf004;</span></button>
+            <div class="searchresult-box__title">Brazil vs Haiti - World Cup 2026 - M29 Group C</div>
+            <div class="searchresult-box__venue-name">Philadelphia Stadium</div>
+            <div class="searchresult-box__venue-location"><span style="font-style:normal;">&#xf3c5;</span> Philadelphia, US</div>
+            <div class="searchresult-box__tickets-count">1189 tickets</div>
+            <div class="searchresult-box__pricing">
+              <div class="searchresult-box__price">
+                <span class="from-text">from</span>
+                <span class="price-value">€963</span>
+              </div>
+              <div class="searchresult-box__action">
+                <button class="ui-button ui-button--size-medium">BUY</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 8 -->
+          <div class="searchresult-box">
+            <div class="searchresult-box__image" style="background-image:url('https://imgs.ticombo.com/tc-images-main/thumbnail/events/sports/match-31-group-d-football-world-cup-2026-2606192359/thumbnail-thumbnail-d4f12c84-c943-4651-961e-1e345d8aa0c7.png');"></div>
+            <div class="searchresult-box__date">
+              <div class="calendar-badge">
+                <div class="top"><span>Jun</span></div>
+                <div class="middle"><span>19</span></div>
+                <div class="bottom"><span>Fri</span></div>
+              </div>
+            </div>
+            <button class="searchresult-box__subscribe-icon"><span style="font-style:normal;">&#xf004;</span></button>
+            <div class="searchresult-box__title">Turkey vs Paraguay - World Cup 2026 - M31 Group D</div>
+            <div class="searchresult-box__venue-name">San Francisco Bay Area Stadium</div>
+            <div class="searchresult-box__venue-location"><span style="font-style:normal;">&#xf3c5;</span> San Francisco Bay Area, US</div>
+            <div class="searchresult-box__tickets-count">880 tickets</div>
+            <div class="searchresult-box__pricing">
+              <div class="searchresult-box__price">
+                <span class="from-text">from</span>
+                <span class="price-value">€424</span>
+              </div>
+              <div class="searchresult-box__action">
+                <button class="ui-button ui-button--size-medium">BUY</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 9 -->
+          <div class="searchresult-box">
+            <div class="searchresult-box__image" style="background-image:url('https://imgs.ticombo.com/tc-images-main/thumbnail/events/sports/match-35-group-f-football-world-cup-2026-2606202359/thumbnail-thumbnail-2a569899-a207-4829-9c13-25e7ffe41f64.png');"></div>
+            <div class="searchresult-box__date">
+              <div class="calendar-badge">
+                <div class="top"><span>Jun</span></div>
+                <div class="middle"><span>20</span></div>
+                <div class="bottom"><span>Sat</span></div>
+              </div>
+            </div>
+            <button class="searchresult-box__subscribe-icon"><span style="font-style:normal;">&#xf004;</span></button>
+            <div class="searchresult-box__title">Netherlands vs Sweden - World Cup 2026 - M35 Group F</div>
+            <div class="searchresult-box__venue-name">Houston Stadium</div>
+            <div class="searchresult-box__venue-location"><span style="font-style:normal;">&#xf3c5;</span> Houston, US</div>
+            <div class="searchresult-box__tickets-count">676 tickets</div>
+            <div class="searchresult-box__pricing">
+              <div class="searchresult-box__price">
+                <span class="from-text">from</span>
+                <span class="price-value">€462</span>
+              </div>
+              <div class="searchresult-box__action">
+                <button class="ui-button ui-button--size-medium">BUY</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 10 -->
+          <div class="searchresult-box">
+            <div class="searchresult-box__image" style="background-image:url('https://imgs.ticombo.com/tc-images-main/thumbnail/events/sports/match-33-group-e-football-world-cup-2026-2606202359/thumbnail-thumbnail-403ac0a5-734a-47cf-ac78-a64195c0d9cc.png');"></div>
+            <div class="searchresult-box__date">
+              <div class="calendar-badge">
+                <div class="top"><span>Jun</span></div>
+                <div class="middle"><span>20</span></div>
+                <div class="bottom"><span>Sat</span></div>
+              </div>
+            </div>
+            <button class="searchresult-box__subscribe-icon"><span style="font-style:normal;">&#xf004;</span></button>
+            <div class="searchresult-box__title">Germany vs Ivory Coast - World Cup 2026 - M33 Group E</div>
+            <div class="searchresult-box__venue-name">Toronto Stadium</div>
+            <div class="searchresult-box__venue-location"><span style="font-style:normal;">&#xf3c5;</span> Toronto, CA</div>
+            <div class="searchresult-box__tickets-count">584 tickets</div>
+            <div class="searchresult-box__pricing">
+              <div class="searchresult-box__price">
+                <span class="from-text">from</span>
+                <span class="price-value">€1,079</span>
+              </div>
+              <div class="searchresult-box__action">
+                <button class="ui-button ui-button--size-medium">BUY</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="main-footer">
+      <div class="container">
+        <div class="footer__row">
+          <div class="column-1">
+            <div class="footer-info__company-links">
+              <ul class="link-list">
+                <li class="footer-link"><a href="#">About Us</a></li>
+                <li class="footer-link"><a href="#">Team</a></li>
+                <li class="footer-link"><a href="#">TixProtect</a></li>
+                <li class="footer-link"><a href="#">Imprint</a></li>
+                <li class="footer-link"><a href="#">Terms and Conditions</a></li>
+                <li class="footer-link"><a href="#">Affiliate Program</a></li>
+              </ul>
+              <ul class="link-list">
+                <li class="footer-link"><a href="#">Corporate Services</a></li>
+                <li class="footer-link"><a href="#">FAQ</a></li>
+                <li class="footer-link"><a href="#">How it works</a></li>
+                <li class="footer-link"><a href="#">Hotels</a></li>
+                <li class="footer-link"><a href="#">World Cup Hub</a></li>
+                <li class="footer-link"><a href="#">Contact us</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="column-2">
+            <h4 class="font-bold m-0 mb-4">TixHub Offices</h4>
+            <div class="footer-info">
+              <div class="footer-info__offices" style="display:flex;flex-wrap:wrap;margin:0 -10px;">
+                <div class="footer-info__office">
+                  <div class="footer-info__sitename">
+                    <span class="tc-flag" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">Germany</span>
+                  </div>
+                  <div class="footer-info__address">Unter den Linden 24, 10117 Berlin, Germany</div>
+                </div>
+                <div class="footer-info__office">
+                  <div class="footer-info__sitename">
+                    <span class="tc-flag" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">United Kingdom</span>
+                  </div>
+                  <div class="footer-info__address">167 City Road, London, Greater London, EC1V 1AW, UK</div>
+                </div>
+                <div class="footer-info__office">
+                  <div class="footer-info__sitename">
+                    <span class="tc-flag" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">United States</span>
+                  </div>
+                  <div class="footer-info__address">131 Continental Dr, Suite 305, Newark, Delaware 19713</div>
+                </div>
+                <div class="footer-info__office">
+                  <div class="footer-info__sitename">
+                    <span class="tc-flag" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">Switzerland</span>
+                  </div>
+                  <div class="footer-info__address">Dorfstrasse 52a, 6390 Engelberg, Switzerland</div>
+                </div>
+                <div class="footer-info__office">
+                  <div class="footer-info__sitename">
+                    <span class="tc-flag" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">Bulgaria</span>
+                  </div>
+                  <div class="footer-info__address">Regus Sofia City West, bul Totleben 53-55, 1606 Sofia</div>
+                </div>
+                <div class="footer-info__office">
+                  <div class="footer-info__sitename">
+                    <span class="tc-flag" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23DDD\'/%3E%3C/svg%3E');"></span>
+                    <span class="footer-info__sitename-name">United Arab Emirates</span>
+                  </div>
+                  <div class="footer-info__address">UAE Dubai Silicon Oasis, DDP Building A1, Office 302</div>
+                </div>
+              </div>
+              <div class="footer-info__provider">
+                Platform provider legal entity might vary depending on location, event and/or domain. For details check specific Event page, <a class="tc-link" href="#">Imprint</a> and <a class="tc-link" href="#">Terms.</a>
+                <span class="copyright">© 2026 TixHub. All rights reserved.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>
